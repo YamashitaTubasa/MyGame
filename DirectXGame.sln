@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXGame", "DirectXGame.vcxproj", "{0BB28B89-F525-4CFE-AB09-56A623DFA96B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{131AAB92-B0E4-4EAB-B0D7-DB2407E5D6F0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imgui", "External\ImGui\imgui.vcxproj", "{CD99125B-568B-46FF-BE3C-C634F670A06D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj", "{371B9FA9-4C90-4AC6-A123-ACED756D6C77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{CCE3E329-DE5D-43A5-9859-6C8C4EC8B30C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BB28B89-F525-4CFE-AB09-56A623DFA96B}.Debug|x64.ActiveCfg = Debug|x64
+		{0BB28B89-F525-4CFE-AB09-56A623DFA96B}.Debug|x64.Build.0 = Debug|x64
+		{0BB28B89-F525-4CFE-AB09-56A623DFA96B}.Release|x64.ActiveCfg = Release|x64
+		{0BB28B89-F525-4CFE-AB09-56A623DFA96B}.Release|x64.Build.0 = Release|x64
+		{CD99125B-568B-46FF-BE3C-C634F670A06D}.Debug|x64.ActiveCfg = Debug|x64
+		{CD99125B-568B-46FF-BE3C-C634F670A06D}.Debug|x64.Build.0 = Debug|x64
+		{CD99125B-568B-46FF-BE3C-C634F670A06D}.Release|x64.ActiveCfg = Release|x64
+		{CD99125B-568B-46FF-BE3C-C634F670A06D}.Release|x64.Build.0 = Release|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.ActiveCfg = Debug|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.Build.0 = Debug|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.ActiveCfg = Release|x64
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CD99125B-568B-46FF-BE3C-C634F670A06D} = {131AAB92-B0E4-4EAB-B0D7-DB2407E5D6F0}
+		{371B9FA9-4C90-4AC6-A123-ACED756D6C77} = {131AAB92-B0E4-4EAB-B0D7-DB2407E5D6F0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F086C800-6C35-43F6-99A7-AAA19E559182}
+	EndGlobalSection
+EndGlobal
