@@ -122,8 +122,9 @@ private:
 	Object3d* object3d[5];
 	// スプライト
 	Sprite* sprite = nullptr;
-	//std::shared_ptr<Sprite> sprite;
 	Sprite* hp = nullptr;
+	Sprite* hpBar = nullptr;
+	Sprite* hpBack = nullptr;
 	SpriteCommon spriteCommon_;
 
 	// パーティクル

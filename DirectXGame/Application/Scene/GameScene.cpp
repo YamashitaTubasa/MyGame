@@ -69,22 +69,42 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	// スプライトの初期化
 	//SpriteInitialize(spriteCommon);
 	// スプライト
-	sprite = new Sprite(100, { 0.0f,0.0f }, { 500.0f,500.0f }, { 1,1,1,1 }, { 0.0f,0.0f }, false, false);
+	sprite = new Sprite();
 	//sprite = make_shared<Sprite>(100, { 0.0f,0.0f }, { 500.0f,500.0f }, { 1,1,1,1 }, { 0.0f,0.0f }, false, false);
 	spriteCommon_ = sprite->SpriteCommonCreate(dXCommon->GetDevice(), 1280, 720);
 	// スプライト用パイプライン生成呼び出し
 	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline(dXCommon->GetDevice());
 
 	// HP
-	hp = new Sprite(100, { 0.0f,0.0f }, { 500.0f,500.0f }, { 1,1,1,1 }, { 0.0f,0.0f }, false, false);
-	hp->LoadTexture(spriteCommon_, 3, L"Resources/Image/hp.png", dXCommon->GetDevice());
+	hp = new Sprite();
+	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png", dXCommon->GetDevice());
+	hp->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 1, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
 	hp->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hp->SpriteCreate(dXCommon->GetDevice(), 50, 50, 3, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
-	hp->SetPosition(XMFLOAT3(0, 0, 0));
-	hp->SetScale(XMFLOAT2(50 * 1, 50 * 1));
-	hp->SetRotation(0.5f);
-	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 3);
+	hp->SetPosition(XMFLOAT3(30, 30, 0));
+	hp->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	hp->SetRotation(0.0f);
+	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 1);
 	hp->SpriteUpdate(hp, spriteCommon_);
+	// HPバー
+	hpBar = new Sprite();
+	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png", dXCommon->GetDevice());
+	hpBar->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 2, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hpBar->SetPosition(XMFLOAT3(30, 30, 0));
+	hpBar->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	hpBar->SetRotation(0.0f);
+	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon, 2);
+	hpBar->SpriteUpdate(hpBar, spriteCommon_);
+	// HP背景
+	hpBack = new Sprite();
+	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png", dXCommon->GetDevice());
+	hpBack->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 3, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hpBack->SetPosition(XMFLOAT3(30, 30, 0));
+	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	hpBack->SetRotation(0.0f);
+	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon, 3);
+	hpBack->SpriteUpdate(hpBack, spriteCommon_);
 
 	//// パーティクルの初期化
 	//ParticleInitialize();
@@ -204,6 +224,11 @@ void GameScene::Draw(SpriteCommon& spriteCommon)
 
 	Sprite::PreDraw(dXCommon->GetCommandList(), spriteCommon_);
 
+	// HPバーの描画
+	hpBar->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_, dXCommon->GetDevice(), hpBar->vbView);
+	// HPの背景描画
+	hpBack->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_, dXCommon->GetDevice(), hpBack->vbView);
+	// HPの描画
 	hp->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_, dXCommon->GetDevice(), hp->vbView);
 
 	Sprite::PostDraw();
@@ -223,7 +248,7 @@ void GameScene::Finalize()
 void GameScene::ObjectInitialize() 
 {
 	// OBJからモデルデータを読み込む
-	Model[0] = Model::LoadFromOBJ("fighter2", "effect1.png");
+	Model[0] = Model::LoadFromOBJ("fighter", "effect1.png");
 	//Model[0]->LoadTexture("effect1.png");
 	Model[1] = Model::LoadFromOBJ("ironSphere", "ironShpere/ironSphere.png");
 	//Model[2] = Model::LoadFromOBJ("skydome", "skydome/skydome.jpg");

@@ -60,6 +60,7 @@ private: // エイリアス
 	template <class T> using vector = std::vector<T>;
 
 public:
+	Sprite() = default;
 	Sprite(UINT texNumber, XMFLOAT2 pos, XMFLOAT2 size, XMFLOAT4 color, XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY);
 	~Sprite();
 
