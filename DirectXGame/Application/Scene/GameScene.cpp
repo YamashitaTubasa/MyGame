@@ -80,7 +80,7 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png", dXCommon->GetDevice());
 	hp->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 1, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
 	hp->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hp->SetPosition(XMFLOAT3(30, 30, 0));
+	hp->SetPosition(hpPosition);
 	hp->SetScale(XMFLOAT2(500 * 1, 20 * 1));
 	hp->SetRotation(0.0f);
 	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 1);
@@ -90,7 +90,7 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png", dXCommon->GetDevice());
 	hpBar->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 2, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
 	hpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hpBar->SetPosition(XMFLOAT3(30, 30, 0));
+	hpBar->SetPosition(hpBarPosition);
 	hpBar->SetScale(XMFLOAT2(500 * 1, 20 * 1));
 	hpBar->SetRotation(0.0f);
 	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon, 2);
@@ -100,7 +100,7 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png", dXCommon->GetDevice());
 	hpBack->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 3, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
 	hpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hpBack->SetPosition(XMFLOAT3(30, 30, 0));
+	hpBack->SetPosition(hpBackPosition);
 	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
 	hpBack->SetRotation(0.0f);
 	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon, 3);
@@ -171,6 +171,12 @@ void GameScene::Update()
 		// パーティクルの初期化
 		particleMan->Execution(particle, 0);
 	}
+
+	if (input->PushKey(DIK_I)) {
+		hpPosition.x += -1;
+	}
+	hp->SetPosition(hpPosition);
+	hp->SpriteUpdate(hp, spriteCommon_);
 
 	// パーティクルの更新
 	particleMan->Update();

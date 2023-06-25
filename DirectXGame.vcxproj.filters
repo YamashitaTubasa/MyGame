@@ -112,6 +112,12 @@
     <Filter Include="ヘッダー ファイル\Application\Platform">
       <UniqueIdentifier>{ef587848-3dab-4a6e-981a-24533f81c150}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engin\Collision">
+      <UniqueIdentifier>{3cb1cac1-6cdd-43c1-8b64-81e9070ae7b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Collision">
+      <UniqueIdentifier>{f6820e1d-2650-46b6-a7bb-2c9002c8cb54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp">
@@ -191,6 +197,9 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Engin\2d\PostEffect.cpp">
       <Filter>ソース ファイル\Engin\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp">
+      <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -320,6 +329,12 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\2d\PostEffect.h">
       <Filter>ヘッダー ファイル\Engin\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\Collision.h">
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionPrimitive.h">
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
