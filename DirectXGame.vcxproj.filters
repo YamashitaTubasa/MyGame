@@ -201,6 +201,9 @@
     <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp">
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -335,6 +338,9 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionPrimitive.h">
       <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
