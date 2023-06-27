@@ -46,6 +46,10 @@ void TYFramework::Initialize()
 	/*camera = new Camera();
 	camera->Initialize();*/
 
+	// ポストエフェクト
+	postEffect = PostEffect::GetInstance();
+	postEffect->Initialize();
+
 	// FBX
 	FbxLoader::GetInstance()->Initialize(dXCommon->GetDevice());
 
@@ -79,4 +83,7 @@ void TYFramework::Update()
 		// ゲームループを抜ける
 		endRequst_ = true;
 	}
+
+	// 入力の更新
+	input->Update();
 }

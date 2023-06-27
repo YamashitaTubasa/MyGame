@@ -13,6 +13,7 @@
 #include "Camera.h"
 #include "FbxLoader.h"
 #include "FbxObject3d.h"
+#include "PostEffect.h"
 
 class GameScene
 {
@@ -141,6 +142,7 @@ private:
 	Camera* camera = nullptr;
 	FbxModel* fbxModel = nullptr;
 	FbxObject3d* fbxObject = nullptr;
+	PostEffect* postEffect = nullptr;
 
 	DirectX::XMFLOAT3 position[5]{};
 	DirectX::XMFLOAT3 rotation[5]{};

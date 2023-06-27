@@ -20,6 +20,7 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	winApp = WinApp::GetInstance();
 	input = Input::GetInstance();
 	dXCommon = DirectXCommon::GetInstance();
+	postEffect = PostEffect::GetInstance();
 
 	// カメラ
 	camera = new Camera();
@@ -118,14 +119,14 @@ void GameScene::Update()
 	// ImGui受付開始
 	imGuiManager->Begin();
 
-	// 入力の更新
-	input->Update();
-
 	// カメラの更新
 	camera->Update();
 
 	// FBXオブジェクトの更新
 	fbxObject->Update();
+
+	// ポストエフェクト
+	postEffect->SetBlur(false);
 
 	// gTSの更新
 	//gTS->Update();

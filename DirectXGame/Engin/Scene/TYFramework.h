@@ -9,6 +9,7 @@
 #include "GameScene.h"
 #include "Camera.h"
 #include "ImGuiManager.h"
+#include "PostEffect.h"
 
 class TYFramework
 {
@@ -48,5 +49,6 @@ protected:
 	Input* input = nullptr;
 	ImGuiManager* imGuiManager = nullptr;
 	Camera* camera = nullptr;
+	PostEffect* postEffect = nullptr;
 };
 

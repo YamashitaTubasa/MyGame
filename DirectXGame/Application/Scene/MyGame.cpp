@@ -33,13 +33,26 @@ void MyGame::Update()
 
 void MyGame::Draw()
 {
+#pragma region ゲームシーン描画
+
+	// レンダーテクスチャの前処理
+	postEffect->PreDrawScene(dXCommon->GetCommandList());
+
+	//=== ゲームシーン描画 ===//
+	gameScene->Draw(spriteCommon);
+
+	// レンダーテクスチャの後処理
+	postEffect->PostDrawScene(dXCommon->GetCommandList());
+
+#pragma endregion
+
 #pragma region 描画
 
 	// 描画前処理
 	dXCommon->PreDraw();
 
-	// ゲームシーンの描画
-	gameScene->Draw(spriteCommon);
+	//=== ポストエフェクトの描画 ===//
+	postEffect->Draw(dXCommon->GetCommandList());
 
 	// ImGui描画
 	//imGuiManager->Draw(dXCommon);

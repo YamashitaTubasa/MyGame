@@ -118,6 +118,9 @@
     <Filter Include="ヘッダー ファイル\Engin\Collision">
       <UniqueIdentifier>{f6820e1d-2650-46b6-a7bb-2c9002c8cb54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダーファイル\PostEffect">
+      <UniqueIdentifier>{50415afa-a837-4ca4-bf62-f1abe69582b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp">
@@ -202,7 +205,7 @@
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +223,9 @@
     </None>
     <None Include="Resources\shaders\FBX.hlsli">
       <Filter>シェーダーファイル\FBX</Filter>
+    </None>
+    <None Include="Resources\shaders\PostEffect.hlsli">
+      <Filter>シェーダーファイル\PostEffect</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -255,6 +261,12 @@
     </FxCompile>
     <FxCompile Include="Resources\shaders\FBXVS.hlsl">
       <Filter>シェーダーファイル\FBX</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffectPS.hlsl">
+      <Filter>シェーダーファイル\PostEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffectVS.hlsl">
+      <Filter>シェーダーファイル\PostEffect</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,7 +352,7 @@
       <Filter>ヘッダー ファイル\Engin\Collision</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionManager.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
