@@ -110,6 +110,7 @@
     <ClCompile Include="DirectXGame\Engin\3d\FbxObject3d.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\Model.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\Object3d.cpp" />
+    <ClCompile Include="DirectXGame\Engin\3d\RailCamera.cpp" />
     <ClCompile Include="DirectXGame\Engin\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engin\Camera\Camera.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="DirectXGame\Engin\3d\FbxObject3d.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Model.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Object3d.h" />
+    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h" />
     <ClInclude Include="DirectXGame\Engin\Audio\Audio.h" />
     <ClInclude Include="DirectXGame\Engin\Camera\Camera.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\Collision.h" />

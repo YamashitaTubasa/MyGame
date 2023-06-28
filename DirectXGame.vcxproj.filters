@@ -207,6 +207,9 @@
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp">
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\3d\RailCamera.cpp">
+      <Filter>ソース ファイル\Engin\3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -353,6 +356,9 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionManager.h">
       <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h">
+      <Filter>ヘッダー ファイル\Engin\3d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
