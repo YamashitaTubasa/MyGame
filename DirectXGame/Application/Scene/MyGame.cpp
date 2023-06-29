@@ -29,6 +29,9 @@ void MyGame::Update()
 
 	// ゲームシーンの更新
 	gameScene->Update();
+
+	// ImGui受付終了
+	imGuiManager->End();
 }
 
 void MyGame::Draw()

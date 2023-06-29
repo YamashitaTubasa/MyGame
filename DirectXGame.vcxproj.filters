@@ -168,7 +168,7 @@
     <ClCompile Include="DirectXGame\Engin\Camera\Camera.cpp">
       <Filter>ソース ファイル\Engin\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\Effect\ParticleM.cpp">
+    <ClCompile Include="DirectXGame\Engin\Effect\Particle.cpp">
       <Filter>ソース ファイル\Engin\Effect</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engin\3d\FbxLoader.cpp">
@@ -315,7 +315,7 @@
     <ClInclude Include="DirectXGame\Engin\Camera\Camera.h">
       <Filter>ヘッダー ファイル\Engin\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Effect\ParticleM.h">
+    <ClInclude Include="DirectXGame\Engin\Effect\Particle.h">
       <Filter>ヘッダー ファイル\Engin\Effect</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\3d\FbxLoader.h">

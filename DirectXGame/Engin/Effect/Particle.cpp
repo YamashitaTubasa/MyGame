@@ -1,4 +1,4 @@
-#include "ParticleM.h"
+#include "Particle.h"
 
 #include <DirectXTex.h>
 #include <Windows.h>
@@ -15,18 +15,7 @@ using namespace Microsoft::WRL;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-ID3D12Device* ParticleM::device = nullptr;
-UINT ParticleM::descriptorHandleIncrementSize = 0;
-//ID3D12GraphicsCommandList* ParticleM::cmdList = nullptr;
-ComPtr<ID3D12RootSignature> ParticleM::rootsignature;
-ComPtr<ID3D12PipelineState> ParticleM::pipelinestate;
-ComPtr<ID3D12DescriptorHeap> ParticleM::descHeap;
-ComPtr<ID3D12Resource> ParticleM::vertBuff;
-ComPtr<ID3D12Resource> ParticleM::texbuff;
-CD3DX12_CPU_DESCRIPTOR_HANDLE ParticleM::cpuDescHandleSRV;
-CD3DX12_GPU_DESCRIPTOR_HANDLE ParticleM::gpuDescHandleSRV;
-D3D12_VERTEX_BUFFER_VIEW ParticleM::vbView{};
-ParticleM::VertexPos ParticleM::vertices[vertexCount];
+ID3D12Device* Particle::device = nullptr;
 
 // XMFLOAT3同士の加算処理
 const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::XMFLOAT3& rhs)
@@ -40,9 +29,9 @@ const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::X
 	return result;
 }
 
-ParticleM* ParticleM::LoadFromOBJ(const std::string& filename)
+Particle* Particle::LoadFromOBJ(const std::string& filename)
 {
-	ParticleM* particle = new ParticleM();
+	Particle* particle = new Particle();
 
 	particle->InitializeDescriptorHeap();
 
@@ -53,19 +42,19 @@ ParticleM* ParticleM::LoadFromOBJ(const std::string& filename)
 	return particle;
 }
 
-void ParticleM::Update()
+void Particle::Update()
 {
 	HRESULT result;
 
 	// 寿命が尽きたパーティクルを全削除
 	particles.remove_if(
-		[](Particle0& x) {
+		[](ParticleOne& x) {
 			return x.frame >= x.num_frame;
 		}
 	);
 
 	// 全パーティクル更新
-	for (std::forward_list<Particle0>::iterator it = particles.begin();
+	for (std::forward_list<ParticleOne>::iterator it = particles.begin();
 		it != particles.end();
 		it++) {
 		// 経過フレーム数をカウント
@@ -86,7 +75,7 @@ void ParticleM::Update()
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	if (SUCCEEDED(result)) {
 		// パーティクルの情報を1つずつ反映
-		for (std::forward_list<Particle0>::iterator it = particles.begin();
+		for (std::forward_list<ParticleOne>::iterator it = particles.begin();
 			it != particles.end();
 			it++) {
 			// 座標
@@ -100,7 +89,7 @@ void ParticleM::Update()
 	}
 }
 
-void ParticleM::Draw(ID3D12GraphicsCommandList* cmdList)
+void Particle::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	// nullptrチェック
 	assert(device);
@@ -120,7 +109,7 @@ void ParticleM::Draw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->DrawInstanced((UINT)std::distance(particles.begin(), particles.end()), 1, 0, 0);
 }
 
-void ParticleM::LoadTexture(const std::string& filename)
+void Particle::LoadTexture(const std::string& filename)
 {
 	HRESULT result = S_FALSE;
 
@@ -198,7 +187,7 @@ void ParticleM::LoadTexture(const std::string& filename)
 	);
 }
 
-void ParticleM::InitializeDescriptorHeap()
+void Particle::InitializeDescriptorHeap()
 {
 	HRESULT result = S_FALSE;
 
@@ -216,7 +205,7 @@ void ParticleM::InitializeDescriptorHeap()
 	descriptorHandleIncrementSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
-void ParticleM::CreateModel()
+void Particle::CreateModel()
 {
 	HRESULT result = S_FALSE;
 
@@ -248,13 +237,13 @@ void ParticleM::CreateModel()
 	vbView.StrideInBytes = sizeof(vertices[0]);
 }
 
-void ParticleM::Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel,
+void Particle::Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel,
 	float start_scale, float end_scale)
 {
 	// リストに要素を追加
 	particles.emplace_front();
 	// 追加した要素の参照
-	Particle0& p = particles.front();
+	ParticleOne& p = particles.front();
 	// 値のセット
 	p.position = position;
 	p.velocity = velocity;

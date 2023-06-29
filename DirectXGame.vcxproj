@@ -115,7 +115,7 @@
     <ClCompile Include="DirectXGame\Engin\Camera\Camera.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp" />
-    <ClCompile Include="DirectXGame\Engin\Effect\ParticleM.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Effect\Particle.cpp" />
     <ClCompile Include="DirectXGame\Engin\Effect\ParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Quaternion.cpp" />
@@ -235,7 +235,7 @@
     <ClInclude Include="DirectXGame\Engin\Collision\Collision.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionPrimitive.h" />
-    <ClInclude Include="DirectXGame\Engin\Effect\ParticleM.h" />
+    <ClInclude Include="DirectXGame\Engin\Effect\Particle.h" />
     <ClInclude Include="DirectXGame\Engin\Effect\ParticleManager.h" />
     <ClInclude Include="DirectXGame\Engin\Input\Input.h" />
     <ClInclude Include="DirectXGame\Engin\Math\Matrix4.h" />

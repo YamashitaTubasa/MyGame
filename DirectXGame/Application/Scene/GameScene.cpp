@@ -10,9 +10,9 @@ GameScene::GameScene()
 GameScene::~GameScene()
 {
 	delete particleMan;
+	delete particleMan1;
 	delete fbxModel;
 	delete fbxObject;
-	/*delete particleMan1;*/
 }
 
 void GameScene::Initialize(SpriteCommon& spriteCommon)
@@ -52,8 +52,8 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	camera->SetDistance(8.0f);
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle = ParticleM::LoadFromOBJ("Resources/Image/effect1.png");
-	particle1 = ParticleM::LoadFromOBJ("Resources/Image/effect2.png");
+	particle = Particle::LoadFromOBJ("Resources/Image/effect1.png");
+	particle1 = Particle::LoadFromOBJ("Resources/Image/effect2.png");
 	// パーティクルの生成
 	particleMan = ParticleManager::Create();
 	particleMan1 = ParticleManager::Create();
@@ -72,14 +72,14 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	// スプライト
 	sprite = new Sprite();
 	//sprite = make_shared<Sprite>(100, { 0.0f,0.0f }, { 500.0f,500.0f }, { 1,1,1,1 }, { 0.0f,0.0f }, false, false);
-	spriteCommon_ = sprite->SpriteCommonCreate(dXCommon->GetDevice(), 1280, 720);
+	spriteCommon_ = sprite->SpriteCommonCreate(1280, 720);
 	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline(dXCommon->GetDevice());
+	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline();
 
 	// HP
 	hp = new Sprite();
-	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png", dXCommon->GetDevice());
-	hp->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 1, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
+	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
+	hp->SpriteCreate(1280, 720, 1, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
 	hp->SetColor(XMFLOAT4(1, 1, 1, 1));
 	hp->SetPosition(hpPosition);
 	hp->SetScale(XMFLOAT2(500 * 1, 20 * 1));
@@ -88,8 +88,8 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	hp->SpriteUpdate(hp, spriteCommon_);
 	// HPバー
 	hpBar = new Sprite();
-	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png", dXCommon->GetDevice());
-	hpBar->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 2, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png");
+	hpBar->SpriteCreate(1280, 720, 2, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
 	hpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
 	hpBar->SetPosition(hpBarPosition);
 	hpBar->SetScale(XMFLOAT2(500 * 1, 20 * 1));
@@ -98,8 +98,8 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	hpBar->SpriteUpdate(hpBar, spriteCommon_);
 	// HP背景
 	hpBack = new Sprite();
-	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png", dXCommon->GetDevice());
-	hpBack->SpriteCreate(dXCommon->GetDevice(), 1280, 720, 3, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png");
+	hpBack->SpriteCreate(1280, 720, 3, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
 	hpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
 	hpBack->SetPosition(hpBackPosition);
 	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
@@ -170,7 +170,10 @@ void GameScene::Update()
 	if (particleTime >= 10) { particl = false; particleTime = 0; }
 	if (particl == true) {
 		// パーティクルの初期化
-		particleMan->Execution(particle, 0);
+		/*particleMan->Execution(particle, -10);
+		particleMan1->Execution(particle1, 10);*/
+		particleMan->Execution(particle, -6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
+		particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 	}
 
 	if (input->PushKey(DIK_I)) {
@@ -181,9 +184,7 @@ void GameScene::Update()
 
 	// パーティクルの更新
 	particleMan->Update();
-
-	// ImGui受付終了
-	imGuiManager->End();
+	particleMan1->Update();
 }
 
 void GameScene::Draw(SpriteCommon& spriteCommon)
@@ -216,7 +217,7 @@ void GameScene::Draw(SpriteCommon& spriteCommon)
 
 	// 3Dオブクジェクトの描画
 	particleMan->Draw();
-	//particleMan1->Draw();
+	particleMan1->Draw();
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
@@ -232,11 +233,11 @@ void GameScene::Draw(SpriteCommon& spriteCommon)
 	Sprite::PreDraw(dXCommon->GetCommandList(), spriteCommon_);
 
 	// HPバーの描画
-	hpBar->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_, dXCommon->GetDevice(), hpBar->vbView);
+	hpBar->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_);
 	// HPの背景描画
-	hpBack->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_, dXCommon->GetDevice(), hpBack->vbView);
+	hpBack->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_);
 	// HPの描画
-	hp->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_, dXCommon->GetDevice(), hp->vbView);
+	hp->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_);
 
 	Sprite::PostDraw();
 

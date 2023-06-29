@@ -131,8 +131,8 @@ private:
 	// パーティクル
 	ParticleManager* particleMan = nullptr;
 	ParticleManager* particleMan1 = nullptr;
-	ParticleM* particle = nullptr;
-	ParticleM* particle1 = nullptr;
+	Particle* particle = nullptr;
+	Particle* particle1 = nullptr;
 	//ParticleManager* particleMan1 = nullptr;
 
 	DirectXCommon* dXCommon = nullptr;

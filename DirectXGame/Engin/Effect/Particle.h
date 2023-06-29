@@ -8,10 +8,10 @@
 #include <forward_list>
 #include <string>
 
-//==============
-// パーティクル
-//==============
-class ParticleM
+//==============//
+// パーティクル //
+//==============//
+class Particle
 {
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -29,7 +29,7 @@ public: // サブクラス
 	};
 
 	// パーティクル1粒
-	struct Particle0
+	struct ParticleOne
 	{
 		// DirectX::を省略
 		using XNFLOAT3 = DirectX::XMFLOAT3;
@@ -55,28 +55,28 @@ private: // 定数
 	static const int vertexCount = 1024; // 頂点数
 
 private: // 静的メンバ変数
-    // デバイス
+	// デバイス
 	static ID3D12Device* device;
 	// デスクリプタサイズ
-	static UINT descriptorHandleIncrementSize;
+	UINT descriptorHandleIncrementSize;
 	// ルートシグネチャ
-	static ComPtr<ID3D12RootSignature> rootsignature;
+	ComPtr<ID3D12RootSignature> rootsignature;
 	// パイプラインステートオブジェクト
-	static ComPtr<ID3D12PipelineState> pipelinestate;
+	ComPtr<ID3D12PipelineState> pipelinestate;
 	// デスクリプタヒープ
-	static ComPtr<ID3D12DescriptorHeap> descHeap;
+	ComPtr<ID3D12DescriptorHeap> descHeap;
 	// 頂点バッファ
-	static ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> vertBuff;
 	// テクスチャバッファ
-	static ComPtr<ID3D12Resource> texbuff;
+	ComPtr<ID3D12Resource> texbuff;
 	// シェーダリソースビューのハンドル(CPU)
-	static CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
-	// シェーダリソースビューのハンドル(CPU)
-	static CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	// シェーダリソースビューのハンドル(GPU)
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
 	// 頂点バッファビュー
-	static D3D12_VERTEX_BUFFER_VIEW vbView;
+	D3D12_VERTEX_BUFFER_VIEW vbView;
 	// 頂点データ配列
-	static VertexPos vertices[vertexCount];
+	VertexPos vertices[vertexCount];
 
 public:// 静的メンバ関数
 	/// <summary>
@@ -84,7 +84,7 @@ public:// 静的メンバ関数
 	/// </summary>
 	/// <param name="filename">ファイル名</param>
 	/// <returns></returns>
-	static ParticleM* LoadFromOBJ(const std::string& filename);
+	static Particle* LoadFromOBJ(const std::string& filename);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -121,9 +121,9 @@ public:// 静的メンバ関数
 	void Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
 
 public:
-	static void SetDevice(ID3D12Device* device) { ParticleM::device = device; }
+	static void SetDevice(ID3D12Device* device) { Particle::device = device; } // deviceのsetter
 
 private: // メンバ変数
 	// 親オブジェクト
-	std::forward_list<Particle0> particles;
+	std::forward_list<ParticleOne> particles;
 };

@@ -13,20 +13,20 @@ float4 Gaussian(float2 drawUV, float2 pickUV, float sigma)
 float4 main(VSOutput input) : SV_TARGET
 {
     float luminance = 1.0f; // ‹P“x
-    float totalWeight = 0;
-    float _Sigma = 0.005;
-    float _StepWidth = 0.001;
+    float totalWeight = 0.0f;
+    float _Sigma = 0.005f;
+    float _StepWidth = 0.001f;
 
     float4 col = tex.Sample(smp, input.uv) * color;
 
     if (isBlur == true)
     {
-        for (float py = -_Sigma * 2; py <= _Sigma * 2; py += _StepWidth)
+        for (float py = -_Sigma * 2.0f; py <= _Sigma * 2.0f; py += _StepWidth)
         {
-            for (float px = -_Sigma * 2; px <= _Sigma * 2; px += _StepWidth)
+            for (float px = -_Sigma * 2.0f; px <= _Sigma * 2.0f; px += _StepWidth)
             {
                 float2 pickUV = input.uv + float2(px, py);
-                float weight = Gaussian(input.uv, pickUV, _Sigma);
+                float4 weight = Gaussian(input.uv, pickUV, _Sigma);
                 col += tex.Sample(smp, pickUV) * weight;
                 totalWeight += weight;
             }

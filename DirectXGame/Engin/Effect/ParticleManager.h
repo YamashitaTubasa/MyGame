@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Particle.h"
+
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
@@ -7,8 +9,6 @@
 #include <d3dx12.h>
 #include <forward_list>
 #include <string>
-
-#include "ParticleM.h"
 
 /// <summary>
 /// パーティクル
@@ -88,7 +88,7 @@ public: // 静的メンバ関数
 	/// 注視点座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	static void SetTarget(XMFLOAT3 target_);
+	static void SetTarget(XMFLOAT3 target);
 
 	/// <summary>
 	/// ベクトルによる移動
@@ -105,8 +105,6 @@ public: // 静的メンバ関数
 private: // 静的メンバ変数
 	// デバイス
 	static ID3D12Device* device;
-	// デスクリプタサイズ
-	static UINT descriptorHandleIncrementSize;
 	// コマンドリスト
 	static ID3D12GraphicsCommandList* cmdList;
 	// ルートシグネチャ
@@ -123,8 +121,6 @@ private: // 静的メンバ変数
 	static XMFLOAT3 target;
 	// 上方向ベクトル
 	static XMFLOAT3 up;
-	// 頂点バッファビュー
-	//static D3D12_VERTEX_BUFFER_VIEW vbView;
 	// ビルボード行列
 	static XMMATRIX matBillboard;
 	// Y軸回りビルボード行列
@@ -170,18 +166,19 @@ public: // メンバ関数
 	/// モデルの設定
 	/// </summary>
 	/// <param name="particle"></param>
-	void SetModel(ParticleM* particle) { this->particle = particle; }
+	void SetModel(Particle* particle) { this->particle = particle; }
 
 	/// <summary>
 	/// パーティクル実装
 	/// </summary>
-	void Execution(ParticleM* particle, const float& posx);
+	void Execution(Particle* particle, float posx, float posy, float posz, int life, float start_scale, float end_scale);
 
 private: // メンバ変数
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuff; 
+	ComPtr<ID3D12Resource> constBuff;
 	// スケール
 	XMFLOAT3 scale = { 1,1,1 };
-	ParticleM* particle = nullptr;
+	// パーティクル
+	Particle* particle = nullptr;
 };
 
