@@ -135,6 +135,9 @@ private:
 	Sprite* hp = nullptr;
 	Sprite* hpBar = nullptr;
 	Sprite* hpBack = nullptr;
+	Sprite* ult = nullptr;
+	Sprite* X = nullptr;
+	Sprite* number[5];
 	SpriteCommon spriteCommon_;
 
 	// パーティクル

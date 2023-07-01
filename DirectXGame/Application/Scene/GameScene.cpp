@@ -83,7 +83,7 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	hp->SetPosition(hpPosition);
 	hp->SetScale(hpScale);
 	hp->SetRotation(0.0f);
-	hp->SpriteTransferVertexBuffer(hp, spriteCommon_, 1);
+	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 1);
 	hp->SpriteUpdate(hp, spriteCommon_);
 	// HPバー
 	hpBar = new Sprite();
@@ -103,8 +103,38 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	hpBack->SetPosition(hpBackPosition);
 	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
 	hpBack->SetRotation(0.0f);
-	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon_, 3);
+	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon, 3);
 	hpBack->SpriteUpdate(hpBack, spriteCommon_);
+	// ULT
+	ult = new Sprite();
+	ult->LoadTexture(spriteCommon_, 4, L"Resources/Image/ult.png");
+	ult->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	ult->SetColor(XMFLOAT4(1, 1, 1, 1));
+	ult->SetPosition({ 1000,620, 0 });
+	ult->SetScale({ 1600 * 0.05, 1600 * 0.05});
+	ult->SetRotation(0.0f);
+	ult->SpriteTransferVertexBuffer(ult, spriteCommon, 4);
+	ult->SpriteUpdate(ult, spriteCommon_);
+	// X
+	X = new Sprite();
+	X->LoadTexture(spriteCommon_, 5, L"Resources/Image/x.png");
+	X->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	X->SetColor(XMFLOAT4(1, 1, 1, 1));
+	X->SetPosition({ 1100,630, 0 });
+	X->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	X->SetRotation(0.0f);
+	X->SpriteTransferVertexBuffer(X, spriteCommon, 5);
+	X->SpriteUpdate(X, spriteCommon_);
+	// 1
+	number[1] = new Sprite();
+	number[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
+	number[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number[1]->SetPosition({ 1200,630, 0 });
+	number[1]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number[1]->SetRotation(0.0f);
+	number[1]->SpriteTransferVertexBuffer(number[1], spriteCommon, 6);
+	number[1]->SpriteUpdate(number[1], spriteCommon_);
 
 	//// パーティクルの初期化
 	//ParticleInitialize();
@@ -237,6 +267,12 @@ void GameScene::Draw()
 	hpBack->SpriteDraw(cmdList, spriteCommon_);
 	// HPの描画
 	hp->SpriteDraw(cmdList, spriteCommon_);
+	// ULTの描画
+	ult->SpriteDraw(cmdList, spriteCommon_);
+	// Xの描画
+	X->SpriteDraw(cmdList, spriteCommon_);
+	// 1の描画
+	number[1]->SpriteDraw(cmdList, spriteCommon_);
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -305,16 +341,16 @@ void GameScene::ObjectUpdate()
 	}*/
 
 	if (input->PushKey(DIK_W)) {
-		position[0].y += 0.4f;
+		position[0].y += 0.3f;
 	}
 	if (input->PushKey(DIK_A)) {
-		position[0].x -= 0.4f;
+		position[0].x -= 0.3f;
 	}
 	if (input->PushKey(DIK_S)) {
-		position[0].y -= 0.4f;
+		position[0].y -= 0.3f;
 	}
 	if (input->PushKey(DIK_D)) {
-		position[0].x += 0.4f;
+		position[0].x += 0.3f;
 	}
 
 	position[1].z -= 1;
