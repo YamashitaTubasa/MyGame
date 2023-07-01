@@ -27,6 +27,9 @@ void MyGame::Update()
 	// 基底クラスの更新処理
 	TYFramework::Update();
 
+	// ImGui受付開始
+	imGuiManager->Begin();
+
 	// ゲームシーンの更新
 	gameScene->Update();
 
@@ -42,7 +45,7 @@ void MyGame::Draw()
 	postEffect->PreDrawScene(dXCommon->GetCommandList());
 
 	//=== ゲームシーン描画 ===//
-	gameScene->Draw(spriteCommon);
+	gameScene->Draw();
 
 	// レンダーテクスチャの後処理
 	postEffect->PostDrawScene(dXCommon->GetCommandList());

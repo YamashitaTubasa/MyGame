@@ -13,6 +13,7 @@ GameScene::~GameScene()
 	delete particleMan1;
 	delete fbxModel;
 	delete fbxObject;
+	delete player;
 }
 
 void GameScene::Initialize(SpriteCommon& spriteCommon)
@@ -51,6 +52,10 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	camera->SetEye(eye[0]);
 	camera->SetDistance(8.0f);
 
+	// 自キャラ生成
+	player = new Player();
+	player->Initialize();
+
 	// OBJの名前を指定してモデルデータを読み込む
 	particle = Particle::LoadFromOBJ("Resources/Image/effect1.png");
 	particle1 = Particle::LoadFromOBJ("Resources/Image/effect2.png");
@@ -61,14 +66,8 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	particleMan->SetModel(particle);
 	particleMan1->SetModel(particle1);
 
-	// gTs
-	/*gTS = new GameTitleScene();
-	gTS->Initialize();*/
-	
 	// オブジェクトの初期化
 	ObjectInitialize();
-	// スプライトの初期化
-	//SpriteInitialize(spriteCommon);
 	// スプライト
 	sprite = new Sprite();
 	//sprite = make_shared<Sprite>(100, { 0.0f,0.0f }, { 500.0f,500.0f }, { 1,1,1,1 }, { 0.0f,0.0f }, false, false);
@@ -79,32 +78,32 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	// HP
 	hp = new Sprite();
 	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
-	hp->SpriteCreate(1280, 720, 1, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
+	hp->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	hp->SetColor(XMFLOAT4(1, 1, 1, 1));
 	hp->SetPosition(hpPosition);
-	hp->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	hp->SetScale(hpScale);
 	hp->SetRotation(0.0f);
-	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 1);
+	hp->SpriteTransferVertexBuffer(hp, spriteCommon_, 1);
 	hp->SpriteUpdate(hp, spriteCommon_);
 	// HPバー
 	hpBar = new Sprite();
 	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png");
-	hpBar->SpriteCreate(1280, 720, 2, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBar->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	hpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
 	hpBar->SetPosition(hpBarPosition);
-	hpBar->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	hpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
 	hpBar->SetRotation(0.0f);
 	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon, 2);
 	hpBar->SpriteUpdate(hpBar, spriteCommon_);
 	// HP背景
 	hpBack = new Sprite();
 	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png");
-	hpBack->SpriteCreate(1280, 720, 3, spriteCommon, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBack->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	hpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
 	hpBack->SetPosition(hpBackPosition);
 	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
 	hpBack->SetRotation(0.0f);
-	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon, 3);
+	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon_, 3);
 	hpBack->SpriteUpdate(hpBack, spriteCommon_);
 
 	//// パーティクルの初期化
@@ -116,9 +115,6 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 
 void GameScene::Update()
 {
-	// ImGui受付開始
-	imGuiManager->Begin();
-
 	// カメラの更新
 	camera->Update();
 
@@ -127,6 +123,9 @@ void GameScene::Update()
 
 	// ポストエフェクト
 	postEffect->SetBlur(false);
+
+	// 自キャラの更新
+	player->Update();
 
 	// gTSの更新
 	//gTS->Update();
@@ -177,9 +176,12 @@ void GameScene::Update()
 	}
 
 	if (input->PushKey(DIK_I)) {
-		hpPosition.x += -1;
+		//hpPosition.x += 1;
+		hpScale.x -= 1;
 	}
 	hp->SetPosition(hpPosition);
+	hp->SetScale(hpScale);
+	hp->SpriteTransferVertexBuffer(hp, spriteCommon_, 1);
 	hp->SpriteUpdate(hp, spriteCommon_);
 
 	// パーティクルの更新
@@ -187,18 +189,21 @@ void GameScene::Update()
 	particleMan1->Update();
 }
 
-void GameScene::Draw(SpriteCommon& spriteCommon)
+void GameScene::Draw()
 {
+	// コマンドライン取得
+	ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
+
 #pragma region 3Dオブジェクトの描画
 
 	// 3Dオブジェクト描画前処理
-	Object3d::PreDraw(dXCommon->GetCommandList());
+	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	/*for (int i = 0; i < 5; i++) {
-		object3d[i]->Draw();
-	}*/
-	object3d[0]->Draw();
+	playerO3->Draw();
+	bulletO3->Draw();
+	skydomeO3->Draw();
+	player->Draw();
 
 	// FBX3Dオブジェクトの描画
 	//fbxObject->Draw(dXCommon->GetCommandList());
@@ -209,19 +214,12 @@ void GameScene::Draw(SpriteCommon& spriteCommon)
 
 #pragma region パーティクルの描画
 
-	// コマンドリストの取得
-	//ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
-
 	// 3Dオブジェクト描画前処理
-	ParticleManager::PreDraw(dXCommon->GetCommandList());
+	ParticleManager::PreDraw(cmdList);
 
 	// 3Dオブクジェクトの描画
 	particleMan->Draw();
 	particleMan1->Draw();
-
-	/// <summary>
-	/// ここに3Dオブジェクトの描画処理を追加できる
-	/// </summary>
 
 	// 3Dオブジェクト描画後処理
 	ParticleManager::PostDraw();
@@ -230,15 +228,17 @@ void GameScene::Draw(SpriteCommon& spriteCommon)
 
 #pragma region スプライト描画
 
-	Sprite::PreDraw(dXCommon->GetCommandList(), spriteCommon_);
+	// スプライト描画前処理
+	Sprite::PreDraw(cmdList, spriteCommon_);
 
 	// HPバーの描画
-	hpBar->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_);
+	hpBar->SpriteDraw(cmdList, spriteCommon_);
 	// HPの背景描画
-	hpBack->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_);
+	hpBack->SpriteDraw(cmdList, spriteCommon_);
 	// HPの描画
-	hp->SpriteDraw(dXCommon->GetCommandList(), spriteCommon_);
+	hp->SpriteDraw(cmdList, spriteCommon_);
 
+	// スプライト描画後処理
 	Sprite::PostDraw();
 
 #pragma endregion
@@ -256,47 +256,46 @@ void GameScene::Finalize()
 void GameScene::ObjectInitialize() 
 {
 	// OBJからモデルデータを読み込む
-	Model[0] = Model::LoadFromOBJ("fighter", "effect1.png");
-	//Model[0]->LoadTexture("effect1.png");
-	Model[1] = Model::LoadFromOBJ("ironSphere", "ironShpere/ironSphere.png");
-	//Model[2] = Model::LoadFromOBJ("skydome", "skydome/skydome.jpg");
+	playerM = Model::LoadFromOBJ("fighter");
+	bulletM = Model::LoadFromOBJ("bullet");
+	skydomeM = Model::LoadFromOBJ("skydome");
 	// 3Dオブジェクト生成
-	for (int i = 0; i < 5; i++) {
-		object3d[i] = Object3d::Create();
-	}
+	playerO3 = Object3d::Create();
+	bulletO3 = Object3d::Create();
+	skydomeO3 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	object3d[0]->SetModel(Model[0]);
-	object3d[1]->SetModel(Model[1]);
-	object3d[2]->SetModel(Model[2]);
+	playerO3->SetModel(playerM);
+	bulletO3->SetModel(bulletM);
+	skydomeO3->SetModel(skydomeM);
 	// 3Dオブジェクトの位置を指定
-	position[0] = { 0,-5,-35 };
+	position[0] = { 0,-3,-35 };
 	rotation[0] = { 0,0,0 };
-	object3d[0]->SetPosition(position[0]);
-	object3d[0]->SetScale({ 5, 5, 5 });
-	object3d[0]->SetRotation(rotation[0]);
+	playerO3->SetPosition(position[0]);
+	playerO3->SetScale({ 5, 5, 5 });
+	playerO3->SetRotation(rotation[0]);
 	//object3d[0]->SetEye(eye[0]);
 
 	position[1] = { 0,0,50 };
-	object3d[1]->SetPosition(position[1]);
-	object3d[1]->SetScale({ 5,5,5 });
-	object3d[1]->SetRotation({ 0, 90, 0 });
+	bulletO3->SetPosition(position[1]);
+	bulletO3->SetScale({ 5,5,5 });
+	bulletO3->SetRotation({ 0, 90, 0 });
 
-	object3d[2]->SetPosition({ 0,-40,0 });
-	object3d[2]->SetScale({ 100, 100, 100 });
-	object3d[2]->SetRotation({0,100,20});
+	skydomeO3->SetPosition({ 0,30,0 });
+	skydomeO3->SetScale({ 100, 100, 100 });
+	skydomeO3->SetRotation({0,0,0});
 }
 
 void GameScene::ObjectUpdate()
 {
 	// 3Dオブジェクト更新
-	for (int i = 0; i < 5; i++) {
-		object3d[i]->Update();
-	}
+	playerO3->Update();
+	bulletO3->Update();
+	skydomeO3->Update();
 
-	object3d[0]->SetPosition(position[0]);
-	object3d[0]->SetRotation(rotation[0]);
+	playerO3->SetPosition(position[0]);
+	playerO3->SetRotation(rotation[0]);
 	//object3d[0]->SetEye(eye[0]);
-	object3d[1]->SetPosition(position[1]);
+	bulletO3->SetPosition(position[1]);
 
 	/*if (input->PushKey(DIK_RIGHT)){
 		eye[0].x += 0.5;
@@ -322,29 +321,21 @@ void GameScene::ObjectUpdate()
 	if (position[1].z < -100) {
 		position[1].z = 50;
 	}
-
-	// プレイヤーと鉄球の当たり判定
-	/*if (CheckCollision(object3d[1]->GetPosition(), object3d[1]->GetScale()) == true) {
-		playerHp -= 1;
-	}*/
-	/*if (playerHp == 0) {
-		scene = GameOver;
-	}*/
 }
 
 void GameScene::ObjectFinalize()
 {
 	// 3Dオブジェクト解放
-	for (int i = 0; i < 5; i++) {
-		delete object3d[i];
-	}
+	delete playerO3;
+	delete bulletO3;
+	delete skydomeO3;
 	// 3Dモデル解放
-	for (int i = 0; i < 5; i++) {
-		delete Model[i];
-	}
+	delete playerM;
+	delete bulletM;
+	delete skydomeM;
 }
 
-void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
+void GameScene::SpriteInitialize()
 {
 	
 }

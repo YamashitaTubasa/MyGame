@@ -14,6 +14,7 @@
 #include "FbxLoader.h"
 #include "FbxObject3d.h"
 #include "PostEffect.h"
+#include "Player.h"
 
 class GameScene
 {
@@ -45,7 +46,7 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw(SpriteCommon& spriteCommon);
+	void Draw();
 
 	/// <summary>
 	/// 解放
@@ -76,7 +77,7 @@ public:
 	/// <summary>
 	/// スプライト初期化
 	/// </summary>
-	void SpriteInitialize(SpriteCommon& spriteCommon);
+	void SpriteInitialize();
 
 	/// <summary>
 	/// スプライトの更新
@@ -118,8 +119,16 @@ private:
 	// 入力
 	Input* input = nullptr;
 	// モデル
+	Model* playerM = nullptr;
+	Model* bulletM = nullptr;
+	Model* enemeyM = nullptr;
+	Model* skydomeM = nullptr;
 	Model* Model[5];
 	// オブジェクト
+	Object3d* playerO3 = nullptr;
+	Object3d* bulletO3 = nullptr;
+	Object3d* enemyO3 = nullptr;
+	Object3d* skydomeO3 = nullptr;
 	Object3d* object3d[5];
 	// スプライト
 	Sprite* sprite = nullptr;
@@ -143,6 +152,7 @@ private:
 	FbxModel* fbxModel = nullptr;
 	FbxObject3d* fbxObject = nullptr;
 	PostEffect* postEffect = nullptr;
+	Player* player = nullptr;
 
 	DirectX::XMFLOAT3 position[5]{};
 	DirectX::XMFLOAT3 rotation[5]{};
@@ -150,8 +160,9 @@ private:
 	DirectX::XMFLOAT3 eye[5]{};
 	DirectX::XMFLOAT3 target[5]{};
 	DirectX::XMFLOAT3 hpPosition = { 30,30,0 };
+	DirectX::XMFLOAT2 hpScale = { 500, 20 };
 	DirectX::XMFLOAT3 hpMove = { -1, 0, 0 };
-	DirectX::XMFLOAT3 hpBarPosition = { 30,30,0 };
+	DirectX::XMFLOAT3 hpBarPosition = { 29,29,0 };
 	DirectX::XMFLOAT3 hpBackPosition = { 30,30,0 };
 
 	bool isPush_D = false;

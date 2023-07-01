@@ -356,7 +356,7 @@ SpriteCommon Sprite::SpriteCommonCreate(int window_width, int window_height)
 
 	// 平行投影行列生成
 	spriteCommon.matProjection = XMMatrixOrthographicOffCenterLH(
-		0.0f, (float)window_width, (float)window_height, 0.0f, 0.0f, 1.0f);
+		0.0f, WinApp::window_width, WinApp::window_height, 0.0f, 0.0f, 1.0f);
 
 	// デスクリプタヒープを生成
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};

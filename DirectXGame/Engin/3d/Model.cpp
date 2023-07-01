@@ -16,7 +16,7 @@ using namespace std;
 // 静的メンバ変数の実体
 ID3D12Device* Model::device = nullptr;
 
-Model* Model::LoadFromOBJ(const string& modelname, const string& texname)
+Model* Model::LoadFromOBJ(const string& modelname)
 {
 	// 新たなModel型のインスタンスのメモリを確保
 	Model* model = new Model();
@@ -30,8 +30,6 @@ Model* Model::LoadFromOBJ(const string& modelname, const string& texname)
 	// バッファ生成
 	model->CreateBuffers();
 
-	//model->LoadTexture(texname);
-	
 	return model;
 }
 
