@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "WinApp.h"
 #include "DirectXCommon.h"
+#include "Input.h"
 
 /// <summary>
 /// 自キャラ
@@ -15,6 +16,13 @@
 class Player
 {
 public:
+	// コンストラクタ
+	Player();
+
+	// デストラクタ
+	~Player();
+
+public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -30,12 +38,22 @@ public:
 	/// </summary>
 	void Draw();
 
-public:
+public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
-	Model* model = nullptr;
-	Object3d* object3d = nullptr;
+	// モデル
+	Model* playerM = nullptr;
+	// オブジェクト
+	Object3d* playerO3 = nullptr;
+	// 入力
+	Input* input = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
+
+	DirectX::XMFLOAT3 position[5]{};
+	DirectX::XMFLOAT3 rotation[5]{};
+	DirectX::XMFLOAT3 scale[5]{};
+	DirectX::XMFLOAT3 eye[5]{};
+	DirectX::XMFLOAT3 target[5]{};
 };
 

@@ -119,13 +119,11 @@ private:
 	// 入力
 	Input* input = nullptr;
 	// モデル
-	Model* playerM = nullptr;
 	Model* bulletM = nullptr;
 	Model* enemeyM = nullptr;
 	Model* skydomeM = nullptr;
 	Model* Model[5];
 	// オブジェクト
-	Object3d* playerO3 = nullptr;
 	Object3d* bulletO3 = nullptr;
 	Object3d* enemyO3 = nullptr;
 	Object3d* skydomeO3 = nullptr;

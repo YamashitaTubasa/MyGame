@@ -70,7 +70,6 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	ObjectInitialize();
 	// スプライト
 	sprite = new Sprite();
-	//sprite = make_shared<Sprite>(100, { 0.0f,0.0f }, { 500.0f,500.0f }, { 1,1,1,1 }, { 0.0f,0.0f }, false, false);
 	spriteCommon_ = sprite->SpriteCommonCreate(1280, 720);
 	// スプライト用パイプライン生成呼び出し
 	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline();
@@ -120,8 +119,8 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	X->LoadTexture(spriteCommon_, 5, L"Resources/Image/x.png");
 	X->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	X->SetColor(XMFLOAT4(1, 1, 1, 1));
-	X->SetPosition({ 1100,630, 0 });
-	X->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	X->SetPosition({ 1110,640, 0 });
+	X->SetScale({ 64.0f * 0.7f, 64.0f * 0.7f });
 	X->SetRotation(0.0f);
 	X->SpriteTransferVertexBuffer(X, spriteCommon, 5);
 	X->SpriteUpdate(X, spriteCommon_);
@@ -156,20 +155,6 @@ void GameScene::Update()
 
 	// 自キャラの更新
 	player->Update();
-
-	// gTSの更新
-	//gTS->Update();
-
-	static char buf[256]{};
-	static float f = 0.0f;
-
-	/*ImGui::Text("Hello%d", 123);
-	if (ImGui::Button("Save")) {
-		imGuiManager->MySaveFunction();
-
-		ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-	}*/
 
 	if (input->PushKey(DIK_RIGHT)) {
 		eye[0].x += 0.5;
@@ -230,7 +215,6 @@ void GameScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	playerO3->Draw();
 	bulletO3->Draw();
 	skydomeO3->Draw();
 	player->Draw();
@@ -292,25 +276,15 @@ void GameScene::Finalize()
 void GameScene::ObjectInitialize() 
 {
 	// OBJからモデルデータを読み込む
-	playerM = Model::LoadFromOBJ("fighter");
 	bulletM = Model::LoadFromOBJ("bullet");
 	skydomeM = Model::LoadFromOBJ("skydome");
 	// 3Dオブジェクト生成
-	playerO3 = Object3d::Create();
 	bulletO3 = Object3d::Create();
 	skydomeO3 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	playerO3->SetModel(playerM);
 	bulletO3->SetModel(bulletM);
 	skydomeO3->SetModel(skydomeM);
 	// 3Dオブジェクトの位置を指定
-	position[0] = { 0,-3,-35 };
-	rotation[0] = { 0,0,0 };
-	playerO3->SetPosition(position[0]);
-	playerO3->SetScale({ 5, 5, 5 });
-	playerO3->SetRotation(rotation[0]);
-	//object3d[0]->SetEye(eye[0]);
-
 	position[1] = { 0,0,50 };
 	bulletO3->SetPosition(position[1]);
 	bulletO3->SetScale({ 5,5,5 });
@@ -324,12 +298,9 @@ void GameScene::ObjectInitialize()
 void GameScene::ObjectUpdate()
 {
 	// 3Dオブジェクト更新
-	playerO3->Update();
 	bulletO3->Update();
 	skydomeO3->Update();
 
-	playerO3->SetPosition(position[0]);
-	playerO3->SetRotation(rotation[0]);
 	//object3d[0]->SetEye(eye[0]);
 	bulletO3->SetPosition(position[1]);
 
@@ -340,19 +311,6 @@ void GameScene::ObjectUpdate()
 		eye[0].x -= 0.5;
 	}*/
 
-	if (input->PushKey(DIK_W)) {
-		position[0].y += 0.3f;
-	}
-	if (input->PushKey(DIK_A)) {
-		position[0].x -= 0.3f;
-	}
-	if (input->PushKey(DIK_S)) {
-		position[0].y -= 0.3f;
-	}
-	if (input->PushKey(DIK_D)) {
-		position[0].x += 0.3f;
-	}
-
 	position[1].z -= 1;
 	if (position[1].z < -100) {
 		position[1].z = 50;
@@ -362,11 +320,9 @@ void GameScene::ObjectUpdate()
 void GameScene::ObjectFinalize()
 {
 	// 3Dオブジェクト解放
-	delete playerO3;
 	delete bulletO3;
 	delete skydomeO3;
 	// 3Dモデル解放
-	delete playerM;
 	delete bulletM;
 	delete skydomeM;
 }
