@@ -51,46 +51,71 @@ void Player::Update()
 	// 上への移動処理
 	if (input->PushKey(DIK_W)) {
 		position[0].y += 0.3f;
+		isUpMove = true;
+	}else {
+		isUpMove = false;
 	}
+	// 上へ行くときの傾き処理
+	if (isUpMove) {
+		if (rotation[0].x >= -20) {
+			rotation[0].x -= 1.0f;
+		}
+	}else {
+		if (rotation[0].x <= 0) {
+			rotation[0].x += 1.0f;
+		}
+	}
+	
 	// 左への移動処理
-	if (input->PushKey(DIK_A)) {
+	if(input->PushKey(DIK_A)) {
 		position[0].x -= 0.3f;
 		isLeftMove = true;
-	}
-	if (!input->PushKey(DIK_A)) {
+	} else{
 		isLeftMove = false;
 	}
 	// 左へ行くときの機体の傾き処理
-	if (isLeftMove) {
+	if(isLeftMove) {
 		if (rotation[0].z <= 20) {
 			rotation[0].z += 1.0f;
 		}
-	}
-	else {
-		if (rotation[0].z >= 0) {
+	} else{
+		if(rotation[0].z >= 0) {
 			rotation[0].z -= 1.0f;
 		}
 	}
+
 	// 下への移動処理
-	if (input->PushKey(DIK_S)) {
+	if(input->PushKey(DIK_S)) {
 		position[0].y -= 0.3f;
+		isDownMove = true;
+	} else{
+		isDownMove = false;
 	}
+	// 下へ行く時の傾き処理
+	if (isDownMove) {
+		if (rotation[0].x <= 20) {
+			rotation[0].x += 1.0f;
+		}
+	} else{
+		if (rotation[0].x >= 0) {
+			rotation[0].x -= 1.0f;
+		}
+	}
+
 	// 右への移動処理
-	if (input->PushKey(DIK_D)) {
+	if(input->PushKey(DIK_D)) {
 		position[0].x += 0.3f;
 		isRightMove = true;
-	}
-	if (!input->PushKey(DIK_D)) {
+	} else{
 		isRightMove = false;
 	}
 	// 右へ行くときの傾き処理
-	if (isRightMove) {
+	if(isRightMove) {
 		if (rotation[0].z >= -20) {
 			rotation[0].z -= 1.0f;
 		}
-	}
-	else {
-		if (rotation[0].z <= 0) {
+	} else{
+		if(rotation[0].z <= 0) {
 			rotation[0].z += 1.0f;
 		}
 	}

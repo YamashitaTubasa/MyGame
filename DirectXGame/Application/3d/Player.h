@@ -66,6 +66,8 @@ public: // メンバ変数
 
 	bool isRightMove = false;
 	bool isLeftMove = false;
+	bool isUpMove = false;
+	bool isDownMove = false;
 	float time = 0.0f;
 	float frame = 0.0f;
 	float endFrame = 2.0f;
