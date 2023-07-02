@@ -11,8 +11,6 @@
 #include "WinApp.h"
 #include "FPSFixed.h"
 
-using namespace Microsoft::WRL;
-
 // DirectX基盤
 class DirectXCommon final
 {
@@ -70,19 +68,19 @@ private:
 
 	HRESULT result;
 	// DirectX12デバイス
-	ComPtr<ID3D12Device> device;
+	Microsoft::WRL::ComPtr<ID3D12Device> device;
 	// DXGIファクトリ
-	ComPtr<IDXGIFactory7> dxgiFactory;
+	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory;
 	// スワップチェイン
-	ComPtr<IDXGISwapChain4> swapChain;
+	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain;
 	// コマンドアロケータ
-	ComPtr<ID3D12CommandAllocator> commandAllocator;
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator;
 	// コマンドリスト
-	ComPtr<ID3D12GraphicsCommandList> commandList;
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList;
 	// コマンドキュー
-	ComPtr<ID3D12CommandQueue> commandQueue;
-	ComPtr<ID3D12DescriptorHeap> rtvHeap;
-	ComPtr<ID3D12DescriptorHeap> dsvHeap;
+	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap;
 
 	//// スワップチェーンの設定
 	//DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
@@ -91,9 +89,9 @@ private:
 	//D3D12_RESOURCE_BARRIER barrierDesc{};
 	//D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
 	//バックバッファ
-	std::vector<ComPtr<ID3D12Resource>> backBuffers;
+	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers;
 	// フェンスの生成
-	ComPtr<ID3D12Fence> fence;
+	Microsoft::WRL::ComPtr<ID3D12Fence> fence;
 
 	UINT rtvHD;
 	UINT64 fenceVal = 0;

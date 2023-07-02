@@ -9,11 +9,14 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 #include "Input.h"
+#include "PlayerBullet.h"
+#include <cmath>
+#include <iostream>
 
 /// <summary>
 /// 自キャラ
 /// </summary>
-class Player
+class Player : public PlayerBullet
 {
 public:
 	// コンストラクタ
@@ -21,6 +24,9 @@ public:
 
 	// デストラクタ
 	~Player();
+
+public:
+	float easeInQuad(float x);
 
 public: // メンバ関数
 	/// <summary>
@@ -46,6 +52,8 @@ public: // メンバ変数
 	Object3d* playerO3 = nullptr;
 	// 入力
 	Input* input = nullptr;
+	// 自キャラの弾
+	//PlayerBullet* playerBullet = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
@@ -55,5 +63,13 @@ public: // メンバ変数
 	DirectX::XMFLOAT3 scale[5]{};
 	DirectX::XMFLOAT3 eye[5]{};
 	DirectX::XMFLOAT3 target[5]{};
+
+	bool isRightMove = false;
+	bool isLeftMove = false;
+	float time = 0.0f;
+	float frame = 0.0f;
+	float endFrame = 2.0f;
+	float start = 0.0f;
+	float end = 2.0f;
 };
 

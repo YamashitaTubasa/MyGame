@@ -14,6 +14,8 @@ GameScene::~GameScene()
 	delete fbxModel;
 	delete fbxObject;
 	delete player;
+	// スプライト解放
+	delete sprite;
 }
 
 void GameScene::Initialize(SpriteCommon& spriteCommon)
@@ -68,72 +70,9 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 
 	// オブジェクトの初期化
 	ObjectInitialize();
-	// スプライト
-	sprite = new Sprite();
-	spriteCommon_ = sprite->SpriteCommonCreate(1280, 720);
-	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline();
-
-	// HP
-	hp = new Sprite();
-	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
-	hp->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hp->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hp->SetPosition(hpPosition);
-	hp->SetScale(hpScale);
-	hp->SetRotation(0.0f);
-	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 1);
-	hp->SpriteUpdate(hp, spriteCommon_);
-	// HPバー
-	hpBar = new Sprite();
-	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png");
-	hpBar->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hpBar->SetPosition(hpBarPosition);
-	hpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
-	hpBar->SetRotation(0.0f);
-	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon, 2);
-	hpBar->SpriteUpdate(hpBar, spriteCommon_);
-	// HP背景
-	hpBack = new Sprite();
-	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png");
-	hpBack->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hpBack->SetPosition(hpBackPosition);
-	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
-	hpBack->SetRotation(0.0f);
-	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon, 3);
-	hpBack->SpriteUpdate(hpBack, spriteCommon_);
-	// ULT
-	ult = new Sprite();
-	ult->LoadTexture(spriteCommon_, 4, L"Resources/Image/ult.png");
-	ult->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	ult->SetColor(XMFLOAT4(1, 1, 1, 1));
-	ult->SetPosition({ 1000,620, 0 });
-	ult->SetScale({ 1600 * 0.05, 1600 * 0.05});
-	ult->SetRotation(0.0f);
-	ult->SpriteTransferVertexBuffer(ult, spriteCommon, 4);
-	ult->SpriteUpdate(ult, spriteCommon_);
-	// X
-	X = new Sprite();
-	X->LoadTexture(spriteCommon_, 5, L"Resources/Image/x.png");
-	X->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	X->SetColor(XMFLOAT4(1, 1, 1, 1));
-	X->SetPosition({ 1110,640, 0 });
-	X->SetScale({ 64.0f * 0.7f, 64.0f * 0.7f });
-	X->SetRotation(0.0f);
-	X->SpriteTransferVertexBuffer(X, spriteCommon, 5);
-	X->SpriteUpdate(X, spriteCommon_);
-	// 1
-	number[1] = new Sprite();
-	number[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
-	number[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	number[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number[1]->SetPosition({ 1200,630, 0 });
-	number[1]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
-	number[1]->SetRotation(0.0f);
-	number[1]->SpriteTransferVertexBuffer(number[1], spriteCommon, 6);
-	number[1]->SpriteUpdate(number[1], spriteCommon_);
+	
+	// スプライトの初期化
+	SpriteInitialize(spriteCommon);
 
 	//// パーティクルの初期化
 	//ParticleInitialize();
@@ -172,8 +111,6 @@ void GameScene::Update()
 
 	// オブジェクトの更新
 	ObjectUpdate();
-	// スプライトの更新
-	SpriteUpdate();
 	
 	if (input->TriggerKey(DIK_U)) {
 		particl = true;
@@ -215,7 +152,6 @@ void GameScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	bulletO3->Draw();
 	skydomeO3->Draw();
 	player->Draw();
 
@@ -268,28 +204,17 @@ void GameScene::Finalize()
 {
 	// オブジェクトの解放
 	ObjectFinalize();
-
-	// スプライトの解放
-	SpriteFinalize();
 }
 
 void GameScene::ObjectInitialize() 
 {
 	// OBJからモデルデータを読み込む
-	bulletM = Model::LoadFromOBJ("bullet");
 	skydomeM = Model::LoadFromOBJ("skydome");
 	// 3Dオブジェクト生成
-	bulletO3 = Object3d::Create();
 	skydomeO3 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	bulletO3->SetModel(bulletM);
 	skydomeO3->SetModel(skydomeM);
 	// 3Dオブジェクトの位置を指定
-	position[1] = { 0,0,50 };
-	bulletO3->SetPosition(position[1]);
-	bulletO3->SetScale({ 5,5,5 });
-	bulletO3->SetRotation({ 0, 90, 0 });
-
 	skydomeO3->SetPosition({ 0,30,0 });
 	skydomeO3->SetScale({ 100, 100, 100 });
 	skydomeO3->SetRotation({0,0,0});
@@ -298,49 +223,85 @@ void GameScene::ObjectInitialize()
 void GameScene::ObjectUpdate()
 {
 	// 3Dオブジェクト更新
-	bulletO3->Update();
 	skydomeO3->Update();
-
-	//object3d[0]->SetEye(eye[0]);
-	bulletO3->SetPosition(position[1]);
-
-	/*if (input->PushKey(DIK_RIGHT)){
-		eye[0].x += 0.5;
-	}
-	if (input->PushKey(DIK_LEFT)) {
-		eye[0].x -= 0.5;
-	}*/
-
-	position[1].z -= 1;
-	if (position[1].z < -100) {
-		position[1].z = 50;
-	}
 }
 
 void GameScene::ObjectFinalize()
 {
 	// 3Dオブジェクト解放
-	delete bulletO3;
 	delete skydomeO3;
 	// 3Dモデル解放
-	delete bulletM;
 	delete skydomeM;
 }
 
-void GameScene::SpriteInitialize()
+void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
 {
-	
-}
+	// スプライト
+	sprite = new Sprite();
+	spriteCommon_ = sprite->SpriteCommonCreate(1280, 720);
+	// スプライト用パイプライン生成呼び出し
+	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline();
 
-void GameScene::SpriteUpdate()
-{
-}
-
-void GameScene::SpriteFinalize()
-{
-	// スプライト解放
-	delete sprite;
-	sprite = nullptr;
+	// HP
+	hp = new Sprite();
+	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
+	hp->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	hp->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hp->SetPosition(hpPosition);
+	hp->SetScale(hpScale);
+	hp->SetRotation(0.0f);
+	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 1);
+	hp->SpriteUpdate(hp, spriteCommon_);
+	// HPバー
+	hpBar = new Sprite();
+	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png");
+	hpBar->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hpBar->SetPosition(hpBarPosition);
+	hpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
+	hpBar->SetRotation(0.0f);
+	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon, 2);
+	hpBar->SpriteUpdate(hpBar, spriteCommon_);
+	// HP背景
+	hpBack = new Sprite();
+	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png");
+	hpBack->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hpBack->SetPosition(hpBackPosition);
+	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	hpBack->SetRotation(0.0f);
+	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon, 3);
+	hpBack->SpriteUpdate(hpBack, spriteCommon_);
+	// ULT
+	ult = new Sprite();
+	ult->LoadTexture(spriteCommon_, 4, L"Resources/Image/ult.png");
+	ult->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	ult->SetColor(XMFLOAT4(1, 1, 1, 1));
+	ult->SetPosition({ 1010,610, 0 });
+	ult->SetScale({ 1600 * 0.05, 1600 * 0.05 });
+	ult->SetRotation(0.0f);
+	ult->SpriteTransferVertexBuffer(ult, spriteCommon, 4);
+	ult->SpriteUpdate(ult, spriteCommon_);
+	// X
+	X = new Sprite();
+	X->LoadTexture(spriteCommon_, 5, L"Resources/Image/x.png");
+	X->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	X->SetColor(XMFLOAT4(1, 1, 1, 1));
+	X->SetPosition({ 1120,630, 0 });
+	X->SetScale({ 64.0f * 0.7f, 64.0f * 0.7f });
+	X->SetRotation(0.0f);
+	X->SpriteTransferVertexBuffer(X, spriteCommon, 5);
+	X->SpriteUpdate(X, spriteCommon_);
+	// 1
+	number[1] = new Sprite();
+	number[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
+	number[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number[1]->SetPosition({ 1200, 620, 0 });
+	number[1]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number[1]->SetRotation(0.0f);
+	number[1]->SpriteTransferVertexBuffer(number[1], spriteCommon, 6);
+	number[1]->SpriteUpdate(number[1], spriteCommon_);
 }
 
 void GameScene::ParticleInitialize()

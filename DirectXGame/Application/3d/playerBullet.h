@@ -5,19 +5,25 @@
 #include "Vector4.h"
 #include "Matrix4.h"
 #include "Model.h"
+#include "Object3d.h"
 
 /// <summary>
 /// 自キャラの弾
 /// </summary>
-class playerBullet
+class PlayerBullet
 {
 public:
+	// コンストラクタ
+	PlayerBullet();
+
+	// デストラクタ
+	~PlayerBullet();
+
+public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="model">モデル</param>
-	/// <param name="position">初期座標</param>
-	void Initialize(Model* model, const Vector3& position);
+	void Initialize();
 
 	/// <summary>
 	/// 更新
@@ -30,6 +36,15 @@ public:
 	void Draw();
 
 private:
-	Model* model;
+	// モデル
+	Model* bulletM = nullptr;
+	// オブジェクト
+	Object3d* bulletO3 = nullptr;
+
+	DirectX::XMFLOAT3 position[5]{};
+	DirectX::XMFLOAT3 rotation[5]{};
+	DirectX::XMFLOAT3 scale[5]{};
+	DirectX::XMFLOAT3 eye[5]{};
+	DirectX::XMFLOAT3 target[5]{};
 };
 

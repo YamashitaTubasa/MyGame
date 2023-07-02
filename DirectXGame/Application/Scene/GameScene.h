@@ -65,11 +65,6 @@ public:
 	void ObjectUpdate();
 
 	/// <summary>
-	/// オブジェクトの描画
-	/// </summary>
-	void ObjectDraw();
-
-	/// <summary>
 	/// オブジェクトの解放
 	/// </summary>
 	void ObjectFinalize();
@@ -77,32 +72,12 @@ public:
 	/// <summary>
 	/// スプライト初期化
 	/// </summary>
-	void SpriteInitialize();
-
-	/// <summary>
-	/// スプライトの更新
-	/// </summary>
-	void SpriteUpdate();
-
-	/// <summary>
-	/// スプライトの描画
-	/// </summary>
-	void TitleDraw();
-	void GameDraw();
-	void GameClearDraw();
-	void GameOverDraw();
-
-	/// <summary>
-	/// スプライトの解放
-	/// </summary>
-	void SpriteFinalize();
+	void SpriteInitialize(SpriteCommon& spriteCommon);
 
 	// パーティクルの初期化
 	void ParticleInitialize();
 
 	void ParticleUpdate();
-
-	void ParticleDraw();
 
 	/// <summary>
 	/// ゲームのリセット
@@ -119,12 +94,10 @@ private:
 	// 入力
 	Input* input = nullptr;
 	// モデル
-	Model* bulletM = nullptr;
 	Model* enemeyM = nullptr;
 	Model* skydomeM = nullptr;
 	Model* Model[5];
 	// オブジェクト
-	Object3d* bulletO3 = nullptr;
 	Object3d* enemyO3 = nullptr;
 	Object3d* skydomeO3 = nullptr;
 	Object3d* object3d[5];

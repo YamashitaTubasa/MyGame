@@ -22,9 +22,9 @@ struct VertexPosUv {
 // パイプラインセット
 struct PipelineSet {
 	// パイプラインステートオブジェクト
-	ComPtr<ID3D12PipelineState> pipelinestate;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelinestate;
 	// ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootsignature;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootsignature;
 };
 
 // スプライトの共通データ
@@ -34,11 +34,11 @@ struct SpriteCommon {
 	// 射影行列
 	DirectX::XMMATRIX matProjection{};
 	// テクスチャ用デスクリプタヒープの生成
-	ComPtr<ID3D12DescriptorHeap> descHeap;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeap;
 	// SRVの最大枚数
 	static const size_t kMaxSRVCount = 512;
 	// テクスチャソース(テクスチャバッファ)の配列
-	ComPtr<ID3D12Resource> texBuff[kMaxSRVCount];
+	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff[kMaxSRVCount];
 	// テクスチャバッファ取得
 	ID3D12Resource* GetTexBuffer(uint32_t index) const { return texBuff[index].Get(); }
 };
