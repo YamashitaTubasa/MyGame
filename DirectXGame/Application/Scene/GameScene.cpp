@@ -58,6 +58,10 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	player = new Player();
 	player->Initialize();
 
+	// 敵キャラ生成
+	enemy = new Enemy();
+	enemy->Initialize();
+
 	// OBJの名前を指定してモデルデータを読み込む
 	particle = Particle::LoadFromOBJ("Resources/Image/effect1.png");
 	particle1 = Particle::LoadFromOBJ("Resources/Image/effect2.png");
@@ -94,6 +98,9 @@ void GameScene::Update()
 
 	// 自キャラの更新
 	player->Update();
+
+	// 敵キャラ更新
+	enemy->Update();
 
 	if (input->PushKey(DIK_RIGHT)) {
 		eye[0].x += 0.5;
@@ -154,6 +161,7 @@ void GameScene::Draw()
 	// 3Dオブジェクトの描画
 	skydomeO3->Draw();
 	player->Draw();
+	enemy->Draw();
 
 	// FBX3Dオブジェクトの描画
 	//fbxObject->Draw(dXCommon->GetCommandList());

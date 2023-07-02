@@ -103,6 +103,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Application\3d\Enemy.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\PostEffect.cpp" />
@@ -224,6 +225,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\3d\Enemy.h" />
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
     <ClInclude Include="DirectXGame\Engin\2d\PostEffect.h" />

@@ -47,7 +47,7 @@ void Player::Update()
 	// 3Dオブジェクト更新
 	playerO3->Update();
 
-	//===== プレイヤーの移動処理 =====//;
+	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
 	if (input->PushKey(DIK_W)) {
 		position[0].y += 0.3f;

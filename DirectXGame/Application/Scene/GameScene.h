@@ -15,6 +15,7 @@
 #include "FbxObject3d.h"
 #include "PostEffect.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class GameScene
 {
@@ -127,6 +128,7 @@ private:
 	FbxObject3d* fbxObject = nullptr;
 	PostEffect* postEffect = nullptr;
 	Player* player = nullptr;
+	Enemy* enemy = nullptr;
 
 	DirectX::XMFLOAT3 position[5]{};
 	DirectX::XMFLOAT3 rotation[5]{};
