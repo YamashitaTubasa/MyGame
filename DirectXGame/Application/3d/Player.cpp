@@ -50,7 +50,7 @@ void Player::Update()
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
 	if (input->PushKey(DIK_W)) {
-		position[0].y += 0.3f;
+		position[0].y += 0.25f;
 		isUpMove = true;
 	}else {
 		isUpMove = false;
@@ -68,7 +68,7 @@ void Player::Update()
 	
 	// 左への移動処理
 	if(input->PushKey(DIK_A)) {
-		position[0].x -= 0.3f;
+		position[0].x -= 0.25f;
 		isLeftMove = true;
 	} else{
 		isLeftMove = false;
@@ -86,7 +86,7 @@ void Player::Update()
 
 	// 下への移動処理
 	if(input->PushKey(DIK_S)) {
-		position[0].y -= 0.3f;
+		position[0].y -= 0.25f;
 		isDownMove = true;
 	} else{
 		isDownMove = false;
@@ -104,7 +104,7 @@ void Player::Update()
 
 	// 右への移動処理
 	if(input->PushKey(DIK_D)) {
-		position[0].x += 0.3f;
+		position[0].x += 0.25f;
 		isRightMove = true;
 	} else{
 		isRightMove = false;

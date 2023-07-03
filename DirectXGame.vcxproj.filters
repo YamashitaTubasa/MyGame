@@ -223,7 +223,7 @@
       <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\3d\Enemy.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -382,7 +382,7 @@
       <Filter>ヘッダー ファイル\Application\3d</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\3d\Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Application\3d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

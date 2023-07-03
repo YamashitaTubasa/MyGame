@@ -21,7 +21,7 @@ void Enemy::Initialize()
 	// オブジェクトにモデルをひも付ける
 	enemyO3->SetModel(enemyM);
 	// 3Dオブジェクトの位置を指定
-	position[0] = { 0,0,-10 };
+	position[0] = { 0,0,-20 };
 	rotation[0] = { 0,180,0 };
 	enemyO3->SetPosition(position[0]);
 	enemyO3->SetScale({ 5, 5, 5 });
