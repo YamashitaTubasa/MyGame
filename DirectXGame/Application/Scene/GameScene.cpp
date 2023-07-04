@@ -14,7 +14,6 @@ GameScene::~GameScene()
 	delete fbxModel;
 	delete fbxObject;
 	delete player;
-	// スプライト解放
 	delete sprite;
 }
 
@@ -56,15 +55,15 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 
 	// 自キャラ生成
 	player = new Player();
-	player->Initialize();
+	player->Initialize(camera);
 
 	// 敵キャラ生成
 	enemy = new Enemy();
 	enemy->Initialize();
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle = Particle::LoadFromOBJ("Resources/Image/effect1.png");
-	particle1 = Particle::LoadFromOBJ("Resources/Image/effect2.png");
+	particle = Particle::LoadFromOBJ("effect1.png");
+	particle1 = Particle::LoadFromOBJ("effect2.png");
 	// パーティクルの生成
 	particleMan = ParticleManager::Create();
 	particleMan1 = ParticleManager::Create();
@@ -78,7 +77,7 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	// スプライトの初期化
 	SpriteInitialize(spriteCommon);
 
-	//// パーティクルの初期化
+	// パーティクルの初期化
 	//ParticleInitialize();
 
 	// FBXアニメーションの実行
@@ -125,11 +124,12 @@ void GameScene::Update()
 	if (particl == true) {
 		particleTime++;
 	}
-	if (particleTime >= 10) { particl = false; particleTime = 0; }
+	if (particleTime >= 10) { 
+		particl = false; 
+		particleTime = 0; 
+	}
 	if (particl == true) {
-		// パーティクルの初期化
-		/*particleMan->Execution(particle, -10);
-		particleMan1->Execution(particle1, 10);*/
+		// パーティクルの実行
 		particleMan->Execution(particle, -6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 		particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 	}
@@ -172,14 +172,14 @@ void GameScene::Draw()
 
 #pragma region パーティクルの描画
 
-	// 3Dオブジェクト描画前処理
+	// パーティクル描画前処理
 	ParticleManager::PreDraw(cmdList);
 
-	// 3Dオブクジェクトの描画
+	// パーティクルの描画
 	particleMan->Draw();
 	particleMan1->Draw();
 
-	// 3Dオブジェクト描画後処理
+	// パーティクル描画後処理
 	ParticleManager::PostDraw();
 
 #pragma endregion

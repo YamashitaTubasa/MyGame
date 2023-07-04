@@ -14,6 +14,10 @@ Player::~Player()
 	delete playerO3;
 	// 3Dモデル解放
 	delete playerM;
+	// 弾の解放
+	for (PlayerBullet* bullet : pBullets) {
+		delete bullet;
+	}
 }
 
 float Player::easeInQuad(float x)
@@ -21,9 +25,11 @@ float Player::easeInQuad(float x)
 	return (float)sin((x * PI) / 2.0);
 }
 
-void Player::Initialize()
+void Player::Initialize(Camera* camera)
 {
 	input = Input::GetInstance();
+
+	this->camera_ = camera;
 
 	// OBJからモデルデータを読み込む
 	playerM = Model::LoadFromOBJ("fighter");
@@ -31,15 +37,15 @@ void Player::Initialize()
 	playerO3 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
 	playerO3->SetModel(playerM);
+	// カメラセット
+	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
-	position[0] = { 0,-3,-35 };
-	rotation[0] = { 0,0,0 };
-	playerO3->SetPosition(position[0]);
+	pPosition = { 0,-3,-35 };
+	pRotation = { 0,0,0 };
+	playerO3->SetPosition(pPosition);
 	playerO3->SetScale({ 5, 5, 5 });
-	playerO3->SetRotation(rotation[0]);
+	playerO3->SetRotation(pRotation);
 	//object3d[0]->SetEye(eye[0]);
-
-	PlayerBullet::Initialize();
 }
 
 void Player::Update()
@@ -50,85 +56,111 @@ void Player::Update()
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
 	if (input->PushKey(DIK_W)) {
-		position[0].y += 0.25f;
+		pPosition.y += 0.25f;
 		isUpMove = true;
 	}else {
 		isUpMove = false;
 	}
 	// 上へ行くときの傾き処理
 	if (isUpMove) {
-		if (rotation[0].x >= -20) {
-			rotation[0].x -= 1.0f;
+		if (pRotation.x >= -20) {
+			pRotation.x -= 1.0f;
 		}
 	}else {
-		if (rotation[0].x <= 0) {
-			rotation[0].x += 1.0f;
+		if (pRotation.x <= 0) {
+			pRotation.x += 1.0f;
 		}
 	}
 	
 	// 左への移動処理
 	if(input->PushKey(DIK_A)) {
-		position[0].x -= 0.25f;
+		pPosition.x -= 0.25f;
 		isLeftMove = true;
 	} else{
 		isLeftMove = false;
 	}
 	// 左へ行くときの機体の傾き処理
 	if(isLeftMove) {
-		if (rotation[0].z <= 20) {
-			rotation[0].z += 1.0f;
+		if (pRotation.z <= 20) {
+			pRotation.z += 1.0f;
 		}
 	} else{
-		if(rotation[0].z >= 0) {
-			rotation[0].z -= 1.0f;
+		if(pRotation.z >= 0) {
+			pRotation.z -= 1.0f;
 		}
 	}
 
 	// 下への移動処理
 	if(input->PushKey(DIK_S)) {
-		position[0].y -= 0.25f;
+		pPosition.y -= 0.25f;
 		isDownMove = true;
 	} else{
 		isDownMove = false;
 	}
 	// 下へ行く時の傾き処理
 	if (isDownMove) {
-		if (rotation[0].x <= 20) {
-			rotation[0].x += 1.0f;
+		if (pRotation.x <= 20) {
+			pRotation.x += 1.0f;
 		}
 	} else{
-		if (rotation[0].x >= 0) {
-			rotation[0].x -= 1.0f;
+		if (pRotation.x >= 0) {
+			pRotation.x -= 1.0f;
 		}
 	}
 
 	// 右への移動処理
 	if(input->PushKey(DIK_D)) {
-		position[0].x += 0.25f;
+		pPosition.x += 0.25f;
 		isRightMove = true;
 	} else{
 		isRightMove = false;
 	}
 	// 右へ行くときの傾き処理
 	if(isRightMove) {
-		if (rotation[0].z >= -20) {
-			rotation[0].z -= 1.0f;
+		if (pRotation.z >= -20) {
+			pRotation.z -= 1.0f;
 		}
 	} else{
-		if(rotation[0].z <= 0) {
-			rotation[0].z += 1.0f;
+		if(pRotation.z <= 0) {
+			pRotation.z += 1.0f;
 		}
 	}
 
-	playerO3->SetPosition(position[0]);
-	playerO3->SetRotation(rotation[0]);
+	playerO3->SetPosition(pPosition);
+	playerO3->SetRotation(pRotation);
 
-	PlayerBullet::Update();
+	// 自キャラの攻撃処理
+	Attack();
+
+	// 弾更新
+	for (PlayerBullet* bullet : pBullets) {
+		bullet->Update();
+	}
 }
 
 void Player::Draw()
 {
 	playerO3->Draw();
 
-	PlayerBullet::Draw();
+	// 弾描画
+	for (PlayerBullet* bullet : pBullets) {
+		bullet->Draw();
+	}
+}
+
+void Player::Attack()
+{
+	if (input->TriggerKey(DIK_SPACE)) {
+
+		// 弾の速度
+		const float bulletSpeed = 1.0f;
+		DirectX::XMFLOAT3 velocity(0, 0, bulletSpeed);
+
+		// 弾の生成と、初期化
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(pPosition, velocity);
+
+		// 球を登録する
+		pBullets.push_back(newBullet);
+	}
 }

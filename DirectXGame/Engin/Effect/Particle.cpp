@@ -16,6 +16,7 @@ using namespace Microsoft::WRL;
 /// 静的メンバ変数の実体
 /// </summary>
 ID3D12Device* Particle::device = nullptr;
+const string Particle::baseDirectory = "Resources/Image/";
 
 // XMFLOAT3同士の加算処理
 const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::XMFLOAT3& rhs)
@@ -117,7 +118,7 @@ void Particle::LoadTexture(const std::string& filename)
 	ScratchImage scratchImg{};
 
 	// ファイルパスを結合
-	string filepath = filename;
+	string filepath = baseDirectory + filename;
 
 	// ユニコード文字列に変換
 	wchar_t wfilepath[128];

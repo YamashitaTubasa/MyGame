@@ -12,8 +12,9 @@ PlayerBullet::~PlayerBullet()
 	delete bulletM;
 }
 
-void PlayerBullet::Initialize()
+void PlayerBullet::Initialize(DirectX::XMFLOAT3 position, const DirectX::XMFLOAT3 velocity)
 {
+	
 	// OBJからモデルデータを読み込む
 	bulletM = Model::LoadFromOBJ("bullet");
 	// 3Dオブジェクト生成
@@ -21,10 +22,10 @@ void PlayerBullet::Initialize()
 	// オブジェクトにモデルをひも付ける
 	bulletO3->SetModel(bulletM);
 	// 3Dオブジェクトの位置を指定
-	position[1] = { 0,0,50 };
-	bulletO3->SetPosition(position[1]);
-	bulletO3->SetScale({ 5,5,5 });
-	bulletO3->SetRotation({ 0, 0, 0 });
+	pBulletPos = position;
+	bulletO3->SetPosition(pBulletPos);
+	bulletO3->SetScale({ 1,1,1 });
+	bulletO3->SetRotation({ 0, 180, 0 });
 }
 
 void PlayerBullet::Update()
@@ -32,12 +33,7 @@ void PlayerBullet::Update()
 	// 3Dオブジェクト更新
 	bulletO3->Update();
 
-	position[1].z -= 1;
-	if (position[1].z < -100) {
-		position[1].z = 50;
-	}
-
-	bulletO3->SetPosition(position[1]);
+	bulletO3->SetPosition(pBulletPos);
 }
 
 void PlayerBullet::Draw()

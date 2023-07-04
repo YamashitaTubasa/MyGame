@@ -53,6 +53,7 @@ public: // サブクラス
 
 private: // 定数
 	static const int vertexCount = 1024; // 頂点数
+	static const std::string baseDirectory;
 
 private: // 静的メンバ変数
 	// デバイス

@@ -7,11 +7,17 @@
 #include "Model.h"
 #include "Object3d.h"
 
+struct BulletMove {
+	DirectX::XMFLOAT3 transform = { 0,0,0 };
+};
+
 /// <summary>
 /// 自キャラの弾
 /// </summary>
 class PlayerBullet
 {
+public:
+
 public:
 	// コンストラクタ
 	PlayerBullet();
@@ -23,7 +29,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(DirectX::XMFLOAT3 position, const DirectX::XMFLOAT3 velocity);
 
 	/// <summary>
 	/// 更新
@@ -40,11 +46,14 @@ private:
 	Model* bulletM = nullptr;
 	// オブジェクト
 	Object3d* bulletO3 = nullptr;
+	// 自キャラの弾の処理
+	BulletMove bulletMove;
 
-	DirectX::XMFLOAT3 position[5]{};
-	DirectX::XMFLOAT3 rotation[5]{};
-	DirectX::XMFLOAT3 scale[5]{};
+	DirectX::XMFLOAT3 pBulletPos = { 0,0,0 };
+	DirectX::XMFLOAT3 pBulletRot = { 0,0,0 };
+	DirectX::XMFLOAT3 pBulletSca = { 1,1,1 };
 	DirectX::XMFLOAT3 eye[5]{};
 	DirectX::XMFLOAT3 target[5]{};
+
 };
 

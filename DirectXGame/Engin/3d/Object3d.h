@@ -90,6 +90,8 @@ public: // 静的メンバ関数
 	static void CameraMoveVector(XMFLOAT3 move);
 
 private: // 静的メンバ変数
+	//カメラ
+	static Camera* camera;
 	// デバイス
 	static ID3D12Device* device;
 	// コマンドリスト
@@ -154,11 +156,12 @@ public: // メンバ関数
 	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
 	const XMFLOAT3& GetRotation() const { return rotation; }
 
+	// カメラ
+	static void SetCamera(Camera* camera) { Object3d::camera = camera; }
+
 private: // メンバ変数
 	// モデル
 	Model* model = nullptr;
-	//カメラ
-	Camera* camera = nullptr;
 	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; 
 	// 色

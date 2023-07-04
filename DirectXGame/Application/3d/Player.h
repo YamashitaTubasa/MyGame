@@ -10,13 +10,16 @@
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "PlayerBullet.h"
+#include "Camera.h"
+
 #include <cmath>
 #include <iostream>
+#include <list>
 
 /// <summary>
 /// 自キャラ
 /// </summary>
-class Player : public PlayerBullet
+class Player
 {
 public:
 	// コンストラクタ
@@ -32,7 +35,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(Camera* camera);
 
 	/// <summary>
 	/// 更新
@@ -44,6 +47,14 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// 攻撃
+	/// </summary>
+	void Attack();
+
+public: // ゲッター
+	DirectX::XMFLOAT3& GetPositon(){ return pPosition; }
+
 public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
 	// モデル
@@ -52,12 +63,18 @@ public: // メンバ変数
 	Object3d* playerO3 = nullptr;
 	// 入力
 	Input* input = nullptr;
-	// 自キャラの弾
-	//PlayerBullet* playerBullet = nullptr;
+	// カメラ
+	Camera* camera_ = nullptr;
+	// 自キャラ弾
+	std::list<PlayerBullet*> pBullets;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
+	DirectX::XMFLOAT3 move = { 0,0.25,0 };
+	DirectX::XMFLOAT3 pPosition = { 0,0,0 };
+	DirectX::XMFLOAT3 pRotation = { 0,0,0 };
+	DirectX::XMFLOAT3 pScale = { 1,1,1 };
 	DirectX::XMFLOAT3 position[5]{};
 	DirectX::XMFLOAT3 rotation[5]{};
 	DirectX::XMFLOAT3 scale[5]{};
