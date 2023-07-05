@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Vector2.h"
 #include "Vector3.h"
+#include "Vector4.h"
 #include "Matrix4.h"
 #include "Input.h"
 #include "WinApp.h"
@@ -53,7 +54,7 @@ public: // メンバ関数
 	void Attack();
 
 public: // ゲッター
-	DirectX::XMFLOAT3& GetPositon(){ return pPosition; }
+	Vector3& GetPositon(){ return pPosition; }
 
 public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
@@ -71,15 +72,15 @@ public: // メンバ変数
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
-	DirectX::XMFLOAT3 move = { 0,0.25,0 };
-	DirectX::XMFLOAT3 pPosition = { 0,0,0 };
-	DirectX::XMFLOAT3 pRotation = { 0,0,0 };
-	DirectX::XMFLOAT3 pScale = { 1,1,1 };
-	DirectX::XMFLOAT3 position[5]{};
-	DirectX::XMFLOAT3 rotation[5]{};
-	DirectX::XMFLOAT3 scale[5]{};
-	DirectX::XMFLOAT3 eye[5]{};
-	DirectX::XMFLOAT3 target[5]{};
+	Vector3 move = { 0,0.25,0 };
+	Vector3 pPosition = { 0,0,0 };
+	Vector3 pRotation = { 0,0,0 };
+	Vector3 pScale = { 1,1,1 };
+	Vector3 position[5]{};
+	Vector3 rotation[5]{};
+	Vector3 scale[5]{};
+	Vector3 eye[5]{};
+	Vector3 target[5]{};
 
 	bool isRightMove = false;
 	bool isLeftMove = false;

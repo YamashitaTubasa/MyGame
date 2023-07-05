@@ -18,19 +18,14 @@ class Object3d
 private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::を省略
-	using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMMATRIX = DirectX::XMMATRIX;
-
+	
 public: // サブクラス
 	
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
-		//XMFLOAT4 color;	// 色 (RGBA)
-		XMMATRIX mat;	// ３Ｄ変換行列
+		//XMFLOAT4 color; // 色 (RGBA)
+		Matrix4 mat;      // 3D変換行列
 	};
 
 public: // 静的メンバ関数
@@ -63,31 +58,31 @@ public: // 静的メンバ関数
 	/// 視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const XMFLOAT3& GetEye() { return eye; }
+	static const Vector3& GetEye() { return eye; }
 
 	/// <summary>
 	/// 視点座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	static void SetEye(XMFLOAT3 eye);
+	static void SetEye(const Vector3& eye);
 
 	/// <summary>
 	/// 注視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const XMFLOAT3& GetTarget() { return target; }
+	static const Vector3& GetTarget() { return target; }
 
 	/// <summary>
 	/// 注視点座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	static void SetTarget(XMFLOAT3 target);
+	static void SetTarget(const Vector3& target);
 
 	/// <summary>
 	/// ベクトルによる移動
 	/// </summary>
 	/// <param name="move">移動量</param>
-	static void CameraMoveVector(XMFLOAT3 move);
+	static void CameraMoveVector(const Vector3& move);
 
 private: // 静的メンバ変数
 	//カメラ
@@ -101,15 +96,15 @@ private: // 静的メンバ変数
 	// パイプラインステートオブジェクト
 	static ComPtr<ID3D12PipelineState> pipelinestate;
 	// ビュー行列
-	static XMMATRIX matView;
+	static Matrix4 matView;
 	// 射影行列
-	static XMMATRIX matProjection;
+	static Matrix4 matProjection;
 	// 視点座標
-	static XMFLOAT3 eye;
+	static Vector3 eye;
 	// 注視点座標
-	static XMFLOAT3 target;
+	static Vector3 target;
 	// 上方向ベクトル
-	static XMFLOAT3 up;
+	static Vector3 up;
 
 private:// 静的メンバ関数
 	
@@ -147,14 +142,14 @@ public: // メンバ関数
 	void SetModel(Model* model) { this->model = model; }
 
 	// オブジェクトの座標
-	const XMFLOAT3& GetPosition() const { return position; }
-	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	const Vector3& GetPosition() const { return position; }
+	void SetPosition(const Vector3& position) { this->position = position; }
 	// オブジェクトの大きさ
-	void SetScale(const XMFLOAT3& scale_) { this->scale = scale_; }
-	const XMFLOAT3& GetScale() const { return scale; }
+	void SetScale(const Vector3& scale_) { this->scale = scale_; }
+	const Vector3& GetScale() const { return scale; }
 	// オブジェクトの回転
-	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
-	const XMFLOAT3& GetRotation() const { return rotation; }
+	void SetRotation(const Vector3& rotation) { this->rotation = rotation; }
+	const Vector3& GetRotation() const { return rotation; }
 
 	// カメラ
 	static void SetCamera(Camera* camera) { Object3d::camera = camera; }
@@ -165,15 +160,15 @@ private: // メンバ変数
 	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0; 
 	// 色
-	XMFLOAT4 color = { 1,1,1,1 };
+	Vector4 color = { 1,1,1,1 };
 	// ローカルスケール
-	XMFLOAT3 scale = { 1,1,1 };
+	Vector3 scale = { 1,1,1 };
 	// X,Y,Z軸回りのローカル回転角
-	XMFLOAT3 rotation = { 0,0,0 };
+	Vector3 rotation = { 0,0,0 };
 	// ローカル座標
-	XMFLOAT3 position = { 0,0,0 };
+	Vector3 position = { 0,0,0 };
 	// ローカルワールド変換行列
-	XMMATRIX matWorld;
+	Matrix4 matWorld;
 	// 親オブジェクト
 	Object3d* parent = nullptr;
 };

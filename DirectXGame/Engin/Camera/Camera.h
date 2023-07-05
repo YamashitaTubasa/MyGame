@@ -1,5 +1,10 @@
 #pragma once
 
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Matrix4.h"
+
 #include <DirectXMath.h>
 #include <wrl.h>
 
@@ -8,8 +13,6 @@ class Camera
 {
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMMATRIX = DirectX::XMMATRIX;
 
 public:
 	// 初期化
@@ -25,27 +28,27 @@ public:
 	void UpdateProjectionMatrix();
 
 public:
-	const XMMATRIX& GetMatView() { return matView; }
-	const XMMATRIX& GetMatProjection() { return matProjection; }
-	const XMFLOAT3& GetEye() { return eye; }
-	const XMFLOAT3& GetTarget() { return target; }
-	const XMFLOAT3& GetUp() { return up; }
+	const Matrix4& GetMatView() { return matView; }
+	const Matrix4& GetMatProjection() { return matProjection; }
+	const Vector3& GetEye() { return eye; }
+	const Vector3& GetTarget() { return target; }
+	const Vector3& GetUp() { return up; }
 	const float& GetDistance() { return distance; }
-	const XMMATRIX& GetViewProjectionMatrix() { return viewProjection; }
+	const Matrix4& GetViewProjectionMatrix() { return viewProjection; }
 
-	void SetMatView(const XMMATRIX& matView) { this->matView = matView; }
-	void SetMatProjection(const XMMATRIX& matProjection) { this->matProjection = matProjection; }
-	void SetEye(const XMFLOAT3& eye) { this->eye = eye; }
-	void SetTarget(const XMFLOAT3& target) { this->target = target; }
-	void SetUp(const XMFLOAT3& up_) { this->up = up_; }
+	void SetMatView(const Matrix4& matView) { this->matView = matView; }
+	void SetMatProjection(const Matrix4& matProjection) { this->matProjection = matProjection; }
+	void SetEye(const Vector3& eye) { this->eye = eye; }
+	void SetTarget(const Vector3& target) { this->target = target; }
+	void SetUp(const Vector3& up_) { this->up = up_; }
 	void SetDistance(float distance_) { this->distance = distance_; }
 
 private:
-	XMMATRIX matView;
-	XMMATRIX matProjection;
-	XMFLOAT3 eye;
-	XMFLOAT3 target;
-	XMFLOAT3 up;
-	XMMATRIX viewProjection;
+	Matrix4 matView;
+	Matrix4 matProjection;
+	Vector3 eye;
+	Vector3 target;
+	Vector3 up;
+	Matrix4 viewProjection;
 	float distance = 50.0f;
 };

@@ -1,5 +1,11 @@
 #pragma once
 
+#include "DirectXCommon.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Matrix4.h"
+
 #include <Windows.h>
 #include <D3dx12.h>
 #include <DirectXMath.h>
@@ -8,8 +14,6 @@
 #include <DirectXTex.h>
 #include <wrl.h>
 #include <array>
-
-#include "DirectXCommon.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 

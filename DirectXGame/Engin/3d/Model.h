@@ -1,10 +1,15 @@
 #pragma once
 
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Matrix4.h"
+
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
-#include <DirectXMath.h>
 #include <d3dx12.h>
+#include <DirectXMath.h>
 #include <string>
 
 class Model 
@@ -12,46 +17,41 @@ class Model
 private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::を省略
-	using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMMATRIX = DirectX::XMMATRIX;
-
+	
 public: // サブクラス
 	// 頂点データ構造体
 	struct VertexPosNormalUv
 	{
-		XMFLOAT3 pos; // xyz座標
-		XMFLOAT3 normal; // 法線ベクトル
-		XMFLOAT2 uv;  // uv座標
+		Vector3 pos;    // xyz座標
+		Vector3 normal; // 法線ベクトル
+		Vector2 uv;     // uv座標
 	};
 
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
-		//XMFLOAT4 color;	// 色 (RGBA)
-		XMMATRIX mat;	// ３Ｄ変換行列
+		//XMFLOAT4 color; // 色 (RGBA)
+		Matrix4 mat;      // 3D変換行列
 	};
 
 	// 定数バッファ用データ構造体B1
 	struct ConstBufferDataB1
 	{
-		XMFLOAT3 ambient; // アンビエント係数
+		Vector3 ambient;  // アンビエント係数
 		float pad1;       // パディング
-		XMFLOAT3 diffuse; // ディフューズ係数
+		Vector3 diffuse;  // ディフューズ係数
 		float pad2;       // パディング
-		XMFLOAT3 specular; // スペキュラー係数
-		float alpha;       // アルファ
+		Vector3 specular; // スペキュラー係数
+		float alpha;      // アルファ
 	};
 
 	// マテリアル
 	struct Material
 	{
 		std::string name; // マテリアル名
-		XMFLOAT3 ambient; // アンビエント影響度
-		XMFLOAT3 diffuse; // ディフェーズ影響度
-		XMFLOAT3 specular;// スペキュラー影響度
+		Vector3 ambient;  // アンビエント影響度
+		Vector3 diffuse;  // ディフェーズ影響度
+		Vector3 specular; // スペキュラー影響度
 		float alpha;      // アルファ
 		std::string textureFilename; // テクスチャファイル名
 		// コンストラクタ
@@ -65,7 +65,7 @@ public: // サブクラス
 
 private: // 定数
 	static const int division = 50; // 分割数
-	static const float radius; // 底面の半径
+	static const float radius;      // 底面の半径
 	static const float prizmHeight; // 柱の高さ
 	static const int planeCount = division * 2 + division * 2; // 面の数
 	static const int vertexCount = planeCount * 3; // 頂点数

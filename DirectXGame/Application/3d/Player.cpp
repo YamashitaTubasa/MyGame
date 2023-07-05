@@ -154,7 +154,7 @@ void Player::Attack()
 
 		// 弾の速度
 		const float bulletSpeed = 1.0f;
-		DirectX::XMFLOAT3 velocity(0, 0, bulletSpeed);
+		Vector3 velocity(0, 0, bulletSpeed);
 
 		// 弾の生成と、初期化
 		PlayerBullet* newBullet = new PlayerBullet();

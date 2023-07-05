@@ -29,7 +29,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectX::XMFLOAT3 position, const DirectX::XMFLOAT3 velocity);
+	void Initialize(const Vector3& position, const Vector3& velocity);
 
 	/// <summary>
 	/// 更新
@@ -49,11 +49,11 @@ private:
 	// 自キャラの弾の処理
 	BulletMove bulletMove;
 
-	DirectX::XMFLOAT3 pBulletPos = { 0,0,0 };
-	DirectX::XMFLOAT3 pBulletRot = { 0,0,0 };
-	DirectX::XMFLOAT3 pBulletSca = { 1,1,1 };
-	DirectX::XMFLOAT3 eye[5]{};
-	DirectX::XMFLOAT3 target[5]{};
+	Vector3 pBulletPos = { 0,0,0 };
+	Vector3 pBulletRot = { 0,0,0 };
+	Vector3 pBulletSca = { 1,1,1 };
+	Vector3 eye[5]{};
+	Vector3 target[5]{};
 
 };
 

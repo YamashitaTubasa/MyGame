@@ -8,7 +8,6 @@
 #include "Sprite.h"
 #include "ParticleManager.h"
 #include "ImGuiManager.h"
-#include "Vector3.h"
 #include "GameTitleScene.h"
 #include "Camera.h"
 #include "FbxLoader.h"
@@ -130,16 +129,16 @@ private:
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
 
-	DirectX::XMFLOAT3 position[5]{};
-	DirectX::XMFLOAT3 rotation[5]{};
-	DirectX::XMFLOAT3 scale[5]{};
-	DirectX::XMFLOAT3 eye[5]{};
-	DirectX::XMFLOAT3 target[5]{};
-	DirectX::XMFLOAT3 hpPosition = { 30,30,0 };
-	DirectX::XMFLOAT2 hpScale = { 500, 20 };
-	DirectX::XMFLOAT3 hpMove = { -1, 0, 0 };
-	DirectX::XMFLOAT3 hpBarPosition = { 29,29,0 };
-	DirectX::XMFLOAT3 hpBackPosition = { 30,30,0 };
+	Vector3 position[5]{};
+	Vector3 rotation[5]{};
+	Vector3 scale[5]{};
+	Vector3 eye[5]{};
+	Vector3 target[5]{};
+	Vector3 hpPosition = { 30,30,0 };
+	Vector2 hpScale = { 500, 20 };
+	Vector3 hpMove = { -1, 0, 0 };
+	Vector3 hpBarPosition = { 29,29,0 };
+	Vector3 hpBackPosition = { 30,30,0 };
 
 	bool isPush_D = false;
 	bool isPush_A = false;

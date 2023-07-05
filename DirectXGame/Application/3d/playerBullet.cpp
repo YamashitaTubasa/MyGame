@@ -12,7 +12,7 @@ PlayerBullet::~PlayerBullet()
 	delete bulletM;
 }
 
-void PlayerBullet::Initialize(DirectX::XMFLOAT3 position, const DirectX::XMFLOAT3 velocity)
+void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity)
 {
 	
 	// OBJからモデルデータを読み込む
