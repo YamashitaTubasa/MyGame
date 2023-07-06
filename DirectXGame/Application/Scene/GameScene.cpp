@@ -77,9 +77,6 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	// スプライトの初期化
 	SpriteInitialize(spriteCommon);
 
-	// パーティクルの初期化
-	//ParticleInitialize();
-
 	// FBXアニメーションの実行
 	fbxObject->PlayAnimation();
 }
@@ -250,51 +247,51 @@ void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	// スプライト用パイプライン生成呼び出し
 	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline();
 
-	// HP
+	// HPの初期化
 	hp = new Sprite();
 	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
-	hp->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hp->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hp->SpriteCreate(1280, 720, 1, spriteCommon_, Vector2(0.0f, 0.0f), false, false);
+	hp->SetColor(Vector4(1, 1, 1, 1));
 	hp->SetPosition(hpPosition);
 	hp->SetScale(hpScale);
 	hp->SetRotation(0.0f);
 	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 1);
 	hp->SpriteUpdate(hp, spriteCommon_);
-	// HPバー
+	// HPバーの初期化
 	hpBar = new Sprite();
 	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png");
-	hpBar->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hpBar->SpriteCreate(1280, 720, 2, spriteCommon_, Vector2(0.0f, 0.0f), false, false);
+	hpBar->SetColor(Vector4(1, 1, 1, 1));
 	hpBar->SetPosition(hpBarPosition);
-	hpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
+	hpBar->SetScale(Vector2(502 * 1, 22 * 1));
 	hpBar->SetRotation(0.0f);
 	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon, 2);
 	hpBar->SpriteUpdate(hpBar, spriteCommon_);
-	// HP背景
+	// HP背景の初期化
 	hpBack = new Sprite();
 	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png");
-	hpBack->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hpBack->SpriteCreate(1280, 720, 3, spriteCommon_, Vector2(0.0f, 0.0f), false, false);
+	hpBack->SetColor(Vector4(1, 1, 1, 1));
 	hpBack->SetPosition(hpBackPosition);
-	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	hpBack->SetScale(Vector2(500 * 1, 20 * 1));
 	hpBack->SetRotation(0.0f);
 	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon, 3);
 	hpBack->SpriteUpdate(hpBack, spriteCommon_);
-	// ULT
+	// ULTマークの初期化
 	ult = new Sprite();
 	ult->LoadTexture(spriteCommon_, 4, L"Resources/Image/ult.png");
-	ult->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	ult->SetColor(XMFLOAT4(1, 1, 1, 1));
+	ult->SpriteCreate(1280, 720, 4, spriteCommon_, Vector2(0.0f, 0.0f), false, false);
+	ult->SetColor(Vector4(1, 1, 1, 1));
 	ult->SetPosition({ 1010,610, 0 });
 	ult->SetScale({ 1600 * 0.05, 1600 * 0.05 });
 	ult->SetRotation(0.0f);
 	ult->SpriteTransferVertexBuffer(ult, spriteCommon, 4);
 	ult->SpriteUpdate(ult, spriteCommon_);
-	// X
+	// ×の初期化
 	X = new Sprite();
 	X->LoadTexture(spriteCommon_, 5, L"Resources/Image/x.png");
-	X->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	X->SetColor(XMFLOAT4(1, 1, 1, 1));
+	X->SpriteCreate(1280, 720, 5, spriteCommon_, Vector2(0.0f, 0.0f), false, false);
+	X->SetColor(Vector4(1, 1, 1, 1));
 	X->SetPosition({ 1120,630, 0 });
 	X->SetScale({ 64.0f * 0.7f, 64.0f * 0.7f });
 	X->SetRotation(0.0f);
@@ -303,8 +300,8 @@ void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	// 1
 	number[1] = new Sprite();
 	number[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
-	number[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	number[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number[1]->SpriteCreate(1280, 720, 6, spriteCommon_, Vector2(0.0f, 0.0f), false, false);
+	number[1]->SetColor(Vector4(1, 1, 1, 1));
 	number[1]->SetPosition({ 1200, 620, 0 });
 	number[1]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number[1]->SetRotation(0.0f);

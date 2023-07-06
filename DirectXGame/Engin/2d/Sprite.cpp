@@ -4,7 +4,7 @@ using namespace DirectX;
 using namespace Microsoft::WRL;
 using namespace std;
 
-Sprite::Sprite(UINT texNumber, XMFLOAT3 pos, XMFLOAT2 size, XMFLOAT4 color, XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY) {
+Sprite::Sprite(UINT texNumber, Vector3 pos, Vector2 size, Vector4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY) {
 
 }
 
@@ -202,7 +202,7 @@ PipelineSet Sprite::SpriteCreateGraphicsPipeline()
 }
 
 void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumber, 
-	const SpriteCommon& spriteCommon, XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY) {
+	const SpriteCommon& spriteCommon, Vector2 anchorpoint, bool isFlipX, bool isFlipY) {
 
 	HRESULT result = S_FALSE;
 
@@ -290,7 +290,7 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 	constMap->color = color_;
 	assert(SUCCEEDED(result));
 
-	//平行投影行列
+	// 平行投影行列
 	constMap->mat = XMMatrixOrthographicOffCenterLH(0.0f, window_width, window_height, 0.0f, 0.0f, 1.0f);
 	constBuff->Unmap(0, nullptr);
 }
@@ -372,11 +372,11 @@ SpriteCommon Sprite::SpriteCommonCreate(int window_width, int window_height)
 void Sprite::SpriteUpdate(Sprite* sprite, const SpriteCommon& spriteCommon) 
 {
 	// ワールド行列の更新
-	sprite->matWorld = XMMatrixIdentity();
+	sprite->matWorld = Matrix4::Identity();
 	// Z軸回転
-	sprite->matWorld *= XMMatrixRotationZ(XMConvertToRadians(sprite->rotation));
+	sprite->matWorld *= Matrix4::RotateZ(Matrix4::ConvertToRadians(sprite->rotation));
 	// 平行移動
-	sprite->matWorld *= XMMatrixTranslation(sprite->position.x, sprite->position.y, 0.0f);
+	sprite->matWorld *= Matrix4::Translate(sprite->position.x, sprite->position.y, 0.0f);
 
 	// 定数バッファの転送
 	ConstBufferData* constMap = nullptr;

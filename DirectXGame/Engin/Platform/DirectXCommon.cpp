@@ -50,6 +50,8 @@ void DirectXCommon::InitializeDevice()
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
 		debugController->EnableDebugLayer();
 		debugController->SetEnableGPUBasedValidation(TRUE);
+
+		debugController->Release();
 	}
 
 #endif
@@ -132,8 +134,6 @@ void DirectXCommon::InitializeDevice()
 		filter.DenyList.pSeverityList = severities;
 		// 指定したエラーの表示を抑制
 		infoQueue->PushStorageFilter(&filter);
-
-		//infoQueue->Release();
 	}
 #endif
 }
@@ -321,19 +321,6 @@ void DirectXCommon::PreDraw()
 	commandList->ClearRenderTargetView(rtvHandle, clearcolor, 0, nullptr);
 	// 震度バッファクリア
 	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-
-	//if (input->Pushkey(DIK_SPACE)) // スペースキーが押されていたら
-	//{
-	//	clearcolor[0] = { 0.7f }; // 青っぽい色
-	//	clearcolor[1] = { 0.5f };
-	//	clearcolor[2] = { 0.3f };
-	//	clearcolor[3] = { 0.0f };
-	//}
-
-	/*bool キーを押した状態か(uint8_t キー番号);
-	bool キーを離した状態か(uint8_t キー番号);
-	bool キーを押した瞬間か(uint8_t キー番号);
-	bool キーを離した瞬間か(uint8_t キー番号);*/
 
 	// 4.描画コマンドはここから
 	// ビューポート設定コマンド

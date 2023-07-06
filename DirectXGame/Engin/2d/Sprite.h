@@ -19,8 +19,8 @@
 
 // 頂点データ
 struct VertexPosUv {
-	DirectX::XMFLOAT3 pos;
-	DirectX::XMFLOAT2 uv;
+	Vector3 pos;
+	Vector2 uv;
 };
 
 // パイプラインセット
@@ -52,11 +52,6 @@ class Sprite
 private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::を省略
-	using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMMATRIX = DirectX::XMMATRIX;
 	using TexMetadata = DirectX::TexMetadata;
 	using ScratchImage = DirectX::ScratchImage;
 	// std::を省略
@@ -65,13 +60,13 @@ private: // エイリアス
 
 public:
 	Sprite() = default;
-	Sprite(UINT texNumber, XMFLOAT3 pos, XMFLOAT2 size, XMFLOAT4 color, XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY);
+	Sprite(UINT texNumber, Vector3 pos, Vector2 size, Vector4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY);
 	~Sprite();
 
 private:
 	struct ConstBufferData {
-		XMFLOAT4 color; // 色 (RGBA)
-		XMMATRIX mat; //座標
+		Vector4 color; // 色 (RGBA)
+		Matrix4 mat; //座標
 	};
 
 public:
@@ -96,7 +91,7 @@ public:
 	/// スプライト生成
 	/// </summary>
 	void SpriteCreate(float window_width, float window_height, UINT texNumber, 
-		const SpriteCommon& spriteCommon, XMFLOAT2 anchorpoint, bool isFlipX, bool FlipY);
+		const SpriteCommon& spriteCommon, Vector2 anchorpoint, bool isFlipX, bool FlipY);
 
 	/// <summary>
 	/// スプライト単体頂点バッファの転送
@@ -130,41 +125,41 @@ public:
 
 public: // セッター
 	// 座標設定
-	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	void SetPosition(const Vector3& position) { this->position = position; }
 	// サイズ設定
-	void SetScale(const XMFLOAT2& scale_) { this->scale = scale_; }
+	void SetScale(const Vector2& scale_) { this->scale = scale_; }
 	// 回転
 	void SetRotation(float rotation_) { this->rotation = rotation_; }
 	// 番号
 	void SetTexNumber(UINT texNumber_) { this->texNumber = texNumber_; }
 	// 色
-	void SetColor(const XMFLOAT4& color) { this->color_ = color; }
+	void SetColor(const Vector4& color) { this->color_ = color; }
 	// フリップ
 	void SetIsFlipX(bool isFlipX) { this->isFlipX_ = isFlipX; } // X
 	void SetIsFlipY(bool isFlipY) { this->isFlipY_ = isFlipY; } // Y
 	// テクスチャ左上座標
-	void SetTexLeftTop(const XMFLOAT2& texLeftTop) { this->texLeftTop_ = texLeftTop; }
+	void SetTexLeftTop(const Vector2& texLeftTop) { this->texLeftTop_ = texLeftTop; }
 	// テクスチャ切り出しサイズ
-	void SetTexSize(const XMFLOAT2& texSize) { this->texSize_ = texSize; }
+	void SetTexSize(const Vector2& texSize) { this->texSize_ = texSize; }
 
 public: // ゲッター
 	// 座標
-	XMFLOAT3 GetPosition() const { return position; }
+	Vector3 GetPosition() const { return position; }
 	// サイズ
-	XMFLOAT2 GetScale() const { return scale; }
+	Vector2 GetScale() const { return scale; }
 	// 回転
 	float GetRotation() const { return rotation; }
 	// 番号
 	UINT GetTexNumber() const { return texNumber; }
 	// 色
-	XMFLOAT4 GetColor() const { return color_; }
+	Vector4 GetColor() const { return color_; }
 	// フリップ
 	bool GetIsFlipX() const { return isFlipX_; } // X
 	bool GetIsFlipY() const { return isFlipY_; } // Y
 	// テクスチャ左上座標
-	XMFLOAT2 GetTexLeftTop() const { return texLeftTop_; }
+	Vector2 GetTexLeftTop() const { return texLeftTop_; }
 	// テクスチャ切り出しサイズ
-	XMFLOAT2 GetTexSize() const { return texSize_; }
+	Vector2 GetTexSize() const { return texSize_; }
 
 public:
 
@@ -191,21 +186,21 @@ protected:
 	UINT texNumber = 0;
 	uint32_t texIndex_ = 0;
 	// 座標
-	XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
+	Vector3 position = { 0.0f, 0.0f, 0.0f };
 	// サイズ
-	XMFLOAT2 scale = { 1.0f, 1.0f };
+	Vector2 scale = { 1.0f, 1.0f };
 	// 回転
-	XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
+	Vector3 rotation_ = { 0.0f,0.0f,0.0f };
 	// ワールド行列
-	XMMATRIX matWorld;
+	Matrix4 matWorld;
 	// アンカーポイント
-	XMFLOAT2 anchorpoint = { 0.0f,0.0f };
+	Vector2 anchorpoint = { 0.0f,0.0f };
 	// テクスチャ左上座標設定
-	XMFLOAT2 texLeftTop_ = { 50.0f, 50.0f };
+	Vector2 texLeftTop_ = { 50.0f, 50.0f };
 	// テクスチャ切り出しサイズ
-	XMFLOAT2 texSize_ = { 100.0f, 100.0f };
+	Vector2 texSize_ = { 100.0f, 100.0f };
 	// 色
-	XMFLOAT4 color_ = { 1,1,1,1 };
+	Vector4 color_ = { 1,1,1,1 };
 
 	// Z軸回りの回転
 	float rotation = 0.0f;
