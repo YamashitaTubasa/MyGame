@@ -5,8 +5,6 @@ void MyGame::Initialize()
 	// 基底クラスの初期化処理
 	TYFramework::Initialize();
 
-	//dXCommon = DirectXCommon::GetInstance();
-
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
 	gameScene->Initialize(spriteCommon);
