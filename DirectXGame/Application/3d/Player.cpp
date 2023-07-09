@@ -2,8 +2,6 @@
 
 using namespace std;
 
-#define PI 3.141592
-
 Player::Player()
 {
 }

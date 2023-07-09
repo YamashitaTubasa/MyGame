@@ -120,10 +120,10 @@ void Object3d::CameraMoveVector(const Vector3& move)
 void Object3d::InitializeCamera(int window_width, int window_height)
 {
 	// ビュー行列の生成
-	matView = XMMatrixLookAtLH(
+	/*matView = XMMatrixLookAtLH(
 		XMLoadFloat3(&eye),
 		XMLoadFloat3(&target),
-		XMLoadFloat3(&up));
+		XMLoadFloat3(&up));*/
 
 	// 平行投影による射影行列の生成
 	//constMap->mat = XMMatrixOrthographicOffCenterLH(
@@ -131,12 +131,14 @@ void Object3d::InitializeCamera(int window_width, int window_height)
 	//	window_height, 0,
 	//	0, 1);
 	// 透視投影による射影行列の生成
-	matProjection = XMMatrixPerspectiveFovLH(
+	/*matProjection = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(60.0f),
 		(float)window_width / window_height,
 		0.1f, 
 		1000.0f
-	);
+	);*/
+
+	camera->Update();
 }
 
 void Object3d::InitializeGraphicsPipeline()
@@ -288,8 +290,7 @@ void Object3d::InitializeGraphicsPipeline()
 
 void Object3d::UpdateViewMatrix()
 {
-	// ビュー行列の更新
-	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+	camera->UpdateViewMatrix();
 }
 
 bool Object3d::Initialize()
@@ -321,18 +322,18 @@ bool Object3d::Initialize()
 void Object3d::Update()
 {
 	HRESULT result;
-	XMMATRIX matScale, matRot, matTrans;
+	Matrix4 matScale, matRot, matTrans, matRotX, matRotY, matRotZ;
 
 	// スケール、回転、平行移動行列の計算
-	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-	matRot = XMMatrixIdentity();
-	matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));
-	matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));
-	matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));
-	matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	matScale.Scale(scale);
+	matRot = Matrix4::Identity();
+	matRot *= matRotZ.RotateZ(rotation.z);
+	matRot *= matRotX.RotateX(rotation.x);
+	matRot *= matRotY.RotateY(rotation.y);
+	matTrans.Translate(position);
 
 	// ワールド行列の合成
-	matWorld = XMMatrixIdentity(); // 変形をリセット
+	matWorld = Matrix4::Identity(); // 変形をリセット
 	matWorld *= matScale;          // ワールド行列にスケーリングを反映
 	matWorld *= matRot;            // ワールド行列に回転を反映
 	matWorld *= matTrans;          // ワールド行列に平行移動を反映

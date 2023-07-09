@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Matrix4.h"
@@ -19,15 +20,15 @@ struct Node
 	// 名前
 	std::string name;
 	// ローカルスケール
-	DirectX::XMVECTOR scaling = { 1,1,1,0 };
+	Vector4 scaling = { 1,1,1,0 };
 	// ローカル回転角
-	DirectX::XMVECTOR rotation = { 0,0,0,0 };
+	Vector4 rotation = { 0,0,0,0 };
 	// ローカル移動
-	DirectX::XMVECTOR translation = { 0,0,0,1 };
+	Vector4 translation = { 0,0,0,1 };
 	// ローカル変形行列
-	DirectX::XMMATRIX transform;
+	Matrix4 transform;
 	// グローバル変形行列
-	DirectX::XMMATRIX globalTransform;
+	Matrix4 globalTransform;
 	// 親ノード
 	Node* parent = nullptr;
 };
@@ -41,11 +42,6 @@ public:
 private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::を省略
-	using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMMATRIX = DirectX::XMMATRIX;
 	using TexMetadata = DirectX::TexMetadata;
 	using ScratchImage = DirectX::ScratchImage;
 	// std::を省略
@@ -60,9 +56,9 @@ public: // サブクラス
 	// 頂点デー構造体
 	struct VertexPosNormalUvSkin 
 	{
-		DirectX::XMFLOAT3 pos;              // xyz座標
-		DirectX::XMFLOAT3 normal;           // 法線ベクトル
-		DirectX::XMFLOAT2 uv;               // uv座標
+		Vector3 pos;    // xyz座標
+		Vector3 normal; // 法線ベクトル
+		Vector2 uv;     // uv座標
 		UINT boneIndex[MAX_BONE_INDICES];   // ボーン　番号
 		float boneWeight[MAX_BONE_INDICES]; // ボーン　重み
 	};
@@ -73,7 +69,7 @@ public: // サブクラス
 		// 名前
 		std::string name;
 		// 初期姿勢の逆行列
-		DirectX::XMMATRIX invInitialPose;
+		Matrix4 invInitialPose;
 		// クラスター(FBX側のボーン情報)
 		FbxCluster* fbxCluster;
 		// コンストラクタ
@@ -94,7 +90,7 @@ public:
 
 public: // getter
 	// モデルの変形行列取得
-	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
+	const Matrix4& GetModelTransform() { return meshNode->globalTransform; }
 	// bonesの取得
 	std::vector<Bone>& GetBones() { return bones; }
 	// fbxSceneの取得
@@ -130,9 +126,9 @@ private:
 	// ボーン配列
 	std::vector<Bone> bones;
 	// アンビエント係数
-	DirectX::XMFLOAT3 ambient = { 1,1,1 };
+	Vector3 ambient = { 1,1,1 };
 	// ディフューズ係数
-	DirectX::XMFLOAT3 diffuse = { 1,1,1 };
+	Vector3 diffuse = { 1,1,1 };
 	// テクスチャメタデータ
 	DirectX::TexMetadata metadata = {};
 	// スクラッチイメージ

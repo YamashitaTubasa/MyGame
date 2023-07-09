@@ -41,7 +41,7 @@ void FbxObject3d::Initialize()
 	ConstBufferDataSkin* constMapSkin = nullptr;
 	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
 	for (int i = 0; i < MAX_BONES; i++) {
-		constMapSkin->bones[i] = XMMatrixIdentity();
+		constMapSkin->bones[i] = Matrix4::Identity();
 	}
 	constBuffSkin->Unmap(0, nullptr);
 }
@@ -67,28 +67,28 @@ void FbxObject3d::GeneratSkinConstBuff()
 
 void FbxObject3d::Update()
 {
-	XMMATRIX matScale, matRot, matTrans;
+	Matrix4 matScale, matRot, matTrans, matRotX, matRotY, matRotZ;
 
 	// スケール、回転、平行移動行列の計算
-	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
-	matRot = XMMatrixIdentity();
-	matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));
-	matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));
-	matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));
-	matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	matScale.Scale(scale);
+	matRot = Matrix4::Identity();
+	matRot *= matRotZ.RotateZ(ConvertToRadians(rotation.z));
+	matRot *= matRotX.RotateX(ConvertToRadians(rotation.x));
+	matRot *= matRotY.RotateY(ConvertToRadians(rotation.y));
+	matTrans.Translate(position);
 
 	// ワールド行列の合成
-	matWorld = XMMatrixIdentity(); // 変形をリセット
+	matWorld = Matrix4::Identity(); // 変形をリセット
 	matWorld *= matScale;          // ワールド行列にスケーリングを反映
 	matWorld *= matRot;            // ワールド行列に回転を反映
 	matWorld *= matTrans;          // ワールド行列に平行移動を反映
 
 	// ビュープロジェクション行列
-	const XMMATRIX& matViewProjection = camera->GetViewProjectionMatrix();
+	const Matrix4& matViewProjection = camera->GetViewProjectionMatrix();
 	// モデルのメッシュトランスフォーム
-	const XMMATRIX& modelTransform = fbxModel->GetModelTransform();
+	const Matrix4& modelTransform = fbxModel->GetModelTransform();
 	// カメラ座標
-	const XMFLOAT3& cameraPos = camera->GetEye();
+	const Vector3& cameraPos = camera->GetEye();
 
 	HRESULT result;
 	// 定数バッファへのデータ転送
@@ -119,7 +119,7 @@ void FbxObject3d::Update()
 	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
 	for (int i = 0; i < bones.size(); i++) {
 		// 今の姿勢行列
-		XMMATRIX matCurrentPose;
+		Matrix4 matCurrentPose;
 		// 今の姿勢行列を取得
 		FbxAMatrix fbxCurrentPose = bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
 		// XMMATRIXに変換

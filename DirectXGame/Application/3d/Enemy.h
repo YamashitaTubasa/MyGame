@@ -37,10 +37,10 @@ private:
 	// モデル
 	Model* enemyM = nullptr;
 
-	DirectX::XMFLOAT3 position[5]{};
-	DirectX::XMFLOAT3 rotation[5]{};
-	DirectX::XMFLOAT3 scale[5]{};
-	DirectX::XMFLOAT3 eye[5]{};
-	DirectX::XMFLOAT3 target[5]{};
+	Vector3 position[5]{};
+	Vector3 rotation[5]{};
+	Vector3 scale[5]{};
+	Vector3 eye[5]{};
+	Vector3 target[5]{};
 };
 

@@ -36,7 +36,7 @@ struct SpriteCommon {
 	// パイプラインセット
 	PipelineSet pipelineSet;
 	// 射影行列
-	DirectX::XMMATRIX matProjection{};
+	Matrix4 matProjection{};
 	// テクスチャ用デスクリプタヒープの生成
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeap;
 	// SRVの最大枚数

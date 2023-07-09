@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "fbxsdk.h"
 #include "FbxModel.h"
@@ -63,7 +63,7 @@ public:
 	/// </summary>
 	/// <param name="dst">書き込み先</param>
 	/// <param name="src">元となるFBX行列</param>
-	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src);
+	static void ConvertMatrixFromFbx(Matrix4* dst, const FbxAMatrix& src);
 
 public: // サブ関数
 	// 頂点座標読み取り

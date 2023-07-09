@@ -1,4 +1,4 @@
-﻿#include "FbxLoader.h"
+#include "FbxLoader.h"
 
 using namespace DirectX;
 
@@ -96,18 +96,20 @@ void FbxLoader::ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, Node* p
     node.translation = { (float)translation[0], (float)translation[1],(float)translation[2], 1.0f };
 
     // 回転角をDegree(度)からラジアンに変換
-    node.rotation.m128_f32[0] = XMConvertToRadians(node.rotation.m128_f32[0]);
-    node.rotation.m128_f32[1] = XMConvertToRadians(node.rotation.m128_f32[1]);
-    node.rotation.m128_f32[2] = XMConvertToRadians(node.rotation.m128_f32[2]);
+    node.rotation.x = XMConvertToRadians(node.rotation.x);
+    node.rotation.y = XMConvertToRadians(node.rotation.y);
+    node.rotation.z = XMConvertToRadians(node.rotation.z);
 
     // スケール、回転、平行移動行列の計算
-    XMMATRIX matScaling, matRotation, matTranslation;
-    matScaling = XMMatrixScalingFromVector(node.scaling);
-    matRotation = XMMatrixRotationRollPitchYawFromVector(node.rotation);
-    matTranslation = XMMatrixTranslationFromVector(node.translation);
+    Matrix4 matScaling, matRotation, matTranslation, matRotX, matRotY, matRotZ;
+    matScaling.Scale(node.scaling);
+    matRotation = matRotZ.RotateZ(node.rotation.z);
+    matRotation = matRotY.RotateY(node.rotation.y);
+    matRotation = matRotX.RotateX(node.rotation.x);
+    matTranslation.Translate(node.translation);
 
     // ローカル変形行列の計算
-    node.transform = XMMatrixIdentity();
+    node.transform = Matrix4::Identity();
     node.transform *= matScaling; // ワールド行列にスケーリングを反映
     node.transform *= matRotation; // ワールド行列に回転を反映
     node.transform *= matTranslation; // ワールド行列に平行移動を反映
@@ -153,14 +155,14 @@ void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
     ParseSkin(fbxModel, fbxMesh);
 }
 
-void FbxLoader::ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src)
+void FbxLoader::ConvertMatrixFromFbx(Matrix4* dst, const FbxAMatrix& src)
 {
     // 行
     for (int i = 0; i < 4; i++) {
         // 列
         for (int j = 0; j < 4; j++) {
             // 1要素コピー
-            dst->r[i].m128_f32[j] = (float)src.Get(i, j);
+            //dst->.x = (float)src.Get(i, j);
         }
     }
 }
@@ -352,12 +354,12 @@ void FbxLoader::ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh)
         FbxAMatrix fbxMat;
         fbxCluster->GetTransformLinkMatrix(fbxMat);
 
-        // XMMatrix型に変換する
-        XMMATRIX initialPose;
+        // Matrix4型に変換する
+        Matrix4 initialPose;
         ConvertMatrixFromFbx(&initialPose, fbxMat);
 
         // 初期姿勢行列の逆行列を得る
-        bone.invInitialPose = XMMatrixInverse(nullptr, initialPose);
+        bone.invInitialPose.MakeInverse();
     }
 
     // ボーン番号とスキンウェイトのペア

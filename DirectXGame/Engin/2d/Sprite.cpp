@@ -291,7 +291,10 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 	assert(SUCCEEDED(result));
 
 	// 平行投影行列
-	constMap->mat = XMMatrixOrthographicOffCenterLH(0.0f, window_width, window_height, 0.0f, 0.0f, 1.0f);
+	constMap->mat.ProjectionMat(ConvertToRadians(60.0f), 
+		(float)WinApp::window_width / WinApp::window_height, 
+		0.1f, 
+		1000.0f);
 	constBuff->Unmap(0, nullptr);
 }
 
@@ -355,8 +358,11 @@ SpriteCommon Sprite::SpriteCommonCreate(int window_width, int window_height)
 	spriteCommon.pipelineSet = SpriteCreateGraphicsPipeline();
 
 	// 平行投影行列生成
-	spriteCommon.matProjection = XMMatrixOrthographicOffCenterLH(
-		0.0f, WinApp::window_width, WinApp::window_height, 0.0f, 0.0f, 1.0f);
+	spriteCommon.matProjection.ProjectionMat(
+		ConvertToRadians(60.0f), 
+		(float)WinApp::window_width / WinApp::window_height, 
+		0.1f, 
+		1000.0f);
 
 	// デスクリプタヒープを生成
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
@@ -371,12 +377,14 @@ SpriteCommon Sprite::SpriteCommonCreate(int window_width, int window_height)
 
 void Sprite::SpriteUpdate(Sprite* sprite, const SpriteCommon& spriteCommon) 
 {
+	Matrix4 matRotZ, matTrans;
+	
 	// ワールド行列の更新
 	sprite->matWorld = Matrix4::Identity();
 	// Z軸回転
-	sprite->matWorld *= Matrix4::RotateZ(Matrix4::ConvertToRadians(sprite->rotation));
+	sprite->matWorld *= matRotZ.RotateZ(ConvertToRadians(sprite->rotation));
 	// 平行移動
-	sprite->matWorld *= Matrix4::Translate(sprite->position.x, sprite->position.y, 0.0f);
+	sprite->matWorld *= matTrans.Translate(sprite->position);
 
 	// 定数バッファの転送
 	ConstBufferData* constMap = nullptr;
