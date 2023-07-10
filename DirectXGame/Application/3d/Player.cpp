@@ -135,6 +135,7 @@ void Player::Update()
 	// 弾更新
 	for (PlayerBullet* bullet : pBullets) {
 		bullet->Update();
+		pBulletP = bullet->GetPosition();
 	}
 }
 

@@ -53,8 +53,9 @@ public: // メンバ関数
 	void Attack();
 
 public: // ゲッター
-	DirectX::XMFLOAT3& GetPositon(){ return pPosition; }
-
+	const DirectX::XMFLOAT3& GetPositon() { return pPosition; }
+	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP; }
+	
 public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
 	// モデル
@@ -80,6 +81,7 @@ public: // メンバ変数
 	DirectX::XMFLOAT3 scale[5]{};
 	DirectX::XMFLOAT3 eye[5]{};
 	DirectX::XMFLOAT3 target[5]{};
+	DirectX::XMFLOAT3 pBulletP = { 0,0,0 };
 
 	bool isRightMove = false;
 	bool isLeftMove = false;

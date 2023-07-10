@@ -29,7 +29,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectX::XMFLOAT3 position, const DirectX::XMFLOAT3 velocity);
+	void Initialize(const DirectX::XMFLOAT3& position, const DirectX::XMFLOAT3& velocity);
 
 	/// <summary>
 	/// 更新
@@ -40,6 +40,9 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+
+public: // ゲッター
+	DirectX::XMFLOAT3 GetPosition() const { return pBulletPos; }
 
 private:
 	// モデル
@@ -54,6 +57,6 @@ private:
 	DirectX::XMFLOAT3 pBulletSca = { 1,1,1 };
 	DirectX::XMFLOAT3 eye[5]{};
 	DirectX::XMFLOAT3 target[5]{};
-
+	DirectX::XMFLOAT3 velocity_ = { 0,0,0 };
 };
 

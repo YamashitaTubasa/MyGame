@@ -101,6 +101,14 @@ void GameScene::Update()
 	// 敵キャラ更新
 	enemy->Update();
 
+	/*if (input->TriggerKey(DIK_O)) {
+		DirectX::XMFLOAT3 a = player->GetpBulletP();
+	}
+
+	if (CheckCollision(player->GetpBulletP(), enemy->GetPosition())) {
+		isEnemyDeth = true;
+	}*/
+
 	if (input->PushKey(DIK_RIGHT)) {
 		eye[0].x += 0.5;
 	}
@@ -161,7 +169,9 @@ void GameScene::Draw()
 	// 3Dオブジェクトの描画
 	skydomeO3->Draw();
 	player->Draw();
-	enemy->Draw();
+	if (!isEnemyDeth) {
+		enemy->Draw();
+	}
 
 	// FBX3Dオブジェクトの描画
 	//fbxObject->Draw(dXCommon->GetCommandList());
@@ -369,28 +379,12 @@ void GameScene::GameReset()
 	time = 0;
 }
 
-int GameScene::CheckCollision(XMFLOAT3 position, XMFLOAT3 scale) {
-	////オブジェクトの座標
-	//float objLeftX = position.x - scale.x;
-	//float objRightX = position.x + scale.x;
-	//float objTopY = position.y + scale.y;
-	//float objBottomY = position.y - scale.y;
-	//float objFrontZ = position.z - scale.z;
-	//float objBZ = position.z + scale.z;
-	////プレイヤーの座標
-	//float playerLeftX = object3d[0]->GetPosition().x - object3d[0]->GetScale().x;
-	//float playerRightX = object3d[0]->GetPosition().x + object3d[0]->GetScale().x;
-	//float playerTopY = object3d[0]->GetPosition().y + object3d[0]->GetScale().y;
-	//float playerBottomY = object3d[0]->GetPosition().y - object3d[0]->GetScale().y;
-	//float playerFrontZ = object3d[0]->GetPosition().z - object3d[0]->GetScale().z;
-	//float playerBZ = object3d[0]->GetPosition().z + object3d[0]->GetScale().z;
+bool GameScene::CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1)
+{
+	if(std::pow((object1.x - object.x),2.0f) + std::pow((object1.y - object.y),2.0f) + 
+		std::pow((object1.z - object.z), 2.0f) <= std::pow((1 + 1), 2.0f)){
+		return true;
+	}
 
-	//if (objLeftX < playerRightX && playerLeftX < objRightX) {
-	//	if (objBottomY < playerTopY && playerBottomY < objTopY) {
-	//		if (objFrontZ < playerBZ && playerFrontZ < objBZ) {
-	//			return true;
-	//		}
-	//	}
-	//}
 	return true;
 }

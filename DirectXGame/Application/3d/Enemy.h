@@ -31,6 +31,9 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+public: // ゲッター
+	DirectX::XMFLOAT3 GetPosition() const { return position[0]; }
+
 private:
 	// オブジェクト
 	Object3d* enemyO3 = nullptr;

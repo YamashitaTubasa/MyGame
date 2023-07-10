@@ -16,6 +16,7 @@
 #include "PostEffect.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "PlayerBullet.h"
 
 class GameScene
 {
@@ -88,7 +89,7 @@ public:
 	/// <summary>
 	/// 当たり判定
 	/// </summary>
-	int CheckCollision(DirectX::XMFLOAT3 object, DirectX::XMFLOAT3 scale);
+	bool CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1);
 
 private:
 	WinApp* winApp = nullptr;
@@ -128,6 +129,7 @@ private:
 	FbxObject3d* fbxObject = nullptr;
 	PostEffect* postEffect = nullptr;
 	Player* player = nullptr;
+	Player* pBullet = nullptr;
 	Enemy* enemy = nullptr;
 
 	DirectX::XMFLOAT3 position[5]{};
@@ -148,4 +150,5 @@ private:
 	int time = 0;
 	float particleTime = 0;
 	bool particl = false;
+	bool isEnemyDeth = false;
 };
