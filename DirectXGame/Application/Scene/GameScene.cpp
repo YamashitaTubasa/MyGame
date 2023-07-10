@@ -61,6 +61,10 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	enemy = new Enemy();
 	enemy->Initialize();
 
+	// 天球の初期化
+	skydome = new Skydome();
+	skydome->Initialize();
+
 	// OBJの名前を指定してモデルデータを読み込む
 	particle = Particle::LoadFromOBJ("effect1.png");
 	particle1 = Particle::LoadFromOBJ("effect2.png");
@@ -97,6 +101,9 @@ void GameScene::Update()
 
 	// 敵キャラ更新
 	enemy->Update();
+
+	// 天球の更新
+	skydome->Update();
 
 	if (input->PushKey(DIK_RIGHT)) {
 		eye[0].x += 0.5;
@@ -156,7 +163,7 @@ void GameScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	skydomeO3->Draw();
+	skydome->Draw();
 	player->Draw();
 	enemy->Draw();
 
@@ -213,30 +220,17 @@ void GameScene::Finalize()
 
 void GameScene::ObjectInitialize() 
 {
-	// OBJからモデルデータを読み込む
-	skydomeM = Model::LoadFromOBJ("skydome");
-	// 3Dオブジェクト生成
-	skydomeO3 = Object3d::Create();
-	// オブジェクトにモデルをひも付ける
-	skydomeO3->SetModel(skydomeM);
-	// 3Dオブジェクトの位置を指定
-	skydomeO3->SetPosition({ 0,30,0 });
-	skydomeO3->SetScale({ 100, 100, 100 });
-	skydomeO3->SetRotation({0,0,0});
+	
 }
 
 void GameScene::ObjectUpdate()
 {
-	// 3Dオブジェクト更新
-	skydomeO3->Update();
+	
 }
 
 void GameScene::ObjectFinalize()
 {
-	// 3Dオブジェクト解放
-	delete skydomeO3;
-	// 3Dモデル解放
-	delete skydomeM;
+	
 }
 
 void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)

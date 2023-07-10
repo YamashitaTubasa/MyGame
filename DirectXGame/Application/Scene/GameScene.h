@@ -15,6 +15,7 @@
 #include "PostEffect.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Skydome.h"
 
 class GameScene
 {
@@ -94,12 +95,8 @@ private:
 	// 入力
 	Input* input = nullptr;
 	// モデル
-	Model* enemeyM = nullptr;
-	Model* skydomeM = nullptr;
 	Model* Model[5];
 	// オブジェクト
-	Object3d* enemyO3 = nullptr;
-	Object3d* skydomeO3 = nullptr;
 	Object3d* object3d[5];
 	// スプライト
 	Sprite* sprite = nullptr;
@@ -128,6 +125,7 @@ private:
 	PostEffect* postEffect = nullptr;
 	Player* player = nullptr;
 	Enemy* enemy = nullptr;
+	Skydome* skydome = nullptr;
 
 	Vector3 position[5]{};
 	Vector3 rotation[5]{};
