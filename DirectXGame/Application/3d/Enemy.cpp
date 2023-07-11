@@ -1,5 +1,10 @@
 #include "Enemy.h"
 
+/// <summary>
+/// 静的メンバ変数の実体
+/// </summary>
+Camera* Enemy::camera = nullptr;
+
 Enemy::Enemy()
 {
 }
@@ -12,8 +17,10 @@ Enemy::~Enemy()
 	delete enemyM;
 }
 
-void Enemy::Initialize()
+void Enemy::Initialize(Camera* camera_)
 {
+	this->camera = camera_;
+
 	// OBJからモデルデータを読み込む
 	enemyM = Model::LoadFromOBJ("enemy");
 	// 3Dオブジェクト生成
@@ -35,5 +42,5 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-	enemyO3->Draw();
+	enemyO3->Draw(camera);
 }

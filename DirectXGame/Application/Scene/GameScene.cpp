@@ -55,15 +55,16 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 
 	// 自キャラ生成
 	player = new Player();
+	Player::SetCamera(camera);
 	player->Initialize(camera);
 
 	// 敵キャラ生成
 	enemy = new Enemy();
-	enemy->Initialize();
+	enemy->Initialize(camera);
 
 	// 天球の初期化
 	skydome = new Skydome();
-	skydome->Initialize();
+	skydome->Initialize(camera);
 
 	// OBJの名前を指定してモデルデータを読み込む
 	particle = Particle::LoadFromOBJ("effect1.png");

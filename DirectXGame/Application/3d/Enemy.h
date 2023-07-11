@@ -2,6 +2,7 @@
 
 #include "Object3d.h"
 #include "Model.h"
+#include "Camera.h"
 
 /// <summary>
 /// 敵クラス
@@ -19,7 +20,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(Camera* camera_);
 
 	/// <summary>
 	/// 更新
@@ -30,6 +31,10 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+
+private: // 定数
+	// カメラ
+	static Camera* camera;
 
 private:
 	// オブジェクト

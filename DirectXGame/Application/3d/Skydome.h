@@ -33,7 +33,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(Camera* camera_);
 
 	/// <summary>
 	/// 更新
@@ -44,6 +44,10 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
+
+private: // 定数
+	// カメラ
+	static Camera* camera;
 
 private: // メンバ変数
 	// モデル

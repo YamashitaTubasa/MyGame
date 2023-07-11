@@ -43,8 +43,8 @@ void TYFramework::Initialize()
 	imGuiManager->Initialize(dXCommon, winApp);
 
 	// Cameraの初期化
-	/*camera = new Camera();
-	camera->Initialize();*/
+	camera = new Camera();
+	camera->Initialize();
 
 	// ポストエフェクト
 	postEffect = PostEffect::GetInstance();

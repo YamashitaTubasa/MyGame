@@ -56,6 +56,13 @@ public: // メンバ関数
 public: // ゲッター
 	Vector3& GetPositon(){ return pPosition; }
 
+public: // セッター
+	static void SetCamera(Camera* camera) { Player::camera_ = camera; }
+
+public: // 静的メンバ変数
+	// カメラ
+	static Camera* camera_;
+
 public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
 	// モデル
@@ -64,11 +71,9 @@ public: // メンバ変数
 	Object3d* playerO3 = nullptr;
 	// 入力
 	Input* input = nullptr;
-	// カメラ
-	Camera* camera_ = nullptr;
+
 	// 自キャラ弾
 	std::list<PlayerBullet*> pBullets;
-
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 

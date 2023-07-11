@@ -107,13 +107,12 @@ private: // 静的メンバ変数
 	static Vector3 up;
 
 private:// 静的メンバ関数
-	
 	/// <summary>
 	/// カメラ初期化
 	/// </summary>
 	/// <param name="window_width">画面横幅</param>
 	/// <param name="window_height">画面縦幅</param>
-	static void InitializeCamera(int window_width, int window_height);
+	static void InitializeCamera(int window_width, int window_height, Camera* camera);
 
 	/// <summary>
 	/// グラフィックパイプライン生成
@@ -136,23 +135,27 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(Camera* camera);
 
-	// モデルの設定
-	void SetModel(Model* model) { this->model = model; }
-
+public: // ゲッター
 	// オブジェクトの座標
 	const Vector3& GetPosition() const { return position; }
+	// オブジェクトの大きさ
+	const Vector3& GetScale() const { return scale; }
+	// オブジェクトの回転
+	const Vector3& GetRotation() const { return rotation; }
+
+public: // セッター
+	// モデルの設定
+	void SetModel(Model* model) { this->model = model; }
+	// カメラ
+	static void SetCamera(Camera* camera) { Object3d::camera = camera; }
+	// オブジェクトの座標
 	void SetPosition(const Vector3& position) { this->position = position; }
 	// オブジェクトの大きさ
 	void SetScale(const Vector3& scale_) { this->scale = scale_; }
-	const Vector3& GetScale() const { return scale; }
 	// オブジェクトの回転
 	void SetRotation(const Vector3& rotation) { this->rotation = rotation; }
-	const Vector3& GetRotation() const { return rotation; }
-
-	// カメラ
-	static void SetCamera(Camera* camera) { Object3d::camera = camera; }
 
 private: // メンバ変数
 	// モデル

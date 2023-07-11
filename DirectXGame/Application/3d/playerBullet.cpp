@@ -1,5 +1,10 @@
 #include "PlayerBullet.h"
 
+/// <summary>
+/// 静的メンバ変数の実体
+/// </summary>
+Camera* PlayerBullet::camera = nullptr;
+
 PlayerBullet::PlayerBullet() 
 {
 }
@@ -12,8 +17,9 @@ PlayerBullet::~PlayerBullet()
 	delete bulletM;
 }
 
-void PlayerBullet::Initialize(const Vector3& position, const Vector3& velocity)
+void PlayerBullet::Initialize(Camera* camera_, const Vector3& position, const Vector3& velocity)
 {
+	this->camera = camera_;
 	
 	// OBJからモデルデータを読み込む
 	bulletM = Model::LoadFromOBJ("bullet");
@@ -38,5 +44,5 @@ void PlayerBullet::Update()
 
 void PlayerBullet::Draw()
 {
-	bulletO3->Draw();
+	bulletO3->Draw(camera);
 }

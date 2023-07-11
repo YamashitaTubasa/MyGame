@@ -31,9 +31,10 @@ void Object3d::StaticInitialize(ID3D12Device * device, int window_width, int win
 	assert(device);
 
 	Object3d::device = device;
+	Object3d::camera = camera;
 		
 	// カメラ初期化
-	InitializeCamera(window_width, window_height);
+	InitializeCamera(window_width, window_height, camera);
 
 	// パイプライン初期化
 	InitializeGraphicsPipeline();
@@ -117,7 +118,7 @@ void Object3d::CameraMoveVector(const Vector3& move)
 	SetTarget(target_moved);
 }
 
-void Object3d::InitializeCamera(int window_width, int window_height)
+void Object3d::InitializeCamera(int window_width, int window_height, Camera* camera)
 {
 	// ビュー行列の生成
 	/*matView = XMMatrixLookAtLH(
@@ -137,8 +138,6 @@ void Object3d::InitializeCamera(int window_width, int window_height)
 		0.1f, 
 		1000.0f
 	);*/
-
-	camera->Update();
 }
 
 void Object3d::InitializeGraphicsPipeline()
@@ -315,7 +314,7 @@ bool Object3d::Initialize()
 		nullptr,
 		IID_PPV_ARGS(&constBuffB0));
 	assert(SUCCEEDED(result));
-	
+
 	return true;
 }
 
@@ -351,7 +350,7 @@ void Object3d::Update()
 	constBuffB0->Unmap(0, nullptr);
 }
 
-void Object3d::Draw()
+void Object3d::Draw(Camera* camera)
 {
 	// nullptrチェック
 	assert(device);
@@ -362,6 +361,9 @@ void Object3d::Draw()
 
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
+
+	// 定数バッファビューをセット
+	cmdList->SetGraphicsRootConstantBufferView(2, camera->GetConstBuff()->GetGPUVirtualAddress());
 
 	// モデルを描画
 	model->Draw(cmdList, 1);

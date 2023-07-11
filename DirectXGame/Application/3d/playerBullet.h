@@ -6,6 +6,7 @@
 #include "Matrix4.h"
 #include "Model.h"
 #include "Object3d.h"
+#include "Camera.h"
 
 struct BulletMove {
 	DirectX::XMFLOAT3 transform = { 0,0,0 };
@@ -17,8 +18,6 @@ struct BulletMove {
 class PlayerBullet
 {
 public:
-
-public:
 	// コンストラクタ
 	PlayerBullet();
 
@@ -29,7 +28,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const Vector3& position, const Vector3& velocity);
+	void Initialize(Camera* camera_, const Vector3& position, const Vector3& velocity);
 
 	/// <summary>
 	/// 更新
@@ -40,6 +39,10 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+	
+private: // 定数
+	// カメラ
+	static Camera* camera;
 
 private:
 	// モデル

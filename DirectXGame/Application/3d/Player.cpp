@@ -2,6 +2,11 @@
 
 using namespace std;
 
+/// <summary>
+/// 静的メンバ変数の実体
+/// </summary>
+Camera* Player::camera_ = nullptr;
+
 Player::Player()
 {
 }
@@ -138,7 +143,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	playerO3->Draw();
+	playerO3->Draw(camera_);
 
 	// 弾描画
 	for (PlayerBullet* bullet : pBullets) {
@@ -156,7 +161,7 @@ void Player::Attack()
 
 		// 弾の生成と、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(pPosition, velocity);
+		newBullet->Initialize(camera_, pPosition, velocity);
 
 		// 球を登録する
 		pBullets.push_back(newBullet);

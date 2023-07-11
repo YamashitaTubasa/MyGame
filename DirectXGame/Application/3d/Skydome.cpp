@@ -1,5 +1,10 @@
 #include "Skydome.h"
 
+/// <summary>
+/// 静的メンバ変数の実体
+/// </summary>
+Camera* Skydome::camera = nullptr;
+
 Skydome::Skydome()
 {
 }
@@ -12,8 +17,10 @@ Skydome::~Skydome()
 	delete skydomeM;
 }
 
-void Skydome::Initialize()
+void Skydome::Initialize(Camera* camera_)
 {
+	this->camera = camera_;
+
 	// OBJからモデルデータを読み込む
 	skydomeM = Model::LoadFromOBJ("skydome");
 	// 3Dオブジェクト生成
@@ -35,5 +42,5 @@ void Skydome::Update()
 void Skydome::Draw()
 {
 	// 天球の描画
-	skydomeO3->Draw();
+	skydomeO3->Draw(camera);
 }
