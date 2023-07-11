@@ -108,6 +108,9 @@ private:
 	Sprite* hp = nullptr;
 	Sprite* hpBar = nullptr;
 	Sprite* hpBack = nullptr;
+	Sprite* enemyHp = nullptr;
+	Sprite* enemyHpBar = nullptr;
+	Sprite* enemyHpBack = nullptr;
 	Sprite* ult = nullptr;
 	Sprite* X = nullptr;
 	Sprite* number[5];
@@ -142,6 +145,11 @@ private:
 	DirectX::XMFLOAT3 hpMove = { -1, 0, 0 };
 	DirectX::XMFLOAT3 hpBarPosition = { 29,29,0 };
 	DirectX::XMFLOAT3 hpBackPosition = { 30,30,0 };
+	DirectX::XMFLOAT3 enemyHpPosition = { 1250,30,0 };
+	DirectX::XMFLOAT2 enemyHpScale = { 500, 20 };
+	DirectX::XMFLOAT3 enemyHpMove = { -1, 0, 0 };
+	DirectX::XMFLOAT3 enemyHpBarPosition = { 1251,29,0 };
+	DirectX::XMFLOAT3 enemyHpBackPosition = { 1251,30,0 };
 
 	bool isPush_D = false;
 	bool isPush_A = false;

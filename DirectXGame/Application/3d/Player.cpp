@@ -164,6 +164,7 @@ void Player::Update()
 
 void Player::Draw()
 {
+	// プレイヤーのモデルの描画
 	playerO3->Draw();
 
 	// 弾描画
@@ -174,6 +175,7 @@ void Player::Draw()
 
 void Player::Attack()
 {
+	// プレイヤーの攻撃処理
 	if (input->TriggerKey(DIK_SPACE)) {
 
 		// 弾の速度

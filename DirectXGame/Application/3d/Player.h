@@ -29,6 +29,7 @@ public:
 	~Player();
 
 public:
+	// イージング
 	float easeInQuad(float x);
 
 public: // メンバ関数
@@ -74,21 +75,26 @@ public: // メンバ変数
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
+	// プレイヤーの移動量
 	DirectX::XMFLOAT3 move = { 0,0.25,0 };
+	// プレイヤーの座標
 	DirectX::XMFLOAT3 pPosition = { 0,0,0 };
+	// プレイヤーの回転
 	DirectX::XMFLOAT3 pRotation = { 0,0,0 };
+	// プレイヤーのサイズ
 	DirectX::XMFLOAT3 pScale = { 1,1,1 };
-	DirectX::XMFLOAT3 position[5]{};
-	DirectX::XMFLOAT3 rotation[5]{};
-	DirectX::XMFLOAT3 scale[5]{};
-	DirectX::XMFLOAT3 eye[5]{};
-	DirectX::XMFLOAT3 target[5]{};
+	// プレイヤーの弾の座標
 	DirectX::XMFLOAT3 pBulletP = { 0,0,0 };
 
+	// 右への移動フラグ
 	bool isRightMove = false;
+	// 左への移動フラグ
 	bool isLeftMove = false;
+	// 上への移動フラグ
 	bool isUpMove = false;
+	// 下への移動フラグ
 	bool isDownMove = false;
+	// イージング変数
 	float time = 0.0f;
 	float frame = 0.0f;
 	float endFrame = 2.0f;

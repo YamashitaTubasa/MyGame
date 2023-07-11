@@ -58,12 +58,16 @@ private:
 	// 自キャラの弾の処理
 	BulletMove bulletMove;
 
+	// 自キャラの弾の座標
 	DirectX::XMFLOAT3 pBulletPos = { 0,0,0 };
+	// 自キャラの弾の回転
 	DirectX::XMFLOAT3 pBulletRot = { 0,0,0 };
+	// 自キャラの弾のサイズ
 	DirectX::XMFLOAT3 pBulletSca = { 1,1,1 };
+	// 自キャラの弾の速度
+	DirectX::XMFLOAT3 velocity_ = { 0,0,0 };
 	DirectX::XMFLOAT3 eye[5]{};
 	DirectX::XMFLOAT3 target[5]{};
-	DirectX::XMFLOAT3 velocity_ = { 0,0,0 };
 
 	// デスタイマー
 	int32_t deathTimer_ = kLifeTime;

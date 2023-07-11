@@ -211,6 +211,12 @@ void GameScene::Draw()
 	X->SpriteDraw(cmdList, spriteCommon_);
 	// 1の描画
 	number[1]->SpriteDraw(cmdList, spriteCommon_);
+	// 敵のHPバーの描画
+	enemyHpBar->SpriteDraw(cmdList, spriteCommon_);
+	// 敵のHPの背景描画
+	enemyHpBack->SpriteDraw(cmdList, spriteCommon_);
+	// 敵のHPの描画
+	enemyHp->SpriteDraw(cmdList, spriteCommon_);
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -320,6 +326,36 @@ void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	number[1]->SetRotation(0.0f);
 	number[1]->SpriteTransferVertexBuffer(number[1], spriteCommon, 6);
 	number[1]->SpriteUpdate(number[1], spriteCommon_);
+	// 敵のHP
+	enemyHp = new Sprite();
+	enemyHp->LoadTexture(spriteCommon_, 7, L"Resources/Image/enemyHp.png");
+	enemyHp->SpriteCreate(1280, 720, 7, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHp->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHp->SetPosition(enemyHpPosition);
+	enemyHp->SetScale(enemyHpScale);
+	enemyHp->SetRotation(0.0f);
+	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon, 7);
+	enemyHp->SpriteUpdate(enemyHp, spriteCommon_);
+	// 敵のHPバー
+	enemyHpBar = new Sprite();
+	enemyHpBar->LoadTexture(spriteCommon_, 8, L"Resources/Image/enemyHpBar.png");
+	enemyHpBar->SpriteCreate(1280, 720, 8, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHpBar->SetPosition(enemyHpBarPosition);
+	enemyHpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
+	enemyHpBar->SetRotation(0.0f);
+	enemyHpBar->SpriteTransferVertexBuffer(enemyHpBar, spriteCommon, 8);
+	enemyHpBar->SpriteUpdate(enemyHpBar, spriteCommon_);
+	// 敵のHP背景
+	enemyHpBack = new Sprite();
+	enemyHpBack->LoadTexture(spriteCommon_, 9, L"Resources/Image/enemyHpBack.png");
+	enemyHpBack->SpriteCreate(1280, 720, 9, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHpBack->SetPosition(enemyHpBackPosition);
+	enemyHpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	enemyHpBack->SetRotation(0.0f);
+	enemyHpBack->SpriteTransferVertexBuffer(enemyHpBack, spriteCommon, 9);
+	enemyHpBack->SpriteUpdate(enemyHpBack, spriteCommon_);
 }
 
 void GameScene::ParticleInitialize()
