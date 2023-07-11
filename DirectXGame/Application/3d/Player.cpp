@@ -53,6 +53,29 @@ void Player::Update()
 	// 3Dオブジェクト更新
 	playerO3->Update();
 
+	// デスフラグの立った弾を削除
+	pBullets.remove_if([](PlayerBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+
+			return true;
+		}
+		return false;
+	});
+
+	//===== プレイヤーの移動範囲の制限 =====//
+	// 左右への移動範囲制限
+	if (pPosition.x <= -8) {
+		pPosition.x += 0.25f;
+	}else if(pPosition.x >= 8){
+		pPosition.x -= 0.25f;
+	}
+	// 上下への移動範囲制限
+	if (pPosition.y <= -6) {
+		pPosition.y += 0.25f;
+	}else if(pPosition.y >= 6){
+		pPosition.y -= 0.25f;
+	}
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
 	if (input->PushKey(DIK_W)) {

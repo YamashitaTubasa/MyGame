@@ -17,13 +17,15 @@ struct BulletMove {
 class PlayerBullet
 {
 public:
-
-public:
 	// コンストラクタ
 	PlayerBullet();
 
 	// デストラクタ
 	~PlayerBullet();
+
+private: // 定数
+	// 寿命
+	static const int32_t kLifeTime = 60 * 5;
 
 public: // メンバ関数
 	/// <summary>
@@ -42,7 +44,11 @@ public: // メンバ関数
 	void Draw();
 
 public: // ゲッター
+	// 座標の取得
 	DirectX::XMFLOAT3 GetPosition() const { return pBulletPos; }
+
+	// デスフラグの取得
+	bool IsDead() const { return isDead_; }
 
 private:
 	// モデル
@@ -58,5 +64,10 @@ private:
 	DirectX::XMFLOAT3 eye[5]{};
 	DirectX::XMFLOAT3 target[5]{};
 	DirectX::XMFLOAT3 velocity_ = { 0,0,0 };
+
+	// デスタイマー
+	int32_t deathTimer_ = kLifeTime;
+	// デスフラグ
+	bool isDead_ = false;
 };
 

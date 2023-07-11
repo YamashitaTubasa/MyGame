@@ -101,11 +101,11 @@ void GameScene::Update()
 	// 敵キャラ更新
 	enemy->Update();
 
-	/*if (input->TriggerKey(DIK_O)) {
+	if (input->TriggerKey(DIK_O)) {
 		DirectX::XMFLOAT3 a = player->GetpBulletP();
 	}
 
-	if (CheckCollision(player->GetpBulletP(), enemy->GetPosition())) {
+	/*if (CheckCollision(player->GetpBulletP(), enemy->GetPosition())) {
 		isEnemyDeth = true;
 	}*/
 

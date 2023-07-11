@@ -35,6 +35,11 @@ void PlayerBullet::Update()
 	// 3Dオブジェクト更新
 	bulletO3->Update();
 
+	// 時間経過でデス
+	if (--deathTimer_ <= 0) {
+		isDead_ = true;
+	}
+
 	// 弾に速度追加
 	pBulletPos.z += velocity_.z;
 

@@ -53,7 +53,9 @@ public: // メンバ関数
 	void Attack();
 
 public: // ゲッター
+	// プレイヤーの座標の取得
 	const DirectX::XMFLOAT3& GetPositon() { return pPosition; }
+	// プレイヤーの弾の座標の取得
 	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP; }
 	
 public: // メンバ変数
