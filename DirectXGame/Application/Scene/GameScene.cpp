@@ -17,7 +17,7 @@ GameScene::~GameScene()
 	delete sprite;
 }
 
-void GameScene::Initialize(SpriteCommon& spriteCommon)
+void GameScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 {
 	winApp = WinApp::GetInstance();
 	input = Input::GetInstance();
@@ -25,13 +25,14 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	postEffect = PostEffect::GetInstance();
 
 	// カメラ
-	camera = new Camera();
-	camera->Initialize();
+	/*camera = new Camera();
+	camera->Initialize();*/
+	this->camera_ = camera;
 
 	// デバイスをセット
 	FbxObject3d::SetDevice(dXCommon->GetDevice());
 	// カメラをセット
-	FbxObject3d::SetCamera(camera);
+	FbxObject3d::SetCamera(camera_);
 	// グラフィックスパイプライン生成
 	FbxObject3d::CreateGraphicsPipeline();
 
@@ -49,22 +50,22 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	// カメラの注視点をセット
 	target[0] = { 0,2.5f,0 };
 	eye[0] = { 0,0,-10 };
-	camera->SetTarget(target[0]);
-	camera->SetEye(eye[0]);
-	camera->SetDistance(8.0f);
+	camera_->SetTarget(target[0]);
+	camera_->SetEye(eye[0]);
+	camera_->SetDistance(8.0f);
 
 	// 自キャラ生成
 	player = new Player();
-	Player::SetCamera(camera);
-	player->Initialize(camera);
+	Player::SetCamera(camera_);
+	player->Initialize(camera_);
 
 	// 敵キャラ生成
 	enemy = new Enemy();
-	enemy->Initialize(camera);
+	enemy->Initialize(camera_);
 
 	// 天球の初期化
 	skydome = new Skydome();
-	skydome->Initialize(camera);
+	skydome->Initialize(camera_);
 
 	// OBJの名前を指定してモデルデータを読み込む
 	particle = Particle::LoadFromOBJ("effect1.png");
@@ -89,7 +90,7 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 void GameScene::Update()
 {
 	// カメラの更新
-	camera->Update();
+	camera_->Update();
 
 	// FBXオブジェクトの更新
 	fbxObject->Update();
@@ -118,7 +119,7 @@ void GameScene::Update()
 	if (input->PushKey(DIK_DOWN)) {
 		eye[0].y -= 0.5;
 	}
-	camera->SetEye(eye[0]);
+	camera_->SetEye(eye[0]);
 
 	// オブジェクトの更新
 	ObjectUpdate();
@@ -153,7 +154,7 @@ void GameScene::Update()
 	particleMan1->Update();
 }
 
-void GameScene::Draw()
+void GameScene::Draw(Camera* camera)
 {
 	// コマンドライン取得
 	ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
@@ -164,9 +165,9 @@ void GameScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	skydome->Draw();
-	player->Draw();
-	enemy->Draw();
+	skydome->Draw(camera);
+	player->Draw(camera);
+	enemy->Draw(camera);
 
 	// FBX3Dオブジェクトの描画
 	//fbxObject->Draw(dXCommon->GetCommandList());

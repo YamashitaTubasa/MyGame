@@ -42,7 +42,7 @@ void PlayerBullet::Update()
 	bulletO3->SetPosition(pBulletPos);
 }
 
-void PlayerBullet::Draw()
+void PlayerBullet::Draw(Camera* camera)
 {
 	bulletO3->Draw(camera);
 }

@@ -43,7 +43,7 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(Camera* camera);
 
 private: // 定数
 	// カメラ

@@ -7,7 +7,7 @@ void MyGame::Initialize()
 
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
-	gameScene->Initialize(spriteCommon);
+	gameScene->Initialize(camera, spriteCommon);
 }
 
 void MyGame::Finalize()
@@ -43,7 +43,7 @@ void MyGame::Draw()
 	postEffect->PreDrawScene(dXCommon->GetCommandList());
 
 	//=== ゲームシーン描画 ===//
-	gameScene->Draw();
+	gameScene->Draw(camera);
 
 	// レンダーテクスチャの後処理
 	postEffect->PostDrawScene(dXCommon->GetCommandList());

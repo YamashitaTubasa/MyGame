@@ -233,7 +233,7 @@
     <None Include="Resources\shaders\Basic.hlsli">
       <Filter>シェーダーファイル</Filter>
     </None>
-    <None Include="Resources\shaders\OBJShaderHeader.hlsli">
+    <None Include="Resources\shaders\OBJ.hlsli">
       <Filter>シェーダーファイル\OBJ</Filter>
     </None>
     <None Include="Resources\shaders\Sprite.hlsli">
@@ -256,10 +256,10 @@
     <FxCompile Include="Resources\shaders\BasicVS.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJPixelShader.hlsl">
+    <FxCompile Include="Resources\shaders\OBJPS.hlsl">
       <Filter>シェーダーファイル\OBJ</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJVertexShader.hlsl">
+    <FxCompile Include="Resources\shaders\OBJVS.hlsl">
       <Filter>シェーダーファイル\OBJ</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">

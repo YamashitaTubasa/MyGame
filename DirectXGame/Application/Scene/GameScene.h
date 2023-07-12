@@ -37,7 +37,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="dXCommon"></param>
-	void Initialize(SpriteCommon& spriteCommon);
+	void Initialize(Camera* camera, SpriteCommon& spriteCommon);
 
 	/// <summary>
 	/// 更新
@@ -47,7 +47,7 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(Camera* camera);
 
 	/// <summary>
 	/// 解放
@@ -119,7 +119,7 @@ private:
 
 	ImGuiManager* imGuiManager = nullptr;
 	GameTitleScene* gTS = nullptr;
-	Camera* camera = nullptr;
+	Camera* camera_ = nullptr;
 	FbxModel* fbxModel = nullptr;
 	FbxObject3d* fbxObject = nullptr;
 	PostEffect* postEffect = nullptr;

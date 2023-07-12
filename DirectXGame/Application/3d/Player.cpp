@@ -141,13 +141,13 @@ void Player::Update()
 	}
 }
 
-void Player::Draw()
+void Player::Draw(Camera* camera)
 {
-	playerO3->Draw(camera_);
+	playerO3->Draw(camera);
 
 	// 弾描画
 	for (PlayerBullet* bullet : pBullets) {
-		bullet->Draw();
+		bullet->Draw(camera);
 	}
 }
 

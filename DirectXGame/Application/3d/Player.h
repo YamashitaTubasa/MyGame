@@ -46,7 +46,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw(Camera* camera);
 
 	/// <summary>
 	/// 攻撃

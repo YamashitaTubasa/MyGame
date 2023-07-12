@@ -39,7 +39,7 @@ void Skydome::Update()
 	skydomeO3->Update();
 }
 
-void Skydome::Draw()
+void Skydome::Draw(Camera* camera)
 {
 	// 天球の描画
 	skydomeO3->Draw(camera);

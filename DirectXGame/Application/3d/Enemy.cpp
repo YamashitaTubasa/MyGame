@@ -40,7 +40,7 @@ void Enemy::Update()
 	enemyO3->Update();
 }
 
-void Enemy::Draw()
+void Enemy::Draw(Camera* camera)
 {
 	enemyO3->Draw(camera);
 }
