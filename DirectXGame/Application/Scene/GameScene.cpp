@@ -76,9 +76,6 @@ void GameScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 	// パーティクルマネージャーにパーティクルを割り当てる
 	particleMan->SetModel(particle);
 	particleMan1->SetModel(particle1);
-
-	// オブジェクトの初期化
-	ObjectInitialize();
 	
 	// スプライトの初期化
 	SpriteInitialize(spriteCommon);
@@ -121,9 +118,6 @@ void GameScene::Update()
 	}
 	camera_->SetEye(eye[0]);
 
-	// オブジェクトの更新
-	ObjectUpdate();
-	
 	if (input->TriggerKey(DIK_U)) {
 		particl = true;
 	}
@@ -216,22 +210,6 @@ void GameScene::Draw(Camera* camera)
 
 void GameScene::Finalize()
 {
-	// オブジェクトの解放
-	ObjectFinalize();
-}
-
-void GameScene::ObjectInitialize() 
-{
-	
-}
-
-void GameScene::ObjectUpdate()
-{
-	
-}
-
-void GameScene::ObjectFinalize()
-{
 	
 }
 
@@ -305,45 +283,6 @@ void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	number[1]->SpriteUpdate(number[1], spriteCommon_);
 }
 
-void GameScene::ParticleInitialize()
-{
-	//for (int i = 0; i < 100; i++) {
-	//	// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-	//	const float md_pos = 10.0f;
-	//	XMFLOAT3 pos{};
-	//	float posx = -5;
-	//	pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posx;
-	//	pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-	//	pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-	//	// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
-	//	const float md_vel = 0.1f;
-	//	XMFLOAT3 vel{};
-	//	vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-	//	vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-	//	vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-	//	// 重力に見立ててYのみ[-0.001f,0]でランダム分布
-	//	XMFLOAT3 acc{};
-	//	const float md_acc = 0.001f;
-	//	acc.y = (float)rand() / RAND_MAX * md_acc;
-
-	//	// 追加
-	//	particleMan->Add(20, pos, vel, acc, 1.0f, 0.0);
-	//}
-}
-
-void GameScene::ParticleUpdate()
-{
-	//// カメラ移動
-	//if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
-	//{
-	//	if (input->PushKey(DIK_W)) { ParticleManager::CameraMoveEyeVector({ 0.0f,+1.0f,0.0f }); }
-	//	else if (input->PushKey(DIK_S)) { ParticleManager::CameraMoveEyeVector({ 0.0f,-1.0f,0.0f }); }
-	//	if (input->PushKey(DIK_D)) { ParticleManager::CameraMoveEyeVector({ +1.0f,0.0f,0.0f }); }
-	//	else if (input->PushKey(DIK_A)) { ParticleManager::CameraMoveEyeVector({ -1.0f,0.0f,0.0f }); }
-	//}
-
-	//particleMan->Update();
-}
 
 void GameScene::GameReset()
 {

@@ -55,30 +55,9 @@ public:
 	void Finalize();
 
 	/// <summary>
-	/// オブジェクトの初期化
-	/// </summary>
-	/// <param name="dXCommon"></param>
-	void ObjectInitialize();
-
-	/// <summary>
-	/// オブジェクトの更新
-	/// </summary>
-	void ObjectUpdate();
-
-	/// <summary>
-	/// オブジェクトの解放
-	/// </summary>
-	void ObjectFinalize();
-
-	/// <summary>
 	/// スプライト初期化
 	/// </summary>
 	void SpriteInitialize(SpriteCommon& spriteCommon);
-
-	// パーティクルの初期化
-	void ParticleInitialize();
-
-	void ParticleUpdate();
 
 	/// <summary>
 	/// ゲームのリセット
