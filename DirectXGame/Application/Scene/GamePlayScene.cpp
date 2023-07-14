@@ -1,13 +1,13 @@
-#include "GameScene.h"
+#include "GamePlayScene.h"
 
 using namespace DirectX;
 using namespace std;
 
-GameScene::GameScene()
+GamePlayScene::GamePlayScene()
 {
 }
 
-GameScene::~GameScene()
+GamePlayScene::~GamePlayScene()
 {
 	delete particleMan;
 	delete particleMan1;
@@ -17,7 +17,7 @@ GameScene::~GameScene()
 	delete sprite;
 }
 
-void GameScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
+void GamePlayScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 {
 	winApp = WinApp::GetInstance();
 	input = Input::GetInstance();
@@ -84,7 +84,7 @@ void GameScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 	fbxObject->PlayAnimation();
 }
 
-void GameScene::Update()
+void GamePlayScene::Update()
 {
 	// カメラの更新
 	camera_->Update();
@@ -148,7 +148,7 @@ void GameScene::Update()
 	particleMan1->Update();
 }
 
-void GameScene::Draw(Camera* camera)
+void GamePlayScene::Draw(Camera* camera)
 {
 	// コマンドライン取得
 	ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
@@ -208,12 +208,12 @@ void GameScene::Draw(Camera* camera)
 #pragma endregion
 }
 
-void GameScene::Finalize()
+void GamePlayScene::Finalize()
 {
 	
 }
 
-void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
+void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 {
 	// スプライト
 	sprite = new Sprite();
@@ -284,7 +284,7 @@ void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
 }
 
 
-void GameScene::GameReset()
+void GamePlayScene::GameReset()
 {
 	// 3Dオブジェクトの位置を指定
 	position[0] = { -20,-5,0 };
@@ -301,7 +301,7 @@ void GameScene::GameReset()
 	time = 0;
 }
 
-int GameScene::CheckCollision(XMFLOAT3 position, XMFLOAT3 scale) {
+int GamePlayScene::CheckCollision(XMFLOAT3 position, XMFLOAT3 scale) {
 	////オブジェクトの座標
 	//float objLeftX = position.x - scale.x;
 	//float objRightX = position.x + scale.x;

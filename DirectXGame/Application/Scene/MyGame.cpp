@@ -6,7 +6,7 @@ void MyGame::Initialize()
 	TYFramework::Initialize();
 
 	// ゲームシーンの初期化
-	gameScene = new GameScene();
+	gameScene = new GamePlayScene();
 	gameScene->Initialize(camera, spriteCommon);
 }
 

@@ -6,7 +6,7 @@
 #include "Sprite.h"
 #include "Model.h"
 #include "Object3d.h"
-#include "GameScene.h"
+#include "GamePlayScene.h"
 #include "Camera.h"
 #include "ImGuiManager.h"
 #include "PostEffect.h"

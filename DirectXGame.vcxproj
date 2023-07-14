@@ -135,7 +135,7 @@
     <ClCompile Include="DirectXGame\Engin\Platform\DirectXCommon.cpp" />
     <ClCompile Include="DirectXGame\Engin\Platform\FPSFixed.cpp" />
     <ClCompile Include="DirectXGame\Engin\Platform\WinApp.cpp" />
-    <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
+    <ClCompile Include="DirectXGame\Application\Scene\GamePlayScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -255,7 +255,7 @@
     <ClInclude Include="DirectXGame\Engin\Platform\FPSFixed.h" />
     <ClInclude Include="DirectXGame\Engin\Platform\WinApp.h" />
     <ClInclude Include="DirectXGame\Engin\Scene\TYFramework.h" />
-    <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\GamePlayScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameTitleScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\MyGame.h" />
     <ClInclude Include="DirectXGame\Engin\ImGui\ImGuiManager.h" />

@@ -17,7 +17,7 @@
 #include "Enemy.h"
 #include "Skydome.h"
 
-class GameScene
+class GamePlayScene
 {
 private:
 	enum Scene {
@@ -29,8 +29,8 @@ private:
 	Scene scene;
 
 public:
-	GameScene();
-	~GameScene();
+	GamePlayScene();
+	~GamePlayScene();
 
 public:
 	/// <summary>
