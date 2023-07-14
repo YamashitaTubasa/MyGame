@@ -5,19 +5,14 @@ void MyGame::Initialize()
 	// 基底クラスの初期化処理
 	TYFramework::Initialize();
 
-	//dXCommon = DirectXCommon::GetInstance();
-
-	// ゲームシーンの初期化
-	gameScene = new GameScene();
-	gameScene->Initialize(spriteCommon);
+	// 最初のシーンの生成
+	GameBaseScene* scene = new GameTitleScene();
+	// シーンマネージャに最初のシーンをセット
+	sceneManager_->SetNextScene(scene);
 }
 
 void MyGame::Finalize()
 {
-	// ゲームシーンの解放
-	gameScene->Finalize();
-	delete gameScene;
-
 	// 基底クラスの終了処理
 	TYFramework::Finalize();
 }
@@ -26,15 +21,6 @@ void MyGame::Update()
 {
 	// 基底クラスの更新処理
 	TYFramework::Update();
-
-	// ImGui受付開始
-	imGuiManager->Begin();
-
-	// ゲームシーンの更新
-	gameScene->Update();
-
-	// ImGui受付終了
-	imGuiManager->End();
 }
 
 void MyGame::Draw()
@@ -44,8 +30,8 @@ void MyGame::Draw()
 	// レンダーテクスチャの前処理
 	postEffect->PreDrawScene(dXCommon->GetCommandList());
 
-	//=== ゲームシーン描画 ===//
-	gameScene->Draw();
+	//=== シーンマネージャの描画 ===//
+	sceneManager_->Draw();
 
 	// レンダーテクスチャの後処理
 	postEffect->PostDrawScene(dXCommon->GetCommandList());

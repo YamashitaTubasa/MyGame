@@ -42,6 +42,9 @@ void TYFramework::Initialize()
 	imGuiManager = new ImGuiManager();
 	imGuiManager->Initialize(dXCommon, winApp);
 
+	// シーンマネージャの生成
+	sceneManager_ = GameSceneManager::GetInstance();
+
 	// Cameraの初期化
 	/*camera = new Camera();
 	camera->Initialize();*/
@@ -86,4 +89,13 @@ void TYFramework::Update()
 
 	// 入力の更新
 	input->Update();
+
+	// ImGui受付開始
+	imGuiManager->Begin();
+
+	// シーンマネージャの更新
+	sceneManager_->Update();
+
+	// ImGui受付終了
+	imGuiManager->End();
 }

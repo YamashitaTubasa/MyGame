@@ -1,13 +1,13 @@
-#include "GameScene.h"
+#include "GamePlayScene.h"
 
 using namespace DirectX;
 using namespace std;
 
-GameScene::GameScene()
+GamePlayScene::GamePlayScene()
 {
 }
 
-GameScene::~GameScene()
+GamePlayScene::~GamePlayScene()
 {
 	delete particleMan;
 	delete particleMan1;
@@ -17,7 +17,7 @@ GameScene::~GameScene()
 	delete sprite;
 }
 
-void GameScene::Initialize(SpriteCommon& spriteCommon)
+void GamePlayScene::Initialize(SpriteCommon& spriteCommon)
 {
 	winApp = WinApp::GetInstance();
 	input = Input::GetInstance();
@@ -84,7 +84,7 @@ void GameScene::Initialize(SpriteCommon& spriteCommon)
 	fbxObject->PlayAnimation();
 }
 
-void GameScene::Update()
+void GamePlayScene::Update()
 {
 	// カメラの更新
 	camera->Update();
@@ -156,7 +156,7 @@ void GameScene::Update()
 	particleMan1->Update();
 }
 
-void GameScene::Draw()
+void GamePlayScene::Draw()
 {
 	// コマンドライン取得
 	ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
@@ -224,13 +224,13 @@ void GameScene::Draw()
 #pragma endregion
 }
 
-void GameScene::Finalize()
+void GamePlayScene::Finalize()
 {
 	// オブジェクトの解放
 	ObjectFinalize();
 }
 
-void GameScene::ObjectInitialize() 
+void GamePlayScene::ObjectInitialize()
 {
 	// OBJからモデルデータを読み込む
 	skydomeM = Model::LoadFromOBJ("skydome");
@@ -244,13 +244,13 @@ void GameScene::ObjectInitialize()
 	skydomeO3->SetRotation({0,0,0});
 }
 
-void GameScene::ObjectUpdate()
+void GamePlayScene::ObjectUpdate()
 {
 	// 3Dオブジェクト更新
 	skydomeO3->Update();
 }
 
-void GameScene::ObjectFinalize()
+void GamePlayScene::ObjectFinalize()
 {
 	// 3Dオブジェクト解放
 	delete skydomeO3;
@@ -258,7 +258,7 @@ void GameScene::ObjectFinalize()
 	delete skydomeM;
 }
 
-void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
+void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 {
 	// スプライト
 	sprite = new Sprite();
@@ -358,7 +358,7 @@ void GameScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	enemyHpBack->SpriteUpdate(enemyHpBack, spriteCommon_);
 }
 
-void GameScene::ParticleInitialize()
+void GamePlayScene::ParticleInitialize()
 {
 	//for (int i = 0; i < 100; i++) {
 	//	// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
@@ -384,7 +384,7 @@ void GameScene::ParticleInitialize()
 	//}
 }
 
-void GameScene::ParticleUpdate()
+void GamePlayScene::ParticleUpdate()
 {
 	//// カメラ移動
 	//if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
@@ -398,7 +398,7 @@ void GameScene::ParticleUpdate()
 	//particleMan->Update();
 }
 
-void GameScene::GameReset()
+void GamePlayScene::GameReset()
 {
 	// 3Dオブジェクトの位置を指定
 	position[0] = { -20,-5,0 };
@@ -415,7 +415,7 @@ void GameScene::GameReset()
 	time = 0;
 }
 
-bool GameScene::CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1)
+bool GamePlayScene::CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1)
 {
 	if(std::pow((object1.x - object.x),2.0f) + std::pow((object1.y - object.y),2.0f) + 
 		std::pow((object1.z - object.z), 2.0f) <= std::pow((1 + 1), 2.0f)){

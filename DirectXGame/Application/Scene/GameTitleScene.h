@@ -1,24 +1,56 @@
 #pragma once
+
 #include "ParticleManager.h"
 #include "Input.h"
 #include "DirectXCommon.h"
+#include "GameBaseScene.h"
+#include "Sprite.h"
+#include "GameSceneManager.h"
+#include "GamePlayScene.h"
+
 #include <DirectXMath.h>
 
-class GameTitleScene 
+class GameTitleScene : public GameBaseScene
 {
-public:
+public: // メンバ関数
+	// コンストラクタ
 	GameTitleScene();
+	// デストラクタ
 	~GameTitleScene();
 
-public:
-	void Initialize();
+public: // メンバ関数
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize(SpriteCommon& spriteCommon) override;
 
-	void Update();
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update() override;
 
-	void Draw(DirectXCommon* dXCommon);
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="dXCommon"></param>
+	void Draw() override;
 
-private:
-	ParticleManager* particleMan1 = nullptr;
-	Input* input = nullptr;
-	DirectXCommon* dXCommon = nullptr;
+	/// <summary>
+	/// 解放
+	/// </summary>
+	void Finalize() override;
+
+private: // メンバ変数
+	ParticleManager* particleMan1_ = nullptr;
+	Input* input_ = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
+	
+	// スプライト
+	Sprite* sprite_ = nullptr;
+	Sprite* title_ = nullptr;
+	SpriteCommon spriteCommon_;
+
+	DirectX::XMFLOAT3 titlePos_ = { 10,10,10 };
+	DirectX::XMFLOAT2 titleScale_ = { 500,20 };
+	DirectX::XMFLOAT3 titleRot_ = { 0,0,0 };
 };

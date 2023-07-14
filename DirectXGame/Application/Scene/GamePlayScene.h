@@ -9,7 +9,6 @@
 #include "ParticleManager.h"
 #include "ImGuiManager.h"
 #include "Vector3.h"
-#include "GameTitleScene.h"
 #include "Camera.h"
 #include "FbxLoader.h"
 #include "FbxObject3d.h"
@@ -17,8 +16,9 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "PlayerBullet.h"
+#include "GameBaseScene.h"
 
-class GameScene
+class GamePlayScene : public GameBaseScene
 {
 private:
 	enum Scene {
@@ -30,30 +30,30 @@ private:
 	Scene scene;
 
 public:
-	GameScene();
-	~GameScene();
+	GamePlayScene();
+	~GamePlayScene();
 
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="dXCommon"></param>
-	void Initialize(SpriteCommon& spriteCommon);
+	void Initialize(SpriteCommon& spriteCommon) override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update() override;
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	void Draw() override;
 
 	/// <summary>
 	/// 解放
 	/// </summary>
-	void Finalize();
+	void Finalize() override;
 
 	/// <summary>
 	/// オブジェクトの初期化
@@ -126,7 +126,6 @@ private:
 	DirectXCommon* dXCommon = nullptr;
 
 	ImGuiManager* imGuiManager = nullptr;
-	GameTitleScene* gTS = nullptr;
 	Camera* camera = nullptr;
 	FbxModel* fbxModel = nullptr;
 	FbxObject3d* fbxObject = nullptr;

@@ -6,10 +6,12 @@
 #include "Sprite.h"
 #include "Model.h"
 #include "Object3d.h"
-#include "GameScene.h"
+#include "GameSceneManager.h"
 #include "Camera.h"
 #include "ImGuiManager.h"
 #include "PostEffect.h"
+#include "ParticleManager.h"
+#include "FbxLoader.h"
 
 class TYFramework
 {
@@ -50,5 +52,6 @@ protected:
 	ImGuiManager* imGuiManager = nullptr;
 	Camera* camera = nullptr;
 	PostEffect* postEffect = nullptr;
+	GameSceneManager* sceneManager_ = nullptr;
 };
 

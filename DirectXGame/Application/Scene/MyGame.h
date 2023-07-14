@@ -1,7 +1,7 @@
 #pragma once
 
 #include "TYFramework.h"
-#include "GameScene.h"
+#include "GameTitleScene.h"
 
 // ゲーム全体
 class MyGame : public TYFramework
@@ -20,5 +20,5 @@ public: // メンバ関数
 	void Draw() override;
 
 private:
-	GameScene* gameScene = nullptr;
+	GameTitleScene* gtScene_ = nullptr;
 };
