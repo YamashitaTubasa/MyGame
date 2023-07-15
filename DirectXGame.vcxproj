@@ -107,6 +107,7 @@
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Skydome.cpp" />
+    <ClCompile Include="DirectXGame\Application\Scene\GameBaseScene.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\PostEffect.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxLoader.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
     <ClInclude Include="DirectXGame\Application\3d\Skydome.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\GameBaseScene.h" />
     <ClInclude Include="DirectXGame\Engin\2d\PostEffect.h" />
     <ClInclude Include="DirectXGame\Engin\2d\Sprite.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxLoader.h" />
