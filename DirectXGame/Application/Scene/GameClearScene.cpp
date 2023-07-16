@@ -1,16 +1,17 @@
-#include "GameTitleScene.h"
+#include "GameClearScene.h"
+
 
 using namespace DirectX;
 
-GameTitleScene::GameTitleScene()
+GameClearScene::GameClearScene()
 {
 }
 
-GameTitleScene::~GameTitleScene()
+GameClearScene::~GameClearScene()
 {
 }
 
-void GameTitleScene::Initialize(SpriteCommon& spriteCommon)
+void GameClearScene::Initialize(SpriteCommon& spriteCommon)
 {
 	dxCommon_ = DirectXCommon::GetInstance();
 
@@ -22,7 +23,7 @@ void GameTitleScene::Initialize(SpriteCommon& spriteCommon)
 
 	// タイトル
 	title_ = new Sprite();
-	title_->LoadTexture(spriteCommon_, 1, L"Resources/Image/title.png");
+	title_->LoadTexture(spriteCommon_, 1, L"Resources/Image/clear.png");
 	title_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	title_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	title_->SetPosition(titlePos_);
@@ -33,17 +34,17 @@ void GameTitleScene::Initialize(SpriteCommon& spriteCommon)
 
 }
 
-void GameTitleScene::Update()
+void GameClearScene::Update()
 {
 	// 十字キーの右を押したら
 	if (Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
 		// ゲームプレイシーン（次シーン）を生成
-		GameBaseScene* scene = new GamePlayScene();
+		GameBaseScene* scene = new GameTitleScene();
 		GameSceneManager::GetInstance()->SetNextScene(scene);
 	}
 }
 
-void GameTitleScene::Draw()
+void GameClearScene::Draw()
 {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
@@ -53,11 +54,11 @@ void GameTitleScene::Draw()
 
 	// タイトルの描画
 	title_->SpriteDraw(cmdList, spriteCommon_);
-	
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 }
 
-void GameTitleScene::Finalize()
+void GameClearScene::Finalize()
 {
 }

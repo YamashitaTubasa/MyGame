@@ -17,6 +17,8 @@
 #include "Enemy.h"
 #include "PlayerBullet.h"
 #include "GameBaseScene.h"
+#include "GameSceneManager.h"
+#include "GameClearScene.h"
 
 class GamePlayScene : public GameBaseScene
 {

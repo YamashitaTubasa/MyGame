@@ -11,8 +11,8 @@ GamePlayScene::~GamePlayScene()
 {
 	delete particleMan;
 	delete particleMan1;
-	delete fbxModel;
-	delete fbxObject;
+	delete skydomeM;
+	delete skydomeO3;
 	delete player;
 	delete sprite;
 }
@@ -86,6 +86,13 @@ void GamePlayScene::Initialize(SpriteCommon& spriteCommon)
 
 void GamePlayScene::Update()
 {
+	// 十字キーの右を押したら
+	if (Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
+		// ゲームプレイシーン（次シーン）を生成
+		GameBaseScene* scene = new GameClearScene();
+		GameSceneManager::GetInstance()->SetNextScene(scene);
+	}
+
 	// カメラの更新
 	camera->Update();
 
@@ -252,10 +259,6 @@ void GamePlayScene::ObjectUpdate()
 
 void GamePlayScene::ObjectFinalize()
 {
-	// 3Dオブジェクト解放
-	delete skydomeO3;
-	// 3Dモデル解放
-	delete skydomeM;
 }
 
 void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)

@@ -107,7 +107,7 @@
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameBaseScene.cpp" />
-    <ClCompile Include="DirectXGame\Application\Scene\GameSceneManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\Scene\GameClearScene.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\PostEffect.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxLoader.cpp" />
@@ -125,6 +125,7 @@
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Quaternion.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Vector4.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Scene\GameSceneManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Scene\TYFramework.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameTitleScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\MyGame.cpp" />
@@ -231,7 +232,7 @@
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameBaseScene.h" />
-    <ClInclude Include="DirectXGame\Application\Scene\GameSceneManager.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\GameClearScene.h" />
     <ClInclude Include="DirectXGame\Engin\2d\PostEffect.h" />
     <ClInclude Include="DirectXGame\Engin\2d\Sprite.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxLoader.h" />
@@ -256,6 +257,7 @@
     <ClInclude Include="DirectXGame\Engin\Platform\DirectXCommon.h" />
     <ClInclude Include="DirectXGame\Engin\Platform\FPSFixed.h" />
     <ClInclude Include="DirectXGame\Engin\Platform\WinApp.h" />
+    <ClInclude Include="DirectXGame\Engin\Scene\GameSceneManager.h" />
     <ClInclude Include="DirectXGame\Engin\Scene\TYFramework.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GamePlayScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameTitleScene.h" />

@@ -6,17 +6,17 @@
 #include "GameBaseScene.h"
 #include "Sprite.h"
 #include "GameSceneManager.h"
-#include "GamePlayScene.h"
+#include "GameTitleScene.h"
 
 #include <DirectXMath.h>
 
-class GameTitleScene : public GameBaseScene
+class GameClearScene : public GameBaseScene
 {
 public: // メンバ関数
 	// コンストラクタ
-	GameTitleScene();
+	GameClearScene();
 	// デストラクタ
-	~GameTitleScene();
+	~GameClearScene();
 
 public: // メンバ関数
 	/// <summary>
@@ -44,7 +44,7 @@ private: // メンバ変数
 	ParticleManager* particleMan1_ = nullptr;
 	Input* input_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
-	
+
 	// スプライト
 	Sprite* sprite_ = nullptr;
 	Sprite* title_ = nullptr;
