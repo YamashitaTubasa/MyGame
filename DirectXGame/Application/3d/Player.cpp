@@ -33,10 +33,13 @@ void Player::Initialize(Camera* camera)
 
 	// OBJからモデルデータを読み込む
 	playerM = Model::LoadFromOBJ("fighter");
+	reticleM = Model::LoadFromOBJ("reticle1");
 	// 3Dオブジェクト生成
 	playerO3 = Object3d::Create();
+	reticleO3 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
 	playerO3->SetModel(playerM);
+	reticleO3->SetModel(reticleM);
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
@@ -45,13 +48,19 @@ void Player::Initialize(Camera* camera)
 	playerO3->SetPosition(pPosition);
 	playerO3->SetScale({ 5, 5, 5 });
 	playerO3->SetRotation(pRotation);
-	//object3d[0]->SetEye(eye[0]);
+	rPosition = { 0,-3,-30 };
+	rRotation = { 0,90,0 };
+	reticleO3->SetPosition(rPosition);
+	reticleO3->SetScale({ 0.3f, 0.3f, 0.3f });
+	reticleO3->SetRotation(rRotation);
+	
 }
 
 void Player::Update()
 {
 	// 3Dオブジェクト更新
 	playerO3->Update();
+	reticleO3->Update();
 
 	// デスフラグの立った弾を削除
 	pBullets.remove_if([](PlayerBullet* bullet) {
@@ -80,6 +89,7 @@ void Player::Update()
 	// 上への移動処理
 	if (input->PushKey(DIK_W)) {
 		pPosition.y += 0.25f;
+		rPosition.y += 0.25f;
 		isUpMove = true;
 	}else {
 		isUpMove = false;
@@ -98,6 +108,7 @@ void Player::Update()
 	// 左への移動処理
 	if(input->PushKey(DIK_A)) {
 		pPosition.x -= 0.25f;
+		rPosition.x -= 0.25f;
 		isLeftMove = true;
 	} else{
 		isLeftMove = false;
@@ -116,6 +127,7 @@ void Player::Update()
 	// 下への移動処理
 	if(input->PushKey(DIK_S)) {
 		pPosition.y -= 0.25f;
+		rPosition.y -= 0.25f;
 		isDownMove = true;
 	} else{
 		isDownMove = false;
@@ -134,6 +146,7 @@ void Player::Update()
 	// 右への移動処理
 	if(input->PushKey(DIK_D)) {
 		pPosition.x += 0.25f;
+		rPosition.x += 0.25f;
 		isRightMove = true;
 	} else{
 		isRightMove = false;
@@ -151,6 +164,18 @@ void Player::Update()
 
 	playerO3->SetPosition(pPosition);
 	playerO3->SetRotation(pRotation);
+	reticleO3->SetPosition(rPosition);
+	reticleO3->SetRotation(rRotation);
+
+	// 自機のワールド座標から3Dレティクルのワールド座標を計算
+	{
+		// 自機から3Sレティクルへの距離
+		const float kDistancePlayerTo3DReticle = 50.0f;
+		// 自機から3Dレティクルへのオフセット(z + 向き)
+		DirectX::XMFLOAT3 offset = { 0,0,1.0f };
+		// 自機のワールド行列の回転を反映
+		//offset = DirectX::XMMatrixAffineTransformation()
+	}
 
 	// 自キャラの攻撃処理
 	Attack();
@@ -166,6 +191,7 @@ void Player::Draw()
 {
 	// プレイヤーのモデルの描画
 	playerO3->Draw();
+	reticleO3->Draw();
 
 	// 弾描画
 	for (PlayerBullet* bullet : pBullets) {

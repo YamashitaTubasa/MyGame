@@ -12,6 +12,7 @@
 #include "PlayerBullet.h"
 #include "Camera.h"
 
+#include <DirectXMath.h>
 #include <cmath>
 #include <iostream>
 #include <list>
@@ -63,8 +64,10 @@ public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
 	// モデル
 	Model* playerM = nullptr;
+	Model* reticleM = nullptr;
 	// オブジェクト
 	Object3d* playerO3 = nullptr;
+	Object3d* reticleO3 = nullptr;
 	// 入力
 	Input* input = nullptr;
 	// カメラ
@@ -85,6 +88,15 @@ public: // メンバ変数
 	DirectX::XMFLOAT3 pScale = { 1,1,1 };
 	// プレイヤーの弾の座標
 	DirectX::XMFLOAT3 pBulletP = { 0,0,0 };
+
+	// レティクルの移動量
+	DirectX::XMFLOAT3 rmove = { 0,0.25,0 };
+	// レティクルの座標
+	DirectX::XMFLOAT3 rPosition = { 0,0,-1 };
+	// レティクルの回転
+	DirectX::XMFLOAT3 rRotation = { 0,0,0 };
+	// レティクルのサイズ
+	DirectX::XMFLOAT3 prScale = { 1,1,1 };
 
 	// 右への移動フラグ
 	bool isRightMove = false;
