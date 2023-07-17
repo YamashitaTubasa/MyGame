@@ -234,6 +234,9 @@
     <ClCompile Include="DirectXGame\Application\Scene\GameSceneManager.cpp">
       <Filter>ソース ファイル\Engin\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\3d\Boss.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -401,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Scene\GameBaseScene.h">
       <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\3d\Boss.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

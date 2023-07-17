@@ -103,6 +103,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Application\3d\Boss.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Enemy.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp" />
@@ -228,6 +229,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\3d\Boss.h" />
     <ClInclude Include="DirectXGame\Application\3d\Enemy.h" />
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
