@@ -1,12 +1,17 @@
 #include "Particle.h"
 
-#include <DirectXTex.h>
 #include <Windows.h>
 #include <cassert>
 #include <sstream>
 #include <string>
 #include <fstream>
 #include <vector>
+
+#pragma warning(push)
+// C4023の警告を見なかったことにする
+#pragma warning(disable:4023)
+#include <DirectXTex.h>
+#pragma warning(pop)
 
 using namespace DirectX;
 using namespace std;

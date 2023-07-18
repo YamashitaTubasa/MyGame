@@ -74,6 +74,7 @@ void TYFramework::Finalize()
 
 	// DirectX解放
 	dXCommon->fpsFixedFinalize();
+	dXCommon->ResourceLeakCheck();
 }
 
 void TYFramework::Update()

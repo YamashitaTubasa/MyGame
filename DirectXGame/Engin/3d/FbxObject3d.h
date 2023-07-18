@@ -37,6 +37,10 @@ public: // サブクラス
 	};
 
 public: // メンバ関数
+	// デストラクタ
+	~FbxObject3d();
+
+public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>

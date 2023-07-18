@@ -30,58 +30,58 @@ void GamePlayScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 	this->camera_ = camera;
 
 	// デバイスをセット
-	FbxObject3d::SetDevice(dXCommon->GetDevice());
-	// カメラをセット
-	FbxObject3d::SetCamera(camera_);
-	// グラフィックスパイプライン生成
-	FbxObject3d::CreateGraphicsPipeline();
+	//FbxObject3d::SetDevice(dXCommon->GetDevice());
+	//// カメラをセット
+	//FbxObject3d::SetCamera(camera_);
+	//// グラフィックスパイプライン生成
+	//FbxObject3d::CreateGraphicsPipeline();
 
-	// FBXの3Dオブジェクト生成とモデルのセット
-	fbxObject = new FbxObject3d();
-	fbxModel = new FbxModel();
-	fbxObject->Initialize();
-	// モデル名を指定してファイル読み込み
-	fbxModel = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
-	// FBXオブジェクトにFBXモデルを割り当てる
-	fbxObject->SetModel(fbxModel);
-	// スケール、回転、座標
-	fbxObject->SetRotation({ 0,90,0 });
+	//// FBXの3Dオブジェクト生成とモデルのセット
+	//fbxObject = new FbxObject3d();
+	//fbxModel = new FbxModel();
+	//fbxObject->Initialize();
+	//// モデル名を指定してファイル読み込み
+	//fbxModel = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	//// FBXオブジェクトにFBXモデルを割り当てる
+	//fbxObject->SetModel(fbxModel);
+	//// スケール、回転、座標
+	//fbxObject->SetRotation({ 0,90,0 });
 
-	// カメラの注視点をセット
-	target[0] = { 0,2.5f,0 };
-	eye[0] = { 0,0,-10 };
-	camera_->SetTarget(target[0]);
-	camera_->SetEye(eye[0]);
-	camera_->SetDistance(8.0f);
+	//// カメラの注視点をセット
+	//target[0] = { 0,2.5f,0 };
+	//eye[0] = { 0,0,-10 };
+	//camera_->SetTarget(target[0]);
+	//camera_->SetEye(eye[0]);
+	//camera_->SetDistance(8.0f);
 
 	// 自キャラ生成
 	player = new Player();
 	Player::SetCamera(camera_);
 	player->Initialize(camera_);
 
-	// 敵キャラ生成
-	enemy = new Enemy();
-	enemy->Initialize(camera_);
+	//// 敵キャラ生成
+	//enemy = new Enemy();
+	//enemy->Initialize(camera_);
 
-	// 天球の初期化
-	skydome = new Skydome();
-	skydome->Initialize(camera_);
+	//// 天球の初期化
+	//skydome = new Skydome();
+	//skydome->Initialize(camera_);
 
-	// OBJの名前を指定してモデルデータを読み込む
-	particle = Particle::LoadFromOBJ("effect1.png");
-	particle1 = Particle::LoadFromOBJ("effect2.png");
-	// パーティクルの生成
-	particleMan = ParticleManager::Create();
-	particleMan1 = ParticleManager::Create();
-	// パーティクルマネージャーにパーティクルを割り当てる
-	particleMan->SetModel(particle);
-	particleMan1->SetModel(particle1);
+	//// OBJの名前を指定してモデルデータを読み込む
+	//particle = Particle::LoadFromOBJ("effect1.png");
+	//particle1 = Particle::LoadFromOBJ("effect2.png");
+	//// パーティクルの生成
+	//particleMan = ParticleManager::Create();
+	//particleMan1 = ParticleManager::Create();
+	//// パーティクルマネージャーにパーティクルを割り当てる
+	//particleMan->SetModel(particle);
+	//particleMan1->SetModel(particle1);
 	
 	// スプライトの初期化
 	SpriteInitialize(spriteCommon);
 
 	// FBXアニメーションの実行
-	fbxObject->PlayAnimation();
+	//fbxObject->PlayAnimation();
 }
 
 void GamePlayScene::Update()
@@ -90,19 +90,19 @@ void GamePlayScene::Update()
 	camera_->Update();
 
 	// FBXオブジェクトの更新
-	fbxObject->Update();
+	//fbxObject->Update();
 
-	// ポストエフェクト
-	postEffect->SetBlur(false);
+	//// ポストエフェクト
+	//postEffect->SetBlur(false);
 
-	// 自キャラの更新
+	//// 自キャラの更新
 	player->Update();
 
-	// 敵キャラ更新
-	enemy->Update();
+	//// 敵キャラ更新
+	//enemy->Update();
 
-	// 天球の更新
-	skydome->Update();
+	//// 天球の更新
+	//skydome->Update();
 
 	if (input->PushKey(DIK_RIGHT)) {
 		eye[0].x += 0.5;
@@ -130,10 +130,9 @@ void GamePlayScene::Update()
 	}
 	if (particl == true) {
 		// パーティクルの実行
-		particleMan->Execution(particle, -6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
-		particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
+		//particleMan->Execution(particle, -6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
+		//particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 	}
-
 	if (input->PushKey(DIK_I)) {
 		//hpPosition.x += 1;
 		hpScale.x -= 1;
@@ -144,8 +143,8 @@ void GamePlayScene::Update()
 	hp->SpriteUpdate(hp, spriteCommon_);
 
 	// パーティクルの更新
-	particleMan->Update();
-	particleMan1->Update();
+	//particleMan->Update();
+	//particleMan1->Update();
 }
 
 void GamePlayScene::Draw(Camera* camera)
@@ -159,9 +158,9 @@ void GamePlayScene::Draw(Camera* camera)
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	skydome->Draw(camera);
-	player->Draw(camera);
-	enemy->Draw(camera);
+	//skydome->Draw(camera);
+	//player->Draw(camera);
+	//enemy->Draw(camera);
 
 	// FBX3Dオブジェクトの描画
 	//fbxObject->Draw(dXCommon->GetCommandList());
@@ -176,8 +175,8 @@ void GamePlayScene::Draw(Camera* camera)
 	ParticleManager::PreDraw(cmdList);
 
 	// パーティクルの描画
-	particleMan->Draw();
-	particleMan1->Draw();
+	//particleMan->Draw();
+	//particleMan1->Draw();
 
 	// パーティクル描画後処理
 	ParticleManager::PostDraw();

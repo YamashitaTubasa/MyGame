@@ -291,10 +291,10 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 	assert(SUCCEEDED(result));
 
 	// 平行投影行列
-	constMap->mat.ProjectionMat(ConvertToRadians(60.0f), 
-		(float)WinApp::window_width / WinApp::window_height, 
-		0.1f, 
-		1000.0f);
+	constMap->mat.m[0][0] = 2.0f / WinApp::window_width;
+	constMap->mat.m[1][1] = -2.0f / WinApp::window_height;
+	constMap->mat.m[3][0] = -1.0f;
+	constMap->mat.m[3][1] = 1.0f;
 	constBuff->Unmap(0, nullptr);
 }
 
@@ -358,11 +358,10 @@ SpriteCommon Sprite::SpriteCommonCreate(int window_width, int window_height)
 	spriteCommon.pipelineSet = SpriteCreateGraphicsPipeline();
 
 	// 平行投影行列生成
-	spriteCommon.matProjection.ProjectionMat(
-		ConvertToRadians(60.0f), 
-		(float)WinApp::window_width / WinApp::window_height, 
-		0.1f, 
-		1000.0f);
+	spriteCommon.matProjection.m[0][0] = 2.0f / WinApp::window_width;
+	spriteCommon.matProjection.m[1][1] = -2.0f / WinApp::window_height;
+	spriteCommon.matProjection.m[3][0] = -1.0f;
+	spriteCommon.matProjection.m[3][1] = 1.0f;
 
 	// デスクリプタヒープを生成
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};

@@ -3,8 +3,12 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 
+#pragma warning(push)
+// C4023の警告を見なかったことにする
+#pragma warning(disable:4023)
 #include <imgui_impl_win32.h>
 #include <imgui_impl_dx12.h>
+#pragma warning(pop)
 
 //==============
 // Imguiの管理

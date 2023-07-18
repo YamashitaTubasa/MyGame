@@ -1,6 +1,12 @@
 #include "ParticleManager.h"
+
 #include <d3dcompiler.h>
+
+#pragma warning(push)
+// C4023の警告を見なかったことにする
+#pragma warning(disable:4023)
 #include <DirectXTex.h>
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 

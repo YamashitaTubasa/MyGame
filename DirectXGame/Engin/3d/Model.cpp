@@ -16,6 +16,12 @@ using namespace std;
 // 静的メンバ変数の実体
 ID3D12Device* Model::device = nullptr;
 
+Model::~Model()
+{
+	// オブジェクトの解放
+	device->Release();
+}
+
 Model* Model::LoadFromOBJ(const string& modelname)
 {
 	// 新たなModel型のインスタンスのメモリを確保

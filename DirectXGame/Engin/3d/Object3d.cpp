@@ -1,9 +1,15 @@
 #include "Object3d.h"
-#include <d3dcompiler.h>
-#include <DirectXTex.h>
+
 #include <fstream>
 #include <sstream>
 #include <vector>
+
+#include <d3dcompiler.h>
+#pragma warning(push)
+// C4023の警告を見なかったことにする
+#pragma warning(disable:4023)
+#include <DirectXTex.h>
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 

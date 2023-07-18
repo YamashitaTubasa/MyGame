@@ -340,7 +340,7 @@ const Vector3 operator *(const Vector3& v, const Matrix4& m)
 
 float ConvertToRadians(float rotation)
 {
-	float Radians = static_cast<float>(rotation * (PI / 180.0f));
+	float radians = static_cast<float>(rotation * (PI / 180.0f));
 
-	return Radians;
+	return radians;
 }

@@ -1,5 +1,10 @@
 #include "WinApp.h"
+
+#pragma warning(push)
+// C4023の警告を見なかったことにする
+#pragma warning(disable:4023)
 #include <imgui_impl_win32.h>
+#pragma warning(pop)
 
 #pragma comment(lib,"winmm.lib")
 
@@ -66,6 +71,8 @@ void WinApp::Initialize()
 
 void WinApp::Finalize()
 {
+	CloseWindow(hwnd);
+
 	// ウィンドウクラスを登録解除
 	UnregisterClass(wc.lpszClassName, wc.hInstance);
 }

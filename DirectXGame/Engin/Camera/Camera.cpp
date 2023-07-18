@@ -6,9 +6,13 @@ using namespace DirectX;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-ID3D12Device* Camera::device = nullptr;
+//ID3D12Device* Camera::device = nullptr;
 
-void Camera::Initialize() 
+Camera::~Camera()
+{
+}
+
+void Camera::Initialize()
 {
 	eye = { 0, 0, -distance }; // 視点座標
 	target = { 0, 0, 0 };      // 注視点座標

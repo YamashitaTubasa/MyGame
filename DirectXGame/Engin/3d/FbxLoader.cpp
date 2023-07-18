@@ -35,6 +35,9 @@ void FbxLoader::Finalize()
     // 各種FBXインスタンスの破壊
     fbxImporter->Destroy();
     fbxManager->Destroy();
+
+    // オブジェクト解放
+    device->Release();
 }
 
 FbxModel* FbxLoader::LoadModelFromFile(const string& modelName)

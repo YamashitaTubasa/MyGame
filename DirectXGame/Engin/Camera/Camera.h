@@ -27,7 +27,11 @@ private: // サブクラス
 		Vector3 cameraPos; // カメラ座標（ワールド座標）
 	};
 
-public:
+public: // メンバ関数
+	// デストラクタ
+	~Camera();
+
+public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -81,7 +85,7 @@ public:
 	void SetDistance(float distance_) { this->distance = distance_; }
 
 private: // 静的メンバ変数
-	static ID3D12Device* device;
+	//static ID3D12Device* device;
 
 private: // メンバ変数
 	Matrix4 matView;

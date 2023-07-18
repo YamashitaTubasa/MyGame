@@ -14,6 +14,12 @@ Camera* FbxObject3d::camera = nullptr;
 ComPtr<ID3D12RootSignature> FbxObject3d::rootsignature;
 ComPtr<ID3D12PipelineState> FbxObject3d::pipelinestate;
 
+FbxObject3d::~FbxObject3d()
+{
+	// オブジェクトの解放
+	device->Release();
+}
+
 void FbxObject3d::Initialize()
 {
 	HRESULT result;

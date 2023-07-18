@@ -1,4 +1,8 @@
 #pragma once 
+
+#include "WinApp.h"
+#include "FPSFixed.h"
+
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
@@ -6,10 +10,12 @@
 #include <chrono>
 #include <thread>
 
+#pragma warning(push)
+// C4023の警告を見なかったことにする
+#pragma warning(disable:4023)
 #include <DirectXTex.h>
+#pragma warning(pop)
 
-#include "WinApp.h"
-#include "FPSFixed.h"
 
 // DirectX基盤
 class DirectXCommon final
@@ -35,13 +41,15 @@ public: // メンバ関数
 	void PostDraw();
 	// 終了処理
 	void fpsFixedFinalize();
+	// リソースリークチェック
+	void ResourceLeakCheck();
 
 public:
 	static DirectXCommon* GetInstance();
 
 private:
 	DirectXCommon() = default;
-	~DirectXCommon() = default;
+	~DirectXCommon();
 	DirectXCommon(const DirectXCommon&) = delete;
 	DirectXCommon& operator=(const DirectXCommon&) = delete;
 
@@ -82,12 +90,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap;
 
-	//// スワップチェーンの設定
-	//DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
-	//// コマンドキューの設定
-	//D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
-	//D3D12_RESOURCE_BARRIER barrierDesc{};
-	//D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
 	//バックバッファ
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers;
 	// フェンスの生成

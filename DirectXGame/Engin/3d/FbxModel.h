@@ -8,12 +8,17 @@
 #include <string>
 #include <DirectXMath.h>
 #include <vector>
-#include <DirectXTex.h>
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
 #include <d3dx12.h>
 #include <fbxsdk.h>
+
+#pragma warning(push)
+// C4023の警告を見なかったことにする
+#pragma warning(disable:4023)
+#include <DirectXTex.h>
+#pragma warning(pop)
 
 struct Node
 {
