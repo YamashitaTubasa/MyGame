@@ -3,7 +3,9 @@
 #include <cassert>
 #include <vector>
 #include <string>
+#include <dxgidebug.h>
 
+#pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 
@@ -113,7 +115,7 @@ void DirectXCommon::InitializeDevice()
 	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true); // やばいエラー時に止まる
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);      // エラー時に止まる
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);    // 警告時に止まる
+		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);    // 警告時に止まる
 
 		// 抑制するエラー
 		D3D12_MESSAGE_ID denyIds[] = {
@@ -406,4 +408,18 @@ void DirectXCommon::PostDraw()
 
 void DirectXCommon::fpsFixedFinalize(){
 	safe_delete(fpsFixed);
+}
+
+void DirectXCommon::ResourceLeakCheck()
+{
+#ifdef _DEBUG
+	// リソースリークチェック
+	IDXGIDebug1* debug;
+	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) {
+		debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
+		debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
+		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
+		debug->Release();
+	}
+#endif
 }

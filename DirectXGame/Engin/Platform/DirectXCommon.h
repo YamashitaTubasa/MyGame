@@ -35,6 +35,8 @@ public: // メンバ関数
 	void PostDraw();
 	// 終了処理
 	void fpsFixedFinalize();
+	// リソースリークチェック
+	void ResourceLeakCheck();
 
 public:
 	static DirectXCommon* GetInstance();
@@ -82,12 +84,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap;
 
-	//// スワップチェーンの設定
-	//DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
-	//// コマンドキューの設定
-	//D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
-	//D3D12_RESOURCE_BARRIER barrierDesc{};
-	//D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
 	//バックバッファ
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers;
 	// フェンスの生成
