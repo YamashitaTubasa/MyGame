@@ -127,6 +127,12 @@
     <Filter Include="ソース ファイル\Application\3d">
       <UniqueIdentifier>{cadf8ed2-1c2f-4092-bd87-36c4460a1909}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Application\Adjustment">
+      <UniqueIdentifier>{a32e31ab-d5df-4384-bcdc-aef154816c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Application\Adjustment">
+      <UniqueIdentifier>{df1f7b7b-1931-4b61-b8f0-e7d2dfedac73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp">
@@ -236,6 +242,9 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\3d\Boss.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Adjustment\GlobalVariables.cpp">
+      <Filter>ソース ファイル\Application\Adjustment</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +416,9 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\3d\Boss.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Adjustment\GlobalVariables.h">
+      <Filter>ヘッダー ファイル\Application\Adjustment</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
