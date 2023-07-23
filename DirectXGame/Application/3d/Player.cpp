@@ -59,7 +59,7 @@ void Player::Update()
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
 	if (input->PushKey(DIK_W)) {
-		pPosition.y += 0.25f;
+		pPosition.y += speed;
 		isUpMove = true;
 	}else {
 		isUpMove = false;
@@ -67,17 +67,17 @@ void Player::Update()
 	// 上へ行くときの傾き処理
 	if (isUpMove) {
 		if (pRotation.x >= -20) {
-			pRotation.x -= 1.0f;
+			pRotation.x -= rotSpeed;
 		}
 	}else {
 		if (pRotation.x <= 0) {
-			pRotation.x += 1.0f;
+			pRotation.x += rotSpeed;
 		}
 	}
 	
 	// 左への移動処理
 	if(input->PushKey(DIK_A)) {
-		pPosition.x -= 0.25f;
+		pPosition.x -= speed;
 		isLeftMove = true;
 	} else{
 		isLeftMove = false;
@@ -85,17 +85,17 @@ void Player::Update()
 	// 左へ行くときの機体の傾き処理
 	if(isLeftMove) {
 		if (pRotation.z <= 20) {
-			pRotation.z += 1.0f;
+			pRotation.z += rotSpeed;
 		}
 	} else{
 		if(pRotation.z >= 0) {
-			pRotation.z -= 1.0f;
+			pRotation.z -= rotSpeed;
 		}
 	}
 
 	// 下への移動処理
 	if(input->PushKey(DIK_S)) {
-		pPosition.y -= 0.25f;
+		pPosition.y -= speed;
 		isDownMove = true;
 	} else{
 		isDownMove = false;
@@ -103,17 +103,17 @@ void Player::Update()
 	// 下へ行く時の傾き処理
 	if (isDownMove) {
 		if (pRotation.x <= 20) {
-			pRotation.x += 1.0f;
+			pRotation.x += rotSpeed;
 		}
 	} else{
 		if (pRotation.x >= 0) {
-			pRotation.x -= 1.0f;
+			pRotation.x -= rotSpeed;
 		}
 	}
 
 	// 右への移動処理
 	if(input->PushKey(DIK_D)) {
-		pPosition.x += 0.25f;
+		pPosition.x += speed;
 		isRightMove = true;
 	} else{
 		isRightMove = false;
@@ -121,11 +121,11 @@ void Player::Update()
 	// 右へ行くときの傾き処理
 	if(isRightMove) {
 		if (pRotation.z >= -20) {
-			pRotation.z -= 1.0f;
+			pRotation.z -= rotSpeed;
 		}
 	} else{
 		if(pRotation.z <= 0) {
-			pRotation.z += 1.0f;
+			pRotation.z += rotSpeed;
 		}
 	}
 

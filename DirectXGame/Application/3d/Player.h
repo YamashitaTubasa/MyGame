@@ -86,6 +86,9 @@ public: // メンバ変数
 	Vector3 scale[5]{};
 	Vector3 eye[5]{};
 	Vector3 target[5]{};
+	
+	float speed = 0.25f;
+	float rotSpeed = 1.0f;
 
 	bool isRightMove = false;
 	bool isLeftMove = false;
