@@ -66,11 +66,11 @@ void Player::Update()
 	}
 	// 上へ行くときの傾き処理
 	if (isUpMove) {
-		if (pRotation.x >= -20) {
+		if (pRotation.x >= -pRotMax) {
 			pRotation.x -= rotSpeed;
 		}
 	}else {
-		if (pRotation.x <= 0) {
+		if (pRotation.x <= pRotMin) {
 			pRotation.x += rotSpeed;
 		}
 	}
@@ -84,11 +84,11 @@ void Player::Update()
 	}
 	// 左へ行くときの機体の傾き処理
 	if(isLeftMove) {
-		if (pRotation.z <= 20) {
+		if (pRotation.z <= pRotMax) {
 			pRotation.z += rotSpeed;
 		}
 	} else{
-		if(pRotation.z >= 0) {
+		if(pRotation.z >= pRotMin) {
 			pRotation.z -= rotSpeed;
 		}
 	}
@@ -102,11 +102,11 @@ void Player::Update()
 	}
 	// 下へ行く時の傾き処理
 	if (isDownMove) {
-		if (pRotation.x <= 20) {
+		if (pRotation.x <= pRotMax) {
 			pRotation.x += rotSpeed;
 		}
 	} else{
-		if (pRotation.x >= 0) {
+		if (pRotation.x >= pRotMin) {
 			pRotation.x -= rotSpeed;
 		}
 	}
@@ -120,11 +120,11 @@ void Player::Update()
 	}
 	// 右へ行くときの傾き処理
 	if(isRightMove) {
-		if (pRotation.z >= -20) {
+		if (pRotation.z >= -pRotMax) {
 			pRotation.z -= rotSpeed;
 		}
 	} else{
-		if(pRotation.z <= 0) {
+		if(pRotation.z <= pRotMin) {
 			pRotation.z += rotSpeed;
 		}
 	}

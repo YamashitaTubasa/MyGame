@@ -89,6 +89,8 @@ public: // メンバ変数
 	
 	float speed = 0.25f;
 	float rotSpeed = 1.0f;
+	float pRotMax = 20.0f;
+	float pRotMin = 0.0f;
 
 	bool isRightMove = false;
 	bool isLeftMove = false;
