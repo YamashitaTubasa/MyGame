@@ -54,6 +54,8 @@ void Player::Initialize(Camera* camera)
 	reticleO3->SetScale({ 0.3f, 0.3f, 0.3f });
 	reticleO3->SetRotation(rRotation);
 	
+	//Object3d::SetEye(pPosition);
+	//Object3d::SetTarget(pPosition);
 }
 
 void Player::Update()
@@ -90,6 +92,8 @@ void Player::Update()
 	if (input->PushKey(DIK_W)) {
 		pPosition.y += 0.25f;
 		rPosition.y += 0.25f;
+		target.y += 0.25f;
+		eye.y += 0.25f;
 		isUpMove = true;
 	}else {
 		isUpMove = false;
@@ -109,6 +113,8 @@ void Player::Update()
 	if(input->PushKey(DIK_A)) {
 		pPosition.x -= 0.25f;
 		rPosition.x -= 0.25f;
+		target.x -= 0.25f;
+		eye.x -= 0.25f;
 		isLeftMove = true;
 	} else{
 		isLeftMove = false;
@@ -128,6 +134,8 @@ void Player::Update()
 	if(input->PushKey(DIK_S)) {
 		pPosition.y -= 0.25f;
 		rPosition.y -= 0.25f;
+		target.y -= 0.25f;
+		eye.y -= 0.25f;
 		isDownMove = true;
 	} else{
 		isDownMove = false;
@@ -147,6 +155,8 @@ void Player::Update()
 	if(input->PushKey(DIK_D)) {
 		pPosition.x += 0.25f;
 		rPosition.x += 0.25f;
+		target.x += 0.25f;
+		eye.x += 0.25f;
 		isRightMove = true;
 	} else{
 		isRightMove = false;
@@ -166,6 +176,8 @@ void Player::Update()
 	playerO3->SetRotation(pRotation);
 	reticleO3->SetPosition(rPosition);
 	reticleO3->SetRotation(rRotation);
+	Object3d::SetTarget(target);
+	Object3d::SetEye(eye);
 
 	// 自機のワールド座標から3Dレティクルのワールド座標を計算
 	{

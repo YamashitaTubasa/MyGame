@@ -98,6 +98,11 @@ public: // メンバ変数
 	// レティクルのサイズ
 	DirectX::XMFLOAT3 prScale = { 1,1,1 };
 
+	// 視点
+	DirectX::XMFLOAT3 eye = { 0,0,-50 };
+	// 注視点
+	DirectX::XMFLOAT3 target = { 0,0,0 };
+
 	// 右への移動フラグ
 	bool isRightMove = false;
 	// 左への移動フラグ

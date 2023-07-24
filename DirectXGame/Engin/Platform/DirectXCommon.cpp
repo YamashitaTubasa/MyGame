@@ -11,11 +11,25 @@
 
 using namespace Microsoft::WRL;
 
+/// <summary>
+/// 静的メンバ変数の実体
+/// </summary>
+DirectXCommon* DirectXCommon::instance = nullptr;
+
 DirectXCommon* DirectXCommon::GetInstance()
 {
-	static DirectXCommon instance;
+	if (instance == nullptr) 
+	{
+		instance = new DirectXCommon();
+	}
+	return instance;
+}
 
-	return &instance;
+void DirectXCommon::DeleteInstance()
+{
+	delete instance;
+
+	instance = nullptr;
 }
 
 void DirectXCommon::Initialize(WinApp* winApp) 
@@ -25,7 +39,7 @@ void DirectXCommon::Initialize(WinApp* winApp)
 
 	// メンバ変数に記録
 	this->winApp = winApp;
-
+	
 	// FPS固定初期化
 	fpsFixed = new FPSFixed();
 	fpsFixed->InitializeFixFPS();

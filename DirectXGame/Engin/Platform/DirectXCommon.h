@@ -6,7 +6,11 @@
 #include <chrono>
 #include <thread>
 
+#pragma warning(push)
+// C4023の警告を見なかったことにする
+#pragma warning(disable:4023)
 #include <DirectXTex.h>
+#pragma warning(pop)
 
 #include "WinApp.h"
 #include "FPSFixed.h"
@@ -36,10 +40,12 @@ public: // メンバ関数
 	// 終了処理
 	void fpsFixedFinalize();
 	// リソースリークチェック
-	void ResourceLeakCheck();
+	static void ResourceLeakCheck();
 
 public:
+	static DirectXCommon* instance;
 	static DirectXCommon* GetInstance();
+	void DeleteInstance();
 
 private:
 	DirectXCommon() = default;
