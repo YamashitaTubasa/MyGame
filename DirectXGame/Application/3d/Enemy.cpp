@@ -37,10 +37,16 @@ void Enemy::Initialize(Camera* camera_)
 
 void Enemy::Update()
 {
+	// モデルの更新
 	enemyO3->Update();
+
+	position[0].x += moveSpeed;
+
+	enemyO3->SetPosition(position[0]);
 }
 
 void Enemy::Draw(Camera* camera)
 {
+	// モデルの描画
 	enemyO3->Draw(camera);
 }

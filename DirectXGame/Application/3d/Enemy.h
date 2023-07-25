@@ -47,5 +47,8 @@ private:
 	Vector3 scale[5]{};
 	Vector3 eye[5]{};
 	Vector3 target[5]{};
+
+	bool isMove = true;
+	float moveSpeed = 1.0f;
 };
 
