@@ -49,10 +49,6 @@ void TYFramework::Initialize()
 	/*camera = new Camera();
 	camera->Initialize();*/
 
-	// ポストエフェクト
-	postEffect = PostEffect::GetInstance();
-	postEffect->Initialize();
-
 	// FBX
 	FbxLoader::GetInstance()->Initialize(dXCommon->GetDevice());
 

@@ -8,10 +8,13 @@ GameTitleScene::GameTitleScene()
 
 GameTitleScene::~GameTitleScene()
 {
+	delete sprite_;
+	delete title_;
 }
 
 void GameTitleScene::Initialize(SpriteCommon& spriteCommon)
 {
+	// DirectXCommonのインスタンス取得
 	dxCommon_ = DirectXCommon::GetInstance();
 
 	// スプライト
@@ -56,6 +59,7 @@ void GameTitleScene::Draw()
 	
 	// スプライト描画後処理
 	Sprite::PostDraw();
+
 }
 
 void GameTitleScene::Finalize()

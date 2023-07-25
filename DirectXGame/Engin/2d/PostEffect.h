@@ -57,13 +57,6 @@ public:
 	void CreateGraphicsPipelineState();
 
 public:
-	static PostEffect* GetInstance();
-
-private:
-	PostEffect(const PostEffect&) = delete;
-	PostEffect& operator=(const PostEffect&) = delete;
-
-public:
 	void SetColor(const DirectX::XMFLOAT4& color);
 	void SetBlur(const bool& blur);
 	void SetAlpha(const float& alpha);

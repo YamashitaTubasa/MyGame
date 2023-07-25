@@ -15,7 +15,9 @@
 #include "WinApp.h"
 #include "FPSFixed.h"
 
-// DirectX基盤
+/// <summary>
+/// DirectX基盤
+/// </summary>
 class DirectXCommon final
 {
 public: // メンバ関数
@@ -39,18 +41,24 @@ public: // メンバ関数
 	void PostDraw();
 	// 終了処理
 	void fpsFixedFinalize();
-	// リソースリークチェック
-	static void ResourceLeakCheck();
 
 public:
 	static DirectXCommon* instance;
+	// インスタンスの取得
 	static DirectXCommon* GetInstance();
+	// インスタンスの解放
 	void DeleteInstance();
+	// リソースリークチェック
+	static void ResourceLeakCheck();
 
 private:
+	// コンストラクタ
 	DirectXCommon() = default;
+	// デストラクタ
 	~DirectXCommon() = default;
+	// コピーコンストラクタの禁止
 	DirectXCommon(const DirectXCommon&) = delete;
+	// 代入演算子の禁止
 	DirectXCommon& operator=(const DirectXCommon&) = delete;
 
 private: // メンバ関数
@@ -89,7 +97,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap;
-
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
 	//バックバッファ
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers;
 	// フェンスの生成

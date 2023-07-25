@@ -9,6 +9,8 @@ GameClearScene::GameClearScene()
 
 GameClearScene::~GameClearScene()
 {
+	delete sprite_;
+	delete clear_;
 }
 
 void GameClearScene::Initialize(SpriteCommon& spriteCommon)
@@ -22,15 +24,15 @@ void GameClearScene::Initialize(SpriteCommon& spriteCommon)
 	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 
 	// タイトル
-	title_ = new Sprite();
-	title_->LoadTexture(spriteCommon_, 1, L"Resources/Image/clear.png");
-	title_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	title_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	title_->SetPosition(titlePos_);
-	title_->SetScale(titleScale_);
-	title_->SetRotation(0.0f);
-	title_->SpriteTransferVertexBuffer(title_, spriteCommon, 1);
-	title_->SpriteUpdate(title_, spriteCommon_);
+	clear_ = new Sprite();
+	clear_->LoadTexture(spriteCommon_, 1, L"Resources/Image/clear.png");
+	clear_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	clear_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	clear_->SetPosition(clearPos_);
+	clear_->SetScale(clearScale_);
+	clear_->SetRotation(0.0f);
+	clear_->SpriteTransferVertexBuffer(clear_, spriteCommon, 1);
+	clear_->SpriteUpdate(clear_, spriteCommon_);
 
 }
 
@@ -53,7 +55,7 @@ void GameClearScene::Draw()
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
 	// タイトルの描画
-	title_->SpriteDraw(cmdList, spriteCommon_);
+	clear_->SpriteDraw(cmdList, spriteCommon_);
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

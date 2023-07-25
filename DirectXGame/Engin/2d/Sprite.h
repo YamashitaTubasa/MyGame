@@ -43,6 +43,9 @@ struct SpriteCommon {
 	ID3D12Resource* GetTexBuffer(uint32_t index) const { return texBuff[index].Get(); }
 };
 
+/// <summary>
+/// スプライト
+/// </summary>
 class Sprite
 {
 private: // エイリアス
@@ -161,8 +164,6 @@ public: // ゲッター
 	XMFLOAT2 GetTexLeftTop() const { return texLeftTop_; }
 	// テクスチャ切り出しサイズ
 	XMFLOAT2 GetTexSize() const { return texSize_; }
-
-public:
 
 protected:
 	// DirectXCommonのインスタンス

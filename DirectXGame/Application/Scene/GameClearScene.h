@@ -47,10 +47,10 @@ private: // メンバ変数
 
 	// スプライト
 	Sprite* sprite_ = nullptr;
-	Sprite* title_ = nullptr;
+	Sprite* clear_ = nullptr;
 	SpriteCommon spriteCommon_;
 
-	DirectX::XMFLOAT3 titlePos_ = { 0,0,0 };
-	DirectX::XMFLOAT2 titleScale_ = { 1280,720 };
-	DirectX::XMFLOAT3 titleRot_ = { 0,0,0 };
+	DirectX::XMFLOAT3 clearPos_ = { 0,0,0 };
+	DirectX::XMFLOAT2 clearScale_ = { 1280,720 };
+	DirectX::XMFLOAT3 clearRot_ = { 0,0,0 };
 };

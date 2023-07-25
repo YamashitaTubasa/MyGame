@@ -9,12 +9,25 @@ GamePlayScene::GamePlayScene()
 
 GamePlayScene::~GamePlayScene()
 {
-	delete particleMan;
-	delete particleMan1;
 	delete skydomeM;
 	delete skydomeO3;
 	delete player;
 	delete sprite;
+	delete camera;
+	delete fbxObject;
+	delete hp;
+	delete hpBar;
+	delete hpBack;
+	delete enemyHp;
+	delete enemyHpBar;
+	delete enemyHpBack;
+	delete ult;
+	delete X;
+	delete particle;
+	delete particle1;
+	for (int i = 0; i < 5; i++) {
+		delete number[i];
+	}
 }
 
 void GamePlayScene::Initialize(SpriteCommon& spriteCommon)
@@ -22,7 +35,12 @@ void GamePlayScene::Initialize(SpriteCommon& spriteCommon)
 	winApp = WinApp::GetInstance();
 	input = Input::GetInstance();
 	dXCommon = DirectXCommon::GetInstance();
-	postEffect = PostEffect::GetInstance();
+
+	//// ポストエフェクト
+	//postEffect = new PostEffect();
+	//postEffect->Initialize();
+	//postEffect1 = new PostEffect();
+	//postEffect1->Initialize();
 
 	// カメラ
 	camera = new Camera();
@@ -37,7 +55,6 @@ void GamePlayScene::Initialize(SpriteCommon& spriteCommon)
 
 	// FBXの3Dオブジェクト生成とモデルのセット
 	fbxObject = new FbxObject3d();
-	fbxModel = new FbxModel();
 	fbxObject->Initialize();
 	// モデル名を指定してファイル読み込み
 	fbxModel = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
@@ -86,6 +103,8 @@ void GamePlayScene::Initialize(SpriteCommon& spriteCommon)
 
 void GamePlayScene::Update()
 {
+	count++;
+
 	// 十字キーの右を押したら
 	if (Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
 		// ゲームプレイシーン（次シーン）を生成
@@ -100,7 +119,7 @@ void GamePlayScene::Update()
 	fbxObject->Update();
 
 	// ポストエフェクト
-	postEffect->SetBlur(false);
+	//postEffect->SetBlur(true);
 
 	// 自キャラの更新
 	player->Update();
@@ -168,7 +187,7 @@ void GamePlayScene::Draw()
 	// コマンドライン取得
 	ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
 
-#pragma region 3Dオブジェクトの描画
+	#pragma region 3Dオブジェクトの描画
 
 	// 3Dオブジェクト描画前処理
 	Object3d::PreDraw(cmdList);
@@ -185,9 +204,10 @@ void GamePlayScene::Draw()
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
-#pragma endregion 
 
-#pragma region パーティクルの描画
+	#pragma endregion 
+
+	#pragma region パーティクルの描画
 
 	// パーティクル描画前処理
 	ParticleManager::PreDraw(cmdList);
@@ -199,9 +219,9 @@ void GamePlayScene::Draw()
 	// パーティクル描画後処理
 	ParticleManager::PostDraw();
 
-#pragma endregion
+	#pragma endregion
 
-#pragma region スプライト描画
+	#pragma region スプライト描画
 
 	// スプライト描画前処理
 	Sprite::PreDraw(cmdList, spriteCommon_);
@@ -228,7 +248,11 @@ void GamePlayScene::Draw()
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
-#pragma endregion
+	#pragma endregion
+
+	// ImGui描画
+	//imGuiManager->Draw(dXCommon);
+
 }
 
 void GamePlayScene::Finalize()

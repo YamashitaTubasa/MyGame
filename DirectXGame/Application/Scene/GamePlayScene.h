@@ -20,6 +20,12 @@
 #include "GameSceneManager.h"
 #include "GameClearScene.h"
 
+// 前方宣言
+class PostEffect;
+
+/// <summary>
+/// ゲームプレイシーン
+/// </summary>
 class GamePlayScene : public GameBaseScene
 {
 private:
@@ -132,6 +138,7 @@ private:
 	FbxModel* fbxModel = nullptr;
 	FbxObject3d* fbxObject = nullptr;
 	PostEffect* postEffect = nullptr;
+	PostEffect* postEffect1 = nullptr;
 	Player* player = nullptr;
 	Player* pBullet = nullptr;
 	Enemy* enemy = nullptr;
@@ -160,4 +167,6 @@ private:
 	float particleTime = 0;
 	bool particl = false;
 	bool isEnemyDeth = false;
+
+	int count = 0;
 };

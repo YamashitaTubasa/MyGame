@@ -275,7 +275,6 @@ void DirectXCommon::InitializeDepthBuffer()
 	depthClearValue.DepthStencil.Depth = 1.0f;
 
 	// リソース設定
-	ID3D12Resource* depthBuff = nullptr;
 	result = device->CreateCommittedResource(
 		&depthHeapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -296,7 +295,7 @@ void DirectXCommon::InitializeDepthBuffer()
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	device->CreateDepthStencilView(
-		depthBuff,
+		depthBuff.Get(),
 		&dsvDesc,
 		dsvHeap->GetCPUDescriptorHandleForHeapStart());
 }

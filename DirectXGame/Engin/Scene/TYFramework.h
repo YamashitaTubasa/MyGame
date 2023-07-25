@@ -9,9 +9,9 @@
 #include "GameSceneManager.h"
 #include "Camera.h"
 #include "ImGuiManager.h"
-#include "PostEffect.h"
 #include "ParticleManager.h"
 #include "FbxLoader.h"
+#include "PostEffect.h"
 
 class TYFramework
 {
@@ -51,7 +51,8 @@ protected:
 	Input* input = nullptr;
 	ImGuiManager* imGuiManager = nullptr;
 	Camera* camera = nullptr;
-	PostEffect* postEffect = nullptr;
 	GameSceneManager* sceneManager_ = nullptr;
+	PostEffect* postEffect = nullptr;
+	PostEffect* postEffect1 = nullptr;
 };
 
