@@ -22,7 +22,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(SpriteCommon& spriteCommon) override;
+	void Initialize() override;
 
 	/// <summary>
 	/// 更新

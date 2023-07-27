@@ -30,7 +30,7 @@ GamePlayScene::~GamePlayScene()
 	}
 }
 
-void GamePlayScene::Initialize(SpriteCommon& spriteCommon)
+void GamePlayScene::Initialize()
 {
 	winApp = WinApp::GetInstance();
 	input = Input::GetInstance();
@@ -92,7 +92,7 @@ void GamePlayScene::Initialize(SpriteCommon& spriteCommon)
 	ObjectInitialize();
 	
 	// スプライトの初期化
-	SpriteInitialize(spriteCommon);
+	SpriteInitialize();
 
 	// パーティクルの初期化
 	//ParticleInitialize();
@@ -227,23 +227,23 @@ void GamePlayScene::Draw()
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
 	// HPバーの描画
-	hpBar->SpriteDraw(cmdList, spriteCommon_);
+	hpBar->SpriteDraw(spriteCommon_);
 	// HPの背景描画
-	hpBack->SpriteDraw(cmdList, spriteCommon_);
+	hpBack->SpriteDraw(spriteCommon_);
 	// HPの描画
-	hp->SpriteDraw(cmdList, spriteCommon_);
+	hp->SpriteDraw(spriteCommon_);
 	// ULTの描画
-	ult->SpriteDraw(cmdList, spriteCommon_);
+	ult->SpriteDraw(spriteCommon_);
 	// Xの描画
-	X->SpriteDraw(cmdList, spriteCommon_);
+	X->SpriteDraw(spriteCommon_);
 	// 1の描画
-	number[1]->SpriteDraw(cmdList, spriteCommon_);
+	number[1]->SpriteDraw(spriteCommon_);
 	// 敵のHPバーの描画
-	enemyHpBar->SpriteDraw(cmdList, spriteCommon_);
+	enemyHpBar->SpriteDraw(spriteCommon_);
 	// 敵のHPの背景描画
-	enemyHpBack->SpriteDraw(cmdList, spriteCommon_);
+	enemyHpBack->SpriteDraw(spriteCommon_);
 	// 敵のHPの描画
-	enemyHp->SpriteDraw(cmdList, spriteCommon_);
+	enemyHp->SpriteDraw(spriteCommon_);
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -285,7 +285,7 @@ void GamePlayScene::ObjectFinalize()
 {
 }
 
-void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
+void GamePlayScene::SpriteInitialize()
 {
 	// スプライト
 	sprite = new Sprite();
@@ -301,7 +301,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	hp->SetPosition(hpPosition);
 	hp->SetScale(hpScale);
 	hp->SetRotation(0.0f);
-	hp->SpriteTransferVertexBuffer(hp, spriteCommon, 1);
+	hp->SpriteTransferVertexBuffer(hp, spriteCommon_, 1);
 	hp->SpriteUpdate(hp, spriteCommon_);
 	// HPバー
 	hpBar = new Sprite();
@@ -311,7 +311,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	hpBar->SetPosition(hpBarPosition);
 	hpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
 	hpBar->SetRotation(0.0f);
-	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon, 2);
+	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon_, 2);
 	hpBar->SpriteUpdate(hpBar, spriteCommon_);
 	// HP背景
 	hpBack = new Sprite();
@@ -321,7 +321,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	hpBack->SetPosition(hpBackPosition);
 	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
 	hpBack->SetRotation(0.0f);
-	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon, 3);
+	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon_, 3);
 	hpBack->SpriteUpdate(hpBack, spriteCommon_);
 	// ULT
 	ult = new Sprite();
@@ -331,7 +331,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	ult->SetPosition({ 1010,610, 0 });
 	ult->SetScale({ 1600 * 0.05, 1600 * 0.05 });
 	ult->SetRotation(0.0f);
-	ult->SpriteTransferVertexBuffer(ult, spriteCommon, 4);
+	ult->SpriteTransferVertexBuffer(ult, spriteCommon_, 4);
 	ult->SpriteUpdate(ult, spriteCommon_);
 	// X
 	X = new Sprite();
@@ -341,7 +341,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	X->SetPosition({ 1120,630, 0 });
 	X->SetScale({ 64.0f * 0.7f, 64.0f * 0.7f });
 	X->SetRotation(0.0f);
-	X->SpriteTransferVertexBuffer(X, spriteCommon, 5);
+	X->SpriteTransferVertexBuffer(X, spriteCommon_, 5);
 	X->SpriteUpdate(X, spriteCommon_);
 	// 1
 	number[1] = new Sprite();
@@ -351,7 +351,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	number[1]->SetPosition({ 1200, 620, 0 });
 	number[1]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number[1]->SetRotation(0.0f);
-	number[1]->SpriteTransferVertexBuffer(number[1], spriteCommon, 6);
+	number[1]->SpriteTransferVertexBuffer(number[1], spriteCommon_, 6);
 	number[1]->SpriteUpdate(number[1], spriteCommon_);
 	// 敵のHP
 	enemyHp = new Sprite();
@@ -361,7 +361,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	enemyHp->SetPosition(enemyHpPosition);
 	enemyHp->SetScale(enemyHpScale);
 	enemyHp->SetRotation(0.0f);
-	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon, 7);
+	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon_, 7);
 	enemyHp->SpriteUpdate(enemyHp, spriteCommon_);
 	// 敵のHPバー
 	enemyHpBar = new Sprite();
@@ -371,7 +371,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	enemyHpBar->SetPosition(enemyHpBarPosition);
 	enemyHpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
 	enemyHpBar->SetRotation(0.0f);
-	enemyHpBar->SpriteTransferVertexBuffer(enemyHpBar, spriteCommon, 8);
+	enemyHpBar->SpriteTransferVertexBuffer(enemyHpBar, spriteCommon_, 8);
 	enemyHpBar->SpriteUpdate(enemyHpBar, spriteCommon_);
 	// 敵のHP背景
 	enemyHpBack = new Sprite();
@@ -381,7 +381,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	enemyHpBack->SetPosition(enemyHpBackPosition);
 	enemyHpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
 	enemyHpBack->SetRotation(0.0f);
-	enemyHpBack->SpriteTransferVertexBuffer(enemyHpBack, spriteCommon, 9);
+	enemyHpBack->SpriteTransferVertexBuffer(enemyHpBack, spriteCommon_, 9);
 	enemyHpBack->SpriteUpdate(enemyHpBack, spriteCommon_);
 }
 

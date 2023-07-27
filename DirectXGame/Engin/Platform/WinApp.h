@@ -1,7 +1,10 @@
 #pragma once
+
 #include <Windows.h>
 
-// WindowsAPI
+/// <summary>
+/// WindowsAPI
+/// </summary>
 class WinApp final
 {
 public: // 静的メンバ関数
@@ -22,12 +25,17 @@ public: // メンバ関数
 	bool ProcessMessage();
 
 public:
+	// インスタンスの取得
 	static WinApp* GetInstance();
 
 private:
+	// コンストラクタ
 	WinApp() = default;
+	// デストラクタ
 	~WinApp() = default;
+	// コピーコンストラクタの禁止
 	WinApp(const WinApp&) = delete;
+	// 代入演算子の禁止
 	WinApp& operator=(const WinApp&) = delete;
 
 public: // 定数

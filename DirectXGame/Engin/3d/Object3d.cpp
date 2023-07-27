@@ -54,6 +54,7 @@ void Object3d::PreDraw(ID3D12GraphicsCommandList * cmdList)
 	cmdList->SetPipelineState(pipelinestate.Get());
 	// ルートシグネチャの設定
 	cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	rootsignature->SetName(L"Obejct3dRootSignature");
 	// プリミティブ形状を設定
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
@@ -279,6 +280,7 @@ void Object3d::InitializeGraphicsPipeline()
 	assert(SUCCEEDED(result));
 
 	gpipeline.pRootSignature = rootsignature.Get();
+	rootsignature->SetName(L"Obejct3dRootSignature");
 
 	// グラフィックスパイプラインの生成
 	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate));

@@ -24,6 +24,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void Destroy();
+
 public:
 	// インスタンスの作成
 	static GameSceneManager* GetInstance();
@@ -43,7 +45,5 @@ private: // メンバ変数
 	GameBaseScene* scene_ = nullptr;
 	// 次シーン
 	GameBaseScene* nextScene_ = nullptr;
-	//
-	SpriteCommon spriteCommon;
 };
 

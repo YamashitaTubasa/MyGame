@@ -1,11 +1,14 @@
 #pragma once
 
 #define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
+#define MaxCountrollers 4  
+#define MaxVibration 65535
+
+#include "WinApp.h"
 
 #include <windows.h>
 #include <wrl.h>
 #include <dinput.h>
-#include "WinApp.h"
 #include <dwrite.h>
 #include <wchar.h>
 #include <wrl/client.h>
@@ -17,10 +20,9 @@
 #pragma comment(lib,"dwrite.lib")
 #pragma comment (lib, "xinput.lib")
 
-#define MaxCountrollers 4  
-#define MaxVibration 65535
-
-// 入力
+/// <summary>
+/// 入力
+/// </summary>
 class Input final
 {
 public:
@@ -58,12 +60,17 @@ public: // メンバ関数
 	bool TriggerKey(BYTE keyNumber);
 
 public:
+	// インスタンスの取得
 	static Input* GetInstance();
 
 private:
+	// コンストラクタ
 	Input() = default;
+	// デストラクタ
 	~Input() = default;
+	// コピーコンストラクタの禁止
 	Input(const Input&) = delete;
+	// 代入演算子の禁止
 	Input& operator=(const Input&) = delete;
 
 private: // メンバ変数

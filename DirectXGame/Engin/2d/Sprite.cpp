@@ -4,6 +4,11 @@ using namespace DirectX;
 using namespace Microsoft::WRL;
 using namespace std;
 
+/// <summary>
+/// 静的メンバ変数の実体
+/// </summary>
+ID3D12GraphicsCommandList* Sprite::cmdList_ = nullptr;
+
 Sprite::Sprite(UINT texNumber, XMFLOAT3 pos, XMFLOAT2 size, XMFLOAT4 color, XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY) {
 
 }
@@ -179,6 +184,7 @@ PipelineSet Sprite::SpriteCreateGraphicsPipeline()
 		rootSigBlob->GetBufferSize(),
 		IID_PPV_ARGS(&pipelineSet.rootsignature));
 	assert(SUCCEEDED(result));
+	pipelineSet.rootsignature->SetName(L"SpriteRootSignature");
 
 	// パイプラインにルートシグネチャをセット
 	pipelineDesc.pRootSignature = pipelineSet.rootsignature.Get();
@@ -186,6 +192,7 @@ PipelineSet Sprite::SpriteCreateGraphicsPipeline()
 	// パイプランステートの生成
 	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineSet.pipelinestate));
 	assert(SUCCEEDED(result));
+	pipelineSet.pipelinestate->SetName(L"SpritePipelineState");
 
 	// デスクリプタヒープを生成	
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
@@ -295,25 +302,32 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 	constBuff->Unmap(0, nullptr);
 }
 
-void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList, const SpriteCommon& spriteCommon) {
+void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList, const SpriteCommon& spriteCommon) 
+{
+	// コマンドリストをセット
+	Sprite::cmdList_ = cmdList;
 
 	// パイプラインステートとルートシグネチャの設定
-	cmdList->SetPipelineState(spriteCommon.pipelineSet.pipelinestate.Get());
-	cmdList->SetGraphicsRootSignature(spriteCommon.pipelineSet.rootsignature.Get());
+	cmdList_->SetPipelineState(spriteCommon.pipelineSet.pipelinestate.Get());
+	spriteCommon.pipelineSet.pipelinestate->SetName(L"PipelineState");
+	cmdList_->SetGraphicsRootSignature(spriteCommon.pipelineSet.rootsignature.Get());
+	spriteCommon.pipelineSet.rootsignature->SetName(L"RootSignature");
 
 	// プリミティブ形状の設定
-	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形リスト
+	cmdList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形リスト
 
 	//テクスチャ用でスクリプタヒープの設定
 	ID3D12DescriptorHeap* ppHeaps[] = { spriteCommon.descHeap.Get() };
-	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	cmdList_->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 }
 
 void Sprite::PostDraw()
 {
+	// コマンドリストの解除
+	Sprite::cmdList_ = nullptr;
 }
 
-void Sprite::SpriteDraw(ID3D12GraphicsCommandList* cmdList_, const SpriteCommon& spriteCommon) 
+void Sprite::SpriteDraw(const SpriteCommon& spriteCommon) 
 {
 	// 非表示フラグがtrueなら
 	if (isInvisible) {
@@ -321,23 +335,21 @@ void Sprite::SpriteDraw(ID3D12GraphicsCommandList* cmdList_, const SpriteCommon&
 		return;
 	}
 
-	this->cmdList = cmdList_;
-
 	// 頂点バッファをセット
-	cmdList->IASetVertexBuffers(0, 1, &vbView);
+	cmdList_->IASetVertexBuffers(0, 1, &vbView);
 
 	// 定数バッファ(CBV)をセット
-	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
+	cmdList_->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
 
 	//シェーダーリソースビューをセット
-	cmdList->SetGraphicsRootDescriptorTable(
+	cmdList_->SetGraphicsRootDescriptorTable(
 		1, CD3DX12_GPU_DESCRIPTOR_HANDLE(
 			spriteCommon.descHeap->GetGPUDescriptorHandleForHeapStart(),
 			texNumber, 
 			device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)));
 
 	//ポリゴンの描画(4頂点で四角形)
-	cmdList->DrawInstanced(4, 1, 0, 0);
+	cmdList_->DrawInstanced(4, 1, 0, 0);
 }
 
 SpriteCommon Sprite::SpriteCommonCreate(int window_width, int window_height) 
@@ -504,9 +516,9 @@ void Sprite::SpriteTransferVertexBuffer(const Sprite* sprite, const SpriteCommon
 
 	// UV計算
 	// 指定番号の画像が読み込み済みなら
-	if (spriteCommon.texBuff[sprite->texIndex_]) {
+	if (texBuffers_[sprite->texIndex_]) {
 		// テクスチャ情報取得
-		resDesc = spriteCommon.texBuff[sprite->texIndex_]->GetDesc();
+		resDesc = texBuffers_[sprite->texIndex_]->GetDesc();
 
 		float tex_left = sprite->texLeftTop_.x / resDesc.Width;
 		float tex_right = (sprite->texLeftTop_.x + sprite->texSize_.x) / resDesc.Width;

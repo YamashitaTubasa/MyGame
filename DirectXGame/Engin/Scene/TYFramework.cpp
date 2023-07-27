@@ -54,12 +54,18 @@ void TYFramework::Initialize()
 
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dXCommon->GetDevice(), WinApp::window_width, WinApp::window_height, camera);
+
 	// パーティクル静的初期化
 	ParticleManager::StaticInitialize(dXCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
 }
 
 void TYFramework::Finalize()
 {
+	sceneManager_->Destroy();
+
+	delete object3d;
+	delete particleMan;
+
 	FbxLoader::GetInstance()->Finalize();
 
 	// imguiの終了処理

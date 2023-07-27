@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DirectXCommon.h"
+
 #include <Windows.h>
 #include <D3dx12.h>
 #include <DirectXMath.h>
@@ -8,8 +10,6 @@
 #include <DirectXTex.h>
 #include <wrl.h>
 #include <array>
-
-#include "DirectXCommon.h"
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -29,6 +29,7 @@ struct PipelineSet {
 
 // スプライトの共通データ
 struct SpriteCommon {
+	
 	// パイプラインセット
 	PipelineSet pipelineSet;
 	// 射影行列
@@ -77,6 +78,9 @@ public:
 	/// <summary>
 	/// スプライト共通データ生成
 	/// </summary>
+	/// <param name="window_width">横幅</param>
+	/// <param name="window_height">縦幅</param>
+	/// <returns></returns>
 	SpriteCommon SpriteCommonCreate(int window_width, int window_height);
 
 	/// <summary>
@@ -89,11 +93,21 @@ public:
 	/// <summary>
 	/// スプライト共通テクスチャ読み込み
 	/// </summary>
+	/// <param name="spriteCommon"></param>
+	/// <param name="texnumber">テクスチャ番号</param>
+	/// <param name="filename">ファイル名</param>
 	void LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar_t* filename);
 
 	/// <summary>
 	/// スプライト生成
 	/// </summary>
+	/// <param name="window_width">横幅</param>
+	/// <param name="window_height">縦幅</param>
+	/// <param name="texNumber">テクスチャ番号</param>
+	/// <param name="spriteCommon"></param>
+	/// <param name="anchorpoint">アンカーポイント</param>
+	/// <param name="isFlipX">フリップX</param>
+	/// <param name="FlipY">フリップY</param>
 	void SpriteCreate(float window_width, float window_height, UINT texNumber, 
 		const SpriteCommon& spriteCommon, XMFLOAT2 anchorpoint, bool isFlipX, bool FlipY);
 
@@ -120,7 +134,7 @@ public:
 	/// <summary>
 	/// スプライト単体描画
 	/// </summary>
-	void SpriteDraw(ID3D12GraphicsCommandList* cmdList_, const SpriteCommon& spriteCommon);
+	void SpriteDraw(const SpriteCommon& spriteCommon);
 
 	/// <summary>
 	/// 終了処理
@@ -138,9 +152,9 @@ public: // セッター
 	void SetTexNumber(UINT texNumber_) { this->texNumber = texNumber_; }
 	// 色
 	void SetColor(const XMFLOAT4& color) { this->color_ = color; }
-	// フリップ
-	void SetIsFlipX(bool isFlipX) { this->isFlipX_ = isFlipX; } // X
-	void SetIsFlipY(bool isFlipY) { this->isFlipY_ = isFlipY; } // Y
+	// フリップX,Y
+	void SetIsFlipX(bool isFlipX) { this->isFlipX_ = isFlipX; }
+	void SetIsFlipY(bool isFlipY) { this->isFlipY_ = isFlipY; }
 	// テクスチャ左上座標
 	void SetTexLeftTop(const XMFLOAT2& texLeftTop) { this->texLeftTop_ = texLeftTop; }
 	// テクスチャ切り出しサイズ
@@ -157,29 +171,33 @@ public: // ゲッター
 	UINT GetTexNumber() const { return texNumber; }
 	// 色
 	XMFLOAT4 GetColor() const { return color_; }
-	// フリップ
-	bool GetIsFlipX() const { return isFlipX_; } // X
-	bool GetIsFlipY() const { return isFlipY_; } // Y
+	// フリップX,Y
+	bool GetIsFlipX() const { return isFlipX_; }
+	bool GetIsFlipY() const { return isFlipY_; }
 	// テクスチャ左上座標
 	XMFLOAT2 GetTexLeftTop() const { return texLeftTop_; }
 	// テクスチャ切り出しサイズ
 	XMFLOAT2 GetTexSize() const { return texSize_; }
 
+private:
+	static ID3D12GraphicsCommandList* cmdList_;
+
 protected:
 	// DirectXCommonのインスタンス
 	DirectXCommon* dXCommon = nullptr;
-	SpriteCommon spriteCommon_;
 
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 	D3D12_RESOURCE_DESC resDesc;
+	// デバイス
 	ComPtr<ID3D12Device> device;
 	//頂点バッファ
 	ComPtr<ID3D12Resource> vertBuff;
-	ComPtr<ID3D12GraphicsCommandList> cmdList;
+	// デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> descHeap;
+	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuff;
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
+	// SRVの最大枚数
 	static const size_t kMaxSRVCount = 2056;
 	// テクスチャバッファ
 	std::array<ComPtr<ID3D12Resource>, kMaxSRVCount> texBuffers_;

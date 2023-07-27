@@ -237,14 +237,13 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	// パイプラインステートとルートシグネチャの設定
 	cmdList->SetPipelineState(pipelineState.Get());
 	cmdList->SetGraphicsRootSignature(rootSignature.Get());
+	rootSignature->SetName(L"PostEffectRootSignature");
 
 	// プリミティブ形状の設定
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形リスト
 
-
 	// 頂点バッファをセット
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
-
 
 	// 定数バッファ(CBV)をセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
@@ -441,6 +440,7 @@ void PostEffect::CreateGraphicsPipelineState()
 	assert(SUCCEEDED(result));
 
 	gpipeline.pRootSignature = rootSignature.Get();
+	rootSignature->SetName(L"PostEffectRootSignature");
 
 	// グラフィックスパイプラインの生成
 	result = dXCommon->GetDevice()->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelineState));

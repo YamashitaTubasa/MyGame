@@ -46,7 +46,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="dXCommon"></param>
-	void Initialize(SpriteCommon& spriteCommon) override;
+	void Initialize() override;
 
 	/// <summary>
 	/// 更新
@@ -82,7 +82,7 @@ public:
 	/// <summary>
 	/// スプライト初期化
 	/// </summary>
-	void SpriteInitialize(SpriteCommon& spriteCommon);
+	void SpriteInitialize();
 
 	// パーティクルの初期化
 	void ParticleInitialize();

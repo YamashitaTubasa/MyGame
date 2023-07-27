@@ -1,10 +1,9 @@
 #pragma once
 
-#include "ParticleManager.h"
-#include "Input.h"
 #include "DirectXCommon.h"
-#include "GameBaseScene.h"
+#include "Input.h"
 #include "Sprite.h"
+#include "GameBaseScene.h"
 #include "GameSceneManager.h"
 #include "GamePlayScene.h"
 
@@ -15,6 +14,7 @@ class GameTitleScene : public GameBaseScene
 public: // メンバ関数
 	// コンストラクタ
 	GameTitleScene();
+
 	// デストラクタ
 	~GameTitleScene();
 
@@ -22,7 +22,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(SpriteCommon& spriteCommon) override;
+	void Initialize() override;
 
 	/// <summary>
 	/// 更新
@@ -41,16 +41,15 @@ public: // メンバ関数
 	void Finalize() override;
 
 private: // メンバ変数
-	ParticleManager* particleMan1_ = nullptr;
 	Input* input_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
 	
 	// スプライト
 	Sprite* sprite_ = nullptr;
 	Sprite* title_ = nullptr;
-	SpriteCommon spriteCommon_;
 
+	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
 	DirectX::XMFLOAT3 titlePos_ = { 0,0,0 };
 	DirectX::XMFLOAT2 titleScale_ = { 1280,720 };
-	DirectX::XMFLOAT3 titleRot_ = { 0,0,0 };
+	float titleRot_ = 0.0f;
 };

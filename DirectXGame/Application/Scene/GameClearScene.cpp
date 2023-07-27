@@ -1,6 +1,5 @@
 #include "GameClearScene.h"
 
-
 using namespace DirectX;
 
 GameClearScene::GameClearScene()
@@ -13,7 +12,7 @@ GameClearScene::~GameClearScene()
 	delete clear_;
 }
 
-void GameClearScene::Initialize(SpriteCommon& spriteCommon)
+void GameClearScene::Initialize()
 {
 	dxCommon_ = DirectXCommon::GetInstance();
 
@@ -31,7 +30,7 @@ void GameClearScene::Initialize(SpriteCommon& spriteCommon)
 	clear_->SetPosition(clearPos_);
 	clear_->SetScale(clearScale_);
 	clear_->SetRotation(0.0f);
-	clear_->SpriteTransferVertexBuffer(clear_, spriteCommon, 1);
+	clear_->SpriteTransferVertexBuffer(clear_, spriteCommon_, 1);
 	clear_->SpriteUpdate(clear_, spriteCommon_);
 
 }
@@ -55,7 +54,7 @@ void GameClearScene::Draw()
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
 	// タイトルの描画
-	clear_->SpriteDraw(cmdList, spriteCommon_);
+	clear_->SpriteDraw(spriteCommon_);
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

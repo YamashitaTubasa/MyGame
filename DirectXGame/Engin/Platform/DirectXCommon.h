@@ -1,4 +1,8 @@
 #pragma once 
+
+#include "WinApp.h"
+#include "FPSFixed.h"
+
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
@@ -11,9 +15,6 @@
 #pragma warning(disable:4023)
 #include <DirectXTex.h>
 #pragma warning(pop)
-
-#include "WinApp.h"
-#include "FPSFixed.h"
 
 /// <summary>
 /// DirectX基盤

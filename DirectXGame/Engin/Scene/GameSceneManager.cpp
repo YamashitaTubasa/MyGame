@@ -3,8 +3,11 @@
 GameSceneManager::~GameSceneManager()
 {
 	// 最後のシーンの終了と解放
-	scene_->Finalize();
-	delete scene_;
+	if (scene_ != nullptr) {
+		scene_->Finalize();
+		delete scene_;
+		scene_ = nullptr;
+	}
 }
 
 GameSceneManager* GameSceneManager::GetInstance() 
@@ -33,7 +36,7 @@ void GameSceneManager::Update()
 		scene_->SetSceneManager(this);
 
 		// 次シーンを初期化する
-		scene_->Initialize(spriteCommon);
+		scene_->Initialize();
 	}
 
 	// 実行中シーンを更新する
@@ -42,5 +45,15 @@ void GameSceneManager::Update()
 
 void GameSceneManager::Draw()
 {
+	// シーンの描画
 	scene_->Draw();
+}
+
+void GameSceneManager::Destroy()
+{
+	if (scene_ != nullptr) {
+		scene_->Finalize();
+		delete scene_;
+		scene_ = nullptr;
+	}
 }

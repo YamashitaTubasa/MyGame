@@ -31,7 +31,7 @@ void MyGame::Update()
 	// 基底クラスの更新処理
 	TYFramework::Update();
 
-	postEffect->SetBlur(true);
+	//postEffect->SetBlur(true);
 }
 
 void MyGame::Draw()

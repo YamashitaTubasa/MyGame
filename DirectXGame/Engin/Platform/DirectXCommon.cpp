@@ -287,7 +287,6 @@ void DirectXCommon::InitializeDepthBuffer()
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
 	dsvHeapDesc.NumDescriptors = 1;// 深度ビューは1つ
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
-	/*ID3D12DescriptorHeap* dsvHeap = nullptr;*/
 	result = device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
 
 	// 深度ビュー作成

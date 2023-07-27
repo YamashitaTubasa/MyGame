@@ -45,7 +45,6 @@ private:
 
 protected:
 	// スプライト
-	SpriteCommon spriteCommon;
 	DirectXCommon* dXCommon = nullptr;
 	WinApp* winApp = nullptr;
 	Input* input = nullptr;
@@ -54,5 +53,7 @@ protected:
 	GameSceneManager* sceneManager_ = nullptr;
 	PostEffect* postEffect = nullptr;
 	PostEffect* postEffect1 = nullptr;
+	Object3d* object3d = nullptr;
+	ParticleManager* particleMan = nullptr;
 };
 
