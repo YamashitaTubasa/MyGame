@@ -217,9 +217,7 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	// スプライト
 	sprite = new Sprite();
 	spriteCommon_ = sprite->SpriteCommonCreate(1280, 720);
-	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline();
-
+	
 	// HPの初期化
 	hp = new Sprite();
 	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
