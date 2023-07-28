@@ -49,6 +49,6 @@ private:
 	Vector3 target[5]{};
 
 	bool isMove = true;
-	float moveSpeed = 1.0f;
+	float moveSpeed = 1.1f;
 };
 
