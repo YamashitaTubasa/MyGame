@@ -38,7 +38,7 @@ void GameClearScene::Initialize()
 void GameClearScene::Update()
 {
 	// 十字キーの右を押したら
-	if (Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		// ゲームプレイシーン（次シーン）を生成
 		GameBaseScene* scene = new GameTitleScene();
 		GameSceneManager::GetInstance()->SetNextScene(scene);

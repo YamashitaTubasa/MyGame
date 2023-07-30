@@ -29,17 +29,21 @@ void Player::Initialize(Camera* camera)
 {
 	input = Input::GetInstance();
 
+	// カメラをセット
 	this->camera_ = camera;
 
 	// OBJからモデルデータを読み込む
 	playerM = Model::LoadFromOBJ("fighter");
-	reticleM = Model::LoadFromOBJ("reticle1");
+	reticleM = Model::LoadFromOBJ("reticle");
+	reticle1M = Model::LoadFromOBJ("reticle1");
 	// 3Dオブジェクト生成
 	playerO3 = Object3d::Create();
 	reticleO3 = Object3d::Create();
+	reticle1O3 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
 	playerO3->SetModel(playerM);
 	reticleO3->SetModel(reticleM);
+	reticle1O3->SetModel(reticle1M);
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
@@ -48,11 +52,16 @@ void Player::Initialize(Camera* camera)
 	playerO3->SetPosition(pPosition);
 	playerO3->SetScale({ 5, 5, 5 });
 	playerO3->SetRotation(pRotation);
-	rPosition = { 0,-3,-30 };
+	rPosition = { 0,-3,-25 };
 	rRotation = { 0,90,0 };
 	reticleO3->SetPosition(rPosition);
-	reticleO3->SetScale({ 0.3f, 0.3f, 0.3f });
+	reticleO3->SetScale(rScale);
 	reticleO3->SetRotation(rRotation);
+	r1Position = { 0,-4,-20 };
+	r1Rotation = { 0,90,0 };
+	reticle1O3->SetPosition(r1Position);
+	reticle1O3->SetScale(r1Scale);
+	reticle1O3->SetRotation(r1Rotation);
 	
 	//Object3d::SetEye(pPosition);
 	//Object3d::SetTarget(pPosition);
@@ -63,6 +72,7 @@ void Player::Update()
 	// 3Dオブジェクト更新
 	playerO3->Update();
 	reticleO3->Update();
+	reticle1O3->Update();
 
 	// デスフラグの立った弾を削除
 	pBullets.remove_if([](PlayerBullet* bullet) {
@@ -78,13 +88,15 @@ void Player::Update()
 	// 左右への移動範囲制限
 	if (pPosition.x <= -8) {
 		pPosition.x += 0.25f;
-	}else if(pPosition.x >= 8){
+	}
+	if(pPosition.x >= 8){
 		pPosition.x -= 0.25f;
 	}
 	// 上下への移動範囲制限
 	if (pPosition.y <= -6) {
 		pPosition.y += 0.25f;
-	}else if(pPosition.y >= 6){
+	}
+	if(pPosition.y >= 6){
 		pPosition.y -= 0.25f;
 	}
 	//===== プレイヤーの移動処理 =====//
@@ -92,6 +104,7 @@ void Player::Update()
 	if (input->PushKey(DIK_W)) {
 		pPosition.y += 0.25f;
 		rPosition.y += 0.25f;
+		r1Position.y += 0.25f;
 		target.y += 0.25f;
 		eye.y += 0.25f;
 		isUpMove = true;
@@ -113,6 +126,7 @@ void Player::Update()
 	if(input->PushKey(DIK_A)) {
 		pPosition.x -= 0.25f;
 		rPosition.x -= 0.25f;
+		r1Position.x -= 0.25f;
 		target.x -= 0.25f;
 		eye.x -= 0.25f;
 		isLeftMove = true;
@@ -134,6 +148,7 @@ void Player::Update()
 	if(input->PushKey(DIK_S)) {
 		pPosition.y -= 0.25f;
 		rPosition.y -= 0.25f;
+		r1Position.y -= 0.25f;
 		target.y -= 0.25f;
 		eye.y -= 0.25f;
 		isDownMove = true;
@@ -155,6 +170,7 @@ void Player::Update()
 	if(input->PushKey(DIK_D)) {
 		pPosition.x += 0.25f;
 		rPosition.x += 0.25f;
+		r1Position.x += 0.25f;
 		target.x += 0.25f;
 		eye.x += 0.25f;
 		isRightMove = true;
@@ -176,6 +192,8 @@ void Player::Update()
 	playerO3->SetRotation(pRotation);
 	reticleO3->SetPosition(rPosition);
 	reticleO3->SetRotation(rRotation);
+	reticle1O3->SetPosition(r1Position);
+	reticle1O3->SetRotation(r1Rotation);
 	Object3d::SetTarget(target);
 	Object3d::SetEye(eye);
 
@@ -189,6 +207,10 @@ void Player::Update()
 		//offset = DirectX::XMMatrixAffineTransformation()
 	}
 
+	if(input->TriggerKey(DIK_Y)){
+		int a = 0;
+	}
+
 	// 自キャラの攻撃処理
 	Attack();
 
@@ -196,6 +218,9 @@ void Player::Update()
 	for (PlayerBullet* bullet : pBullets) {
 		bullet->Update();
 		pBulletP = bullet->GetPosition();
+		if (bullet->GetPosition().z == 10) {
+			hp -= 1;
+		}
 	}
 }
 
@@ -204,6 +229,7 @@ void Player::Draw()
 	// プレイヤーのモデルの描画
 	playerO3->Draw();
 	reticleO3->Draw();
+	reticle1O3->Draw();
 
 	// 弾描画
 	for (PlayerBullet* bullet : pBullets) {

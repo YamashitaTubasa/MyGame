@@ -59,15 +59,19 @@ public: // ゲッター
 	const DirectX::XMFLOAT3& GetPositon() { return pPosition; }
 	// プレイヤーの弾の座標の取得
 	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP; }
+	// HPの取得
+	int GetHp() const { return hp; }
 	
 public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
 	// モデル
 	Model* playerM = nullptr;
 	Model* reticleM = nullptr;
+	Model* reticle1M = nullptr;
 	// オブジェクト
 	Object3d* playerO3 = nullptr;
 	Object3d* reticleO3 = nullptr;
+	Object3d* reticle1O3 = nullptr;
 	// 入力
 	Input* input = nullptr;
 	// カメラ
@@ -91,12 +95,16 @@ public: // メンバ変数
 
 	// レティクルの移動量
 	DirectX::XMFLOAT3 rmove = { 0,0.25,0 };
+	DirectX::XMFLOAT3 r1move = { 0,0.25,0 };
 	// レティクルの座標
 	DirectX::XMFLOAT3 rPosition = { 0,0,-1 };
+	DirectX::XMFLOAT3 r1Position = { 0,0,-1 };
 	// レティクルの回転
 	DirectX::XMFLOAT3 rRotation = { 0,0,0 };
+	DirectX::XMFLOAT3 r1Rotation = { 0,0,0 };
 	// レティクルのサイズ
-	DirectX::XMFLOAT3 prScale = { 1,1,1 };
+	DirectX::XMFLOAT3 rScale = { 0.4f, 0.4f, 0.4f };
+	DirectX::XMFLOAT3 r1Scale = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
 	DirectX::XMFLOAT3 eye = { 0,0,-50 };
@@ -117,5 +125,7 @@ public: // メンバ変数
 	float endFrame = 2.0f;
 	float start = 0.0f;
 	float end = 2.0f;
+	// HP
+	int hp = 10;
 };
 

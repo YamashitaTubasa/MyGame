@@ -106,7 +106,7 @@ void GamePlayScene::Update()
 	count++;
 
 	// 十字キーの右を押したら
-	if (Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
+	if (enemyHpScale.x == 0) {
 		// ゲームプレイシーン（次シーン）を生成
 		GameBaseScene* scene = new GameClearScene();
 		GameSceneManager::GetInstance()->SetNextScene(scene);
@@ -176,6 +176,56 @@ void GamePlayScene::Update()
 	hp->SetScale(hpScale);
 	hp->SpriteTransferVertexBuffer(hp, spriteCommon_, 1);
 	hp->SpriteUpdate(hp, spriteCommon_);
+
+	if (player->GetHp() == 9) {
+		if (enemyHpScale.x >= 300) {
+			enemyHpScale.x -= 5;
+		}
+	}
+	if (player->GetHp() == 8) {
+		if (enemyHpScale.x >= 100) {
+			enemyHpScale.x -= 5;
+		}
+	}
+	if (player->GetHp() == 7) {
+		if (enemyHpScale.x >= 0) {
+			enemyHpScale.x -= 5;
+		}
+	}
+	if (player->GetHp() == 6) {
+		if (enemyHpScale.x >= 100) {
+			enemyHpScale.x -= 2;
+		}
+	}
+	if (player->GetHp() == 5) {
+		if (enemyHpScale.x >= 0) {
+			enemyHpScale.x -= 2;
+		}
+	}
+	if (player->GetHp() == 4) {
+		if (enemyHpScale.x >= 150) {
+			enemyHpScale.x -= 2;
+		}
+	}
+	if (player->GetHp() == 3) {
+		if (enemyHpScale.x >= 100) {
+			enemyHpScale.x -= 2;
+		}
+	}
+	if (player->GetHp() == 2) {
+		if (enemyHpScale.x >= 50) {
+			enemyHpScale.x -= 2;
+		}
+	}
+	if (player->GetHp() == 1) {
+		if (enemyHpScale.x >= 0) {
+			enemyHpScale.x -= 2;
+		}
+	}
+
+	enemyHp->SetScale(enemyHpScale);
+	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon_, 7);
+	enemyHp->SpriteUpdate(enemyHp, spriteCommon_);
 
 	// パーティクルの更新
 	particleMan->Update();
