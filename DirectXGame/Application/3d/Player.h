@@ -120,12 +120,14 @@ public: // メンバ変数
 	// 下への移動フラグ
 	bool isDownMove = false;
 	// イージング変数
-	float time = 0.0f;
+	//float time = 0.0f;
 	float frame = 0.0f;
 	float endFrame = 2.0f;
 	float start = 0.0f;
 	float end = 2.0f;
 	// HP
 	int hp = 10;
+	int time = 0;
+	bool isTime = false;
 };
 

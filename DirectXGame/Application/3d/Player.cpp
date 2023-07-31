@@ -88,16 +88,32 @@ void Player::Update()
 	// 左右への移動範囲制限
 	if (pPosition.x <= -8) {
 		pPosition.x += 0.25f;
+		rPosition.x += 0.25f;
+		r1Position.x += 0.25f;
+		target.x += 0.25f;
+		eye.x += 0.25f;
 	}
 	if(pPosition.x >= 8){
 		pPosition.x -= 0.25f;
+		rPosition.x -= 0.25f;
+		r1Position.x -= 0.25f;
+		target.x -= 0.25f;
+		eye.x -= 0.25f;
 	}
 	// 上下への移動範囲制限
 	if (pPosition.y <= -6) {
 		pPosition.y += 0.25f;
+		rPosition.y += 0.25f;
+		r1Position.y += 0.25f;
+		target.y += 0.25f;
+		eye.y += 0.25f;
 	}
 	if(pPosition.y >= 6){
 		pPosition.y -= 0.25f;
+		rPosition.y -= 0.25f;
+		r1Position.y -= 0.25f;
+		target.y -= 0.25f;
+		eye.y -= 0.25f;
 	}
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
@@ -218,7 +234,8 @@ void Player::Update()
 	for (PlayerBullet* bullet : pBullets) {
 		bullet->Update();
 		pBulletP = bullet->GetPosition();
-		if (bullet->GetPosition().z == 10) {
+		if (bullet->GetPosition().z == 10 && bullet->GetPosition().y > -2 && bullet->GetPosition().y < 2 && 
+			bullet->GetPosition().x > -2 && bullet->GetPosition().x < 2) {
 			hp -= 1;
 		}
 	}
@@ -240,7 +257,8 @@ void Player::Draw()
 void Player::Attack()
 {
 	// プレイヤーの攻撃処理
-	if (input->TriggerKey(DIK_SPACE)) {
+	if (input->TriggerKey(DIK_SPACE) && isTime == false) {
+		isTime = true;
 
 		// 弾の速度
 		const float bulletSpeed = 1.0f;
@@ -252,5 +270,13 @@ void Player::Attack()
 
 		// 球を登録する
 		pBullets.push_back(newBullet);
+	}
+	
+	if (isTime == true) {
+		time++;
+	}
+	if (time >= 100) {
+		time = 0;
+		isTime = false;
 	}
 }
