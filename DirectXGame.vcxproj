@@ -116,6 +116,7 @@
     <ClCompile Include="DirectXGame\Engin\3d\FbxLoader.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxModel.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxObject3d.cpp" />
+    <ClCompile Include="DirectXGame\Engin\3d\LevelLoader.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\Model.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\Object3d.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\RailCamera.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="DirectXGame\Engin\3d\FbxLoader.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxModel.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxObject3d.h" />
+    <ClInclude Include="DirectXGame\Engin\3d\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Model.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Object3d.h" />
     <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h" />

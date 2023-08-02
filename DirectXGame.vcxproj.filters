@@ -240,14 +240,17 @@
     <ClCompile Include="DirectXGame\Application\Scene\GameSceneManager.cpp">
       <Filter>ソース ファイル\Engin\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\3d\Boss.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\Adjustment\GlobalVariables.cpp">
       <Filter>ソース ファイル\Application\Adjustment</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engin\Camera\DebugCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engin\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\3d\LevelLoader.cpp">
+      <Filter>ソース ファイル\Engin\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\3d\Boss.cpp">
+      <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -417,14 +420,17 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameBaseScene.h">
       <Filter>ヘッダー ファイル\Application\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\3d\Boss.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\Adjustment\GlobalVariables.h">
       <Filter>ヘッダー ファイル\Application\Adjustment</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\3d\Boss.h">
+      <Filter>ヘッダー ファイル\Application\3d</Filter>
+    </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Camera\DebugCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engin\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\3d\LevelLoader.h">
+      <Filter>ヘッダー ファイル\Engin\3d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
