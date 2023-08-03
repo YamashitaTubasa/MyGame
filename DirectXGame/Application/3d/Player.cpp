@@ -23,9 +23,18 @@ Player::~Player()
 	}
 }
 
-float Player::easeInQuad(float x)
+float Player::EaseOutQuintP(float t, float b, float c, float d)
 {
-	return (float)sin((x * PI) / 2.0);
+	float x = t / d;
+	float v = EaseOutQuint(x);
+	float result = c * v + b;
+
+	return result;
+}
+
+float Player::EaseOutQuint(float x)
+{
+	return static_cast<float>(1 - pow(1 - x, 5));
 }
 
 void Player::Initialize(Camera* camera)
