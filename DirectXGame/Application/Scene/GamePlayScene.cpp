@@ -164,8 +164,8 @@ void GamePlayScene::Update()
 	}
 	if (particl == true) {
 		// パーティクルの実行
-		particleMan->Execution(particle, -6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
-		particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
+		/*particleMan->Execution(particle, -6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
+		particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);*/
 	}
 
 	if (input->PushKey(DIK_I)) {

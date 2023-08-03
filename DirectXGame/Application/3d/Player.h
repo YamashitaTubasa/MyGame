@@ -30,8 +30,16 @@ public:
 	~Player();
 
 public:
-	// イージング
-	float easeInQuad(float x);
+	/// <summary>
+	/// イージング
+	/// </summary>
+	/// <param name="t">時間</param>
+	/// <param name="b">開始位置</param>
+	/// <param name="c">開始位置-終了位置の差</param>
+	/// <param name="d">合計時間</param>
+	/// <returns></returns>
+	float EaseOutQuintP(float t, float b, float c, float d);
+	float EaseOutQuint(float x);
 
 public: // メンバ関数
 	/// <summary>
@@ -120,11 +128,14 @@ public: // メンバ変数
 	// 下への移動フラグ
 	bool isDownMove = false;
 	// イージング変数
-	//float time = 0.0f;
-	float frame = 0.0f;
-	float endFrame = 2.0f;
-	float start = 0.0f;
-	float end = 2.0f;
+	bool isEaseFlag = false;
+	float eTime = 0.0f;
+	float eFrame = 0.0f;
+	float eEndFrame = 80.0f;
+	float eStart = 0.0f;
+	float eEnd = 360.0f;
+	// 回転のフラグ
+	bool isRot = false;
 	// HP
 	int hp = 10;
 	int time = 0;

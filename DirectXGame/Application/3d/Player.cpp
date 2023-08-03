@@ -20,9 +20,18 @@ Player::~Player()
 	}
 }
 
-float Player::easeInQuad(float x)
+float Player::EaseOutQuintP(float t, float b, float c, float d)
 {
-	return (float)sin((x * PI) / 2.0);
+	float x = t / d;
+	float v = EaseOutQuint(x);
+	float result = c * v + b;
+
+	return result;
+}
+
+float Player::EaseOutQuint(float x)
+{
+	return static_cast<float>(1 - pow(1 - x, 5));
 }
 
 void Player::Initialize(Camera* camera)
@@ -201,6 +210,27 @@ void Player::Update()
 	} else{
 		if(pRotation.z <= 0) {
 			pRotation.z += 1.0f;
+		}
+	}
+
+	// ブースト時の処理
+	if (input->TriggerKey(DIK_U)) {
+		isEaseFlag = true;
+		isRot = true;
+		eFrame = 0;
+	}
+	if (isRot) {
+		if (isEaseFlag) {
+			eFrame++;
+		}
+
+		// 自機の回転
+		pRotation.z = EaseOutQuintP(eFrame, 0, 360, 80);
+
+		// 回転最大時の値の初期化
+		if (pRotation.z == 360.0f) {
+			pRotation.z = 0.0f;
+			isRot = false;
 		}
 	}
 
