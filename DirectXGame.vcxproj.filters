@@ -252,6 +252,9 @@
     <ClCompile Include="DirectXGame\Application\3d\Boss.cpp">
       <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\Math\EasingManager.cpp">
+      <Filter>ソース ファイル\Engin\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -431,6 +434,9 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\3d\LevelLoader.h">
       <Filter>ヘッダー ファイル\Engin\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Math\EasingManager.h">
+      <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

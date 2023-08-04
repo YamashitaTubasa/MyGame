@@ -128,6 +128,7 @@
     <ClCompile Include="DirectXGame\Engin\Effect\Particle.cpp" />
     <ClCompile Include="DirectXGame\Engin\Effect\ParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Math\EasingManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Quaternion.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Vector4.cpp" />
     <ClCompile Include="DirectXGame\Engin\Scene\TYFramework.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="DirectXGame\Engin\Effect\Particle.h" />
     <ClInclude Include="DirectXGame\Engin\Effect\ParticleManager.h" />
     <ClInclude Include="DirectXGame\Engin\Input\Input.h" />
+    <ClInclude Include="DirectXGame\Engin\Math\EasingManager.h" />
     <ClInclude Include="DirectXGame\Engin\Math\Matrix4.h" />
     <ClInclude Include="DirectXGame\Engin\Math\Quaternion.h" />
     <ClInclude Include="DirectXGame\Engin\Math\Vector2.h" />
