@@ -20,20 +20,6 @@ Player::~Player()
 	}
 }
 
-float Player::EaseOutQuintP(float t, float b, float c, float d)
-{
-	float x = t / d;
-	float v = EaseOutQuint(x);
-	float result = c * v + b;
-
-	return result;
-}
-
-float Player::EaseOutQuint(float x)
-{
-	return static_cast<float>(1 - pow(1 - x, 5));
-}
-
 void Player::Initialize(Camera* camera)
 {
 	input = Input::GetInstance();
@@ -96,42 +82,42 @@ void Player::Update()
 	//===== プレイヤーの移動範囲の制限 =====//
 	// 左右への移動範囲制限
 	if (pPosition.x <= -8) {
-		pPosition.x += 0.25f;
-		rPosition.x += 0.25f;
-		r1Position.x += 0.25f;
-		target.x += 0.25f;
-		eye.x += 0.25f;
+		pPosition.x += 0.3f;
+		rPosition.x += 0.3f;
+		r1Position.x += 0.3f;
+		target.x += 0.3f;
+		eye.x += 0.3f;
 	}
 	if(pPosition.x >= 8){
-		pPosition.x -= 0.25f;
-		rPosition.x -= 0.25f;
-		r1Position.x -= 0.25f;
-		target.x -= 0.25f;
-		eye.x -= 0.25f;
+		pPosition.x -= 0.3f;
+		rPosition.x -= 0.3f;
+		r1Position.x -= 0.3f;
+		target.x -= 0.3f;
+		eye.x -= 0.3f;
 	}
 	// 上下への移動範囲制限
 	if (pPosition.y <= -6) {
-		pPosition.y += 0.25f;
-		rPosition.y += 0.25f;
-		r1Position.y += 0.25f;
-		target.y += 0.25f;
-		eye.y += 0.25f;
+		pPosition.y += 0.3f;
+		rPosition.y += 0.3f;
+		r1Position.y += 0.3f;
+		target.y += 0.3f;
+		eye.y += 0.3f;
 	}
 	if(pPosition.y >= 6){
-		pPosition.y -= 0.25f;
-		rPosition.y -= 0.25f;
-		r1Position.y -= 0.25f;
-		target.y -= 0.25f;
-		eye.y -= 0.25f;
+		pPosition.y -= 0.3f;
+		rPosition.y -= 0.3f;
+		r1Position.y -= 0.3f;
+		target.y -= 0.3f;
+		eye.y -= 0.3f;
 	}
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
 	if (input->PushKey(DIK_W)) {
-		pPosition.y += 0.25f;
-		rPosition.y += 0.25f;
-		r1Position.y += 0.25f;
-		target.y += 0.25f;
-		eye.y += 0.25f;
+		pPosition.y += 0.3f;
+		rPosition.y += 0.3f;
+		r1Position.y += 0.3f;
+		target.y += 0.3f;
+		eye.y += 0.3f;
 		isUpMove = true;
 	}else {
 		isUpMove = false;
@@ -149,11 +135,11 @@ void Player::Update()
 	
 	// 左への移動処理
 	if(input->PushKey(DIK_A)) {
-		pPosition.x -= 0.25f;
-		rPosition.x -= 0.25f;
-		r1Position.x -= 0.25f;
-		target.x -= 0.25f;
-		eye.x -= 0.25f;
+		pPosition.x -= 0.3f;
+		rPosition.x -= 0.3f;
+		r1Position.x -= 0.3f;
+		target.x -= 0.3f;
+		eye.x -= 0.3f;
 		isLeftMove = true;
 	} else{
 		isLeftMove = false;
@@ -171,11 +157,11 @@ void Player::Update()
 
 	// 下への移動処理
 	if(input->PushKey(DIK_S)) {
-		pPosition.y -= 0.25f;
-		rPosition.y -= 0.25f;
-		r1Position.y -= 0.25f;
-		target.y -= 0.25f;
-		eye.y -= 0.25f;
+		pPosition.y -= 0.3f;
+		rPosition.y -= 0.3f;
+		r1Position.y -= 0.3f;
+		target.y -= 0.3f;
+		eye.y -= 0.3f;
 		isDownMove = true;
 	} else{
 		isDownMove = false;
@@ -193,11 +179,11 @@ void Player::Update()
 
 	// 右への移動処理
 	if(input->PushKey(DIK_D)) {
-		pPosition.x += 0.25f;
-		rPosition.x += 0.25f;
-		r1Position.x += 0.25f;
-		target.x += 0.25f;
-		eye.x += 0.25f;
+		pPosition.x += 0.3f;
+		rPosition.x += 0.3f;
+		r1Position.x += 0.3f;
+		target.x += 0.3f;
+		eye.x += 0.3f;
 		isRightMove = true;
 	} else{
 		isRightMove = false;
@@ -213,7 +199,7 @@ void Player::Update()
 		}
 	}
 
-	// ブースト時の処理
+	// ブースト時の回転処理
 	if (input->TriggerKey(DIK_U)) {
 		isEaseFlag = true;
 		isRot = true;
@@ -225,7 +211,7 @@ void Player::Update()
 		}
 
 		// 自機の回転
-		pRotation.z = EaseOutQuintP(eFrame, 0, 360, 80);
+		pRotation.z = EasingManager::EaseOutQuintP(eFrame, 0, 360, 60);
 
 		// 回転最大時の値の初期化
 		if (pRotation.z == 360.0f) {

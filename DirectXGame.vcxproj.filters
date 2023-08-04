@@ -234,6 +234,9 @@
     <ClCompile Include="DirectXGame\Application\Scene\GameClearScene.cpp">
       <Filter>ソース ファイル\Application\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\Math\EasingManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -401,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Scene\GameClearScene.h">
       <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Math\EasingManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
