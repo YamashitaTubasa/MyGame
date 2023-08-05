@@ -12,6 +12,7 @@
 #include "Input.h"
 #include "PlayerBullet.h"
 #include "Camera.h"
+#include "EasingManager.h"
 
 #include <cmath>
 #include <iostream>
@@ -100,6 +101,15 @@ public: // メンバ変数
 	float rotSpeed = 1.0f;
 	float pRotMax = 20.0f;
 	float pRotMin = 0.0f;
+
+	bool isEaseFlag = false;
+	float eTime = 0.0f;
+	float eFrame = 0.0f;
+	float eEndFrame = 80.0f;
+	float eStart = 0.0f;
+	float eEnd = 360.0f;
+	// 回転のフラグ
+	bool isRot = false;
 
 	bool isRightMove = false;
 	bool isLeftMove = false;

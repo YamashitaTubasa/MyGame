@@ -138,6 +138,27 @@ void Player::Update()
 		}
 	}
 
+	// ブースト時の回転処理
+	if (input->TriggerKey(DIK_U)) {
+		isEaseFlag = true;
+		isRot = true;
+		eFrame = 0;
+	}
+	if (isRot) {
+		if (isEaseFlag) {
+			eFrame++;
+		}
+
+		// 自機の回転
+		pRotation.z = EasingManager::EaseOutQuintP(eFrame, 0, 360, 60);
+
+		// 回転最大時の値の初期化
+		if (pRotation.z == 360.0f) {
+			pRotation.z = 0.0f;
+			isRot = false;
+		}
+	}
+
 	playerO3->SetPosition(pPosition);
 	playerO3->SetRotation(pRotation);
 
