@@ -256,6 +256,7 @@
     <ClInclude Include="DirectXGame\Engin\Collision\Collision.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionPrimitive.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h" />
     <ClInclude Include="DirectXGame\Engin\Effect\Particle.h" />
     <ClInclude Include="DirectXGame\Engin\Effect\ParticleManager.h" />
     <ClInclude Include="DirectXGame\Engin\Input\Input.h" />

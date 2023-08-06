@@ -438,5 +438,8 @@
     <ClInclude Include="DirectXGame\Engin\Math\EasingManager.h">
       <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
