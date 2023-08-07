@@ -42,17 +42,17 @@ void Player::Initialize(Camera* camera)
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
-	pPosition = { 0,-3,-35 };
+	pPosition = { 0,-2,-35 };
 	pRotation = { 0,0,0 };
 	playerO3->SetPosition(pPosition);
 	playerO3->SetScale({ 5, 5, 5 });
 	playerO3->SetRotation(pRotation);
-	rPosition = { 0,-3,-25 };
+	rPosition = { 0,-2,-25 };
 	rRotation = { 0,90,0 };
 	reticleO3->SetPosition(rPosition);
 	reticleO3->SetScale(rScale);
 	reticleO3->SetRotation(rRotation);
-	r1Position = { 0,-4,-20 };
+	r1Position = { 0,-3,-20 };
 	r1Rotation = { 0,90,0 };
 	reticle1O3->SetPosition(r1Position);
 	reticle1O3->SetScale(r1Scale);

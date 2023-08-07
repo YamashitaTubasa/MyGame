@@ -45,14 +45,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(ProjectDir)lib\fbx_sdk\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\nlohmann;$(IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(ProjectDir)lib\fbx_sdk\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\nlohmann;$(IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
@@ -103,6 +103,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Application\3d\BackGroundObject.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Enemy.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp" />
@@ -113,6 +114,7 @@
     <ClCompile Include="DirectXGame\Engin\3d\FbxLoader.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxModel.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxObject3d.cpp" />
+    <ClCompile Include="DirectXGame\Engin\3d\LevelLoader.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\Model.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\Object3d.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\RailCamera.cpp" />
@@ -229,6 +231,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\3d\BackGroundObject.h" />
     <ClInclude Include="DirectXGame\Application\3d\Enemy.h" />
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="DirectXGame\Engin\3d\FbxLoader.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxModel.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxObject3d.h" />
+    <ClInclude Include="DirectXGame\Engin\3d\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Model.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Object3d.h" />
     <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h" />

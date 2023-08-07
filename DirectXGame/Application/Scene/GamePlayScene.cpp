@@ -28,6 +28,7 @@ GamePlayScene::~GamePlayScene()
 	for (int i = 0; i < 5; i++) {
 		delete number[i];
 	}
+	delete backGroundObj;
 }
 
 void GamePlayScene::Initialize()
@@ -78,6 +79,10 @@ void GamePlayScene::Initialize()
 	enemy = new Enemy();
 	enemy->Initialize();
 
+	// 背景のオブジェクト
+	backGroundObj = new BackGroundObject();
+	backGroundObj->Initialize();
+
 	// OBJの名前を指定してモデルデータを読み込む
 	particle = Particle::LoadFromOBJ("effect1.png");
 	particle1 = Particle::LoadFromOBJ("effect2.png");
@@ -126,6 +131,9 @@ void GamePlayScene::Update()
 
 	// 敵キャラ更新
 	enemy->Update();
+
+	// 背景のオブジェクトの更新
+	backGroundObj->Update();
 
 	if (input->TriggerKey(DIK_O)) {
 		DirectX::XMFLOAT3 a = player->GetpBulletP();
@@ -248,6 +256,9 @@ void GamePlayScene::Draw()
 	if (!isEnemyDeth) {
 		enemy->Draw();
 	}
+
+	// 背景のオブジェクトの描画
+	backGroundObj->Draw();
 
 	// FBX3Dオブジェクトの描画
 	//fbxObject->Draw(dXCommon->GetCommandList());

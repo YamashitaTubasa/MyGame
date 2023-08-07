@@ -16,6 +16,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "PlayerBullet.h"
+#include "BackGroundObject.h"
 #include "GameBaseScene.h"
 #include "GameSceneManager.h"
 #include "GameClearScene.h"
@@ -142,6 +143,7 @@ private:
 	Player* player = nullptr;
 	Player* pBullet = nullptr;
 	Enemy* enemy = nullptr;
+	BackGroundObject* backGroundObj = nullptr;
 
 	DirectX::XMFLOAT3 position[5]{};
 	DirectX::XMFLOAT3 rotation[5]{};
