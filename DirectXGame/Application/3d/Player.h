@@ -87,7 +87,7 @@ public: // メンバ変数
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
-	Vector3 move = { 0,0.3,0 };
+	Vector3 move = { 0,0.3f,0 };
 	Vector3 pPosition = { 0,0,0 };
 	Vector3 pRotation = { 0,0,0 };
 	Vector3 pScale = { 1,1,1 };
