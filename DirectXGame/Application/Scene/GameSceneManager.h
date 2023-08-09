@@ -43,6 +43,4 @@ private: // メンバ変数
 	GameBaseScene* scene_ = nullptr;
 	// 次シーン
 	GameBaseScene* nextScene_ = nullptr;
-	//
-	//SpriteCommon spriteCommon;
 };
