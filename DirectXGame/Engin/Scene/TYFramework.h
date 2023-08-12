@@ -12,6 +12,7 @@
 #include "ParticleManager.h"
 #include "FbxLoader.h"
 #include "PostEffect.h"
+#include "AbstractSceneFactory.h"
 
 class TYFramework
 {
@@ -55,5 +56,7 @@ protected:
 	PostEffect* postEffect1 = nullptr;
 	Object3d* object3d = nullptr;
 	ParticleManager* particleMan = nullptr;
+	// シーンファクトリー
+	AbstractSceneFactory* sceneFactory_ = nullptr;
 };
 

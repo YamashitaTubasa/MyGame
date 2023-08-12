@@ -57,3 +57,12 @@ void GameSceneManager::Destroy()
 		scene_ = nullptr;
 	}
 }
+
+void GameSceneManager::ChangeScene(const std::string& sceneName)
+{
+	assert(sceneFactory_);
+	assert(nextScene_ == nullptr);
+
+	// 次シーン生成
+	nextScene_ = sceneFactory_->CreateScene(sceneName);
+}

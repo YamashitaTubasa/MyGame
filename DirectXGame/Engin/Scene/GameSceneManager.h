@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameBaseScene.h"
+#include "AbstractSceneFactory.h"
 
 /// <summary>
 /// シーン管理
@@ -24,6 +25,9 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// シーンの解放
+	/// </summary>
 	void Destroy();
 
 public:
@@ -37,13 +41,21 @@ private:
 	GameSceneManager& operator=(const GameSceneManager&) = delete;
 
 public: // メンバ関数
-	// 次シーン予約
-	void SetNextScene(GameBaseScene* nextScene) { nextScene_ = nextScene; }
+	/// <summary>
+	/// 次シーン予約
+	/// </summary>
+	/// <param name="sceneName">ファイル名</param>
+	void ChangeScene(const std::string& sceneName);
+
+	// シーンファクトリーのsetter
+	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { sceneFactory_ = sceneFactory; }
 
 private: // メンバ変数
 	// 今のシーン(実行中シーン)
 	GameBaseScene* scene_ = nullptr;
 	// 次シーン
 	GameBaseScene* nextScene_ = nullptr;
+	// シーンファクトリー（借りてくる）
+	AbstractSceneFactory* sceneFactory_ = nullptr;
 };
 

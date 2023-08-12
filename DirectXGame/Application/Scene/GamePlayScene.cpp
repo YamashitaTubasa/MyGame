@@ -113,8 +113,7 @@ void GamePlayScene::Update()
 	// 十字キーの右を押したら
 	if (enemyHpScale.x == 0) {
 		// ゲームプレイシーン（次シーン）を生成
-		GameBaseScene* scene = new GameClearScene();
-		GameSceneManager::GetInstance()->SetNextScene(scene);
+		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
 
 	// カメラの更新

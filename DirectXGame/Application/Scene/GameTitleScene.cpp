@@ -44,8 +44,7 @@ void GameTitleScene::Update()
 	// シーンの切り替え
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		// ゲームプレイシーン（次シーン）を生成
-		GameBaseScene* scene = new GamePlayScene();
-		GameSceneManager::GetInstance()->SetNextScene(scene);
+		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");
 	}
 }
 

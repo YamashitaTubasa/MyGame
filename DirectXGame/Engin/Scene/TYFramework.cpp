@@ -62,6 +62,8 @@ void TYFramework::Initialize()
 void TYFramework::Finalize()
 {
 	sceneManager_->Destroy();
+	//シーンファクトリの解放
+	delete sceneFactory_;
 
 	delete object3d;
 	delete particleMan;
