@@ -255,6 +255,9 @@
     <ClCompile Include="DirectXGame\Engin\Math\EasingManager.cpp">
       <Filter>ソース ファイル\Engin\Math</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Scene\SceneFactory.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -438,8 +441,11 @@
     <ClInclude Include="DirectXGame\Engin\Math\EasingManager.h">
       <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
