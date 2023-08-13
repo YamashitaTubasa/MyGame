@@ -123,6 +123,7 @@
     <ClCompile Include="DirectXGame\Engin\Camera\Camera.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Collision\CollisionPrimitive.cpp" />
     <ClCompile Include="DirectXGame\Engin\Effect\Particle.cpp" />
     <ClCompile Include="DirectXGame\Engin\Effect\ParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp" />
