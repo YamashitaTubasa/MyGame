@@ -110,8 +110,7 @@ void GamePlayScene::Update()
 {
 	count++;
 
-	// 十字キーの右を押したら
-	if (enemyHpScale.x == 0) {
+	if (player->GetPositon().z >= 150) {
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
@@ -331,7 +330,7 @@ void GamePlayScene::ObjectInitialize()
 	skydomeO3->SetModel(skydomeM);
 	// 3Dオブジェクトの位置を指定
 	skydomeO3->SetPosition({ 0,30,0 });
-	skydomeO3->SetScale({ 100, 100, 100 });
+	skydomeO3->SetScale({ 300, 300, 300 });
 	skydomeO3->SetRotation({0,0,0});
 }
 

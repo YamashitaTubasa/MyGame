@@ -97,9 +97,6 @@
     <Filter Include="ソース ファイル\Application">
       <UniqueIdentifier>{f7f5757a-8081-45f3-b7f1-ac9fb54b00fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Platform">
-      <UniqueIdentifier>{631320e3-dfec-435e-be58-ac1a9033933d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Application\Scene">
       <UniqueIdentifier>{ce7e8b24-9f13-45ef-acf2-79a93dfc6d35}</UniqueIdentifier>
     </Filter>
@@ -108,9 +105,6 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Application\Scene">
       <UniqueIdentifier>{c1ce2f60-a012-40cb-9615-59d871189da0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Application\Platform">
-      <UniqueIdentifier>{ef587848-3dab-4a6e-981a-24533f81c150}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Engin\Collision">
       <UniqueIdentifier>{3cb1cac1-6cdd-43c1-8b64-81e9070ae7b1}</UniqueIdentifier>
@@ -219,9 +213,6 @@
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp">
       <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp">
-      <Filter>ソース ファイル\Application\3d</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\3d\Enemy.cpp">
       <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
@@ -246,8 +237,11 @@
     <ClCompile Include="DirectXGame\Application\Scene\SceneFactory.cpp">
       <Filter>ソース ファイル\Application\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp">
+      <Filter>ソース ファイル\Application\3d</Filter>
+    </ClCompile>
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionPrimitive.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,8 +33,13 @@ void MyGame::Update()
 {
 	// 基底クラスの更新処理
 	TYFramework::Update();
-
-	//postEffect->SetBlur(true);
+	a++;
+	if (a >= 400 && a < 450) {
+		postEffect->SetBlur(true);
+	}
+	if (a >= 450) {
+		postEffect->SetBlur(false);
+	}
 }
 
 void MyGame::Draw()

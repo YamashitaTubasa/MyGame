@@ -58,5 +58,6 @@ protected:
 	ParticleManager* particleMan = nullptr;
 	// シーンファクトリー
 	AbstractSceneFactory* sceneFactory_ = nullptr;
+	int a = 0;
 };
 

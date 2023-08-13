@@ -58,6 +58,7 @@ public: // ゲッター
 	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP; }
 	// HPの取得
 	int GetHp() const { return hp; }
+	bool GetIsPostE() { return isPostE; }
 	
 public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
@@ -104,7 +105,7 @@ public: // メンバ変数
 	DirectX::XMFLOAT3 r1Scale = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
-	DirectX::XMFLOAT3 eye = { 0,0,-50 };
+	DirectX::XMFLOAT3 eye = { 0,20,-100 };
 	// 注視点
 	DirectX::XMFLOAT3 target = { 0,0,0 };
 
@@ -129,5 +130,16 @@ public: // メンバ変数
 	int hp = 10;
 	int time = 0;
 	bool isTime = false;
+	// レティクルフラグ
+	bool isReticle = false;
+	// スタート時の演出フラグ
+	bool isStartStaging = true;
+	// スタート演出タイム
+	int startCount = 0;
+	// ゴール時の演出フラグ
+	bool isEndStaging = false;
+	// ゴール演出タイム
+	int endCount = 0;
+	bool isPostE = false;
 };
 
