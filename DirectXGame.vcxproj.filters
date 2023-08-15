@@ -243,6 +243,9 @@
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionPrimitive.cpp">
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\Collision\SphereCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -425,6 +428,18 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h">
       <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\BaseCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionInfo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\SphereCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

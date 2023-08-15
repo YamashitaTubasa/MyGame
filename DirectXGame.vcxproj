@@ -63,7 +63,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDIr)DirectXGame\Engin\Collision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -85,7 +85,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDIr)DirectXGame\Engin\Collision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -124,6 +124,7 @@
     <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionPrimitive.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Collision\SphereCollider.cpp" />
     <ClCompile Include="DirectXGame\Engin\Effect\Particle.cpp" />
     <ClCompile Include="DirectXGame\Engin\Effect\ParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp" />
@@ -238,6 +239,10 @@
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\BaseCollider.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionInfo.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\SphereCollider.h" />
     <ClInclude Include="DirectXGame\Engin\Scene\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameBaseScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameClearScene.h" />

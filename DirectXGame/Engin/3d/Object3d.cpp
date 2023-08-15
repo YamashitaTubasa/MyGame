@@ -1,4 +1,7 @@
 #include "Object3d.h"
+
+#include "BaseCollider.h"
+
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 #include <fstream>
@@ -24,6 +27,13 @@ XMMATRIX Object3d::matProjection{};
 XMFLOAT3 Object3d::eye = { 0, 0, -50.0f };
 XMFLOAT3 Object3d::target = { 0, 0, 0 };
 XMFLOAT3 Object3d::up = { 0, 1, 0 };
+
+Object3d::~Object3d()
+{
+	if (collider) {
+		delete collider;
+	}
+}
 
 void Object3d::StaticInitialize(ID3D12Device * device, int window_width, int window_height, Camera* camera)
 {
@@ -299,6 +309,9 @@ bool Object3d::Initialize()
 	// nullptrチェック
 	assert(device);
 
+	// クラス名の文字列を取得
+	name = typeid(*this).name();
+
 	HRESULT result;
 
 	// ヒーププロパティ
@@ -350,6 +363,11 @@ void Object3d::Update()
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
 	constMap->mat = matWorld * matView * matProjection;	// 行列の合成
 	constBuffB0->Unmap(0, nullptr);
+
+	// 当たり判定更新
+	if (collider) {
+		collider->Update();
+	}
 }
 
 void Object3d::Draw()
@@ -366,4 +384,10 @@ void Object3d::Draw()
 
 	// モデルを描画
 	model->Draw(cmdList, 1);
+}
+
+void Object3d::SetCollider(BaseCollider* collider)
+{
+	collider->SetObject(this);
+	this->collider = collider;
 }

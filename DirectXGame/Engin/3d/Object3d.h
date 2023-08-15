@@ -9,6 +9,9 @@
 
 #include "Model.h"
 #include "Camera.h"
+#include "CollisionInfo.h"
+
+class BaseCollider;
 
 /// <summary>
 /// 3Dオブジェクト
@@ -25,13 +28,23 @@ private: // エイリアス
 	using XMMATRIX = DirectX::XMMATRIX;
 
 public: // サブクラス
-	
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
 		//XMFLOAT4 color;	// 色 (RGBA)
 		XMMATRIX mat;	// ３Ｄ変換行列
 	};
+
+public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	Object3d() = default;
+
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	virtual ~Object3d();
 
 public: // 静的メンバ関数
 	/// <summary>
@@ -132,34 +145,90 @@ private:// 静的メンバ関数
 	static void UpdateViewMatrix();
 
 public: // メンバ関数
-	bool Initialize();
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <returns>成否</returns>
+	virtual bool Initialize();
+
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update();
+	virtual void Update();
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw();
+	virtual void Draw();
 
-	// モデルの設定
+public:
+	/// <summary>
+	/// モデルの設定
+	/// </summary>
+	/// <param name="model">モデル</param>
 	void SetModel(Model* model) { this->model = model; }
 
-	// オブジェクトの座標
+	/// <summary>
+	/// ワールド行列の取得
+	/// </summary>
+	/// <returns>ワールド行列</returns>
+	const XMMATRIX& GetMatWorld() { return matWorld; }
+
+	/// <summary>
+	/// コライダーのセット
+	/// </summary>
+	/// <param name="collider">コライダー</param>
+	void SetCollider(BaseCollider* collider);
+
+	/// <summary>
+	/// 衝突時コールバック関数
+	/// </summary>
+	/// <param name="info">衝突情報</param>
+	virtual void OnCollision(const CollisionInfo& info) {}
+
+	/// <summary>
+	/// オブジェクトの座標取得
+	/// </summary>
+	/// <returns>座標</returns>
 	const XMFLOAT3& GetPosition() const { return position; }
+
+	/// <summary>
+	/// オブジェクトの座標セット
+	/// </summary>
+	/// <param name="position">座標</param>
 	void SetPosition(const XMFLOAT3& position) { this->position = position; }
-	// オブジェクトの大きさ
+
+	/// <summary>
+	/// オブジェクトのサイズのセット
+	/// </summary>
+	/// <param name="scale_">サイズ</param>
 	void SetScale(const XMFLOAT3& scale_) { this->scale = scale_; }
+
+	/// <summary>
+	/// オブジェクトのサイズの取得
+	/// </summary>
+	/// <returns>サイズ</returns>
 	const XMFLOAT3& GetScale() const { return scale; }
-	// オブジェクトの回転
+
+	/// <summary>
+	/// オブジェクトの回転のセット
+	/// </summary>
+	/// <param name="rotation">回転</param>
 	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
+
+	/// <summary>
+	/// オブジェクトの回転の取得
+	/// </summary>
+	/// <returns>回転</returns>
 	const XMFLOAT3& GetRotation() const { return rotation; }
 
-	// カメラ
+	/// <summary>
+	/// カメラ
+	/// </summary>
+	/// <param name="camera">カメラ</param>
 	static void SetCamera(Camera* camera) { Object3d::camera = camera; }
 
-private: // メンバ変数
+protected: // メンバ変数
 	// モデル
 	Model* model = nullptr;
 	// 定数バッファ
@@ -176,5 +245,9 @@ private: // メンバ変数
 	XMMATRIX matWorld;
 	// 親オブジェクト
 	Object3d* parent = nullptr;
+	// クラス名（デバック用）
+	const char* name = nullptr;
+	// コライダー
+	BaseCollider* collider = nullptr;
 };
 
