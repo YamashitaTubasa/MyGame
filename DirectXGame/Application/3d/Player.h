@@ -5,13 +5,12 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Matrix4.h"
-#include "Input.h"
 #include "WinApp.h"
 #include "DirectXCommon.h"
-#include "Input.h"
 #include "PlayerBullet.h"
 #include "Camera.h"
 #include "EasingManager.h"
+#include "Input.h"
 
 #include <DirectXMath.h>
 #include <cmath>
@@ -21,7 +20,7 @@
 /// <summary>
 /// 自キャラ
 /// </summary>
-class Player
+class Player : public Object3d
 {
 public:
 	// コンストラクタ
@@ -30,16 +29,23 @@ public:
 	// デストラクタ
 	~Player();
 
+public: // 静的メンバ関数
+	/// <summary>
+	/// 3Dオブジェクト生成
+	/// </summary>
+	/// <returns>インスタンス</returns>
+	static Player* Create(Model* model = nullptr);
+
 public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Camera* camera);
+	bool Initialize() override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update() override;
 
 	/// <summary>
 	/// 描画
@@ -50,6 +56,12 @@ public: // メンバ関数
 	/// 攻撃
 	/// </summary>
 	void Attack();
+
+	/// <summary>
+	/// 衝突時コールバック関数
+	/// </summary>
+	/// <param name="info">衝突情報</param>
+	void OnCollision(const CollisionInfo& info) override;
 
 public: // ゲッター
 	// プレイヤーの座標の取得
@@ -141,5 +153,7 @@ public: // メンバ変数
 	// ゴール演出タイム
 	int endCount = 0;
 	bool isPostE = false;
+	// 自機のフラグ
+	bool isPlayer = true;
 };
 

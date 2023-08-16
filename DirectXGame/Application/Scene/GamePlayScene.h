@@ -13,7 +13,6 @@
 #include "FbxLoader.h"
 #include "FbxObject3d.h"
 #include "PostEffect.h"
-#include "Player.h"
 #include "Enemy.h"
 #include "PlayerBullet.h"
 #include "BackGroundObject.h"
@@ -23,6 +22,8 @@
 
 // 前方宣言
 class PostEffect;
+class CollisionManager;
+class Player;
 
 /// <summary>
 /// ゲームプレイシーン
@@ -144,6 +145,8 @@ private:
 	Player* pBullet = nullptr;
 	Enemy* enemy = nullptr;
 	BackGroundObject* backGroundObj = nullptr;
+	// 衝突マネージャ
+	CollisionManager* collisionMan = nullptr;
 
 	DirectX::XMFLOAT3 position[5]{};
 	DirectX::XMFLOAT3 rotation[5]{};

@@ -1,5 +1,42 @@
 #pragma once
+
+#include <forward_list>
+
+class BaseCollider;
+
+/// <summary>
+/// 衝突マネージャ
+/// </summary>
 class CollisionManager
 {
-};
+public: // 静的メンバ関数
+	static CollisionManager* GetInstance();
 
+public: // メンバ関数
+	inline void AddCollider(BaseCollider* collider) {
+		colliders.push_front(collider);
+	}
+
+	inline void RemoveCollider(BaseCollider* collider) {
+		colliders.remove(collider);
+	}
+
+	/// <summary>
+	/// 全ての衝突チェック
+	/// </summary>
+	void CheckAllCollisions();
+
+private:
+	// コンストラクタ
+	CollisionManager() = default;
+	// コピーコンストラクタの禁止
+	CollisionManager(const CollisionManager&) = delete;
+	// デストラクタ
+	~CollisionManager() = default;
+	// コピー代入演算子の禁止
+	CollisionManager& operator=(const CollisionManager&) = delete;
+
+private:
+	// コライダーのリスト
+	std::forward_list<BaseCollider*> colliders;
+};

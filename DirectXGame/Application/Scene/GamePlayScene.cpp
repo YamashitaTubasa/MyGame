@@ -1,5 +1,9 @@
 #include "GamePlayScene.h"
 
+#include "Player.h"
+#include "SphereCollider.h"
+#include "CollisionManager.h"
+
 using namespace DirectX;
 using namespace std;
 
@@ -36,6 +40,7 @@ void GamePlayScene::Initialize()
 	winApp = WinApp::GetInstance();
 	input = Input::GetInstance();
 	dXCommon = DirectXCommon::GetInstance();
+	collisionMan = CollisionManager::GetInstance();
 
 	//// ポストエフェクト
 	//postEffect = new PostEffect();
@@ -73,7 +78,7 @@ void GamePlayScene::Initialize()
 
 	// 自キャラ生成
 	player = new Player();
-	player->Initialize(camera);
+	player = Player::Create();
 
 	// 敵キャラ生成
 	enemy = new Enemy();
@@ -236,6 +241,9 @@ void GamePlayScene::Update()
 	// パーティクルの更新
 	particleMan->Update();
 	particleMan1->Update();
+
+	// 全ての衝突をチェック
+	collisionMan->CheckAllCollisions();
 }
 
 void GamePlayScene::Draw()

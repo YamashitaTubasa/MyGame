@@ -1,5 +1,8 @@
 #include "Enemy.h"
 
+#include "CollisionManager.h"
+#include "SphereCollider.h"
+
 Enemy::Enemy()
 {
 }
@@ -20,6 +23,7 @@ void Enemy::Initialize()
 	enemyO3 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
 	enemyO3->SetModel(enemyM);
+	enemyO3->SetCollider(new SphereCollider);
 	// 3Dオブジェクトの位置を指定
 	position[0] = { 0,0,0 };
 	rotation[0] = { 0,180,0 };

@@ -1,6 +1,9 @@
 #include "Player.h"
 
+#include "SphereCollider.h"
+
 using namespace std;
+using namespace DirectX;
 
 #define PI 3.141592
 
@@ -20,12 +23,41 @@ Player::~Player()
 	}
 }
 
-void Player::Initialize(Camera* camera)
+Player* Player::Create(Model* model)
 {
-	input = Input::GetInstance();
+	// 3Dオブジェクトのインスタンスを生成
+	Player* instance = new Player();
+	if (instance == nullptr) {
+		return nullptr;
+	}
+
+	// 初期化
+	if (!instance->Initialize()) {
+		delete instance;
+		assert(0);
+	}
+
+	// モデルのセット
+	if (model) {
+		instance->SetModel(model);
+	}
+
+	return instance;
+}
+
+bool Player::Initialize()
+{
+	if (!Object3d::Initialize()) {
+		return false;
+	}
+
+	// コライダーの追加
+	float radius = 0.6f;
+	// 半径分だけ足元から浮いた座標を球の中心にする
+	SetCollider(new SphereCollider(XMVECTOR({ 0, radius, 0, 0 }), radius));
 
 	// カメラをセット
-	this->camera_ = camera;
+	//this->camera_ = camera;
 
 	// OBJからモデルデータを読み込む
 	playerM = Model::LoadFromOBJ("fighter");
@@ -60,10 +92,14 @@ void Player::Initialize(Camera* camera)
 
 	Object3d::SetEye(eye);
 	Object3d::SetTarget(target);
+
+	return true;
 }
 
 void Player::Update()
 {
+	input = Input::GetInstance();
+
 	// 3Dオブジェクト更新
 	playerO3->Update();
 	reticleO3->Update();
@@ -317,7 +353,10 @@ void Player::Update()
 void Player::Draw()
 {
 	// プレイヤーのモデルの描画
-	playerO3->Draw();
+	if (isPlayer) {
+		playerO3->Draw();
+	}
+
 	if (isReticle == true) {
 		reticleO3->Draw();
 		reticle1O3->Draw();
@@ -354,4 +393,9 @@ void Player::Attack()
 		time = 0;
 		isTime = false;
 	}
+}
+
+void Player::OnCollision(const CollisionInfo& info)
+{
+	isPlayer = false;
 }
