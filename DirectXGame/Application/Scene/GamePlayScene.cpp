@@ -79,6 +79,7 @@ void GamePlayScene::Initialize()
 	// 自キャラ生成
 	player = new Player();
 	player = Player::Create();
+	player->SetCollider(new SphereCollider);
 
 	// 敵キャラ生成
 	enemy = new Enemy();

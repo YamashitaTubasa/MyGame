@@ -6,7 +6,7 @@
 /// <summary>
 /// 敵クラス
 /// </summary>
-class Enemy
+class Enemy : public Object3d
 {
 public:
 	// コンストラクタ
@@ -17,14 +17,21 @@ public:
 
 public: // メンバ関数
 	/// <summary>
+	/// 3Dオブジェクト生成
+	/// </summary>
+	/// <param name="model">モデル</param>
+	/// <returns></returns>
+	static Enemy* Create(Model* model = nullptr);
+
+	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	bool Initialize() override;
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update() override;
 
 	/// <summary>
 	/// 描画

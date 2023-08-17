@@ -15,8 +15,34 @@ Enemy::~Enemy()
 	delete enemyM;
 }
 
-void Enemy::Initialize()
+Enemy* Enemy::Create(Model* model)
 {
+	// 3Dオブジェクトのインスタンス生成
+	Enemy* instance = new Enemy();
+	if (instance == nullptr) {
+		return nullptr;
+	}
+
+	// 初期化
+	if (!instance->Initialize()) {
+		delete instance;
+		assert(0);
+	}
+
+	if (model) {
+		instance->SetModel(model);
+	}
+
+	return instance;
+}
+
+bool Enemy::Initialize()
+{
+	if (!Object3d::Initialize()) 
+	{
+		return false;
+	}
+
 	// OBJからモデルデータを読み込む
 	enemyM = Model::LoadFromOBJ("enemy");
 	// 3Dオブジェクト生成
@@ -30,6 +56,8 @@ void Enemy::Initialize()
 	enemyO3->SetPosition(position[0]);
 	enemyO3->SetScale({ 5, 5, 5 });
 	enemyO3->SetRotation(rotation[0]);
+
+	return true;
 }
 
 void Enemy::Update()
