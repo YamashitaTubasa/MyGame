@@ -44,7 +44,7 @@ bool Enemy::Initialize()
 	}
 
 	// OBJからモデルデータを読み込む
-	enemyM = Model::LoadFromOBJ("enemy");
+	enemyM = Model::LoadFromOBJ("sphere1");
 	// 3Dオブジェクト生成
 	enemyO3 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける

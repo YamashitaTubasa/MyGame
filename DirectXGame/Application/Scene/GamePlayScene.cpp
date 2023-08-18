@@ -83,7 +83,8 @@ void GamePlayScene::Initialize()
 
 	// 敵キャラ生成
 	enemy = new Enemy();
-	enemy->Initialize();
+	enemy = Enemy::Create();
+	enemy->SetCollider(new SphereCollider);
 
 	// 背景のオブジェクト
 	backGroundObj = new BackGroundObject();

@@ -60,7 +60,7 @@ bool Player::Initialize()
 	//this->camera_ = camera;
 
 	// OBJからモデルデータを読み込む
-	playerM = Model::LoadFromOBJ("fighter");
+	playerM = Model::LoadFromOBJ("sphere1");
 	reticleM = Model::LoadFromOBJ("reticle");
 	reticle1M = Model::LoadFromOBJ("reticle1");
 	// 3Dオブジェクト生成
