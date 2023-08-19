@@ -3,6 +3,8 @@
 #include "Object3d.h"
 #include "Model.h"
 
+#include <sstream>
+
 /// <summary>
 /// 敵クラス
 /// </summary>
@@ -38,6 +40,16 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// 敵発生データの読み込み
+	/// </summary>
+	void LoadEnemyPopData();
+
+	/// <summary>
+	/// 敵発生コマンドの更新
+	/// </summary>
+	void UpdateEnemyPopCommands();
+
 public: // ゲッター
 	DirectX::XMFLOAT3 GetPosition() const { return position[0]; }
 
@@ -46,11 +58,18 @@ private:
 	Object3d* enemyO3 = nullptr;
 	// モデル
 	Model* enemyM = nullptr;
+	// 敵発生コマンド
+	std::stringstream enemyPopCommands;
 
 	DirectX::XMFLOAT3 position[5]{};
 	DirectX::XMFLOAT3 rotation[5]{};
 	DirectX::XMFLOAT3 scale[5]{};
 	DirectX::XMFLOAT3 eye[5]{};
 	DirectX::XMFLOAT3 target[5]{};
+
+	// 待機フラグ
+	bool isWait = false;
+	// 待機タイマー
+	int waitTimer = 0;
 };
 

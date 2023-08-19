@@ -117,7 +117,7 @@ public: // メンバ変数
 	DirectX::XMFLOAT3 r1Scale = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
-	DirectX::XMFLOAT3 eye = { 0,20,-100 };
+	DirectX::XMFLOAT3 eye = { 0,30,-100 };
 	// 注視点
 	DirectX::XMFLOAT3 target = { 0,0,0 };
 

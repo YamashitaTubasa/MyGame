@@ -15,7 +15,7 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB,
 		*inter = sphereB.center + sphereA.center;
 	}
 
-	return true;
+	return false;
 }
 
 bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane& plane, DirectX::XMVECTOR* inter)
