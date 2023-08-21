@@ -50,8 +50,12 @@ bool Enemy::Initialize()
 	enemyM = Model::LoadFromOBJ("enemy");
 	// 3Dオブジェクト生成
 	enemyO3 = Object3d::Create();
+	enemyO1 = Object3d::Create();
+	enemyO2 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
 	enemyO3->SetModel(enemyM);
+	enemyO1->SetModel(enemyM);
+	enemyO2->SetModel(enemyM);
 	enemyO3->SetCollider(new SphereCollider);
 	// 3Dオブジェクトの位置を指定
 	position[0] = { 0,0,0 };
@@ -59,6 +63,13 @@ bool Enemy::Initialize()
 	enemyO3->SetPosition(position[0]);
 	enemyO3->SetScale({ 5, 5, 5 });
 	enemyO3->SetRotation(rotation[0]);
+
+	enemyO1->SetPosition({ 10,1,10 });
+	enemyO1->SetScale({ 5, 5, 5 });
+	enemyO1->SetRotation(rotation[0]);
+	enemyO2->SetPosition({ -10,-1,30 });
+	enemyO2->SetScale({ 5, 5, 5 });
+	enemyO2->SetRotation(rotation[0]);
 
 	// 敵発生データの読み込み
 	LoadEnemyPopData();
@@ -70,6 +81,8 @@ void Enemy::Update()
 {
 	// 敵の更新
 	enemyO3->Update();
+	enemyO1->Update();
+	enemyO2->Update();
 	
 	// 敵を発生
 	UpdateEnemyPopCommands();
@@ -79,6 +92,8 @@ void Enemy::Draw()
 {
 	// 敵の描画
 	enemyO3->Draw();
+	enemyO1->Draw();
+	enemyO2->Draw();
 }
 
 void Enemy::LoadEnemyPopData()

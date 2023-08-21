@@ -305,8 +305,14 @@ void GamePlayScene::Draw()
 	ult->SpriteDraw(spriteCommon_);
 	// Xの描画
 	X->SpriteDraw(spriteCommon_);
+	// 0の描画
+	if (player->GetIsBullet() == 0) {
+		number[0]->SpriteDraw(spriteCommon_);
+	}
 	// 1の描画
-	number[1]->SpriteDraw(spriteCommon_);
+	if (player->GetIsBullet() == 1) {
+		number[1]->SpriteDraw(spriteCommon_);
+	}
 	// 敵のHPバーの描画
 	enemyHpBar->SpriteDraw(spriteCommon_);
 	// 敵のHPの背景描画
@@ -412,6 +418,16 @@ void GamePlayScene::SpriteInitialize()
 	X->SetRotation(0.0f);
 	X->SpriteTransferVertexBuffer(X, spriteCommon_, 5);
 	X->SpriteUpdate(X, spriteCommon_);
+	// 0
+	number[0] = new Sprite();
+	number[0]->LoadTexture(spriteCommon_, 10, L"Resources/Image/0.png");
+	number[0]->SpriteCreate(1280, 720, 10, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number[0]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number[0]->SetPosition({ 1200, 620, 0 });
+	number[0]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number[0]->SetRotation(0.0f);
+	number[0]->SpriteTransferVertexBuffer(number[0], spriteCommon_, 10);
+	number[0]->SpriteUpdate(number[0], spriteCommon_);
 	// 1
 	number[1] = new Sprite();
 	number[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");

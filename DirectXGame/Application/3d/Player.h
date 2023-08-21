@@ -71,6 +71,7 @@ public: // ゲッター
 	// HPの取得
 	int GetHp() const { return hp; }
 	bool GetIsPostE() { return isPostE; }
+	int GetIsBullet() { return isBullet; }
 	
 public: // メンバ変数
 	DirectXCommon* dxCommon = nullptr;
@@ -155,5 +156,6 @@ public: // メンバ変数
 	bool isPostE = false;
 	// 自機のフラグ
 	bool isPlayer = true;
+	int isBullet = 1;
 };
 

@@ -179,48 +179,58 @@ void Player::Update()
 	}
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
-	if (input->PushKey(DIK_W)) {
-		pPosition.y += 0.3f;
-		rPosition.y += 0.3f;
-		r1Position.y += 0.3f;
-		target.y += 0.3f;
-		eye.y += 0.3f;
-		isUpMove = true;
-	}else {
-		isUpMove = false;
+	if (!isStartStaging && !isEndStaging) {
+		if (input->PushKey(DIK_W)) {
+			pPosition.y += 0.3f;
+			rPosition.y += 0.3f;
+			r1Position.y += 0.3f;
+			target.y += 0.3f;
+			eye.y += 0.3f;
+			isUpMove = true;
+		}
 	}
+	if (!input->PushKey(DIK_W)) {
+			isUpMove = false;
+	}
+	
 	// 上へ行くときの傾き処理
 	if (isUpMove) {
 		if (pRotation.x >= -20) {
 			pRotation.x -= 1.0f;
 		}
-	}else {
+	}
+	else {
 		if (pRotation.x <= 0) {
 			pRotation.x += 1.0f;
 		}
 	}
-	
+
 	// 左への移動処理
-	if(input->PushKey(DIK_A)) {
-		pPosition.x -= 0.3f;
-		rPosition.x -= 0.3f;
-		r1Position.x -= 0.3f;
-		target.x -= 0.3f;
-		eye.x -= 0.3f;
-		isLeftMove = true;
-	} else{
-		isLeftMove = false;
+	if (!isStartStaging && !isEndStaging) {
+		if (input->PushKey(DIK_A)) {
+			pPosition.x -= 0.3f;
+			rPosition.x -= 0.3f;
+			r1Position.x -= 0.3f;
+			target.x -= 0.3f;
+			eye.x -= 0.3f;
+			isLeftMove = true;
+		}
 	}
+	if (!input->PushKey(DIK_A)) {
+			isLeftMove = false;
+	}
+	
 	// 左へ行くときの機体の傾き処理
-	if(isLeftMove) {
+	if (isLeftMove) {
 		if (pRotation.z <= 20.0f) {
 			pRotation.z += 1.0f;
 		}
 		if (pRotation.y >= -10.0f) {
 			pRotation.y -= 1.0f;
 		}
-	} else{
-		if(pRotation.z >= 0.0f) {
+	}
+	else {
+		if (pRotation.z >= 0.0f) {
 			pRotation.z -= 1.0f;
 		}
 		if (pRotation.y <= 0.0f) {
@@ -229,48 +239,58 @@ void Player::Update()
 	}
 
 	// 下への移動処理
-	if(input->PushKey(DIK_S)) {
-		pPosition.y -= 0.3f;
-		rPosition.y -= 0.3f;
-		r1Position.y -= 0.3f;
-		target.y -= 0.3f;
-		eye.y -= 0.3f;
-		isDownMove = true;
-	} else{
-		isDownMove = false;
+	if (!isStartStaging && !isEndStaging) {
+		if (input->PushKey(DIK_S)) {
+			pPosition.y -= 0.3f;
+			rPosition.y -= 0.3f;
+			r1Position.y -= 0.3f;
+			target.y -= 0.3f;
+			eye.y -= 0.3f;
+			isDownMove = true;
+		}
 	}
+	if (!input->PushKey(DIK_S)) {
+			isDownMove = false;
+	}
+	
 	// 下へ行く時の傾き処理
 	if (isDownMove) {
 		if (pRotation.x <= 20) {
 			pRotation.x += 1.0f;
 		}
-	} else{
+	}
+	else {
 		if (pRotation.x >= 0) {
 			pRotation.x -= 1.0f;
 		}
 	}
 
 	// 右への移動処理
-	if(input->PushKey(DIK_D)) {
-		pPosition.x += 0.3f;
-		rPosition.x += 0.3f;
-		r1Position.x += 0.3f;
-		target.x += 0.3f;
-		eye.x += 0.3f;
-		isRightMove = true;
-	} else{
-		isRightMove = false;
+	if (!isStartStaging && !isEndStaging) {
+		if (input->PushKey(DIK_D)) {
+			pPosition.x += 0.3f;
+			rPosition.x += 0.3f;
+			r1Position.x += 0.3f;
+			target.x += 0.3f;
+			eye.x += 0.3f;
+			isRightMove = true;
+		}
 	}
+	if (!input->PushKey(DIK_D)) {
+			isRightMove = false;
+	}
+	
 	// 右へ行くときの傾き処理
-	if(isRightMove) {
+	if (isRightMove) {
 		if (pRotation.z >= -20.0f) {
 			pRotation.z -= 1.0f;
 		}
 		if (pRotation.y <= 10.0f) {
 			pRotation.y += 1.0f;
 		}
-	} else{
-		if(pRotation.z <= 0.0f) {
+	}
+	else {
+		if (pRotation.z <= 0.0f) {
 			pRotation.z += 1.0f;
 		}
 		if (pRotation.y >= 0.0f) {
@@ -303,7 +323,7 @@ void Player::Update()
 		isReticle = false;
 		isEndStaging = true;
 		pPosition.y += 0.2f;
-		pPosition.z += 1.1f;
+		pPosition.z += 1.2f;
 		rPosition.z += 0.1f;
 		r1Position.z += 0.1f;
 		target = pPosition;
@@ -321,6 +341,11 @@ void Player::Update()
 	reticle1O3->SetRotation(r1Rotation);
 	Object3d::SetTarget(target);
 	Object3d::SetEye(eye);
+
+	// 弾の切り替え
+	if (input->TriggerKey(DIK_E)) {
+		isBullet = 0;
+	}
 
 	// 自機のワールド座標から3Dレティクルのワールド座標を計算
 	{

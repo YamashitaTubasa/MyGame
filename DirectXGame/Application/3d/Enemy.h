@@ -56,6 +56,8 @@ public: // ゲッター
 private:
 	// オブジェクト
 	Object3d* enemyO3 = nullptr;
+	Object3d* enemyO1 = nullptr;
+	Object3d* enemyO2 = nullptr;
 	// モデル
 	Model* enemyM = nullptr;
 	// 敵発生コマンド
