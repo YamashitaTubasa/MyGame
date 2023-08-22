@@ -197,3 +197,8 @@ void Player::Attack()
 		pBullets.push_back(newBullet);
 	}
 }
+
+void Player::OnCollision(const CollisionInfo& info)
+{
+	isPlayer = false;
+}

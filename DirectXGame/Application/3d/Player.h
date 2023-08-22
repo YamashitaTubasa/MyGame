@@ -63,6 +63,12 @@ public: // メンバ関数
 	/// </summary>
 	void Attack();
 
+	/// <summary>
+	/// 衝突時コールバック関数
+	/// </summary>
+	/// <param name="info">衝突情報</param>
+	void OnCollision(const CollisionInfo& info) override;
+
 public: // ゲッター
 	Vector3& GetPositon(){ return pPosition; }
 
