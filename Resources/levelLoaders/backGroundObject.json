@@ -1,0 +1,443 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "LIGHT",
+            "name": "Light",
+            "transform": {
+                "translation": [
+                    4.076245307922363,
+                    -32.079158782958984,
+                    -5.749839782714844
+                ],
+                "rotation": [
+                    37.26104736328125,
+                    3.1637091636657715,
+                    106.93632507324219
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "CAMERA",
+            "name": "Camera",
+            "transform": {
+                "translation": [
+                    7.358891487121582,
+                    -40.01040267944336,
+                    -6.695392608642578
+                ],
+                "rotation": [
+                    63.559295654296875,
+                    2.2983238068263745e-07,
+                    46.69194412231445
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "asphalt",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -33.08461380004883,
+                    -12.928691864013672
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    18.89962387084961,
+                    18.89962387084961,
+                    18.89962387084961
+                ]
+            },
+            "file_name": "asphalt"
+        },
+        {
+            "type": "MESH",
+            "name": "building",
+            "transform": {
+                "translation": [
+                    26.484025955200195,
+                    -33.08461380004883,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.001",
+            "transform": {
+                "translation": [
+                    23.194599151611328,
+                    -8.638151168823242,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.002",
+            "transform": {
+                "translation": [
+                    33.32954025268555,
+                    -19.96786880493164,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.003",
+            "transform": {
+                "translation": [
+                    32.002227783203125,
+                    3.506478786468506,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.004",
+            "transform": {
+                "translation": [
+                    44.74871063232422,
+                    15.18977165222168,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.005",
+            "transform": {
+                "translation": [
+                    24.941974639892578,
+                    28.660037994384766,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.006",
+            "transform": {
+                "translation": [
+                    32.4656867980957,
+                    42.17152786254883,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.007",
+            "transform": {
+                "translation": [
+                    -24.668155670166016,
+                    -33.08461380004883,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.008",
+            "transform": {
+                "translation": [
+                    -47.13731384277344,
+                    -21.38965606689453,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.009",
+            "transform": {
+                "translation": [
+                    -24.668155670166016,
+                    -9.988801956176758,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.010",
+            "transform": {
+                "translation": [
+                    -36.593650817871094,
+                    3.7268996238708496,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.011",
+            "transform": {
+                "translation": [
+                    -24.668155670166016,
+                    16.513254165649414,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.012",
+            "transform": {
+                "translation": [
+                    -56.33460998535156,
+                    29.85122299194336,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.013",
+            "transform": {
+                "translation": [
+                    -24.668155670166016,
+                    45.09269332885742,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.014",
+            "transform": {
+                "translation": [
+                    -39.49724578857422,
+                    60.87465286254883,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "building.015",
+            "transform": {
+                "translation": [
+                    21.832246780395508,
+                    54.8217658996582,
+                    -11.653701782226562
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "building"
+        },
+        {
+            "type": "MESH",
+            "name": "bridge",
+            "transform": {
+                "translation": [
+                    0.0,
+                    1.4422221183776855,
+                    -10.094709396362305
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    22.319049835205078
+                ],
+                "scaling": [
+                    6.084421157836914,
+                    6.084421157836914,
+                    6.084421634674072
+                ]
+            },
+            "file_name": "bridge"
+        }
+    ]
+}
