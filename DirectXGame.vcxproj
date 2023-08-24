@@ -144,6 +144,8 @@
     <ClCompile Include="DirectXGame\Engin\Platform\FPSFixed.cpp" />
     <ClCompile Include="DirectXGame\Engin\Platform\WinApp.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GamePlayScene.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Collision\MeshCollider.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Collision\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -276,6 +278,8 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameTitleScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\MyGame.h" />
     <ClInclude Include="DirectXGame\Engin\ImGui\ImGuiManager.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\MeshCollider.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
