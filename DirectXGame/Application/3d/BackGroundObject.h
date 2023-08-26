@@ -37,12 +37,14 @@ private:
 	Model* buildingM = nullptr;
 	Model* asphaltM = nullptr;
 	Model* bridgeM = nullptr;
+	Model* treeM = nullptr;
 	// モデルデータコンテナ
 	std::map<std::string, Model*> models;
 	// オブジェクト
 	Object3d* building = nullptr;
 	Object3d* asphalt = nullptr;
 	Object3d* bridge = nullptr;
+	Object3d* tree = nullptr;
 	std::vector<Object3d*> objects;
 	// レベルデータ
 	LevelData* levelData = nullptr;

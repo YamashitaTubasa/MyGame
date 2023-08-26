@@ -9,10 +9,12 @@ void BackGroundObject::Initialize()
 	buildingM = Model::LoadFromOBJ("building");
 	asphaltM = Model::LoadFromOBJ("asphalt");
 	bridgeM = Model::LoadFromOBJ("bridge");
+	treeM = Model::LoadFromOBJ("tree");
 
 	models.insert(std::make_pair("building", buildingM));
 	models.insert(std::make_pair("asphalt", asphaltM));
 	models.insert(std::make_pair("bridge", bridgeM));
+	models.insert(std::make_pair("tree", treeM));
 
 	// レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData->objects) {
