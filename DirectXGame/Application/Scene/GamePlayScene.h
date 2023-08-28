@@ -123,6 +123,7 @@ private:
 	Sprite* enemyHpBack = nullptr;
 	Sprite* ult = nullptr;
 	Sprite* X = nullptr;
+	Sprite* damage = nullptr;
 	Sprite* number[5];
 	SpriteCommon spriteCommon_;
 
@@ -174,4 +175,6 @@ private:
 	bool isEnemyDeth = false;
 
 	int count = 0;
+	bool isDamage = false;
+	int damageTime = 0;
 };

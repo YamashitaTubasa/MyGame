@@ -495,9 +495,9 @@ void ParticleManager::Draw()
 
 void ParticleManager::Execution(Particle* particle, float posx, float posy, float posz, int life, float start_scale, float end_scale)
 {
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 10; i++) {
 		// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-		const float md_pos = 10.0f;
+		const float md_pos = 3.0f;
 		XMFLOAT3 pos{};
 		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posx;
 		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posy;

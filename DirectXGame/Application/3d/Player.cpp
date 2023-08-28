@@ -299,7 +299,7 @@ void Player::Update()
 	}
 
 	// ブースト時の回転処理
-	if (input->TriggerKey(DIK_U)) {
+	if (pPosition.z == 5.09989643f && pPosition.x >= -2 && pPosition.x <= 2 && pPosition.y >= 2 && pPosition.y <= 6) {
 		isEaseFlag = true;
 		isRot = true;
 		eFrame = 0;

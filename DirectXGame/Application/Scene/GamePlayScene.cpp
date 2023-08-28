@@ -91,14 +91,14 @@ void GamePlayScene::Initialize()
 	backGroundObj->Initialize();
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle = Particle::LoadFromOBJ("effect1.png");
-	particle1 = Particle::LoadFromOBJ("effect2.png");
+	particle = Particle::LoadFromOBJ("bombEffect.png");
+	//particle1 = Particle::LoadFromOBJ("effect2.png");
 	// パーティクルの生成
 	particleMan = ParticleManager::Create();
-	particleMan1 = ParticleManager::Create();
+	//particleMan1 = ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルを割り当てる
 	particleMan->SetModel(particle);
-	particleMan1->SetModel(particle1);
+	//particleMan1->SetModel(particle1);
 
 	// オブジェクトの初期化
 	ObjectInitialize();
@@ -177,8 +177,8 @@ void GamePlayScene::Update()
 	}
 	if (particl == true) {
 		// パーティクルの実行
-		/*particleMan->Execution(particle, -6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
-		particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);*/
+		particleMan->Execution(particle, 0.0f, 0.0f, 0.5f, 20, 0.9f, 0.0f);
+		//particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 	}
 
 	if (input->PushKey(DIK_I)) {
@@ -240,9 +240,20 @@ void GamePlayScene::Update()
 	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon_, 7);
 	enemyHp->SpriteUpdate(enemyHp, spriteCommon_);
 
+	if (input->PushKey(DIK_I)) {
+		isDamage = true;
+	}
+	if (isDamage) {
+		damageTime++;
+	}
+	if (damageTime >= 20) {
+		isDamage = false;
+		damageTime = 0;
+	}
+
 	// パーティクルの更新
 	particleMan->Update();
-	particleMan1->Update();
+	//particleMan1->Update();
 
 	// 全ての衝突をチェック
 	collisionMan->CheckAllCollisions();
@@ -283,7 +294,7 @@ void GamePlayScene::Draw()
 
 	// パーティクルの描画
 	particleMan->Draw();
-	particleMan1->Draw();
+	//particleMan1->Draw();
 
 	// パーティクル描画後処理
 	ParticleManager::PostDraw();
@@ -319,6 +330,10 @@ void GamePlayScene::Draw()
 	enemyHpBack->SpriteDraw(spriteCommon_);
 	// 敵のHPの描画
 	enemyHp->SpriteDraw(spriteCommon_);
+	// ダメージの描画
+	if (isDamage) {
+		damage->SpriteDraw(spriteCommon_);
+	}
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -468,6 +483,16 @@ void GamePlayScene::SpriteInitialize()
 	enemyHpBack->SetRotation(0.0f);
 	enemyHpBack->SpriteTransferVertexBuffer(enemyHpBack, spriteCommon_, 9);
 	enemyHpBack->SpriteUpdate(enemyHpBack, spriteCommon_);
+	// ダメージ
+	damage = new Sprite();
+	damage->LoadTexture(spriteCommon_, 11, L"Resources/Image/damage.png");
+	damage->SpriteCreate(1280, 720, 11, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	damage->SetColor(XMFLOAT4(1, 1, 1, 1));
+	damage->SetPosition({ 0.0f, 0.0f, 0.0f});
+	damage->SetScale(XMFLOAT2(1280 * 1, 720 * 1));
+	damage->SetRotation(0.0f);
+	damage->SpriteTransferVertexBuffer(damage, spriteCommon_, 11);
+	damage->SpriteUpdate(damage, spriteCommon_);
 }
 
 void GamePlayScene::ParticleInitialize()
