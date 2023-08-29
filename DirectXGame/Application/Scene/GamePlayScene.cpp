@@ -245,6 +245,9 @@ void GamePlayScene::Update()
 	}
 	if (isDamage) {
 		damageTime++;
+		if (hpScale.x >= 50) {
+			hpScale.x -= 5;
+		}
 	}
 	if (damageTime >= 20) {
 		isDamage = false;
