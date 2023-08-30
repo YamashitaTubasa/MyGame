@@ -68,7 +68,7 @@ void GamePlayScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 	//skydome->Initialize(camera_);
 
 	//// OBJの名前を指定してモデルデータを読み込む
-	//particle = Particle::LoadFromOBJ("effect1.png");
+	//particle = Particle::LoadFromOBJ("bombEffect.png");
 	//particle1 = Particle::LoadFromOBJ("effect2.png");
 	//// パーティクルの生成
 	//particleMan = ParticleManager::Create();
