@@ -105,16 +105,16 @@ void GamePlayScene::Update()
 	//skydome->Update();
 
 	if (input->PushKey(DIK_RIGHT)) {
-		eye[0].x += 0.5;
+		eye[0].x += 0.4;
 	}
 	if (input->PushKey(DIK_LEFT)) {
-		eye[0].x -= 0.5;
+		eye[0].x -= 0.4;
 	}
 	if (input->PushKey(DIK_UP)) {
-		eye[0].y += 0.5;
+		eye[0].y += 0.4;
 	}
 	if (input->PushKey(DIK_DOWN)) {
-		eye[0].y -= 0.5;
+		eye[0].y -= 0.4;
 	}
 	camera_->SetEye(eye[0]);
 
