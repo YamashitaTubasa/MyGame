@@ -84,6 +84,7 @@ private:
 	Sprite* hpBack = nullptr;
 	Sprite* ult = nullptr;
 	Sprite* X = nullptr;
+	Sprite* damage = nullptr;
 	Sprite* number[5];
 	SpriteCommon spriteCommon_;
 
