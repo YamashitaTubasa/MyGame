@@ -25,8 +25,10 @@ void Enemy::Initialize(Camera* camera_)
 	enemyM = Model::LoadFromOBJ("enemy");
 	// 3Dオブジェクト生成
 	enemyO3 = Object3d::Create();
+	enemyO2 = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
 	enemyO3->SetModel(enemyM);
+	enemyO2->SetModel(enemyM);
 	// 3Dオブジェクトの位置を指定
 	position[0] = { 0,0,-20 };
 	rotation[0] = { 0,180,0 };

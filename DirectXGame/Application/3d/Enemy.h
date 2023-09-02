@@ -39,6 +39,7 @@ private: // 定数
 private:
 	// オブジェクト
 	Object3d* enemyO3 = nullptr;
+	Object3d* enemyO2 = nullptr;
 	// モデル
 	Model* enemyM = nullptr;
 
