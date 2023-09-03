@@ -501,11 +501,13 @@ void ParticleManager::Execution(Particle* particle, float posx, float posy, floa
 {
 	for (int i = 0; i < 100; i++) {
 		// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-		const float md_pos = 5.0f;
+		const float md_pos_x = 5.0f;
+		const float md_pos_y = 5.0f;
+		const float md_pos_z = 5.0f;
 		XMFLOAT3 pos{};
-		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posx;
-		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posy;
-		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posz;
+		pos.x = (float)rand() / RAND_MAX * md_pos_x - md_pos_x / 2.0f + posx;
+		pos.y = (float)rand() / RAND_MAX * md_pos_y - md_pos_y / 2.0f + posy;
+		pos.z = (float)rand() / RAND_MAX * md_pos_z - md_pos_z / 2.0f + posz;
 		// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
 		const float md_vel = 0.1f;
 		XMFLOAT3 vel{};
