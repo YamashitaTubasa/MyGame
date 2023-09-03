@@ -21,6 +21,7 @@ Player::~Player()
 	for (PlayerBullet* bullet : pBullets) {
 		delete bullet;
 	}
+	delete enemy;
 }
 
 Player* Player::Create(Model* model)
@@ -47,9 +48,13 @@ Player* Player::Create(Model* model)
 
 bool Player::Initialize()
 {
+	dxCommon = DirectXCommon::GetInstance();
+
 	if (!Object3d::Initialize()) {
 		return false;
 	}
+
+	enemy = new Enemy();
 
 	// コライダーの追加
 	float radius = 0.6f;
@@ -93,6 +98,13 @@ bool Player::Initialize()
 	Object3d::SetEye(eye);
 	Object3d::SetTarget(target);
 
+	// OBJの名前を指定してモデルデータを読み込む
+	particle = Particle::LoadFromOBJ("bombEffect.png");
+	// パーティクルの生成
+	particleMan = ParticleManager::Create();
+	// パーティクルマネージャーにパーティクルを割り当てる
+	particleMan->SetModel(particle);
+
 	return true;
 }
 
@@ -105,6 +117,14 @@ void Player::Update()
 	reticleO3->Update();
 	reticle1O3->Update();
 
+	// パーティクルの更新
+	particleMan->Update();
+
+	// デスフラグの立った敵を削除
+	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy_) {
+		return enemy_->GetIsDead();
+	});
+
 	// デスフラグの立った弾を削除
 	pBullets.remove_if([](PlayerBullet* bullet) {
 		if (bullet->IsDead()) {
@@ -114,6 +134,9 @@ void Player::Update()
 		}
 		return false;
 	});
+
+	// パーティクルの実行
+	particleMan->Execution(particle, 0.0f, 0.0f, 0.0f, 20, 0.9f, 0.0f);
 
 	startCount++;
 	if (startCount >= 90) {
@@ -135,7 +158,7 @@ void Player::Update()
 		}
 	}
 	if (!isStartStaging) {
-		if (pPosition.z < 50) {
+		if (pPosition.z < 100) {
 			pPosition.z += 0.4f;
 			rPosition.z += 0.4f;
 			r1Position.z += 0.4f;
@@ -319,7 +342,7 @@ void Player::Update()
 		}
 	}
 
-	if (pPosition.z >= 50) {
+	if (pPosition.z >= 100) {
 		isReticle = false;
 		isEndStaging = true;
 		pPosition.y += 0.2f;
@@ -368,10 +391,26 @@ void Player::Update()
 	for (PlayerBullet* bullet : pBullets) {
 		bullet->Update();
 		pBulletP = bullet->GetPosition();
-		if (bullet->GetPosition().z == 10 && bullet->GetPosition().y > -2 && bullet->GetPosition().y < 2 && 
-			bullet->GetPosition().x > -2 && bullet->GetPosition().x < 2) {
+		if (bullet->GetPosition().z >= 10 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 4 && 
+			bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
 			hp -= 1;
+			enemy->SetIsDead(true);
 		}
+	}
+
+	if (pPosition.x >= -2 && pPosition.x <= 2 && pPosition.y >= -2 && pPosition.y <= 2 && pPosition.z <= 9 && pPosition.z >= 5 ||
+		pPosition.x <= -5 && pPosition.x >= -9 && pPosition.y >= -3 && pPosition.y <= 1 && pPosition.z <= 28 && pPosition.z >= 23 || 
+		pPosition.x >= 4 && pPosition.x <= 9 && pPosition.y >= -1 && pPosition.y <= 3 && pPosition.z <= 22 && pPosition.z >= 17 || 
+		pPosition.x >= -2 && pPosition.x <= 2 && pPosition.y >= -2 && pPosition.y <= 2 && pPosition.z <= 37 && pPosition.z >= 32) {
+		isEffect = true;
+	}
+	if (isEffect) {
+		effectTime++;
+		hp -= 1;
+	}
+	if (effectTime >= 15) {
+		isEffect = false;
+		effectTime = 0;
 	}
 }
 
@@ -423,4 +462,16 @@ void Player::Attack()
 void Player::OnCollision(const CollisionInfo& info)
 {
 	isPlayer = false;
+}
+
+void Player::Effect()
+{
+#pragma region パーティクルの描画
+
+	// パーティクルの描画
+	if (isEffect) {
+		particleMan->Draw();
+	}
+
+#pragma endregion
 }

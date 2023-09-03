@@ -2,6 +2,7 @@
 
 #include "CollisionManager.h"
 #include "SphereCollider.h"
+#include "Input.h"
 
 #include <fstream>
 
@@ -89,6 +90,10 @@ void Enemy::Update()
 	enemyO1->Update();
 	enemyO2->Update();
 	enemyO4->Update();
+
+	if (Input::GetInstance()->TriggerKey(DIK_T)) {
+		isDead = true;
+	}
 	
 	// 敵を発生
 	UpdateEnemyPopCommands();
@@ -97,7 +102,9 @@ void Enemy::Update()
 void Enemy::Draw()
 {
 	// 敵の描画
-	enemyO3->Draw();
+	if (!isDead) {
+		enemyO3->Draw();
+	}
 	enemyO1->Draw();
 	enemyO2->Draw();
 	enemyO4->Draw();

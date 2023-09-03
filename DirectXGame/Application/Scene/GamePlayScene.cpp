@@ -136,6 +136,10 @@ void GamePlayScene::Update()
 
 	// 敵キャラ更新
 	enemy->Update();
+	// デスフラグの立った敵を削除
+	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy_) {
+		return enemy_->GetIsDead();
+		});
 
 	// 背景のオブジェクトの更新
 	backGroundObj->Update();
@@ -177,7 +181,7 @@ void GamePlayScene::Update()
 	}
 	if (particl == true) {
 		// パーティクルの実行
-		particleMan->Execution(particle, 0.0f, 0.0f, 0.5f, 20, 0.9f, 0.0f);
+		//particleMan->Execution(particle, 0.0f, 0.0f, 0.5f, 20, 0.9f, 0.0f);
 		//particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 	}
 
@@ -185,57 +189,57 @@ void GamePlayScene::Update()
 		//hpPosition.x += 1;
 		hpScale.x -= 1;
 	}
+	
+
+	if (player->GetHp() == 9) {
+		if (hpScale.x >= 491) {
+			hpScale.x -= 10;
+		}
+	}
+	if (player->GetHp() == 8) {
+		if (hpScale.x >= 481) {
+			hpScale.x -= 10;
+		}
+	}
+	if (player->GetHp() == 7) {
+		if (hpScale.x >= 0) {
+			hpScale.x -= 10;
+		}
+	}
+	if (player->GetHp() == 6) {
+		if (hpScale.x >= 100) {
+			hpScale.x -= 10;
+		}
+	}
+	if (player->GetHp() == 5) {
+		if (hpScale.x >= 0) {
+			hpScale.x -= 10;
+		}
+	}
+	if (player->GetHp() == 4) {
+		if (hpScale.x >= 150) {
+			hpScale.x -= 10;
+		}
+	}
+	if (player->GetHp() == 3) {
+		if (hpScale.x >= 100) {
+			hpScale.x -= 10;
+		}
+	}
+	if (player->GetHp() == 2) {
+		if (hpScale.x >= 50) {
+			hpScale.x -= 10;
+		}
+	}
+	if (player->GetHp() == 1) {
+		if (hpScale.x >= 0) {
+			hpScale.x -= 10;
+		}
+	}
 	hp->SetPosition(hpPosition);
 	hp->SetScale(hpScale);
 	hp->SpriteTransferVertexBuffer(hp, spriteCommon_, 1);
 	hp->SpriteUpdate(hp, spriteCommon_);
-
-	if (player->GetHp() == 9) {
-		if (enemyHpScale.x >= 300) {
-			enemyHpScale.x -= 5;
-		}
-	}
-	if (player->GetHp() == 8) {
-		if (enemyHpScale.x >= 100) {
-			enemyHpScale.x -= 5;
-		}
-	}
-	if (player->GetHp() == 7) {
-		if (enemyHpScale.x >= 0) {
-			enemyHpScale.x -= 5;
-		}
-	}
-	if (player->GetHp() == 6) {
-		if (enemyHpScale.x >= 100) {
-			enemyHpScale.x -= 2;
-		}
-	}
-	if (player->GetHp() == 5) {
-		if (enemyHpScale.x >= 0) {
-			enemyHpScale.x -= 2;
-		}
-	}
-	if (player->GetHp() == 4) {
-		if (enemyHpScale.x >= 150) {
-			enemyHpScale.x -= 2;
-		}
-	}
-	if (player->GetHp() == 3) {
-		if (enemyHpScale.x >= 100) {
-			enemyHpScale.x -= 2;
-		}
-	}
-	if (player->GetHp() == 2) {
-		if (enemyHpScale.x >= 50) {
-			enemyHpScale.x -= 2;
-		}
-	}
-	if (player->GetHp() == 1) {
-		if (enemyHpScale.x >= 0) {
-			enemyHpScale.x -= 2;
-		}
-	}
-
 	enemyHp->SetScale(enemyHpScale);
 	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon_, 7);
 	enemyHp->SpriteUpdate(enemyHp, spriteCommon_);
@@ -298,6 +302,7 @@ void GamePlayScene::Draw()
 	// パーティクルの描画
 	particleMan->Draw();
 	//particleMan1->Draw();
+	player->Effect();
 
 	// パーティクル描画後処理
 	ParticleManager::PostDraw();
@@ -316,23 +321,23 @@ void GamePlayScene::Draw()
 	// HPの描画
 	hp->SpriteDraw(spriteCommon_);
 	// ULTの描画
-	ult->SpriteDraw(spriteCommon_);
+	//ult->SpriteDraw(spriteCommon_);
 	// Xの描画
-	X->SpriteDraw(spriteCommon_);
+	//X->SpriteDraw(spriteCommon_);
 	// 0の描画
 	if (player->GetIsBullet() == 0) {
-		number[0]->SpriteDraw(spriteCommon_);
+		//number[0]->SpriteDraw(spriteCommon_);
 	}
 	// 1の描画
 	if (player->GetIsBullet() == 1) {
-		number[1]->SpriteDraw(spriteCommon_);
+		//number[1]->SpriteDraw(spriteCommon_);
 	}
 	// 敵のHPバーの描画
-	enemyHpBar->SpriteDraw(spriteCommon_);
+	//enemyHpBar->SpriteDraw(spriteCommon_);
 	// 敵のHPの背景描画
-	enemyHpBack->SpriteDraw(spriteCommon_);
+	//enemyHpBack->SpriteDraw(spriteCommon_);
 	// 敵のHPの描画
-	enemyHp->SpriteDraw(spriteCommon_);
+	//enemyHp->SpriteDraw(spriteCommon_);
 	// ダメージの描画
 	if (isDamage) {
 		damage->SpriteDraw(spriteCommon_);

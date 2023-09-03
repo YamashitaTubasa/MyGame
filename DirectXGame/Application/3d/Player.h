@@ -11,6 +11,9 @@
 #include "Camera.h"
 #include "EasingManager.h"
 #include "Input.h"
+#include "Enemy.h"
+#include "Particle.h"
+#include "ParticleManager.h"
 
 #include <DirectXMath.h>
 #include <cmath>
@@ -63,6 +66,11 @@ public: // メンバ関数
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+	/// <summary>
+	/// エフェクト
+	/// </summary>
+	void Effect();
+
 public: // ゲッター
 	// プレイヤーの座標の取得
 	const DirectX::XMFLOAT3& GetPositon() { return pPosition; }
@@ -89,6 +97,12 @@ public: // メンバ変数
 	Camera* camera_ = nullptr;
 	// 自キャラ弾
 	std::list<PlayerBullet*> pBullets;
+	// 敵キャラ
+	std::list<std::unique_ptr<Enemy>> enemys_;
+	Enemy* enemy = nullptr;
+	// パーティクル
+	Particle* particle = nullptr;
+	ParticleManager* particleMan = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
@@ -157,5 +171,7 @@ public: // メンバ変数
 	// 自機のフラグ
 	bool isPlayer = true;
 	int isBullet = 1;
+	bool isEffect = false;
+	int effectTime = 0;
 };
 

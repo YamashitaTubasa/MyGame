@@ -52,6 +52,10 @@ public: // メンバ関数
 
 public: // ゲッター
 	DirectX::XMFLOAT3 GetPosition() const { return position[0]; }
+	// デスフラグの取得
+	bool GetIsDead() const { return isDead; }
+	// デスフラグのセット
+	void SetIsDead(bool isDead_) { isDead = isDead_; }
 
 private:
 	// オブジェクト
@@ -74,5 +78,7 @@ private:
 	bool isWait = false;
 	// 待機タイマー
 	int waitTimer = 0;
+	// 敵のデスフラグ
+	bool isDead = false;
 };
 

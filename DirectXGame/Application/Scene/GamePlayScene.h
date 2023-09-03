@@ -148,6 +148,8 @@ private:
 	BackGroundObject* backGroundObj = nullptr;
 	// 衝突マネージャ
 	CollisionManager* collisionMan = nullptr;
+	// 敵キャラ
+	std::list<std::unique_ptr<Enemy>> enemys_;
 
 	DirectX::XMFLOAT3 position[5]{};
 	DirectX::XMFLOAT3 rotation[5]{};
