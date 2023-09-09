@@ -273,6 +273,7 @@
     <ClInclude Include="DirectXGame\Engin\Platform\DirectXCommon.h" />
     <ClInclude Include="DirectXGame\Engin\Platform\FPSFixed.h" />
     <ClInclude Include="DirectXGame\Engin\Platform\WinApp.h" />
+    <ClInclude Include="DirectXGame\Engin\Scene\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engin\Scene\TYFramework.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GamePlayScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameTitleScene.h" />

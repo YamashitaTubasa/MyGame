@@ -258,11 +258,11 @@
     <ClCompile Include="DirectXGame\Application\Scene\SceneFactory.cpp">
       <Filter>ソース ファイル\Application\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\Collision\MeshCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Engin\Collision\Mesh.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engin\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\Collision\MeshCollider.cpp">
+      <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -453,10 +453,13 @@
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h">
       <Filter>ヘッダー ファイル\Engin\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Collision\MeshCollider.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Collision\Mesh.h">
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\MeshCollider.h">
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Scene\AbstractSceneFactory.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
