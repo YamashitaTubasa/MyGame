@@ -278,6 +278,16 @@ void GamePlayScene::SpriteInitialize(SpriteCommon& spriteCommon)
 	number[1]->SetRotation(0.0f);
 	number[1]->SpriteTransferVertexBuffer(number[1], spriteCommon, 6);
 	number[1]->SpriteUpdate(number[1], spriteCommon_);
+	// 2
+	number[2] = new Sprite();
+	number[2]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
+	number[2]->SpriteCreate(1280, 720, 6, spriteCommon_, Vector2(0.0f, 0.0f), false, false);
+	number[2]->SetColor(Vector4(1, 1, 1, 1));
+	number[2]->SetPosition({ 1200, 620, 0 });
+	number[2]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number[2]->SetRotation(0.0f);
+	number[2]->SpriteTransferVertexBuffer(number[2], spriteCommon, 6);
+	number[2]->SpriteUpdate(number[2], spriteCommon_);
 }
 
 
