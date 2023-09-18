@@ -15,6 +15,7 @@
 #include "PostEffect.h"
 #include "Enemy.h"
 #include "PlayerBullet.h"
+#include "Skydome.h"
 #include "BackGroundObject.h"
 #include "GameBaseScene.h"
 #include "GameSceneManager.h"
@@ -64,17 +65,6 @@ public:
 	/// 解放
 	/// </summary>
 	void Finalize() override;
-
-	/// <summary>
-	/// オブジェクトの初期化
-	/// </summary>
-	/// <param name="dXCommon"></param>
-	void ObjectInitialize();
-
-	/// <summary>
-	/// オブジェクトの更新
-	/// </summary>
-	void ObjectUpdate();
 
 	/// <summary>
 	/// オブジェクトの解放
@@ -146,6 +136,7 @@ private:
 	Player* pBullet = nullptr;
 	Enemy* enemy = nullptr;
 	BackGroundObject* backGroundObj = nullptr;
+	Skydome* skydome = nullptr;
 	// 衝突マネージャ
 	CollisionManager* collisionMan = nullptr;
 	// 敵キャラ

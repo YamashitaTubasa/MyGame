@@ -3,6 +3,9 @@
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Sprite.h"
+#include "Object3d.h"
+#include "Model.h"
+#include "Skydome.h"
 #include "GameBaseScene.h"
 #include "GameSceneManager.h"
 #include "GamePlayScene.h"
@@ -47,6 +50,9 @@ private: // メンバ変数
 	// スプライト
 	Sprite* sprite_ = nullptr;
 	Sprite* title_ = nullptr;
+
+	// 天球
+	Skydome* skydome = nullptr;
 
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
 	DirectX::XMFLOAT3 titlePos_ = { 0,0,0 };

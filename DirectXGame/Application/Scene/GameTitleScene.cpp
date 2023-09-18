@@ -17,6 +17,10 @@ void GameTitleScene::Initialize()
 	// DirectXCommonのインスタンス取得
 	dxCommon_ = DirectXCommon::GetInstance();
 
+	// 天球の初期化
+	skydome = new Skydome();
+	skydome->Initialize();
+
 	// スプライトの初期化
 	sprite_ = new Sprite();
 	spriteCommon_ = sprite_->SpriteCommonCreate(1280, 720);
@@ -38,6 +42,9 @@ void GameTitleScene::Initialize()
 
 void GameTitleScene::Update()
 {
+	// 天球の更新
+	skydome->Update();
+
 	// スプライトの更新
 	title_->SpriteUpdate(title_, spriteCommon_);
 
@@ -52,6 +59,18 @@ void GameTitleScene::Draw()
 {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
+
+#pragma region オブジェクトの描画
+
+	// オブジェクトの前処理
+	Object3d::PreDraw(cmdList);
+
+	skydome->Draw();
+
+	// オブジェクトの後処理
+	Object3d::PostDraw();
+
+#pragma endregion
 
 #pragma region スプライトの描画
 

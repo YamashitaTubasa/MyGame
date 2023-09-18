@@ -13,8 +13,7 @@ GamePlayScene::GamePlayScene()
 
 GamePlayScene::~GamePlayScene()
 {
-	delete skydomeM;
-	delete skydomeO3;
+	delete skydome;
 	delete player;
 	delete sprite;
 	delete camera;
@@ -90,6 +89,10 @@ void GamePlayScene::Initialize()
 	backGroundObj = new BackGroundObject();
 	backGroundObj->Initialize();
 
+	// 天球の初期化
+	skydome = new Skydome();
+	skydome->Initialize();
+
 	// OBJの名前を指定してモデルデータを読み込む
 	particle = Particle::LoadFromOBJ("bombEffect.png");
 	//particle1 = Particle::LoadFromOBJ("effect2.png");
@@ -99,9 +102,6 @@ void GamePlayScene::Initialize()
 	// パーティクルマネージャーにパーティクルを割り当てる
 	particleMan->SetModel(particle);
 	//particleMan1->SetModel(particle1);
-
-	// オブジェクトの初期化
-	ObjectInitialize();
 	
 	// スプライトの初期化
 	SpriteInitialize();
@@ -144,6 +144,9 @@ void GamePlayScene::Update()
 	// 背景のオブジェクトの更新
 	backGroundObj->Update();
 
+	// 天球の更新
+	skydome->Update();
+
 	if (input->TriggerKey(DIK_O)) {
 		DirectX::XMFLOAT3 a = player->GetpBulletP();
 	}
@@ -165,9 +168,6 @@ void GamePlayScene::Update()
 		eye[0].y -= 0.5;
 	}
 	camera->SetEye(eye[0]);
-
-	// オブジェクトの更新
-	ObjectUpdate();
 	
 	if (input->TriggerKey(DIK_U)) {
 		particl = true;
@@ -277,7 +277,7 @@ void GamePlayScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	skydomeO3->Draw();
+	skydome->Draw();
 	player->Draw();
 	if (!isEnemyDeth) {
 		enemy->Draw();
@@ -357,26 +357,6 @@ void GamePlayScene::Finalize()
 {
 	// オブジェクトの解放
 	ObjectFinalize();
-}
-
-void GamePlayScene::ObjectInitialize()
-{
-	// OBJからモデルデータを読み込む
-	skydomeM = Model::LoadFromOBJ("skydome");
-	// 3Dオブジェクト生成
-	skydomeO3 = Object3d::Create();
-	// オブジェクトにモデルをひも付ける
-	skydomeO3->SetModel(skydomeM);
-	// 3Dオブジェクトの位置を指定
-	skydomeO3->SetPosition({ 0,30,0 });
-	skydomeO3->SetScale({ 300, 300, 300 });
-	skydomeO3->SetRotation({0,0,0});
-}
-
-void GamePlayScene::ObjectUpdate()
-{
-	// 3Dオブジェクト更新
-	skydomeO3->Update();
 }
 
 void GamePlayScene::ObjectFinalize()
