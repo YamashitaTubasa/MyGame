@@ -2,20 +2,6 @@
 
 #include "Object3d.h"
 #include "Model.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix4.h"
-#include "Input.h"
-#include "WinApp.h"
-#include "DirectXCommon.h"
-#include "Input.h"
-#include "PlayerBullet.h"
-#include "Camera.h"
-
-#include <cmath>
-#include <iostream>
-#include <list>
 
 /// <summary>
 /// 天球
@@ -23,17 +9,10 @@
 class Skydome
 {
 public:
-	// コンストラクタ
-	Skydome();
-
-	// デストラクタ
-	~Skydome();
-
-public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(Camera* camera_);
+	void Initialize();
 
 	/// <summary>
 	/// 更新
@@ -43,16 +22,12 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw(Camera* camera);
+	void Draw();
 
-private: // 定数
-	// カメラ
-	static Camera* camera;
-
-private: // メンバ変数
-	// モデル
-	Model* skydomeM = nullptr;
+private:
 	// オブジェクト
-	Object3d* skydomeO3 = nullptr;
+	Object3d* titleObj = nullptr;
+	// モデル
+	Model* titleModel = nullptr;
 };
 
