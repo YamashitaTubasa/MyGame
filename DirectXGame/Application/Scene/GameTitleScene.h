@@ -54,8 +54,18 @@ private: // メンバ変数
 	// 天球
 	Skydome* skydome = nullptr;
 
+	// オブジェクト
+	Object3d* object3d = nullptr;
+	Model* model = nullptr;
+
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
-	DirectX::XMFLOAT3 titlePos_ = { 0,0,0 };
-	DirectX::XMFLOAT2 titleScale_ = { 1280,720 };
+	DirectX::XMFLOAT3 titlePos_ = { 250,200,0 };
+	DirectX::XMFLOAT2 titleScale_ = { 780,160 };
+
+	DirectX::XMFLOAT3 pPos = { 0,-5,-30 };
+	DirectX::XMFLOAT3 eye = { 0,0,-50 };
+
 	float titleRot_ = 0.0f;
+	bool start = false;
+	int startTimer = 0;
 };
