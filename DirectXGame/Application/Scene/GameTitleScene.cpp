@@ -70,7 +70,7 @@ void GameTitleScene::Update()
 	}
 	if (start) {
 		startTimer++;
-		pPos.z += 2.0f;
+		pPos.z += 1.5f;
 		pPos.y += 0.25f;
 		eye.y -= 0.06f;
 
@@ -110,7 +110,9 @@ void GameTitleScene::Draw()
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
 	//=== スプライトの描画 ===//
-	title_->SpriteDraw(spriteCommon_);
+	if (!start) {
+		title_->SpriteDraw(spriteCommon_);
+	}
 	
 	// スプライト描画後処理
 	Sprite::PostDraw();

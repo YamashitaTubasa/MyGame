@@ -310,6 +310,7 @@
     <FxCompile Include="Resources\shaders\PostEffectVS.hlsl">
       <Filter>シェーダーファイル\PostEffect</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffectDepthOfFieldPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engin\Input\Input.h">

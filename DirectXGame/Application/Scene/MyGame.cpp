@@ -9,9 +9,9 @@ void MyGame::Initialize()
 
 	// ポストエフェクト
 	postEffect = new PostEffect();
-	postEffect->Initialize();
+	postEffect->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
 	postEffect1 = new PostEffect();
-	postEffect1->Initialize();
+	postEffect1->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
 
 	// シーンファクトリを生成し、マネージャにセット
 	sceneFactory_ = new SceneFactory();
@@ -50,26 +50,26 @@ void MyGame::Draw()
 #pragma region ゲームシーン描画
 
 	// レンダーテクスチャの前処理
-	postEffect->PreDrawScene(cmdList);
+	postEffect->PreDraw(cmdList);
 
 	//=== シーンマネージャの描画 ===//
 	sceneManager_->Draw();
 
 	// レンダーテクスチャの後処理
-	postEffect->PostDrawScene(cmdList);
+	postEffect->PostDraw(cmdList);
 
 #pragma endregion
 
 #pragma region ポストエフェクトの描画
 
 	// レンダーテクスチャ1の前処理
-	postEffect1->PreDrawScene(cmdList);
+	postEffect1->PreDraw(cmdList);
 
 	//=== ポストエフェクトの描画 ===//
 	postEffect->Draw(cmdList);
 
 	// レンダーテクスチャ1の後処理
-	postEffect1->PostDrawScene(cmdList);
+	postEffect1->PostDraw(cmdList);
 
 #pragma endregion
 
