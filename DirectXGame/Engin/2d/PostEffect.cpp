@@ -11,12 +11,6 @@ using namespace DirectX;
 //const float PostEffect::clearColor[4] = { 0.25, 0.5, 0.1f, 0.0f }; // 緑っぽい色
 const float PostEffect::clearColor[4] = { 0.1f, 0.25f, 0.5f, 0.0f };// 青っぽい色
 
-PostEffect* PostEffect::GetInstance() {
-	static PostEffect instance;
-
-	return &instance;
-}
-
 PostEffect::PostEffect()
 	: Sprite(
 		100, // テクスチャ番号
@@ -29,7 +23,7 @@ PostEffect::PostEffect()
 {
 }
 
-void PostEffect::Initialize()
+void PostEffect::Initialize(const wchar_t* filename)
 {
 	dXCommon = DirectXCommon::GetInstance();
 
@@ -38,7 +32,7 @@ void PostEffect::Initialize()
 	this->device = dXCommon->GetDevice();
 
 	// パイプライン生成
-	CreateGraphicsPipelineState();
+	CreateGraphicsPipelineState(filename);
 
 	// テクスチャリソース設定
 	CD3DX12_RESOURCE_DESC texresDesc =
@@ -224,7 +218,7 @@ void PostEffect::Initialize()
 	// 定数バッファにデータ転送
 	result = constBuff->Map(0, nullptr, (void**)&constMap); // マッピング
 	constMap->color = color_;
-	constMap->isBlur = isBlur_;
+	constMap->isPostE = isPostE_;
 	constMap->alpha = alpha_;
 	constMap->mat = XMMatrixIdentity();
 	assert(SUCCEEDED(result));
@@ -243,14 +237,13 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	// パイプラインステートとルートシグネチャの設定
 	cmdList->SetPipelineState(pipelineState.Get());
 	cmdList->SetGraphicsRootSignature(rootSignature.Get());
+	rootSignature->SetName(L"PostEffectRootSignature");
 
 	// プリミティブ形状の設定
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形リスト
 
-
 	// 頂点バッファをセット
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
-
 
 	// 定数バッファ(CBV)をセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
@@ -265,7 +258,7 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->DrawInstanced(4, 1, 0, 0);
 }
 
-void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
+void PostEffect::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	CD3DX12_RESOURCE_BARRIER resourceBarrier =
 		CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
@@ -302,7 +295,7 @@ void PostEffect::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 		nullptr);
 }
 
-void PostEffect::PostDrawScene(ID3D12GraphicsCommandList* cmdList)
+void PostEffect::PostDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	CD3DX12_RESOURCE_BARRIER resourceBarriers =
 		CD3DX12_RESOURCE_BARRIER::Transition(texBuff.Get(),
@@ -311,7 +304,7 @@ void PostEffect::PostDrawScene(ID3D12GraphicsCommandList* cmdList)
 	cmdList->ResourceBarrier(1, &resourceBarriers);
 }
 
-void PostEffect::CreateGraphicsPipelineState()
+void PostEffect::CreateGraphicsPipelineState(const wchar_t* filename)
 {
 	HRESULT result = S_FALSE;
 	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
@@ -344,7 +337,7 @@ void PostEffect::CreateGraphicsPipelineState()
 
 	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/PostEffectPS.hlsl", // シェーダファイル名
+		filename, // シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
 		"main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定
@@ -447,6 +440,7 @@ void PostEffect::CreateGraphicsPipelineState()
 	assert(SUCCEEDED(result));
 
 	gpipeline.pRootSignature = rootSignature.Get();
+	rootSignature->SetName(L"PostEffectRootSignature");
 
 	// グラフィックスパイプラインの生成
 	result = dXCommon->GetDevice()->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelineState));
@@ -463,13 +457,13 @@ void PostEffect::SetColor(const DirectX::XMFLOAT4& color)
 	assert(SUCCEEDED(result));
 }
 
-void PostEffect::SetBlur(const bool& isBlur)
+void PostEffect::SetIsPostE(const bool& isPostE)
 {
 	HRESULT result;
 
 	// 定数バッファにデータ転送
 	result = constBuff->Map(0, nullptr, (void**)&constMap); // マッピング
-	constMap->isBlur = isBlur;
+	constMap->isPostE = isPostE;
 	assert(SUCCEEDED(result));
 }
 
