@@ -67,21 +67,8 @@ void GamePlayScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 	//skydome = new Skydome();
 	//skydome->Initialize(camera_);
 
-	//// OBJの名前を指定してモデルデータを読み込む
-	//particle = Particle::LoadFromOBJ("bombEffect.png");
-	//particle1 = Particle::LoadFromOBJ("effect2.png");
-	//// パーティクルの生成
-	//particleMan = ParticleManager::Create();
-	//particleMan1 = ParticleManager::Create();
-	//// パーティクルマネージャーにパーティクルを割り当てる
-	//particleMan->SetModel(particle);
-	//particleMan1->SetModel(particle1);
-	
 	// スプライトの初期化
 	SpriteInitialize(spriteCommon);
-
-	// FBXアニメーションの実行
-	//fbxObject->PlayAnimation();
 }
 
 void GamePlayScene::Update()
