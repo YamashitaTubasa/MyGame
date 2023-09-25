@@ -63,10 +63,6 @@ void GamePlayScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 	//enemy = new Enemy();
 	//enemy->Initialize(camera_);
 
-	//// 天球の初期化
-	//skydome = new Skydome();
-	//skydome->Initialize(camera_);
-
 	// スプライトの初期化
 	SpriteInitialize(spriteCommon);
 }
@@ -87,9 +83,6 @@ void GamePlayScene::Update()
 
 	//// 敵キャラ更新
 	//enemy->Update();
-
-	//// 天球の更新
-	//skydome->Update();
 
 	if (input->PushKey(DIK_RIGHT)) {
 		eye[0].x += 0.3;
@@ -145,7 +138,6 @@ void GamePlayScene::Draw(Camera* camera)
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	//skydome->Draw(camera);
 	//player->Draw(camera);
 	//enemy->Draw(camera);
 
