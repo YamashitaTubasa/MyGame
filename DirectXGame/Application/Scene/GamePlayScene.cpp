@@ -22,7 +22,7 @@ void GamePlayScene::Initialize(Camera* camera, SpriteCommon& spriteCommon)
 	winApp = WinApp::GetInstance();
 	input = Input::GetInstance();
 	dXCommon = DirectXCommon::GetInstance();
-	postEffect = PostEffect::GetInstance();
+	//postEffect = PostEffect::GetInstance();
 
 	// カメラ
 	/*camera = new Camera();
