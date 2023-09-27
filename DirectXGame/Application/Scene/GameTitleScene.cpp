@@ -10,6 +10,7 @@ GameTitleScene::~GameTitleScene()
 {
 	delete sprite_;
 	delete title_;
+	start = false;
 }
 
 void GameTitleScene::Initialize()
@@ -78,7 +79,7 @@ void GameTitleScene::Update()
 		object3d->SetEye(eye);
 	}
 	if (startTimer >= 200) {
-		start = false;
+		
 		startTimer = 0;
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");

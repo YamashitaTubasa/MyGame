@@ -5,6 +5,7 @@
 #include "DirectXCommon.h"
 #include "GameBaseScene.h"
 #include "Sprite.h"
+#include "Skydome.h"
 #include "GameSceneManager.h"
 #include "GameTitleScene.h"
 
@@ -50,7 +51,10 @@ private: // メンバ変数
 	Sprite* clear_ = nullptr;
 	SpriteCommon spriteCommon_;
 
-	DirectX::XMFLOAT3 clearPos_ = { 0,0,0 };
-	DirectX::XMFLOAT2 clearScale_ = { 1280,720 };
+	// 天球
+	Skydome* skydome_ = nullptr;
+
+	DirectX::XMFLOAT3 clearPos_ = { 190,150,0 };
+	DirectX::XMFLOAT2 clearScale_ = { 950,230 };
 	DirectX::XMFLOAT3 clearRot_ = { 0,0,0 };
 };

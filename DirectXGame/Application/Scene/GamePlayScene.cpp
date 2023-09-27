@@ -139,7 +139,7 @@ void GamePlayScene::Update()
 	// デスフラグの立った敵を削除
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy_) {
 		return enemy_->GetIsDead();
-		});
+	});
 
 	// 背景のオブジェクトの更新
 	backGroundObj->Update();
