@@ -264,6 +264,9 @@
     <ClCompile Include="DirectXGame\Engin\Collision\MeshCollider.cpp">
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\2d\PostEffectManager.cpp">
+      <Filter>ソース ファイル\Engin\2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -463,7 +466,10 @@
       <Filter>ヘッダー ファイル\Engin\Collision</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Scene\AbstractSceneFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engin\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\2d\PostEffectManager.h">
+      <Filter>ヘッダー ファイル\Engin\2d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

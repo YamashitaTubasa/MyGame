@@ -113,6 +113,7 @@
     <ClCompile Include="DirectXGame\Application\Scene\GameSceneManager.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\PostEffect.cpp" />
+    <ClCompile Include="DirectXGame\Engin\2d\PostEffectManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxLoader.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxModel.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameSceneManager.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Engin\2d\PostEffect.h" />
+    <ClInclude Include="DirectXGame\Engin\2d\PostEffectManager.h" />
     <ClInclude Include="DirectXGame\Engin\2d\Sprite.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxLoader.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxModel.h" />
