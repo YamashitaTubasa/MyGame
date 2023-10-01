@@ -49,6 +49,7 @@ private: // メンバ変数
 	// スプライト
 	Sprite* sprite_ = nullptr;
 	Sprite* clear_ = nullptr;
+	Sprite* space_ = nullptr;
 	SpriteCommon spriteCommon_;
 
 	// 天球
@@ -57,4 +58,10 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 clearPos_ = { 190,150,0 };
 	DirectX::XMFLOAT2 clearScale_ = { 950,230 };
 	DirectX::XMFLOAT3 clearRot_ = { 0,0,0 };
+	DirectX::XMFLOAT4 spaceColor_ = { 1,1,1,1 };
+	DirectX::XMFLOAT3 spacePos_ = { 480,500,0 };
+	DirectX::XMFLOAT2 spaceScale_ {330, 41};
+
+	bool isSpace = true;
+	int spaceTimer = 0;
 };

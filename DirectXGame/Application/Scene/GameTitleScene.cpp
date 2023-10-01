@@ -90,10 +90,6 @@ void GameTitleScene::Update()
 		spaceTimer = 0;
 	}
 
-	if(Input::GetInstance()->TriggerKey(DIK_R)){
-		int a = 1;
-	}
-
 	// シーンの切り替え
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		start = true;

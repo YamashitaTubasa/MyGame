@@ -24,7 +24,7 @@ void GameClearScene::Initialize()
 
 	// タイトル
 	clear_ = new Sprite();
-	clear_->LoadTexture(spriteCommon_, 1, L"Resources/Image/clear1.png");
+	clear_->LoadTexture(spriteCommon_, 1, L"Resources/Image/clear2.png");
 	clear_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	clear_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	clear_->SetPosition(clearPos_);
@@ -33,10 +33,22 @@ void GameClearScene::Initialize()
 	clear_->SpriteTransferVertexBuffer(clear_, spriteCommon_, 1);
 	clear_->SpriteUpdate(clear_, spriteCommon_);
 
+	//===== SPACEの描画 =====//
+	space_ = new Sprite();
+	// テクスチャの読み込み
+	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/space2.png");
+	// スプライトの生成
+	space_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	space_->SetColor(spaceColor_);
+	space_->SetPosition(spacePos_);
+	space_->SetScale(spaceScale_);
+	// スプライトの頂点バッファの転送
+	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, 2);
+
 	// 天球の初期化
 	skydome_ = new Skydome();
 	skydome_->Initialize();
-
 }
 
 void GameClearScene::Update()
@@ -49,6 +61,19 @@ void GameClearScene::Update()
 
 	// 天球の更新
 	skydome_->Update();
+
+	// スプライトの更新
+	space_->SpriteUpdate(space_, spriteCommon_);
+
+	// Press SPACEの描画の点滅処理
+	spaceTimer++;
+	if (spaceTimer >= 50 && spaceTimer <= 99) {
+		isSpace = false;
+	}
+	if (spaceTimer >= 100) {
+		isSpace = true;
+		spaceTimer = 0;
+	}
 }
 
 void GameClearScene::Draw()
@@ -76,6 +101,9 @@ void GameClearScene::Draw()
 
 	// タイトルの描画
 	clear_->SpriteDraw(spriteCommon_);
+	if (isSpace) {
+		space_->SpriteDraw(spriteCommon_);
+	}
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
