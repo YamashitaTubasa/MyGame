@@ -4,6 +4,7 @@
 #include "GameTitleScene.h"
 #include "GamePlayScene.h"
 #include "GameClearScene.h"
+#include "GameOverScene.h"
 
 /// <summary>
 /// このゲーム用のシーン工場

@@ -110,6 +110,7 @@
     <ClCompile Include="DirectXGame\Application\3d\Skydome.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameBaseScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameClearScene.cpp" />
+    <ClCompile Include="DirectXGame\Application\Scene\GameOverScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\PostEffect.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\Sprite.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
     <ClInclude Include="DirectXGame\Application\3d\Skydome.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\GameOverScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\BaseCollider.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionInfo.h" />
