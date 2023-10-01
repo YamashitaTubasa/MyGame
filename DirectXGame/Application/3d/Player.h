@@ -78,6 +78,7 @@ public: // ゲッター
 	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP; }
 	// HPの取得
 	int GetHp() const { return hp; }
+	bool GetIsHp()const { return isHp; }
 	bool GetIsPostE() { return isPostE; }
 	int GetIsBullet() { return isBullet; }
 	
@@ -173,5 +174,6 @@ public: // メンバ変数
 	int isBullet = 1;
 	bool isEffect = false;
 	int effectTime = 0;
+	bool isHp = false;
 };
 

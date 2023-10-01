@@ -403,13 +403,17 @@ void Player::Update()
 		pPosition.x >= 4 && pPosition.x <= 9 && pPosition.y >= -1 && pPosition.y <= 3 && pPosition.z <= 22 && pPosition.z >= 17 || 
 		pPosition.x >= -2 && pPosition.x <= 2 && pPosition.y >= -2 && pPosition.y <= 2 && pPosition.z <= 37 && pPosition.z >= 32) {
 		isEffect = true;
+		isHp = true;
 	}
 	if (isEffect) {
 		effectTime++;
+	}
+	if (isHp) {
 		hp -= 1;
 	}
 	if (effectTime >= 15) {
 		isEffect = false;
+		isHp = false;
 		effectTime = 0;
 	}
 }

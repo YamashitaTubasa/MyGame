@@ -184,20 +184,17 @@ void GamePlayScene::Update()
 		//particleMan->Execution(particle, 0.0f, 0.0f, 0.5f, 20, 0.9f, 0.0f);
 		//particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 	}
-
-	if (input->PushKey(DIK_I)) {
-		//hpPosition.x += 1;
-		hpScale.x -= 1;
+	if (input->TriggerKey(DIK_R)) {
+		int a = 1;
 	}
-	
 
-	if (player->GetHp() == 9) {
-		if (hpScale.x >= 491) {
-			hpScale.x -= 10;
+	if (player->GetIsHp()) {
+		if (hpScale.x >= 0) {
+			hpScale.x -= 15;
 		}
 	}
 	if (player->GetHp() == 8) {
-		if (hpScale.x >= 481) {
+		if (hpScale.x >= 0) {
 			hpScale.x -= 10;
 		}
 	}
@@ -249,13 +246,18 @@ void GamePlayScene::Update()
 	}
 	if (isDamage) {
 		damageTime++;
-		if (hpScale.x >= 50) {
+		if (hpScale.x >= 0) {
 			hpScale.x -= 5;
 		}
 	}
 	if (damageTime >= 20) {
 		isDamage = false;
 		damageTime = 0;
+	}
+
+	if (hpScale.x <= 0) {
+		// ゲームオーバー（次シーン）を生成
+		GameSceneManager::GetInstance()->ChangeScene("OVER");
 	}
 
 	// パーティクルの更新
