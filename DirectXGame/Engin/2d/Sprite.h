@@ -71,6 +71,7 @@ public:
 private:
 	struct ConstBufferData {
 		XMFLOAT4 color; // 色 (RGBA)
+		float alpha; // アルファ値
 		XMMATRIX mat; //座標
 	};
 

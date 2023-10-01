@@ -50,6 +50,7 @@ private: // メンバ変数
 	// スプライト
 	Sprite* sprite_ = nullptr;
 	Sprite* title_ = nullptr;
+	Sprite* space_ = nullptr;
 
 	// 天球
 	Skydome* skydome = nullptr;
@@ -59,13 +60,19 @@ private: // メンバ変数
 	Model* model = nullptr;
 
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
-	DirectX::XMFLOAT3 titlePos_ = { 250,200,0 };
-	DirectX::XMFLOAT2 titleScale_ = { 780,160 };
+	DirectX::XMFLOAT3 titlePos_ = { 200,100,0 };
+	DirectX::XMFLOAT2 titleScale_ = { 1000,300 };
+	DirectX::XMFLOAT4 spaceColor_ = { 1,1,1,1 };
+	DirectX::XMFLOAT3 spacePos_ = { 480,500,0 };
+	DirectX::XMFLOAT2 spaceScale_ {330, 41};
 
 	DirectX::XMFLOAT3 pPos = { 0,-5,-30 };
 	DirectX::XMFLOAT3 eye = { 0,0,-50 };
 
 	float titleRot_ = 0.0f;
+	float spaceRot_ = 0.0f;
 	bool start = false;
 	int startTimer = 0;
+	bool isSpace = true;
+	int spaceTimer = 0;
 };
