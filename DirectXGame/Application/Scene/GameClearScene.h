@@ -1,11 +1,10 @@
 #pragma once
 
-#include "ParticleManager.h"
-#include "Input.h"
 #include "DirectXCommon.h"
-#include "GameBaseScene.h"
+#include "Input.h"
 #include "Sprite.h"
 #include "Skydome.h"
+#include "GameBaseScene.h"
 #include "GameSceneManager.h"
 #include "GameTitleScene.h"
 
@@ -42,7 +41,6 @@ public: // メンバ関数
 	void Finalize() override;
 
 private: // メンバ変数
-	ParticleManager* particleMan1_ = nullptr;
 	Input* input_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
 
@@ -55,13 +53,19 @@ private: // メンバ変数
 	// 天球
 	Skydome* skydome_ = nullptr;
 
+	// クリアの設定
 	DirectX::XMFLOAT3 clearPos_ = { 190,150,0 };
 	DirectX::XMFLOAT2 clearScale_ = { 950,230 };
 	DirectX::XMFLOAT3 clearRot_ = { 0,0,0 };
+
+	// スペースの設定
 	DirectX::XMFLOAT4 spaceColor_ = { 1,1,1,1 };
 	DirectX::XMFLOAT3 spacePos_ = { 480,500,0 };
-	DirectX::XMFLOAT2 spaceScale_ {330, 41};
+	DirectX::XMFLOAT2 spaceScale_ {330, 43};
 
+	// フラグ
 	bool isSpace = true;
+
+	// タイマー
 	int spaceTimer = 0;
 };

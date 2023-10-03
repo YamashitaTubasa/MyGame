@@ -10,6 +10,9 @@ GameOverScene::~GameOverScene()
 {
 	delete sprite_;
 	delete over_;
+	delete black_;
+	delete space_;
+	delete skydome_;
 }
 
 void GameOverScene::Initialize()

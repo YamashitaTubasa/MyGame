@@ -14,7 +14,6 @@ Sprite::Sprite(UINT texNumber, XMFLOAT3 pos, XMFLOAT2 size, XMFLOAT4 color, XMFL
 }
 
 Sprite::~Sprite() {
-
 }
 
 PipelineSet Sprite::SpriteCreateGraphicsPipeline() 
@@ -203,7 +202,7 @@ PipelineSet Sprite::SpriteCreateGraphicsPipeline()
 	if (FAILED(result)) {
 		assert(0);
 	}
-
+	descHeap->SetName(L"Sprite[descHeap]");
 	// パイプラインとルートシグネチャを返す
 	return pipelineSet;
 }
@@ -242,7 +241,7 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 		nullptr,
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
-
+	vertBuff->SetName(L"Sprite[vertBuff]");
 	// 指定番号の画像が読み込み済みなら
 	if (spriteCommon.texBuff[this->texNumber]) {
 		// テクスチャ情報取得
@@ -251,7 +250,7 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 		scale = { (float)resDesc.Width,(float)resDesc.Height };
 		// テクスチャ情報取得
 	}
-
+	
 	texSize_ = { (float)resDesc.Width, (float)resDesc.Height };
 
 	// アンカーポイントをコピー
@@ -290,7 +289,7 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 		nullptr,
 		IID_PPV_ARGS(&constBuff));
 	assert(SUCCEEDED(result));
-
+	constBuff->SetName(L"Sprite[constBuff]");
 	// 定数バッファにデータ転送
 	ConstBufferData* constMap = nullptr;
 	result = constBuff->Map(0, nullptr, (void**)&constMap); // マッピング
@@ -376,7 +375,7 @@ SpriteCommon Sprite::SpriteCommonCreate(int window_width, int window_height)
 	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	descHeapDesc.NumDescriptors = SpriteCommon::kMaxSRVCount;
 	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&spriteCommon.descHeap));
-
+	spriteCommon.descHeap->SetName(L"SpriteDescHeap");
 	// 生成したスプライトを返す
 	return spriteCommon;
 }
@@ -441,7 +440,7 @@ void Sprite::LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar
 		D3D12_RESOURCE_STATE_GENERIC_READ, // テクスチャ用指定
 		nullptr, IID_PPV_ARGS(&spriteCommon.texBuff[texnumber]));
 	assert(SUCCEEDED(result));
-
+	
 	// テクスチャバッファにデータ転送
 	for (size_t i = 0; i < metadata.mipLevels; i++) {
 		const Image* img = scratchImg.GetImage(i, 0, 0); // 生データ抽出
@@ -519,7 +518,7 @@ void Sprite::SpriteTransferVertexBuffer(const Sprite* sprite, const SpriteCommon
 	if (texBuffers_[sprite->texIndex_]) {
 		// テクスチャ情報取得
 		resDesc = texBuffers_[sprite->texIndex_]->GetDesc();
-
+		
 		float tex_left = sprite->texLeftTop_.x / resDesc.Width;
 		float tex_right = (sprite->texLeftTop_.x + sprite->texSize_.x) / resDesc.Width;
 		float tex_top = sprite->texLeftTop_.y / resDesc.Height;

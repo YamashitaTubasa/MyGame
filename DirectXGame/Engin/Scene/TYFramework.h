@@ -54,8 +54,6 @@ protected:
 	GameSceneManager* sceneManager_ = nullptr;
 	PostEffect* postEffect = nullptr;
 	PostEffect* postEffect1 = nullptr;
-	Object3d* object3d = nullptr;
-	ParticleManager* particleMan = nullptr;
 	// シーンファクトリー
 	AbstractSceneFactory* sceneFactory_ = nullptr;
 	int a = 0;

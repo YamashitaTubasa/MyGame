@@ -23,6 +23,11 @@ PostEffect::PostEffect()
 {
 }
 
+PostEffect::~PostEffect()
+{
+	//device->Release();
+}
+
 void PostEffect::Initialize(const wchar_t* filename)
 {
 	dXCommon = DirectXCommon::GetInstance();
@@ -84,7 +89,7 @@ void PostEffect::Initialize(const wchar_t* filename)
 	// SRV用デスクリプタヒープを生成
 	result = device->CreateDescriptorHeap(&srvDescHeapDesc, IID_PPV_ARGS(&descHeapSRV));
 	assert(SUCCEEDED(result));
-
+	descHeapSRV->SetName(L"PostEffect[descHeapSRV]");
 	// SRV設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{}; // 設定構造体
 	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
@@ -117,7 +122,7 @@ void PostEffect::Initialize(const wchar_t* filename)
 		&rtvDesc,
 		descHeapRTV->GetCPUDescriptorHandleForHeapStart()
 	);
-
+	descHeapRTV->SetName(L"PostEffect[descHeapRTV]");
 	// 深度バッファリソース設定
 	CD3DX12_RESOURCE_DESC depthResDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
@@ -143,7 +148,7 @@ void PostEffect::Initialize(const wchar_t* filename)
 		&clearValueBuffer,
 		IID_PPV_ARGS(&depthBuff));
 	assert(SUCCEEDED(result));
-
+	depthBuff->SetName(L"PostEffect[depthBuff]");
 	// DSV用デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC DescHeapDesc{};
 	DescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
@@ -159,7 +164,7 @@ void PostEffect::Initialize(const wchar_t* filename)
 	device->CreateDepthStencilView(depthBuff.Get(),
 		&dsvDesc,
 		descHeapDSV->GetCPUDescriptorHandleForHeapStart());
-
+	descHeapDSV->SetName(L"PostEffect[descHeapDSV]");
 	CD3DX12_HEAP_PROPERTIES heapPropertiess =
 		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	CD3DX12_RESOURCE_DESC resourceDesc =
@@ -214,6 +219,7 @@ void PostEffect::Initialize(const wchar_t* filename)
 		nullptr,
 		IID_PPV_ARGS(&constBuff));
 	assert(SUCCEEDED(result));
+	constBuff->SetName(L"PostEffect[constBuff]");
 
 	// 定数バッファにデータ転送
 	result = constBuff->Map(0, nullptr, (void**)&constMap); // マッピング

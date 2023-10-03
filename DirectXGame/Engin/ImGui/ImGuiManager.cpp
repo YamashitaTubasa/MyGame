@@ -1,5 +1,13 @@
 #include "ImGuiManager.h"
 
+ImGuiManager::ImGuiManager()
+{
+}
+
+ImGuiManager::~ImGuiManager()
+{
+}
+
 void ImGuiManager::Initialize(DirectXCommon* dXCommon_, WinApp* winApp_) {
 	HRESULT result;
 
@@ -18,7 +26,7 @@ void ImGuiManager::Initialize(DirectXCommon* dXCommon_, WinApp* winApp_) {
 	// デスクリプタヒープ生成
 	result = dXCommon_->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
 	assert(SUCCEEDED(result));
-
+	srvHeap_->SetName(L"ImGuiManager[srvHeap_]");
 	ImGui_ImplDX12_Init(
 		dXCommon_->GetDevice(),
 		static_cast<int>(dXCommon_->GetBackBufferCount()),

@@ -31,7 +31,7 @@ void FbxObject3d::Initialize()
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffTransform));
-
+	constBuffTransform->SetName(L"FbxObject3d[constBuffTransform]");
 	GeneratSkinConstBuff();
 
 	// 1フレーム分の時間を60FPSで設定
@@ -63,6 +63,7 @@ void FbxObject3d::GeneratSkinConstBuff()
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffSkin));
+	constBuffSkin->SetName(L"FbxObject3d[constBuffSkin]");
 }
 
 void FbxObject3d::Update()
@@ -327,9 +328,10 @@ void FbxObject3d::CreateGraphicsPipeline()
 	if (FAILED(result)) { assert(0); }
 
 	gpipeline.pRootSignature = rootsignature.Get();
-	rootsignature->SetName(L"FbxObject3dRootSignature");
+	rootsignature->SetName(L"FbxObject3d[RootSignature]");
 
 	// グラフィックスパイプラインの生成
 	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipelinestate.ReleaseAndGetAddressOf()));
 	if (FAILED(result)) { assert(0); }
+	pipelinestate->SetName(L"FbxObject3d[pipelinestate]");
 }

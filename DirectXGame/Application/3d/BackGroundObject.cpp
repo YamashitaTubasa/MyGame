@@ -1,5 +1,21 @@
 #include "BackGroundObject.h"
 
+BackGroundObject::BackGroundObject()
+{
+}
+
+BackGroundObject::~BackGroundObject()
+{
+	delete buildingM;
+	delete asphaltM;
+	delete bridgeM;
+	delete treeM;
+	delete wheelM;
+	for (auto& object: objects) {
+		delete object;
+	}
+}
+
 void BackGroundObject::Initialize()
 {
 	// レベルデータの読み込み

@@ -44,6 +44,7 @@ public: // メンバ関数
 	void fpsFixedFinalize();
 
 public:
+	// DirectXCommonのインスタンス
 	static DirectXCommon* instance;
 	// インスタンスの取得
 	static DirectXCommon* GetInstance();

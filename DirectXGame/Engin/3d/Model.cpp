@@ -16,6 +16,15 @@ using namespace std;
 // 静的メンバ変数の実体
 ID3D12Device* Model::device = nullptr;
 
+Model::Model()
+{
+}
+
+Model::~Model()
+{
+	//device->Release();
+}
+
 Model* Model::LoadFromOBJ(const string& modelname)
 {
 	// 新たなModel型のインスタンスのメモリを確保
@@ -146,7 +155,7 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 		D3D12_RESOURCE_STATE_GENERIC_READ, // テクスチャ用指定
 		nullptr, IID_PPV_ARGS(&texbuff));
 	assert(SUCCEEDED(result));
-
+	
 	// テクスチャバッファにデータ転送
 	for (size_t i = 0; i < metadata.mipLevels; i++) {
 		const Image* img = scratchImg.GetImage(i, 0, 0); // 生データ抽出
@@ -405,7 +414,7 @@ void Model::InitializeDescriptorHeap()
 	if (FAILED(result)) {
 		assert(0);
 	}
-
+	descHeap->SetName(L"Model[descHeap]");
 	// デスクリプタサイズを取得
 	descriptorHandleIncrementSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
@@ -430,7 +439,7 @@ void Model::CreateBuffers()
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
-
+	vertBuff->SetName(L"Model[verBuff]");
 	// 頂点バッファへのデータ転送
 	VertexPosNormalUv* vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
@@ -455,7 +464,7 @@ void Model::CreateBuffers()
 	result = device->CreateCommittedResource(
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&indexBuff));
-
+	indexBuff->SetName(L"Model[indexBuff]");
 	// インデックスバッファへのデータ転送
 	unsigned short* indexMap = nullptr;
 	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
@@ -498,7 +507,7 @@ void Model::CreateBuffers()
 		nullptr,
 		IID_PPV_ARGS(&constBuffB1)
 	);
-
+	constBuffB1->SetName(L"Model[constBuffB1]");
 	// 定数バッファへデータ転送
 	ConstBufferDataB1* constMap1 = nullptr;
 	result = constBuffB1->Map(0, nullptr, (void**)&constMap1);

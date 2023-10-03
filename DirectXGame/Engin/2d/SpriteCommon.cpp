@@ -1,4 +1,4 @@
-#include "2d/SpriteCommon.h"
+#include "SpriteCommon.h"
 
 void SpriteCommon::Initialize(){
 

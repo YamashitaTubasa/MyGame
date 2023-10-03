@@ -27,6 +27,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	PostEffect();
+	~PostEffect();
 
 	/// <summary>
 	/// 初期化

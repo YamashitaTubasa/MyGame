@@ -16,6 +16,9 @@
 class ImGuiManager 
 {
 public:
+	ImGuiManager();
+	~ImGuiManager();
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>

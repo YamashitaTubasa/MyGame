@@ -2,7 +2,7 @@
 
 #include <DirectXMath.h>
 
-#include "Platform/DirectXCommon.h"
+#include "DirectXCommon.h"
 
 using namespace DirectX;
 

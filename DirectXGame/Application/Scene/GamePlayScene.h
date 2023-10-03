@@ -95,14 +95,7 @@ private:
 	WinApp* winApp = nullptr;
 	// 入力
 	Input* input = nullptr;
-	// モデル
-	Model* enemeyM = nullptr;
-	Model* skydomeM = nullptr;
-	Model* Model[5];
-	// オブジェクト
-	Object3d* enemyO3 = nullptr;
-	Object3d* skydomeO3 = nullptr;
-	Object3d* object3d[5];
+	
 	// スプライト
 	Sprite* sprite = nullptr;
 	Sprite* hp = nullptr;
@@ -119,10 +112,7 @@ private:
 
 	// パーティクル
 	ParticleManager* particleMan = nullptr;
-	ParticleManager* particleMan1 = nullptr;
 	Particle* particle = nullptr;
-	Particle* particle1 = nullptr;
-	//ParticleManager* particleMan1 = nullptr;
 
 	DirectXCommon* dXCommon = nullptr;
 
@@ -130,8 +120,8 @@ private:
 	Camera* camera = nullptr;
 	FbxModel* fbxModel = nullptr;
 	FbxObject3d* fbxObject = nullptr;
-	PostEffect* postEffect = nullptr;
-	PostEffect* postEffect1 = nullptr;
+	/*PostEffect* postEffect = nullptr;
+	PostEffect* postEffect1 = nullptr;*/
 	Player* player = nullptr;
 	Player* pBullet = nullptr;
 	Enemy* enemy = nullptr;

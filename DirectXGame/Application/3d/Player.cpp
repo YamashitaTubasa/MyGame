@@ -13,10 +13,12 @@ Player::Player()
 
 Player::~Player()
 {
-	// 3Dオブジェクト解放
 	delete playerO3;
-	// 3Dモデル解放
+	delete reticleO3;
+	delete reticle1O3;
 	delete playerM;
+	delete reticleM;
+	delete reticle1M;
 	// 弾の解放
 	for (PlayerBullet* bullet : pBullets) {
 		delete bullet;

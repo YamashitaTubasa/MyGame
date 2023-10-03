@@ -114,6 +114,7 @@
     <ClCompile Include="DirectXGame\Application\Scene\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\PostEffect.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\Sprite.cpp" />
+    <ClCompile Include="DirectXGame\Engin\2d\SpriteCommon.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxLoader.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxModel.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxObject3d.cpp" />
@@ -249,6 +250,8 @@
     <ClInclude Include="DirectXGame\Application\3d\Skydome.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameOverScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h" />
+    <ClInclude Include="DirectXGame\Engin\2d\SpriteCommon.h" />
+    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\BaseCollider.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionInfo.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h" />
@@ -264,7 +267,6 @@
     <ClInclude Include="DirectXGame\Engin\3d\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Model.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Object3d.h" />
-    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h" />
     <ClInclude Include="DirectXGame\Engin\Audio\Audio.h" />
     <ClInclude Include="DirectXGame\Engin\Camera\Camera.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\Collision.h" />

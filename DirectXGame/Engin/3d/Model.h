@@ -18,6 +18,10 @@ private: // エイリアス
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
+public:
+	Model();
+	~Model();
+
 public: // サブクラス
 	// 頂点データ構造体
 	struct VertexPosNormalUv

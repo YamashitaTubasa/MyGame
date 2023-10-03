@@ -18,6 +18,7 @@ GamePlayScene::~GamePlayScene()
 	delete sprite;
 	delete camera;
 	delete fbxObject;
+	delete fbxModel;
 	delete hp;
 	delete hpBar;
 	delete hpBack;
@@ -26,8 +27,10 @@ GamePlayScene::~GamePlayScene()
 	delete enemyHpBack;
 	delete ult;
 	delete X;
+	delete damage;
 	delete particle;
-	delete particle1;
+	delete particleMan;
+	delete enemy;
 	for (int i = 0; i < 5; i++) {
 		delete number[i];
 	}
@@ -40,12 +43,6 @@ void GamePlayScene::Initialize()
 	input = Input::GetInstance();
 	dXCommon = DirectXCommon::GetInstance();
 	collisionMan = CollisionManager::GetInstance();
-
-	//// ポストエフェクト
-	//postEffect = new PostEffect();
-	//postEffect->Initialize();
-	//postEffect1 = new PostEffect();
-	//postEffect1->Initialize();
 
 	// カメラ
 	camera = new Camera();
@@ -85,7 +82,7 @@ void GamePlayScene::Initialize()
 	enemy = Enemy::Create();
 	enemy->SetCollider(new SphereCollider);
 
-	// 背景のオブジェクト
+	// 背景のオブジェクトの初期化
 	backGroundObj = new BackGroundObject();
 	backGroundObj->Initialize();
 
@@ -95,19 +92,13 @@ void GamePlayScene::Initialize()
 
 	// OBJの名前を指定してモデルデータを読み込む
 	particle = Particle::LoadFromOBJ("bombEffect.png");
-	//particle1 = Particle::LoadFromOBJ("effect2.png");
 	// パーティクルの生成
 	particleMan = ParticleManager::Create();
-	//particleMan1 = ParticleManager::Create();
-	// パーティクルマネージャーにパーティクルを割り当てる
+	// パーティクルマネージャーにパーティクルセットする
 	particleMan->SetModel(particle);
-	//particleMan1->SetModel(particle1);
 	
 	// スプライトの初期化
 	SpriteInitialize();
-
-	// パーティクルの初期化
-	//ParticleInitialize();
 
 	// FBXアニメーションの実行
 	fbxObject->PlayAnimation();
@@ -117,6 +108,7 @@ void GamePlayScene::Update()
 {
 	count++;
 
+	// シーン切り替え
 	if (player->GetPositon().z >= 150) {
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
@@ -127,9 +119,6 @@ void GamePlayScene::Update()
 
 	// FBXオブジェクトの更新
 	fbxObject->Update();
-
-	// ポストエフェクト
-	//postEffect->SetBlur(true);
 
 	// 自キャラの更新
 	player->Update();
@@ -146,10 +135,6 @@ void GamePlayScene::Update()
 
 	// 天球の更新
 	skydome->Update();
-
-	if (input->TriggerKey(DIK_O)) {
-		DirectX::XMFLOAT3 a = player->GetpBulletP();
-	}
 
 	/*if (CheckCollision(player->GetpBulletP(), enemy->GetPosition())) {
 		isEnemyDeth = true;
@@ -357,12 +342,6 @@ void GamePlayScene::Draw()
 
 void GamePlayScene::Finalize()
 {
-	// オブジェクトの解放
-	ObjectFinalize();
-}
-
-void GamePlayScene::ObjectFinalize()
-{
 }
 
 void GamePlayScene::SpriteInitialize()
@@ -485,59 +464,8 @@ void GamePlayScene::SpriteInitialize()
 	damage->SpriteUpdate(damage, spriteCommon_);
 }
 
-void GamePlayScene::ParticleInitialize()
-{
-	//for (int i = 0; i < 100; i++) {
-	//	// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-	//	const float md_pos = 10.0f;
-	//	XMFLOAT3 pos{};
-	//	float posx = -5;
-	//	pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posx;
-	//	pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-	//	pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-	//	// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
-	//	const float md_vel = 0.1f;
-	//	XMFLOAT3 vel{};
-	//	vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-	//	vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-	//	vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-	//	// 重力に見立ててYのみ[-0.001f,0]でランダム分布
-	//	XMFLOAT3 acc{};
-	//	const float md_acc = 0.001f;
-	//	acc.y = (float)rand() / RAND_MAX * md_acc;
-
-	//	// 追加
-	//	particleMan->Add(20, pos, vel, acc, 1.0f, 0.0);
-	//}
-}
-
-void GamePlayScene::ParticleUpdate()
-{
-	//// カメラ移動
-	//if (input->PushKey(DIK_W) || input->PushKey(DIK_S) || input->PushKey(DIK_D) || input->PushKey(DIK_A))
-	//{
-	//	if (input->PushKey(DIK_W)) { ParticleManager::CameraMoveEyeVector({ 0.0f,+1.0f,0.0f }); }
-	//	else if (input->PushKey(DIK_S)) { ParticleManager::CameraMoveEyeVector({ 0.0f,-1.0f,0.0f }); }
-	//	if (input->PushKey(DIK_D)) { ParticleManager::CameraMoveEyeVector({ +1.0f,0.0f,0.0f }); }
-	//	else if (input->PushKey(DIK_A)) { ParticleManager::CameraMoveEyeVector({ -1.0f,0.0f,0.0f }); }
-	//}
-
-	//particleMan->Update();
-}
-
 void GamePlayScene::GameReset()
 {
-	// 3Dオブジェクトの位置を指定
-	position[0] = { -20,-5,0 };
-	rotation[0] = { 0,90,0 };
-	object3d[0]->SetPosition(position[0]);
-	object3d[0]->SetScale({ 5, 5, 5 });
-	object3d[0]->SetRotation(rotation[0]);
-	position[1] = { 0,5,50 };
-	object3d[1]->SetPosition(position[1]);
-	object3d[1]->SetRotation({ 0, 90, 0 });
-	object3d[1]->SetScale({ 5,5,5 });
-
 	playerHp = 3;
 	time = 0;
 }

@@ -2,19 +2,29 @@
 
 #include "TYFramework.h"
 
-// ゲーム全体
+/// <summary>
+/// ゲーム全体
+/// </summary>
 class MyGame : public TYFramework
 {
 public: // メンバ関数
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize() override;
 
-	// 終了
+	/// <summary>
+	/// 終了
+	/// </summary>
 	void Finalize() override;
 
-	// 毎フレーム更新
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update() override;
 
-	// 描画
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw() override;
 };

@@ -65,9 +65,6 @@ void TYFramework::Finalize()
 	//シーンファクトリの解放
 	delete sceneFactory_;
 
-	delete object3d;
-	delete particleMan;
-
 	FbxLoader::GetInstance()->Finalize();
 
 	// imguiの終了処理

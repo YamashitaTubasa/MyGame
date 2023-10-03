@@ -12,9 +12,10 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
-	// 3Dオブジェクト解放
 	delete enemyO3;
-	// 3Dモデル解放
+	delete enemyO1;
+	delete enemyO2;
+	delete enemyO4;
 	delete enemyM;
 }
 

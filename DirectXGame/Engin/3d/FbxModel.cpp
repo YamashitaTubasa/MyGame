@@ -26,7 +26,7 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff));
-
+	vertBuff->SetName(L"FbxModel[vertBuff]");
 	// 頂点バッファへのデータ転送
 	VertexPosNormalUvSkin* vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
@@ -69,7 +69,7 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 	ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
 	ibView.Format = DXGI_FORMAT_R16_UINT;
 	ibView.SizeInBytes = sizeIB;
-
+	indexBuff->SetName(L"FbxModel[indexBuff]");
 	// テクスチャ画像データ
 	const DirectX::Image* img = scratchImg.GetImage(0, 0, 0); // 生データ抽出
 	assert(img);
@@ -109,7 +109,7 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE; // シェーダから見えるように
 	descHeapDesc.NumDescriptors = 1; // テクスチャ枚数
 	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeapSRV)); // 生成
-
+	descHeapSRV->SetName(L"FbxModel[descHeapSRV]");
 	// シェーダリソースビュー(SRV)作成
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	D3D12_RESOURCE_DESC resDesc = texbuff->GetDesc();

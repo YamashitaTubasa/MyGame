@@ -32,12 +32,16 @@ const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::X
 
 Particle* Particle::LoadFromOBJ(const std::string& filename)
 {
+	// パーティクルのインスタンス生成
 	Particle* particle = new Particle();
 
+	// デスクリプタヒープの初期化
 	particle->InitializeDescriptorHeap();
 
+	// テクスチャの読み込み
 	particle->LoadTexture(filename);
 
+	// モデルの作成
 	particle->CreateModel();
 
 	return particle;
@@ -201,7 +205,7 @@ void Particle::InitializeDescriptorHeap()
 	if (FAILED(result)) {
 		assert(0);
 	}
-
+	descHeap->SetName(L"Particle[descHeap]");
 	// デスクリプタサイズを取得
 	descriptorHandleIncrementSize = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }

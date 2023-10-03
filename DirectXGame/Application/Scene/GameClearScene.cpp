@@ -10,6 +10,8 @@ GameClearScene::~GameClearScene()
 {
 	delete sprite_;
 	delete clear_;
+	delete space_;
+	delete skydome_;
 }
 
 void GameClearScene::Initialize()
@@ -53,9 +55,9 @@ void GameClearScene::Initialize()
 
 void GameClearScene::Update()
 {
-	// 十字キーの右を押したら
+	// SPACEを押したら
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-		// ゲームプレイシーン（次シーン）を生成
+		// ゲームタイトルシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 
@@ -99,7 +101,7 @@ void GameClearScene::Draw()
 	// スプライト描画前処理
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
-	// タイトルの描画
+	//=== スプライトの描画 ===//
 	clear_->SpriteDraw(spriteCommon_);
 	if (isSpace) {
 		space_->SpriteDraw(spriteCommon_);

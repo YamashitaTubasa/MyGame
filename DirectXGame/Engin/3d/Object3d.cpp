@@ -36,6 +36,8 @@ Object3d::~Object3d()
 		CollisionManager::GetInstance()->RemoveCollider(collider);
 		delete collider;
 	}
+
+	//device->Release();
 }
 
 void Object3d::StaticInitialize(ID3D12Device * device, int window_width, int window_height, Camera* camera)
@@ -65,9 +67,10 @@ void Object3d::PreDraw(ID3D12GraphicsCommandList * cmdList)
 
 	// パイプラインステートの設定
 	cmdList->SetPipelineState(pipelinestate.Get());
+	pipelinestate->SetName(L"Object3d[pipelinestate]");
 	// ルートシグネチャの設定
 	cmdList->SetGraphicsRootSignature(rootsignature.Get());
-	rootsignature->SetName(L"Obejct3dRootSignature");
+	rootsignature->SetName(L"Obejct3d[RootSignature]");
 	// プリミティブ形状を設定
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
@@ -293,7 +296,6 @@ void Object3d::InitializeGraphicsPipeline()
 	assert(SUCCEEDED(result));
 
 	gpipeline.pRootSignature = rootsignature.Get();
-	rootsignature->SetName(L"Obejct3dRootSignature");
 
 	// グラフィックスパイプラインの生成
 	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate));
@@ -332,7 +334,7 @@ bool Object3d::Initialize()
 		nullptr,
 		IID_PPV_ARGS(&constBuffB0));
 	assert(SUCCEEDED(result));
-	
+	constBuffB0->SetName(L"Object3d[constBuffB0]");
 	return true;
 }
 
@@ -366,7 +368,7 @@ void Object3d::Update()
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
 	constMap->mat = matWorld * matView * matProjection;	// 行列の合成
 	constBuffB0->Unmap(0, nullptr);
-
+	
 	// 当たり判定更新
 	if (collider) {
 		collider->Update();

@@ -10,7 +10,10 @@ GameTitleScene::~GameTitleScene()
 {
 	delete sprite_;
 	delete title_;
-	start = false;
+	delete skydome;
+	delete space_;
+	delete object3d;
+	delete model;
 }
 
 void GameTitleScene::Initialize()
@@ -55,8 +58,10 @@ void GameTitleScene::Initialize()
 	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, 2);
 
 	// OBJモデルの読み込み
+	model = new Model();
 	model = Model::LoadFromOBJ("fighter");
 	// オブジェクトの生成
+	object3d = new Object3d();
 	object3d = Object3d::Create();
 	// オブジェクトにモデルをセット
 	object3d->SetModel(model);
@@ -90,7 +95,7 @@ void GameTitleScene::Update()
 		spaceTimer = 0;
 	}
 
-	// シーンの切り替え
+	// シーンの切り替え処理
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		start = true;
 	}
@@ -104,8 +109,9 @@ void GameTitleScene::Update()
 		object3d->SetEye(eye);
 	}
 	if (startTimer >= 200) {
-		
+		// タイマーを初期値に戻す
 		startTimer = 0;
+
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");
 	}

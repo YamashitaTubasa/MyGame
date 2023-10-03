@@ -64,7 +64,6 @@ void ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->SetPipelineState(pipelinestate.Get());
 	// ルートシグネチャの設定
 	cmdList->SetGraphicsRootSignature(rootsignature.Get());
-	rootsignature->SetName(L"ParticleManRootSignature");
 	// プリミティブ形状を設定
 	//cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
@@ -344,12 +343,11 @@ void ParticleManager::InitializeGraphicsPipeline()
 	assert(SUCCEEDED(result));
 
 	gpipeline.pRootSignature = rootsignature.Get();
-	rootsignature->SetName(L"ParticleManRootSignature");
-
+	rootsignature->SetName(L"ParticleMan[RootSignature]");
 	// グラフィックスパイプラインの生成
 	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate));
 	assert(SUCCEEDED(result));
-
+	pipelinestate->SetName(L"ParticleMan[pipelinestate]");
 }
 
 void ParticleManager::UpdateViewMatrix()
