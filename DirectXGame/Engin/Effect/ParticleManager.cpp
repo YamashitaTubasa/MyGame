@@ -454,6 +454,7 @@ bool ParticleManager::Initialize()
 		D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&constBuff));
 	assert(SUCCEEDED(result));
+	constBuff->SetName(L"ParticleManager[constBuff]");
 
 	return true;
 }

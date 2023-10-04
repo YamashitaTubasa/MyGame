@@ -38,19 +38,19 @@ float4 GaussianBlur(float2 uv, float sigma, float stepWidth)
 
 float4 main(VSOutput input) : SV_TARGET
 {
-	float _FocusDepth = 0.043;
+	float _FocusDepth = 0.04;
     float _NFocusWidth = 0.01;
     float _FFocusWidth = 0.02;
     float4 depth = tex.Sample(smp, input.uv);
     float inFocus = 1 - smoothstep(0, _NFocusWidth, abs(depth - _FocusDepth));
     float outFocus = smoothstep(_NFocusWidth, _FFocusWidth, abs(depth - _FocusDepth));
     float middleFocus = 1 - inFocus - outFocus;
-    float4 inFocusColor = tex.Sample(smp, input.uv);
-    float4 middleFocusColor = GaussianBlur(input.uv, 0.03, 0.003);
-    float4 outFocusColor = GaussianBlur(input.uv, 0.03, 0.004);
-    //float4 inFocusColor = float4(1, 0, 0, 1);
-    //float4 middleFocusColor = float4(0, 1, 0, 1);
-    //float4 outFocusColor = float4(0, 0, 1, 1);
+    //float4 inFocusColor = tex.Sample(smp, input.uv);
+    //float4 middleFocusColor = GaussianBlur(input.uv, 0.03, 0.003);
+    //float4 outFocusColor = GaussianBlur(input.uv, 0.03, 0.004);
+    float4 inFocusColor = float4(1, 0, 0, 1);
+    float4 middleFocusColor = float4(0, 1, 0, 1);
+    float4 outFocusColor = float4(0, 0, 1, 1);
     
     return (inFocus * inFocusColor) + (middleFocus * middleFocusColor) + (outFocus * outFocusColor);
 }

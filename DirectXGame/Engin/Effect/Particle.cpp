@@ -160,6 +160,7 @@ void Particle::LoadTexture(const std::string& filename)
 		D3D12_RESOURCE_STATE_GENERIC_READ, // テクスチャ用指定
 		nullptr, IID_PPV_ARGS(&texbuff));
 	assert(SUCCEEDED(result));
+	texbuff->SetName(L"Particle[texbuff]");
 
 	// テクスチャバッファにデータ転送
 	for (size_t i = 0; i < metadata.mipLevels; i++) {
@@ -226,6 +227,7 @@ void Particle::CreateModel()
 		&heapProps, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
 		IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
+	vertBuff->SetName(L"Particle[vertBuff]");
 
 	// 頂点バッファへのデータ転送
 	//VertexPosNormalUv* vertMap = nullptr;

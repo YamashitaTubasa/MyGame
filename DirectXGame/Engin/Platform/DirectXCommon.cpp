@@ -336,19 +336,6 @@ void DirectXCommon::PreDraw()
 	// 震度バッファクリア
 	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
-	//if (input->Pushkey(DIK_SPACE)) // スペースキーが押されていたら
-	//{
-	//	clearcolor[0] = { 0.7f }; // 青っぽい色
-	//	clearcolor[1] = { 0.5f };
-	//	clearcolor[2] = { 0.3f };
-	//	clearcolor[3] = { 0.0f };
-	//}
-
-	/*bool キーを押した状態か(uint8_t キー番号);
-	bool キーを離した状態か(uint8_t キー番号);
-	bool キーを押した瞬間か(uint8_t キー番号);
-	bool キーを離した瞬間か(uint8_t キー番号);*/
-
 	// 4.描画コマンドはここから
 	// ビューポート設定コマンド
 	D3D12_VIEWPORT viewport{};
@@ -402,8 +389,10 @@ void DirectXCommon::PostDraw()
 	if (fence->GetCompletedValue() != fenceVal) {
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
 		fence->SetEventOnCompletion(fenceVal, event);
-		WaitForSingleObject(event, INFINITE);
-		CloseHandle(event);
+		if (event != NULL) {
+			WaitForSingleObject(event, INFINITE);
+			CloseHandle(event);
+		}
 	}
 
 	// FPS固定

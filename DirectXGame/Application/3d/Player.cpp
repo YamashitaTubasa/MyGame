@@ -19,6 +19,8 @@ Player::~Player()
 	delete playerM;
 	delete reticleM;
 	delete reticle1M;
+	delete particle;
+	delete particleMan;
 	// 弾の解放
 	for (PlayerBullet* bullet : pBullets) {
 		delete bullet;
