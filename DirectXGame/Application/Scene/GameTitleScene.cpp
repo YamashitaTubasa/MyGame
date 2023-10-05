@@ -18,8 +18,10 @@ GameTitleScene::~GameTitleScene()
 
 void GameTitleScene::Initialize()
 {
-	// DirectXCommonのインスタンス取得
+	// DirectXのインスタンス取得
 	dxCommon_ = DirectXCommon::GetInstance();
+	// スプライト共通部のインスタンスの取得
+	spriteCommon = SpriteCommon::GetInstance();
 
 	// 天球の初期化
 	skydome = new Skydome();

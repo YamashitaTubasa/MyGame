@@ -22,25 +22,55 @@
 class DirectXCommon final
 {
 public: // メンバ関数
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="winApp"></param>
 	void Initialize(WinApp* winApp);
-	// デバイスの初期化
+
+	/// <summary>
+	/// デバイスの初期化
+	/// </summary>
 	void InitializeDevice();
-	// コマンド関連の初期化
+
+	/// <summary>
+	/// コマンド関連の初期化
+	/// </summary>
 	void InitializeCommand();
-	// スワップチェーンの初期化
+
+	/// <summary>
+	/// スワップチェーンの初期化
+	/// </summary>
 	void InitializeSwapchain();
-	// レンダーターゲットビューの初期化
+
+	/// <summary>
+	/// レンダーターゲットビューの初期化
+	/// </summary>
 	void InitializeRenderTargetView();
-	// 深度バッファの初期化
+
+	/// <summary>
+	/// 深度バッファの初期化
+	/// </summary>
 	void InitializeDepthBuffer();
-	// フェンスの初期化
+
+	/// <summary>
+	/// フェンスの初期化
+	/// </summary>
 	void InitializeFence();
-	// 描画前処理
+
+	/// <summary>
+	/// 描画前処理
+	/// </summary>
 	void PreDraw();
-	// 描画後処理
+
+	/// <summary>
+	/// 描画後処理
+	/// </summary>
 	void PostDraw();
-	// 終了処理
+
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void fpsFixedFinalize();
 
 public:

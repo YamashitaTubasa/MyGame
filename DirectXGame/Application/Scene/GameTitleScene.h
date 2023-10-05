@@ -3,6 +3,7 @@
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Sprite.h"
+#include "SpriteCommon.h"
 #include "Skydome.h"
 #include "GameBaseScene.h"
 #include "GameSceneManager.h"
@@ -49,6 +50,7 @@ private: // メンバ変数
 	Sprite* sprite_ = nullptr;
 	Sprite* title_ = nullptr;
 	Sprite* space_ = nullptr;
+	SpriteCommon* spriteCommon = nullptr;
 
 	// 天球
 	Skydome* skydome = nullptr;

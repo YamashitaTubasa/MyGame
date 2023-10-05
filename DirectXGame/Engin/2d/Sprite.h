@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DirectXCommon.h"
+#include "SpriteCommon.h"
 
 #include <Windows.h>
 #include <D3dx12.h>
@@ -20,29 +21,29 @@ struct VertexPosUv {
 };
 
 // パイプラインセット
-struct PipelineSet {
-	// パイプラインステートオブジェクト
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelinestate;
-	// ルートシグネチャ
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootsignature;
-};
+//struct PipelineSet {
+//	// パイプラインステートオブジェクト
+//	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelinestate;
+//	// ルートシグネチャ
+//	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootsignature;
+//};
 
 // スプライトの共通データ
-struct SpriteCommon {
-	
-	// パイプラインセット
-	PipelineSet pipelineSet;
-	// 射影行列
-	DirectX::XMMATRIX matProjection{};
-	// テクスチャ用デスクリプタヒープの生成
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeap;
-	// SRVの最大枚数
-	static const size_t kMaxSRVCount = 512;
-	// テクスチャソース(テクスチャバッファ)の配列
-	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff[kMaxSRVCount];
-	// テクスチャバッファ取得
-	ID3D12Resource* GetTexBuffer(uint32_t index) const { return texBuff[index].Get(); }
-};
+//struct SpriteCommon {
+//	
+//	// パイプラインセット
+//	PipelineSet pipelineSet;
+//	// 射影行列
+//	DirectX::XMMATRIX matProjection{};
+//	// テクスチャ用デスクリプタヒープの生成
+//	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeap;
+//	// SRVの最大枚数
+//	static const size_t kMaxSRVCount = 512;
+//	// テクスチャソース(テクスチャバッファ)の配列
+//	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff[kMaxSRVCount];
+//	// テクスチャバッファ取得
+//	ID3D12Resource* GetTexBuffer(uint32_t index) const { return texBuff[index].Get(); }
+//};
 
 /// <summary>
 /// スプライト
@@ -71,25 +72,31 @@ public:
 private:
 	struct ConstBufferData {
 		XMFLOAT4 color; // 色 (RGBA)
-		float alpha; // アルファ値
-		XMMATRIX mat; //座標
+		float alpha;    // アルファ値
+		XMMATRIX mat;   // 座標
 	};
 
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="spriteCommon"></param>
+	void Initialize(SpriteCommon* spriteCommon);
+
 	/// <summary>
 	/// スプライト共通データ生成
 	/// </summary>
 	/// <param name="window_width">横幅</param>
 	/// <param name="window_height">縦幅</param>
 	/// <returns></returns>
-	SpriteCommon SpriteCommonCreate(int window_width, int window_height);
+	//SpriteCommon SpriteCommonCreate(int window_width, int window_height);
 
 	/// <summary>
 	/// 3Dオブジェクト用パイプライン生成
 	/// </summary>
 	/// <param name="device"></param>
 	/// <returns></returns>
-	PipelineSet SpriteCreateGraphicsPipeline();
+	//PipelineSet SpriteCreateGraphicsPipeline();
 
 	/// <summary>
 	/// スプライト共通テクスチャ読み込み
@@ -97,7 +104,7 @@ public:
 	/// <param name="spriteCommon"></param>
 	/// <param name="texnumber">テクスチャ番号</param>
 	/// <param name="filename">ファイル名</param>
-	void LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar_t* filename);
+	//void LoadTexture(SpriteCommon* spriteCommon, UINT texnumber, const wchar_t* filename);
 
 	/// <summary>
 	/// スプライト生成
@@ -125,17 +132,17 @@ public:
 	/// <summary>
 	/// 描画前処理
 	/// </summary>
-	static void PreDraw(ID3D12GraphicsCommandList* cmdList, const SpriteCommon& spriteCommon);
+	//static void PreDraw(ID3D12GraphicsCommandList* cmdList, const SpriteCommon& spriteCommon);
 
 	/// <summary>
 	/// 描画後処理
 	/// </summary>
-	static void PostDraw();
+	//static void PostDraw();
 
 	/// <summary>
 	/// スプライト単体描画
 	/// </summary>
-	void SpriteDraw(const SpriteCommon& spriteCommon);
+	void SpriteDraw(SpriteCommon* spriteCommon);
 
 	/// <summary>
 	/// 終了処理
@@ -186,6 +193,8 @@ private:
 protected:
 	// DirectXCommonのインスタンス
 	DirectXCommon* dXCommon = nullptr;
+	// スプライト共通部
+	SpriteCommon* spriteCommon = nullptr;
 
 	//頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView{};

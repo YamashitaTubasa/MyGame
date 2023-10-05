@@ -4,6 +4,7 @@
 #include "WinApp.h"
 #include "DirectXCommon.h"
 #include "Sprite.h"
+#include "SpriteCommon.h"
 #include "Model.h"
 #include "Object3d.h"
 #include "GameSceneManager.h"
@@ -54,6 +55,7 @@ protected:
 	GameSceneManager* sceneManager_ = nullptr;
 	PostEffect* postEffect = nullptr;
 	PostEffect* postEffect1 = nullptr;
+	SpriteCommon* spriteCommon = nullptr;
 	// シーンファクトリー
 	AbstractSceneFactory* sceneFactory_ = nullptr;
 	int a = 0;

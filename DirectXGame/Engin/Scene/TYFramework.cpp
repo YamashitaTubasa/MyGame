@@ -42,6 +42,10 @@ void TYFramework::Initialize()
 	imGuiManager = new ImGuiManager();
 	imGuiManager->Initialize(dXCommon, winApp);
 
+	// スプライト共通部の初期化
+	spriteCommon = SpriteCommon::GetInstance();
+	spriteCommon->Initialize(dXCommon);
+
 	// シーンマネージャの生成
 	sceneManager_ = GameSceneManager::GetInstance();
 
