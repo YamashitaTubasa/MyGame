@@ -1,9 +1,12 @@
-﻿#pragma once
+#pragma once
 
 #include "fbxsdk.h"
 #include "FbxModel.h"
 
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
+#pragma warning(pop)
 #include <d3dx12.h>
 #include <cassert>
 #include <string>
@@ -30,7 +33,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="device">D3D12デバイス</param>
+	/// <param name="device_">D3D12デバイス</param>
 	void Initialize(ID3D12Device* device);
 
 	/// <summary>
@@ -91,7 +94,7 @@ private:
 
 private:
 	// D3D12デバイス
-	ID3D12Device* device = nullptr;
+	ID3D12Device* device_ = nullptr;
 	// FBXマネージャ
 	FbxManager* fbxManager = nullptr;
 	// FBXインポータ

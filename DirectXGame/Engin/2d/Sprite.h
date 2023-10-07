@@ -2,7 +2,6 @@
 
 #include "DirectXCommon.h"
 
-#include <Windows.h>
 #include <D3dx12.h>
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
@@ -10,6 +9,10 @@
 #include <DirectXTex.h>
 #include <wrl.h>
 #include <array>
+#pragma warning(push)
+#pragma warning(disable:4668)
+#include <Windows.h>
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -65,7 +68,7 @@ private: // エイリアス
 
 public:
 	Sprite() = default;
-	Sprite(UINT texNumber, XMFLOAT3 pos, XMFLOAT2 size, XMFLOAT4 color, XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY);
+	Sprite([[maybe_unused]] UINT texNumber, [[maybe_unused]]XMFLOAT3 pos, [[maybe_unused]] XMFLOAT2 size, [[maybe_unused]] XMFLOAT4 color, [[maybe_unused]] XMFLOAT2 anchorpoint, [[maybe_unused]] bool isFlipX, [[maybe_unused]] bool isFlipY);
 	~Sprite();
 
 private:
@@ -82,7 +85,7 @@ public:
 	/// <param name="window_width">横幅</param>
 	/// <param name="window_height">縦幅</param>
 	/// <returns></returns>
-	SpriteCommon SpriteCommonCreate(int window_width, int window_height);
+	SpriteCommon SpriteCommonCreate();
 
 	/// <summary>
 	/// 3Dオブジェクト用パイプライン生成
@@ -144,13 +147,13 @@ public:
 
 public: // セッター
 	// 座標設定
-	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	void SetPosition(const XMFLOAT3& position) { this->position_ = position; }
 	// サイズ設定
-	void SetScale(const XMFLOAT2& scale_) { this->scale = scale_; }
+	void SetScale(const XMFLOAT2& scale) { this->scale_ = scale; }
 	// 回転
-	void SetRotation(float rotation_) { this->rotation = rotation_; }
+	void SetRotation(float rotation) { this->f_rotation_ = rotation; }
 	// 番号
-	void SetTexNumber(UINT texNumber_) { this->texNumber = texNumber_; }
+	void SetTexNumber(UINT texNumber) { this->texNumber_ = texNumber; }
 	// 色
 	void SetColor(const XMFLOAT4& color) { this->color_ = color; }
 	// フリップX,Y
@@ -163,13 +166,13 @@ public: // セッター
 
 public: // ゲッター
 	// 座標
-	XMFLOAT3 GetPosition() const { return position; }
+	XMFLOAT3 GetPosition() const { return position_; }
 	// サイズ
-	XMFLOAT2 GetScale() const { return scale; }
+	XMFLOAT2 GetScale() const { return scale_; }
 	// 回転
-	float GetRotation() const { return rotation; }
+	float GetRotation() const { return f_rotation_; }
 	// 番号
-	UINT GetTexNumber() const { return texNumber; }
+	UINT GetTexNumber() const { return texNumber_; }
 	// 色
 	XMFLOAT4 GetColor() const { return color_; }
 	// フリップX,Y
@@ -185,37 +188,37 @@ private:
 
 protected:
 	// DirectXCommonのインスタンス
-	DirectXCommon* dXCommon = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
 
 	//頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	D3D12_RESOURCE_DESC resDesc;
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
+	D3D12_RESOURCE_DESC resDesc_;
 	// デバイス
-	ComPtr<ID3D12Device> device;
+	ComPtr<ID3D12Device> device_;
 	//頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> vertBuff_;
 	// デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeap;
+	ComPtr<ID3D12DescriptorHeap> descHeap_;
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuff;
+	ComPtr<ID3D12Resource> constBuff_;
 	// SRVの最大枚数
-	static const size_t kMaxSRVCount = 2056;
+	static const size_t kMaxSRVCount_ = 2056;
 	// テクスチャバッファ
-	std::array<ComPtr<ID3D12Resource>, kMaxSRVCount> texBuffers_;
+	std::array<ComPtr<ID3D12Resource>, kMaxSRVCount_> texBuffers_;
 
 	// テクスチャ番号
-	UINT texNumber = 0;
+	UINT texNumber_ = 0;
 	uint32_t texIndex_ = 0;
 	// 座標
-	XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
+	XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
 	// サイズ
-	XMFLOAT2 scale = { 1.0f, 1.0f };
+	XMFLOAT2 scale_ = { 1.0f, 1.0f };
 	// 回転
 	XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
 	// ワールド行列
-	XMMATRIX matWorld;
+	XMMATRIX matWorld_;
 	// アンカーポイント
-	XMFLOAT2 anchorpoint = { 0.0f,0.0f };
+	XMFLOAT2 anchorpoint_ = { 0.0f,0.0f };
 	// テクスチャ左上座標設定
 	XMFLOAT2 texLeftTop_ = { 50.0f, 50.0f };
 	// テクスチャ切り出しサイズ
@@ -224,12 +227,12 @@ protected:
 	XMFLOAT4 color_ = { 1,1,1,1 };
 
 	// Z軸回りの回転
-	float rotation = 0.0f;
+	float f_rotation_ = 0.0f;
 	// 左右反転
 	bool isFlipX_ = false;
 	// 上下反転
 	bool isFlipY_ = false;
 	// 非表示
-	bool isInvisible = false;
+	bool isInvisible_ = false;
 };
 

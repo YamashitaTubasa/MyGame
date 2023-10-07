@@ -21,7 +21,7 @@ void GameOverScene::Initialize()
 
 	// スプライト
 	sprite_ = new Sprite();
-	spriteCommon_ = sprite_->SpriteCommonCreate(1280, 720);
+	spriteCommon_ = sprite_->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
 	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 

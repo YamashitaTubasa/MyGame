@@ -42,8 +42,8 @@ float4 main(VSOutput input) : SV_TARGET
     float _NFocusWidth = 0.01;
     float _FFocusWidth = 0.02;
     float4 depth = tex.Sample(smp, input.uv);
-    float inFocus = 1 - smoothstep(0, _NFocusWidth, abs(depth - _FocusDepth));
-    float outFocus = smoothstep(_NFocusWidth, _FFocusWidth, abs(depth - _FocusDepth));
+    float inFocus = (float)(1 - smoothstep(0, _NFocusWidth, abs(depth - _FocusDepth)));
+    float outFocus = (float)(smoothstep(_NFocusWidth, _FFocusWidth, abs(depth - _FocusDepth)));
     float middleFocus = 1 - inFocus - outFocus;
     //float4 inFocusColor = tex.Sample(smp, input.uv);
     //float4 middleFocusColor = GaussianBlur(input.uv, 0.03, 0.003);

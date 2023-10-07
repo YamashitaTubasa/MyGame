@@ -11,14 +11,14 @@
 struct LevelData {
 	// オブジェクトデータ
 	struct ObjectData {
-		// ファイル名
-		std::string fileName;
 		// 移動
 		DirectX::XMVECTOR translation;
 		// 回転角
 		DirectX::XMVECTOR rotation;
 		// スケール
 		DirectX::XMVECTOR scaling;
+		// ファイル名
+		std::string fileName;
 	};
 
 	std::vector<ObjectData> objects;

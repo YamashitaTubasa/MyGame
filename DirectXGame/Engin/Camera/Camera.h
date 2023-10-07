@@ -25,27 +25,27 @@ public:
 	void UpdateProjectionMatrix();
 
 public:
-	const XMMATRIX& GetMatView() { return matView; }
-	const XMMATRIX& GetMatProjection() { return matProjection; }
-	const XMFLOAT3& GetEye() { return eye; }
-	const XMFLOAT3& GetTarget() { return target; }
-	const XMFLOAT3& GetUp() { return up; }
-	const float& GetDistance() { return distance; }
-	const XMMATRIX& GetViewProjectionMatrix() { return viewProjection; }
+	const XMMATRIX& GetMatView() { return matView_; }
+	const XMMATRIX& GetMatProjection() { return matProjection_; }
+	const XMFLOAT3& GetEye() { return eye_; }
+	const XMFLOAT3& GetTarget() { return target_; }
+	const XMFLOAT3& GetUp() { return up_; }
+	const float& GetDistance() { return distance_; }
+	const XMMATRIX& GetViewProjectionMatrix() { return viewProjection_; }
 
-	void SetMatView(const XMMATRIX& matView) { this->matView = matView; }
-	void SetMatProjection(const XMMATRIX& matProjection) { this->matProjection = matProjection; }
-	void SetEye(const XMFLOAT3& eye) { this->eye = eye; }
-	void SetTarget(const XMFLOAT3& target) { this->target = target; }
-	void SetUp(const XMFLOAT3& up_) { this->up = up_; }
-	void SetDistance(float distance_) { this->distance = distance_; }
+	void SetMatView(const XMMATRIX& matView) { this->matView_ = matView; }
+	void SetMatProjection(const XMMATRIX& matProjection) { this->matProjection_ = matProjection; }
+	void SetEye(const XMFLOAT3& eye) { this->eye_ = eye; }
+	void SetTarget(const XMFLOAT3& target) { this->target_ = target; }
+	void SetUp(const XMFLOAT3& up) { this->up_ = up; }
+	void SetDistance(float distance) { this->distance_ = distance; }
 
 private:
-	XMMATRIX matView;
-	XMMATRIX matProjection;
-	XMFLOAT3 eye;
-	XMFLOAT3 target;
-	XMFLOAT3 up;
-	XMMATRIX viewProjection;
-	float distance = 50.0f;
+	XMMATRIX matView_;
+	XMMATRIX matProjection_;
+	XMFLOAT3 eye_;
+	XMFLOAT3 target_;
+	XMFLOAT3 up_;
+	XMMATRIX viewProjection_;
+	float distance_ = 50.0f;
 };

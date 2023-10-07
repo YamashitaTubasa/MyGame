@@ -377,15 +377,11 @@ void Player::Update()
 	// 自機のワールド座標から3Dレティクルのワールド座標を計算
 	{
 		// 自機から3Sレティクルへの距離
-		const float kDistancePlayerTo3DReticle = 50.0f;
+		//const float kDistancePlayerTo3DReticle = 50.0f;
 		// 自機から3Dレティクルへのオフセット(z + 向き)
 		DirectX::XMFLOAT3 offset = { 0,0,1.0f };
 		// 自機のワールド行列の回転を反映
 		//offset = DirectX::XMMatrixAffineTransformation()
-	}
-
-	if(input->TriggerKey(DIK_Y)){
-		int a = 0;
 	}
 
 	// 自キャラの攻撃処理
@@ -467,7 +463,7 @@ void Player::Attack()
 	}
 }
 
-void Player::OnCollision(const CollisionInfo& info)
+void Player::OnCollision([[maybe_unused]] const CollisionInfo& info)
 {
 	isPlayer = false;
 }

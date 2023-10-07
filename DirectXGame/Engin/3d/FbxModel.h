@@ -8,16 +8,20 @@
 #include <DirectXMath.h>
 #include <vector>
 #include <DirectXTex.h>
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
+#pragma warning(pop)
 #include <d3dx12.h>
 #include <fbxsdk.h>
 
 struct Node
 {
-	// 名前
-	std::string name;
 	// ローカルスケール
 	DirectX::XMVECTOR scaling = { 1,1,1,0 };
 	// ローカル回転角
@@ -28,6 +32,8 @@ struct Node
 	DirectX::XMMATRIX transform;
 	// グローバル変形行列
 	DirectX::XMMATRIX globalTransform;
+	// 名前
+	std::string name;
 	// 親ノード
 	Node* parent = nullptr;
 };

@@ -1,8 +1,14 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
+#pragma warning(pop)
 #include <DirectXMath.h>
 #include <d3dx12.h>
 #include <string>
@@ -19,7 +25,9 @@ private: // エイリアス
 	using XMMATRIX = DirectX::XMMATRIX;
 
 public:
+	// コンストラクタ
 	Model();
+	// デストラクタ
 	~Model();
 
 public: // サブクラス
@@ -92,38 +100,38 @@ public: // 静的メンバ関数
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
 
 	// setter
-	static void SetDevice(ID3D12Device* device) { Model::device = device; }
+	static void SetDevice(ID3D12Device* device) { Model::device_ = device; }
 
 
 private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device;
+	static ID3D12Device* device_;
 	// 頂点データ配列
-	std::vector<VertexPosNormalUv> vertices;
+	std::vector<VertexPosNormalUv> vertices_;
 	// 頂点インデックス配列
-	std::vector<unsigned short> indices;
+	std::vector<unsigned short> indices_;
 	// マテリアル
-	Material material;
+	Material material_;
 	// テクスチャバッファ
-	ComPtr<ID3D12Resource> texbuff;
+	ComPtr<ID3D12Resource> texbuff_;
 	// デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeap;
+	ComPtr<ID3D12DescriptorHeap> descHeap_;
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV_;
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV_;
 	// デスクリプタサイズ
-	UINT descriptorHandleIncrementSize;
+	UINT descriptorHandleIncrementSize_;
 	// 頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> vertBuff_;
 	// インデックスバッファ
-	ComPtr<ID3D12Resource> indexBuff;
+	ComPtr<ID3D12Resource> indexBuff_;
 	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView;
+	D3D12_VERTEX_BUFFER_VIEW vbView_;
 	// インデックスバッファビュー
-	D3D12_INDEX_BUFFER_VIEW ibView;
+	D3D12_INDEX_BUFFER_VIEW ibView_;
 	// 定数バッファ（マテリアル）
-	ComPtr<ID3D12Resource> constBuffB1; // 定数バッファ
+	ComPtr<ID3D12Resource> constBuffB1_; // 定数バッファ
 
 private:// 静的メンバ関数
 	// OBJファイルから3Dモデルを読み込む(非公開)

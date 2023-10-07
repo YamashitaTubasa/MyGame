@@ -1,8 +1,14 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
+#pragma warning(pop)
 #include <DirectXMath.h>
 #include <d3dx12.h>
 #include <string>
@@ -50,10 +56,10 @@ public: // 静的メンバ関数
 	/// <summary>
 	/// 静的初期化
 	/// </summary>
-	/// <param name="device">デバイス</param>
+	/// <param name="device_">デバイス</param>
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
-	static void StaticInitialize(ID3D12Device* device, int window_width, int window_height, Camera* camera);
+	static void StaticInitialize(ID3D12Device* device_, int window_width, int window_height, [[maybe_unused]] Camera* camera);
 
 	/// <summary>
 	/// 描画前処理
@@ -76,7 +82,7 @@ public: // 静的メンバ関数
 	/// 視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const XMFLOAT3& GetEye() { return eye; }
+	static const XMFLOAT3& GetEye() { return eye_; }
 
 	/// <summary>
 	/// 視点座標の設定
@@ -88,7 +94,7 @@ public: // 静的メンバ関数
 	/// 注視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const XMFLOAT3& GetTarget() { return target; }
+	static const XMFLOAT3& GetTarget() { return target_; }
 
 	/// <summary>
 	/// 注視点座標の設定
@@ -104,25 +110,25 @@ public: // 静的メンバ関数
 
 private: // 静的メンバ変数
 	//カメラ
-	static Camera* camera;
+	static Camera* camera_;
 	// デバイス
-	static ID3D12Device* device;
+	static ID3D12Device* device_;
 	// コマンドリスト
-	static ID3D12GraphicsCommandList* cmdList;
+	static ID3D12GraphicsCommandList* cmdList_;
 	// ルートシグネチャ
-	static ComPtr<ID3D12RootSignature> rootsignature;
+	static ComPtr<ID3D12RootSignature> rootsignature_;
 	// パイプラインステートオブジェクト
-	static ComPtr<ID3D12PipelineState> pipelinestate;
+	static ComPtr<ID3D12PipelineState> pipelinestate_;
 	// ビュー行列
-	static XMMATRIX matView;
+	static XMMATRIX matView_;
 	// 射影行列
-	static XMMATRIX matProjection;
+	static XMMATRIX matProjection_;
 	// 視点座標
-	static XMFLOAT3 eye;
+	static XMFLOAT3 eye_;
 	// 注視点座標
-	static XMFLOAT3 target;
+	static XMFLOAT3 target_;
 	// 上方向ベクトル
-	static XMFLOAT3 up;
+	static XMFLOAT3 up_;
 
 private:// 静的メンバ関数
 	
@@ -166,13 +172,13 @@ public:
 	/// モデルの設定
 	/// </summary>
 	/// <param name="model">モデル</param>
-	void SetModel(Model* model) { this->model = model; }
+	void SetModel(Model* model) { this->model_ = model; }
 
 	/// <summary>
 	/// ワールド行列の取得
 	/// </summary>
 	/// <returns>ワールド行列</returns>
-	const XMMATRIX& GetMatWorld() { return matWorld; }
+	const XMMATRIX& GetMatWorld() { return matWorld_; }
 
 	/// <summary>
 	/// コライダーのセット
@@ -184,70 +190,70 @@ public:
 	/// 衝突時コールバック関数
 	/// </summary>
 	/// <param name="info">衝突情報</param>
-	virtual void OnCollision(const CollisionInfo& info) {}
+	virtual void OnCollision([[maybe_unused]] const CollisionInfo& info) {}
 
 	/// <summary>
 	/// オブジェクトの座標取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const XMFLOAT3& GetPosition() const { return position; }
+	const XMFLOAT3& GetPosition() const { return position_; }
 
 	/// <summary>
 	/// オブジェクトの座標セット
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	void SetPosition(const XMFLOAT3& position) { this->position_ = position; }
 
 	/// <summary>
 	/// オブジェクトのサイズのセット
 	/// </summary>
 	/// <param name="scale_">サイズ</param>
-	void SetScale(const XMFLOAT3& scale_) { this->scale = scale_; }
+	void SetScale(const XMFLOAT3& scale) { this->scale_ = scale; }
 
 	/// <summary>
 	/// オブジェクトのサイズの取得
 	/// </summary>
 	/// <returns>サイズ</returns>
-	const XMFLOAT3& GetScale() const { return scale; }
+	const XMFLOAT3& GetScale() const { return scale_; }
 
 	/// <summary>
 	/// オブジェクトの回転のセット
 	/// </summary>
 	/// <param name="rotation">回転</param>
-	void SetRotation(const XMFLOAT3& rotation) { this->rotation = rotation; }
+	void SetRotation(const XMFLOAT3& rotation) { this->rotation_ = rotation; }
 
 	/// <summary>
 	/// オブジェクトの回転の取得
 	/// </summary>
 	/// <returns>回転</returns>
-	const XMFLOAT3& GetRotation() const { return rotation; }
+	const XMFLOAT3& GetRotation() const { return rotation_; }
 
 	/// <summary>
 	/// カメラ
 	/// </summary>
 	/// <param name="camera">カメラ</param>
-	static void SetCamera(Camera* camera) { Object3d::camera = camera; }
+	static void SetCamera(Camera* camera) { Object3d::camera_ = camera; }
 
 protected: // メンバ変数
 	// モデル
-	Model* model = nullptr;
+	Model* model_ = nullptr;
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuffB0; 
+	ComPtr<ID3D12Resource> constBuffB0_; 
 	// 色
-	XMFLOAT4 color = { 1,1,1,1 };
+	XMFLOAT4 color_ = { 1,1,1,1 };
 	// ローカルスケール
-	XMFLOAT3 scale = { 1,1,1 };
+	XMFLOAT3 scale_ = { 1,1,1 };
 	// X,Y,Z軸回りのローカル回転角
-	XMFLOAT3 rotation = { 0,0,0 };
+	XMFLOAT3 rotation_ = { 0,0,0 };
 	// ローカル座標
-	XMFLOAT3 position = { 0,0,0 };
+	XMFLOAT3 position_ = { 0,0,0 };
 	// ローカルワールド変換行列
-	XMMATRIX matWorld;
+	XMMATRIX matWorld_;
 	// 親オブジェクト
-	Object3d* parent = nullptr;
+	Object3d* parent_ = nullptr;
 	// クラス名（デバック用）
-	const char* name = nullptr;
+	const char* name_ = nullptr;
 	// コライダー
-	BaseCollider* collider = nullptr;
+	BaseCollider* collider_ = nullptr;
 };
 

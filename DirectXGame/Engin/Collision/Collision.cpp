@@ -2,7 +2,7 @@
 
 using namespace DirectX;
 
-bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* r)
+bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter, [[maybe_unused]]DirectX::XMVECTOR* r)
 {
 	// 座標系の原点から球の中心座標への距離
 	XMVECTOR distV = XMVector3Dot(sphereA.center, sphereB.center);

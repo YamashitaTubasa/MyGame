@@ -1,6 +1,9 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <Windows.h>
+#pragma warning(pop)
 
 /// <summary>
 /// WindowsAPI
@@ -18,8 +21,8 @@ public: // メンバ関数
 	void Finalize();
 
 	// getter
-	HWND GetHwnd() const { return hwnd; }
-	HINSTANCE GetHInstance() const { return wc.hInstance; }
+	HWND GetHwnd() const { return hwnd_; }
+	HINSTANCE GetHInstance() const { return wc_.hInstance; }
 
 	// メッセージの処理
 	bool ProcessMessage();
@@ -46,7 +49,7 @@ public: // 定数
 
 private:
 	// ウィンドウハンドル
-	HWND hwnd = nullptr;
+	HWND hwnd_ = nullptr;
 	// ウィンドウクラスの設定
-	WNDCLASSEX wc{};
+	WNDCLASSEX wc_{};
 };

@@ -27,7 +27,7 @@ void GameTitleScene::Initialize()
 
 	// スプライトの初期化
 	sprite_ = new Sprite();
-	spriteCommon_ = sprite_->SpriteCommonCreate(1280, 720);
+	spriteCommon_ = sprite_->SpriteCommonCreate();
 
 	//===== タイトル描画の初期化 =====//
 	title_ = new Sprite();

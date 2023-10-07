@@ -8,7 +8,8 @@ ImGuiManager::~ImGuiManager()
 {
 }
 
-void ImGuiManager::Initialize(DirectXCommon* dXCommon_, WinApp* winApp_) {
+void ImGuiManager::Initialize(DirectXCommon* dXCommon, WinApp* winApp) {
+
 	HRESULT result;
 
 	// ImGuiのコンテキストを生成
@@ -16,7 +17,7 @@ void ImGuiManager::Initialize(DirectXCommon* dXCommon_, WinApp* winApp_) {
 	// ImGuiのスタイルを設定
 	ImGui::StyleColorsDark();
 
-	ImGui_ImplWin32_Init(winApp_->GetHwnd());
+	ImGui_ImplWin32_Init(winApp->GetHwnd());
 
 	// デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
@@ -24,12 +25,12 @@ void ImGuiManager::Initialize(DirectXCommon* dXCommon_, WinApp* winApp_) {
 	desc.NumDescriptors = 1;
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	// デスクリプタヒープ生成
-	result = dXCommon_->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
+	result = dXCommon->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
 	assert(SUCCEEDED(result));
 	srvHeap_->SetName(L"ImGuiManager[srvHeap_]");
 	ImGui_ImplDX12_Init(
-		dXCommon_->GetDevice(),
-		static_cast<int>(dXCommon_->GetBackBufferCount()),
+		dXCommon->GetDevice(),
+		static_cast<int>(dXCommon->GetBackBufferCount()),
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, srvHeap_.Get(),
 		srvHeap_->GetCPUDescriptorHandleForHeapStart(),
 		srvHeap_->GetGPUDescriptorHandleForHeapStart()
@@ -65,9 +66,9 @@ void ImGuiManager::End()
 	ImGui::Render();
 }
 
-void ImGuiManager::Draw(DirectXCommon* dXCommon_)
+void ImGuiManager::Draw(DirectXCommon* dXCommon)
 {
-	ID3D12GraphicsCommandList* commandList = dXCommon_->GetCommandList();
+	ID3D12GraphicsCommandList* commandList = dXCommon->GetCommandList();
 
 	// デスクリプタヒープの配列をセットするコマンド
 	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap_.Get() };

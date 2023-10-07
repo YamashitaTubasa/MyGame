@@ -3,7 +3,10 @@
 #include "WinApp.h"
 #include "FPSFixed.h"
 
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
+#pragma warning(pop)
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include <d3dx12.h>
@@ -72,39 +75,39 @@ private: // メンバ関数
 	
 public: // Getter
 	// デバイスの取得
-	ID3D12Device* GetDevice() const { return device.Get(); }
+	ID3D12Device* GetDevice() const { return device_.Get(); }
 	// コマンドリスト取得
-	ID3D12GraphicsCommandList* GetCommandList() const { return commandList.Get(); }
+	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
 	// バックバッファの数を取得
-	size_t GetBackBufferCount() const { return backBuffers.size(); }
+	size_t GetBackBufferCount() const { return backBuffers_.size(); }
 
 private: 
 	// WindowsAPI
-	WinApp* winApp = nullptr;
+	WinApp* winApp_ = nullptr;
 	// FPS
-	FPSFixed* fpsFixed = nullptr;
+	FPSFixed* fpsFixed_ = nullptr;
 
-	HRESULT result;
+	HRESULT result_;
 	// DirectX12デバイス
-	Microsoft::WRL::ComPtr<ID3D12Device> device;
+	Microsoft::WRL::ComPtr<ID3D12Device> device_;
 	// DXGIファクトリ
-	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory;
+	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory_;
 	// スワップチェイン
-	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain;
+	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_;
 	// コマンドアロケータ
-	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator;
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_;
 	// コマンドリスト
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList;
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
 	// コマンドキュー
-	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue;
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap;
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap;
-	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
+	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff_;
 	//バックバッファ
-	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers;
+	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers_;
 	// フェンスの生成
-	Microsoft::WRL::ComPtr<ID3D12Fence> fence;
+	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
 
-	UINT rtvHD;
-	UINT64 fenceVal = 0;
+	UINT rtvHD_;
+	UINT64 fenceVal_ = 0;
 };

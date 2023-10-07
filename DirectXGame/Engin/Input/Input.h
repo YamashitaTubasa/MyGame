@@ -6,7 +6,10 @@
 
 #include "WinApp.h"
 
-#include <windows.h>
+#pragma warning(push)
+#pragma warning(disable:4668)
+#include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
 #include <dinput.h>
 #include <dwrite.h>
@@ -75,13 +78,13 @@ private:
 
 private: // メンバ変数
 	// キーボードのデバイス
-	ComPtr<IDirectInputDevice8> keyboard;
+	ComPtr<IDirectInputDevice8> keyboard_;
 	// DirectInputのインスタンス
-	ComPtr<IDirectInput8> directInput;
+	ComPtr<IDirectInput8> directInput_;
 	// 全キーの状態
-	BYTE key[256] = {};
+	BYTE key_[256] = {};
 	// 前回の全キーの状態
-	BYTE keyPre[256] = {};
+	BYTE keyPre_[256] = {};
 	// WindowsAPI
-	WinApp* winApp = nullptr;
+	WinApp* winApp_ = nullptr;
 };

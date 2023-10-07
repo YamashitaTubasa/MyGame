@@ -169,9 +169,6 @@ void GamePlayScene::Update()
 		//particleMan->Execution(particle, 0.0f, 0.0f, 0.5f, 20, 0.9f, 0.0f);
 		//particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 	}
-	if (input->TriggerKey(DIK_R)) {
-		int a = 1;
-	}
 
 	if (player->GetIsHp()) {
 		if (hpScale.x >= 0) {
@@ -348,7 +345,7 @@ void GamePlayScene::SpriteInitialize()
 {
 	// スプライト
 	sprite = new Sprite();
-	spriteCommon_ = sprite->SpriteCommonCreate(1280, 720);
+	spriteCommon_ = sprite->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
 	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline();
 
