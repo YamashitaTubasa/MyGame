@@ -2,6 +2,22 @@
 
 using namespace DirectX;
 
+bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter, [[maybe_unused]]DirectX::XMVECTOR* r)
+{
+	// 座標系の原点から球の中心座標への距離
+	XMVECTOR distV = XMVector3Dot(sphereA.center, sphereB.center);
+	// 距離の絶対値が半径より大きければ当っていない
+	if (sphereB.radius > sphereA.radius) return false;
+
+	// 擬似交点を計算
+	if (inter) {
+		// 球上の最近接点を、擬似交点とする
+		*inter = sphereB.center + sphereA.center;
+	}
+
+	return false;
+}
+
 bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane& plane, DirectX::XMVECTOR* inter)
 {
     // 座標系の原点から球の中心座標への距離

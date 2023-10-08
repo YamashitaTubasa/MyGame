@@ -10,6 +10,10 @@ GameTitleScene::~GameTitleScene()
 {
 	delete sprite_;
 	delete title_;
+	delete skydome;
+	delete space_;
+	delete object3d;
+	delete model;
 }
 
 void GameTitleScene::Initialize()
@@ -23,12 +27,12 @@ void GameTitleScene::Initialize()
 
 	// スプライトの初期化
 	sprite_ = new Sprite();
-	spriteCommon_ = sprite_->SpriteCommonCreate(1280, 720);
+	spriteCommon_ = sprite_->SpriteCommonCreate();
 
 	//===== タイトル描画の初期化 =====//
 	title_ = new Sprite();
 	// テクスチャの読み込み
-	title_->LoadTexture(spriteCommon_, 1, L"Resources/Image/title2.png");
+	title_->LoadTexture(spriteCommon_, 1, L"Resources/Image/title6.png");
 	// スプライトの生成
 	title_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
@@ -39,9 +43,25 @@ void GameTitleScene::Initialize()
 	// スプライトの頂点バッファの転送
 	title_->SpriteTransferVertexBuffer(title_, spriteCommon_, 1);
 
+	//===== SPACEの描画 =====//
+	space_ = new Sprite();
+	// テクスチャの読み込み
+	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/space2.png");
+	// スプライトの生成
+	space_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	space_->SetColor(spaceColor_);
+	space_->SetPosition(spacePos_);
+	space_->SetScale(spaceScale_);
+	space_->SetRotation(spaceRot_);
+	// スプライトの頂点バッファの転送
+	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, 2);
+
 	// OBJモデルの読み込み
+	model = new Model();
 	model = Model::LoadFromOBJ("fighter");
 	// オブジェクトの生成
+	object3d = new Object3d();
 	object3d = Object3d::Create();
 	// オブジェクトにモデルをセット
 	object3d->SetModel(model);
@@ -63,8 +83,19 @@ void GameTitleScene::Update()
 
 	// スプライトの更新
 	title_->SpriteUpdate(title_, spriteCommon_);
+	space_->SpriteUpdate(space_, spriteCommon_);
 
-	// シーンの切り替え
+	// Press SPACEの描画の点滅処理
+	spaceTimer++;
+	if (spaceTimer >= 50 && spaceTimer <= 99) {
+		isSpace = false;
+	}
+	if (spaceTimer >= 100) {
+		isSpace = true;
+		spaceTimer = 0;
+	}
+
+	// シーンの切り替え処理
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		start = true;
 	}
@@ -78,8 +109,9 @@ void GameTitleScene::Update()
 		object3d->SetEye(eye);
 	}
 	if (startTimer >= 200) {
-		start = false;
+		// タイマーを初期値に戻す
 		startTimer = 0;
+
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");
 	}
@@ -112,6 +144,9 @@ void GameTitleScene::Draw()
 	//=== スプライトの描画 ===//
 	if (!start) {
 		title_->SpriteDraw(spriteCommon_);
+		if (isSpace) {
+			space_->SpriteDraw(spriteCommon_);
+		}
 	}
 	
 	// スプライト描画後処理

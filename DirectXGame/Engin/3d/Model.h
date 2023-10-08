@@ -1,15 +1,16 @@
 #pragma once
 
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix4.h"
-
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
-#include <d3dx12.h>
+#pragma warning(pop)
 #include <DirectXMath.h>
+#include <d3dx12.h>
 #include <string>
 
 class Model 
@@ -17,41 +18,52 @@ class Model
 private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	
+	// DirectX::を省略
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMMATRIX = DirectX::XMMATRIX;
+
+public:
+	// コンストラクタ
+	Model();
+	// デストラクタ
+	~Model();
+
 public: // サブクラス
 	// 頂点データ構造体
 	struct VertexPosNormalUv
 	{
-		Vector3 pos;    // xyz座標
-		Vector3 normal; // 法線ベクトル
-		Vector2 uv;     // uv座標
+		XMFLOAT3 pos; // xyz座標
+		XMFLOAT3 normal; // 法線ベクトル
+		XMFLOAT2 uv;  // uv座標
 	};
 
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
-		//XMFLOAT4 color; // 色 (RGBA)
-		Matrix4 mat;      // 3D変換行列
+		//XMFLOAT4 color;	// 色 (RGBA)
+		XMMATRIX mat;	// ３Ｄ変換行列
 	};
 
 	// 定数バッファ用データ構造体B1
 	struct ConstBufferDataB1
 	{
-		Vector3 ambient;  // アンビエント係数
+		XMFLOAT3 ambient; // アンビエント係数
 		float pad1;       // パディング
-		Vector3 diffuse;  // ディフューズ係数
+		XMFLOAT3 diffuse; // ディフューズ係数
 		float pad2;       // パディング
-		Vector3 specular; // スペキュラー係数
-		float alpha;      // アルファ
+		XMFLOAT3 specular; // スペキュラー係数
+		float alpha;       // アルファ
 	};
 
 	// マテリアル
 	struct Material
 	{
 		std::string name; // マテリアル名
-		Vector3 ambient;  // アンビエント影響度
-		Vector3 diffuse;  // ディフェーズ影響度
-		Vector3 specular; // スペキュラー影響度
+		XMFLOAT3 ambient; // アンビエント影響度
+		XMFLOAT3 diffuse; // ディフェーズ影響度
+		XMFLOAT3 specular;// スペキュラー影響度
 		float alpha;      // アルファ
 		std::string textureFilename; // テクスチャファイル名
 		// コンストラクタ
@@ -65,19 +77,16 @@ public: // サブクラス
 
 private: // 定数
 	static const int division = 50; // 分割数
-	static const float radius;      // 底面の半径
+	static const float radius; // 底面の半径
 	static const float prizmHeight; // 柱の高さ
 	static const int planeCount = division * 2 + division * 2; // 面の数
 	static const int vertexCount = planeCount * 3; // 頂点数
 
-public:
-	~Model();
-
 public: // 静的メンバ関数
+	
 	// OBJファイルから3Dモデルを読み込む
 	static Model* LoadFromOBJ(const std::string& modelname);
 
-public: // メンバ関数
 	// マテリアル読み込み
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
@@ -91,37 +100,38 @@ public: // メンバ関数
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
 
 	// setter
-	static void SetDevice(ID3D12Device* device) { Model::device = device; }
+	static void SetDevice(ID3D12Device* device) { Model::device_ = device; }
+
 
 private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device;
+	static ID3D12Device* device_;
 	// 頂点データ配列
-	std::vector<VertexPosNormalUv> vertices;
+	std::vector<VertexPosNormalUv> vertices_;
 	// 頂点インデックス配列
-	std::vector<unsigned short> indices;
+	std::vector<unsigned short> indices_;
 	// マテリアル
-	Material material;
+	Material material_;
 	// テクスチャバッファ
-	ComPtr<ID3D12Resource> texbuff;
+	ComPtr<ID3D12Resource> texbuff_;
 	// デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeap;
+	ComPtr<ID3D12DescriptorHeap> descHeap_;
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV_;
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV_;
 	// デスクリプタサイズ
-	UINT descriptorHandleIncrementSize;
+	UINT descriptorHandleIncrementSize_;
 	// 頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> vertBuff_;
 	// インデックスバッファ
-	ComPtr<ID3D12Resource> indexBuff;
+	ComPtr<ID3D12Resource> indexBuff_;
 	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView;
+	D3D12_VERTEX_BUFFER_VIEW vbView_;
 	// インデックスバッファビュー
-	D3D12_INDEX_BUFFER_VIEW ibView;
+	D3D12_INDEX_BUFFER_VIEW ibView_;
 	// 定数バッファ（マテリアル）
-	ComPtr<ID3D12Resource> constBuffB1; // 定数バッファ
+	ComPtr<ID3D12Resource> constBuffB1_; // 定数バッファ
 
 private:// 静的メンバ関数
 	// OBJファイルから3Dモデルを読み込む(非公開)

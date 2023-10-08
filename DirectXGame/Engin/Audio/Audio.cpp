@@ -131,7 +131,6 @@ void Audio::PlayWave(const std::string& filename) {
 	assert(SUCCEEDED(result));
 
 	// 再生する波形データの設定
-	XAUDIO2_BUFFER buf{};
 	buf.pAudioData = soundData.pBuffer;
 	buf.AudioBytes = soundData.bufferSize;
 	buf.Flags = XAUDIO2_END_OF_STREAM;

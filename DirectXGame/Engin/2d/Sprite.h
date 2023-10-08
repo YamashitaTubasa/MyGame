@@ -1,31 +1,25 @@
 #pragma once
 
 #include "DirectXCommon.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix4.h"
 
-#include <Windows.h>
 #include <D3dx12.h>
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
 #include <cassert>
+#include <DirectXTex.h>
 #include <wrl.h>
 #include <array>
-
 #pragma warning(push)
-// C4023の警告を見なかったことにする
-#pragma warning(disable:4023)
-#include <DirectXTex.h>
+#pragma warning(disable:4668)
+#include <Windows.h>
 #pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 
 // 頂点データ
 struct VertexPosUv {
-	Vector3 pos;
-	Vector2 uv;
+	DirectX::XMFLOAT3 pos;
+	DirectX::XMFLOAT2 uv;
 };
 
 // パイプラインセット
@@ -38,10 +32,11 @@ struct PipelineSet {
 
 // スプライトの共通データ
 struct SpriteCommon {
+	
 	// パイプラインセット
 	PipelineSet pipelineSet;
 	// 射影行列
-	Matrix4 matProjection{};
+	DirectX::XMMATRIX matProjection{};
 	// テクスチャ用デスクリプタヒープの生成
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeap;
 	// SRVの最大枚数
@@ -52,11 +47,19 @@ struct SpriteCommon {
 	ID3D12Resource* GetTexBuffer(uint32_t index) const { return texBuff[index].Get(); }
 };
 
+/// <summary>
+/// スプライト
+/// </summary>
 class Sprite
 {
 private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	// DirectX::を省略
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMMATRIX = DirectX::XMMATRIX;
 	using TexMetadata = DirectX::TexMetadata;
 	using ScratchImage = DirectX::ScratchImage;
 	// std::を省略
@@ -65,20 +68,24 @@ private: // エイリアス
 
 public:
 	Sprite() = default;
-	Sprite(UINT texNumber, Vector3 pos, Vector2 size, Vector4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY);
+	Sprite([[maybe_unused]] UINT texNumber, [[maybe_unused]]XMFLOAT3 pos, [[maybe_unused]] XMFLOAT2 size, [[maybe_unused]] XMFLOAT4 color, [[maybe_unused]] XMFLOAT2 anchorpoint, [[maybe_unused]] bool isFlipX, [[maybe_unused]] bool isFlipY);
 	~Sprite();
 
 private:
 	struct ConstBufferData {
-		Vector4 color; // 色 (RGBA)
-		Matrix4 mat; //座標
+		XMFLOAT4 color; // 色 (RGBA)
+		float alpha; // アルファ値
+		XMMATRIX mat; //座標
 	};
 
 public:
 	/// <summary>
 	/// スプライト共通データ生成
 	/// </summary>
-	SpriteCommon SpriteCommonCreate(int window_width, int window_height);
+	/// <param name="window_width">横幅</param>
+	/// <param name="window_height">縦幅</param>
+	/// <returns></returns>
+	SpriteCommon SpriteCommonCreate();
 
 	/// <summary>
 	/// 3Dオブジェクト用パイプライン生成
@@ -90,13 +97,23 @@ public:
 	/// <summary>
 	/// スプライト共通テクスチャ読み込み
 	/// </summary>
+	/// <param name="spriteCommon"></param>
+	/// <param name="texnumber">テクスチャ番号</param>
+	/// <param name="filename">ファイル名</param>
 	void LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar_t* filename);
 
 	/// <summary>
 	/// スプライト生成
 	/// </summary>
+	/// <param name="window_width">横幅</param>
+	/// <param name="window_height">縦幅</param>
+	/// <param name="texNumber">テクスチャ番号</param>
+	/// <param name="spriteCommon"></param>
+	/// <param name="anchorpoint">アンカーポイント</param>
+	/// <param name="isFlipX">フリップX</param>
+	/// <param name="FlipY">フリップY</param>
 	void SpriteCreate(float window_width, float window_height, UINT texNumber, 
-		const SpriteCommon& spriteCommon, Vector2 anchorpoint, bool isFlipX, bool FlipY);
+		const SpriteCommon& spriteCommon, XMFLOAT2 anchorpoint, bool isFlipX, bool FlipY);
 
 	/// <summary>
 	/// スプライト単体頂点バッファの転送
@@ -121,7 +138,7 @@ public:
 	/// <summary>
 	/// スプライト単体描画
 	/// </summary>
-	void SpriteDraw(ID3D12GraphicsCommandList* cmdList_, const SpriteCommon& spriteCommon);
+	void SpriteDraw(const SpriteCommon& spriteCommon);
 
 	/// <summary>
 	/// 終了処理
@@ -130,90 +147,92 @@ public:
 
 public: // セッター
 	// 座標設定
-	void SetPosition(const Vector3& position) { this->position = position; }
+	void SetPosition(const XMFLOAT3& position) { this->position_ = position; }
 	// サイズ設定
-	void SetScale(const Vector2& scale_) { this->scale = scale_; }
+	void SetScale(const XMFLOAT2& scale) { this->scale_ = scale; }
 	// 回転
-	void SetRotation(float rotation_) { this->rotation = rotation_; }
+	void SetRotation(float rotation) { this->f_rotation_ = rotation; }
 	// 番号
-	void SetTexNumber(UINT texNumber_) { this->texNumber = texNumber_; }
+	void SetTexNumber(UINT texNumber) { this->texNumber_ = texNumber; }
 	// 色
-	void SetColor(const Vector4& color) { this->color_ = color; }
-	// フリップ
-	void SetIsFlipX(bool isFlipX) { this->isFlipX_ = isFlipX; } // X
-	void SetIsFlipY(bool isFlipY) { this->isFlipY_ = isFlipY; } // Y
+	void SetColor(const XMFLOAT4& color) { this->color_ = color; }
+	// フリップX,Y
+	void SetIsFlipX(bool isFlipX) { this->isFlipX_ = isFlipX; }
+	void SetIsFlipY(bool isFlipY) { this->isFlipY_ = isFlipY; }
 	// テクスチャ左上座標
-	void SetTexLeftTop(const Vector2& texLeftTop) { this->texLeftTop_ = texLeftTop; }
+	void SetTexLeftTop(const XMFLOAT2& texLeftTop) { this->texLeftTop_ = texLeftTop; }
 	// テクスチャ切り出しサイズ
-	void SetTexSize(const Vector2& texSize) { this->texSize_ = texSize; }
+	void SetTexSize(const XMFLOAT2& texSize) { this->texSize_ = texSize; }
 
 public: // ゲッター
 	// 座標
-	Vector3 GetPosition() const { return position; }
+	XMFLOAT3 GetPosition() const { return position_; }
 	// サイズ
-	Vector2 GetScale() const { return scale; }
+	XMFLOAT2 GetScale() const { return scale_; }
 	// 回転
-	float GetRotation() const { return rotation; }
+	float GetRotation() const { return f_rotation_; }
 	// 番号
-	UINT GetTexNumber() const { return texNumber; }
+	UINT GetTexNumber() const { return texNumber_; }
 	// 色
-	Vector4 GetColor() const { return color_; }
-	// フリップ
-	bool GetIsFlipX() const { return isFlipX_; } // X
-	bool GetIsFlipY() const { return isFlipY_; } // Y
+	XMFLOAT4 GetColor() const { return color_; }
+	// フリップX,Y
+	bool GetIsFlipX() const { return isFlipX_; }
+	bool GetIsFlipY() const { return isFlipY_; }
 	// テクスチャ左上座標
-	Vector2 GetTexLeftTop() const { return texLeftTop_; }
+	XMFLOAT2 GetTexLeftTop() const { return texLeftTop_; }
 	// テクスチャ切り出しサイズ
-	Vector2 GetTexSize() const { return texSize_; }
+	XMFLOAT2 GetTexSize() const { return texSize_; }
 
-public:
+private:
+	static ID3D12GraphicsCommandList* cmdList_;
 
 protected:
 	// DirectXCommonのインスタンス
-	DirectXCommon* dXCommon = nullptr;
-	SpriteCommon spriteCommon_;
+	DirectXCommon* dxCommon_ = nullptr;
 
 	//頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	D3D12_RESOURCE_DESC resDesc;
-	ComPtr<ID3D12Device> device;
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
+	D3D12_RESOURCE_DESC resDesc_;
+	// デバイス
+	ComPtr<ID3D12Device> device_;
 	//頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff;
-	ComPtr<ID3D12GraphicsCommandList> cmdList;
-	ComPtr<ID3D12DescriptorHeap> descHeap;
-	ComPtr<ID3D12Resource> constBuff;
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	static const size_t kMaxSRVCount = 2056;
+	ComPtr<ID3D12Resource> vertBuff_;
+	// デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> descHeap_;
+	// 定数バッファ
+	ComPtr<ID3D12Resource> constBuff_;
+	// SRVの最大枚数
+	static const size_t kMaxSRVCount_ = 2056;
 	// テクスチャバッファ
-	std::array<ComPtr<ID3D12Resource>, kMaxSRVCount> texBuffers_;
+	std::array<ComPtr<ID3D12Resource>, kMaxSRVCount_> texBuffers_;
 
 	// テクスチャ番号
-	UINT texNumber = 0;
+	UINT texNumber_ = 0;
 	uint32_t texIndex_ = 0;
 	// 座標
-	Vector3 position = { 0.0f, 0.0f, 0.0f };
+	XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
 	// サイズ
-	Vector2 scale = { 1.0f, 1.0f };
+	XMFLOAT2 scale_ = { 1.0f, 1.0f };
 	// 回転
-	Vector3 rotation_ = { 0.0f,0.0f,0.0f };
+	XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
 	// ワールド行列
-	Matrix4 matWorld;
+	XMMATRIX matWorld_;
 	// アンカーポイント
-	Vector2 anchorpoint = { 0.0f,0.0f };
+	XMFLOAT2 anchorpoint_ = { 0.0f,0.0f };
 	// テクスチャ左上座標設定
-	Vector2 texLeftTop_ = { 50.0f, 50.0f };
+	XMFLOAT2 texLeftTop_ = { 50.0f, 50.0f };
 	// テクスチャ切り出しサイズ
-	Vector2 texSize_ = { 100.0f, 100.0f };
+	XMFLOAT2 texSize_ = { 100.0f, 100.0f };
 	// 色
-	Vector4 color_ = { 1,1,1,1 };
+	XMFLOAT4 color_ = { 1,1,1,1 };
 
 	// Z軸回りの回転
-	float rotation = 0.0f;
+	float f_rotation_ = 0.0f;
 	// 左右反転
 	bool isFlipX_ = false;
 	// 上下反転
 	bool isFlipY_ = false;
 	// 非表示
-	bool isInvisible = false;
+	bool isInvisible_ = false;
 };
 

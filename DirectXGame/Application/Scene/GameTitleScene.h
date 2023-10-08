@@ -3,8 +3,6 @@
 #include "DirectXCommon.h"
 #include "Input.h"
 #include "Sprite.h"
-#include "Object3d.h"
-#include "Model.h"
 #include "Skydome.h"
 #include "GameBaseScene.h"
 #include "GameSceneManager.h"
@@ -50,6 +48,7 @@ private: // メンバ変数
 	// スプライト
 	Sprite* sprite_ = nullptr;
 	Sprite* title_ = nullptr;
+	Sprite* space_ = nullptr;
 
 	// 天球
 	Skydome* skydome = nullptr;
@@ -58,14 +57,26 @@ private: // メンバ変数
 	Object3d* object3d = nullptr;
 	Model* model = nullptr;
 
+	// タイトルの設定
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
-	DirectX::XMFLOAT3 titlePos_ = { 250,200,0 };
-	DirectX::XMFLOAT2 titleScale_ = { 780,160 };
+	DirectX::XMFLOAT3 titlePos_ = { 200,100,0 };
+	DirectX::XMFLOAT2 titleScale_ = { 1000,300 };
+	float titleRot_ = 0.0f;
+
+	// スペースの設定
+	DirectX::XMFLOAT4 spaceColor_ = { 1,1,1,1 };
+	DirectX::XMFLOAT3 spacePos_ = { 480,500,0 };
+	DirectX::XMFLOAT2 spaceScale_ {330, 43};
+	float spaceRot_ = 0.0f;
 
 	DirectX::XMFLOAT3 pPos = { 0,-5,-30 };
 	DirectX::XMFLOAT3 eye = { 0,0,-50 };
 
-	float titleRot_ = 0.0f;
-	bool start = false;
+	// タイマー
 	int startTimer = 0;
+	int spaceTimer = 0;
+
+	// フラグ
+	bool start = false;
+	bool isSpace = true;
 };

@@ -1,5 +1,15 @@
 #include "Skydome.h"
 
+Skydome::Skydome()
+{
+}
+
+Skydome::~Skydome()
+{
+	delete titleObj;
+	delete titleModel;
+}
+
 void Skydome::Initialize()
 {
 	// OBJからモデルデータを読み込む

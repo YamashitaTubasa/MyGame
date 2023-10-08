@@ -42,25 +42,29 @@ void TYFramework::Initialize()
 	imGuiManager = new ImGuiManager();
 	imGuiManager->Initialize(dXCommon, winApp);
 
-	// Cameraの初期化
-	camera = new Camera();
-	camera->Initialize();
+	// シーンマネージャの生成
+	sceneManager_ = GameSceneManager::GetInstance();
 
-	// ポストエフェクト
-	postEffect = PostEffect::GetInstance();
-	postEffect->Initialize();
+	// Cameraの初期化
+	/*camera = new Camera();
+	camera->Initialize();*/
 
 	// FBX
 	FbxLoader::GetInstance()->Initialize(dXCommon->GetDevice());
 
 	// 3Dオブジェクト静的初期化
 	Object3d::StaticInitialize(dXCommon->GetDevice(), WinApp::window_width, WinApp::window_height, camera);
+
 	// パーティクル静的初期化
 	ParticleManager::StaticInitialize(dXCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
 }
 
 void TYFramework::Finalize()
 {
+	sceneManager_->Destroy();
+	//シーンファクトリの解放
+	delete sceneFactory_;
+
 	FbxLoader::GetInstance()->Finalize();
 
 	// imguiの終了処理
@@ -74,7 +78,7 @@ void TYFramework::Finalize()
 
 	// DirectX解放
 	dXCommon->fpsFixedFinalize();
-	dXCommon->ResourceLeakCheck();
+	dXCommon->DeleteInstance();
 }
 
 void TYFramework::Update()
@@ -87,4 +91,13 @@ void TYFramework::Update()
 
 	// 入力の更新
 	input->Update();
+
+	// ImGui受付開始
+	imGuiManager->Begin();
+
+	// シーンマネージャの更新
+	sceneManager_->Update();
+
+	// ImGui受付終了
+	imGuiManager->End();
 }

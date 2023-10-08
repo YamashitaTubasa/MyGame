@@ -1,8 +1,14 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
+#pragma warning(pop)
 #include <DirectXMath.h>
 #include <d3dx12.h>
 #include <forward_list>
@@ -52,32 +58,32 @@ public: // サブクラス
 	};
 
 private: // 定数
-	static const int vertexCount = 1024; // 頂点数
-	static const std::string baseDirectory;
+	static const int vertexCount_ = 1024; // 頂点数
+	static const std::string baseDirectory_;
 
 private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device;
+	static ID3D12Device* device_;
 	// デスクリプタサイズ
-	UINT descriptorHandleIncrementSize;
+	UINT descriptorHandleIncrementSize_;
 	// ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootsignature;
+	ComPtr<ID3D12RootSignature> rootsignature_;
 	// パイプラインステートオブジェクト
-	ComPtr<ID3D12PipelineState> pipelinestate;
+	ComPtr<ID3D12PipelineState> pipelinestate_;
 	// デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeap;
+	ComPtr<ID3D12DescriptorHeap> descHeap_;
 	// 頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff;
+	ComPtr<ID3D12Resource> vertBuff_;
 	// テクスチャバッファ
-	ComPtr<ID3D12Resource> texbuff;
+	ComPtr<ID3D12Resource> texbuff_;
 	// シェーダリソースビューのハンドル(CPU)
-	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV_;
 	// シェーダリソースビューのハンドル(GPU)
-	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV_;
 	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView;
+	D3D12_VERTEX_BUFFER_VIEW vbView_;
 	// 頂点データ配列
-	VertexPos vertices[vertexCount];
+	VertexPos vertices_[vertexCount_];
 
 public:// 静的メンバ関数
 	/// <summary>
@@ -122,9 +128,9 @@ public:// 静的メンバ関数
 	void Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
 
 public:
-	static void SetDevice(ID3D12Device* device) { Particle::device = device; } // deviceのsetter
+	static void SetDevice(ID3D12Device* device) { Particle::device_ = device; } // device_のsetter
 
 private: // メンバ変数
 	// 親オブジェクト
-	std::forward_list<ParticleOne> particles;
+	std::forward_list<ParticleOne> particles_;
 };

@@ -16,11 +16,17 @@
 class ImGuiManager 
 {
 public:
+	// コンストラクタ
+	ImGuiManager();
+	// デストラクタ
+	~ImGuiManager();
+
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="dXCommon"></param>
-	void Initialize(DirectXCommon* dXCommon_, WinApp* winApp_);
+	void Initialize(DirectXCommon* dXCommon, WinApp* winApp);
 
 	/// <summary>
 	/// 終了

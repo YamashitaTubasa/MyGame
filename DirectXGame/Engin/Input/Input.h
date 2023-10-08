@@ -1,8 +1,17 @@
 #pragma once
-#include <windows.h>
+
+#define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
+#define MaxCountrollers 4  
+#define MaxVibration 65535
+
+#include "WinApp.h"
+
+#pragma warning(push)
+#pragma warning(disable:4668)
+#include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
 #include <dinput.h>
-#include "WinApp.h"
 #include <dwrite.h>
 #include <wchar.h>
 #include <wrl/client.h>
@@ -14,11 +23,9 @@
 #pragma comment(lib,"dwrite.lib")
 #pragma comment (lib, "xinput.lib")
 
-#define MaxCountrollers 4  
-#define MaxVibration 65535
-//#define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
-
-// 入力
+/// <summary>
+/// 入力
+/// </summary>
 class Input final
 {
 public:
@@ -56,23 +63,28 @@ public: // メンバ関数
 	bool TriggerKey(BYTE keyNumber);
 
 public:
+	// インスタンスの取得
 	static Input* GetInstance();
 
 private:
+	// コンストラクタ
 	Input() = default;
+	// デストラクタ
 	~Input() = default;
+	// コピーコンストラクタの禁止
 	Input(const Input&) = delete;
+	// 代入演算子の禁止
 	Input& operator=(const Input&) = delete;
 
 private: // メンバ変数
 	// キーボードのデバイス
-	ComPtr<IDirectInputDevice8> keyboard;
+	ComPtr<IDirectInputDevice8> keyboard_;
 	// DirectInputのインスタンス
-	ComPtr<IDirectInput8> directInput;
+	ComPtr<IDirectInput8> directInput_;
 	// 全キーの状態
-	BYTE key[256] = {};
+	BYTE key_[256] = {};
 	// 前回の全キーの状態
-	BYTE keyPre[256] = {};
+	BYTE keyPre_[256] = {};
 	// WindowsAPI
-	WinApp* winApp = nullptr;
+	WinApp* winApp_ = nullptr;
 };

@@ -9,13 +9,14 @@ class GameSceneManager;
 class GameBaseScene
 {
 public: // メンバ関数
+	GameBaseScene() = default;
 	virtual ~GameBaseScene() = default;
 
 public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	virtual void Initialize(SpriteCommon& spriteCommon) = 0;
+	virtual void Initialize() = 0;
 
 	/// <summary>
 	/// 更新
@@ -38,6 +39,9 @@ public: // メンバ関数
 private: // メンバ変数
 	// シーンマネージャ（借りてくる）
 	GameSceneManager* gSceneManager_ = nullptr;
+
+protected:
 	// スプライト
-	SpriteCommon spriteCommon;
+	SpriteCommon spriteCommon_;
 };
+

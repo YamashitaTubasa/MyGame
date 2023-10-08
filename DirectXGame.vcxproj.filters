@@ -16,15 +16,6 @@
     <Filter Include="シェーダーファイル">
       <UniqueIdentifier>{92d7bcfa-ebef-45b1-9050-8a6c09a173ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="シェーダーファイル\OBJ">
-      <UniqueIdentifier>{a238e045-7730-42f2-a9ef-a493c14ade0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="シェーダーファイル\Sprite">
-      <UniqueIdentifier>{8a89aaa2-898c-4f59-8d8c-121b2dc6d2dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="シェーダーファイル\Particle">
-      <UniqueIdentifier>{9d6ee302-f818-435d-b0c4-b050df9cf59c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engin">
       <UniqueIdentifier>{120e9c48-4738-438e-9aa5-89f3c3f48b55}</UniqueIdentifier>
     </Filter>
@@ -91,14 +82,8 @@
     <Filter Include="ヘッダー ファイル\Engin\Camera">
       <UniqueIdentifier>{a3316664-3aae-41dc-8d69-84ea12527c10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="シェーダーファイル\FBX">
-      <UniqueIdentifier>{985ce2bb-639f-46b4-a402-bb83ef2d39db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Application">
       <UniqueIdentifier>{f7f5757a-8081-45f3-b7f1-ac9fb54b00fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Application\Platform">
-      <UniqueIdentifier>{631320e3-dfec-435e-be58-ac1a9033933d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Application\Scene">
       <UniqueIdentifier>{ce7e8b24-9f13-45ef-acf2-79a93dfc6d35}</UniqueIdentifier>
@@ -109,17 +94,11 @@
     <Filter Include="ヘッダー ファイル\Application\Scene">
       <UniqueIdentifier>{c1ce2f60-a012-40cb-9615-59d871189da0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Application\Platform">
-      <UniqueIdentifier>{ef587848-3dab-4a6e-981a-24533f81c150}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engin\Collision">
       <UniqueIdentifier>{3cb1cac1-6cdd-43c1-8b64-81e9070ae7b1}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Engin\Collision">
       <UniqueIdentifier>{f6820e1d-2650-46b6-a7bb-2c9002c8cb54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="シェーダーファイル\PostEffect">
-      <UniqueIdentifier>{50415afa-a837-4ca4-bf62-f1abe69582b4}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Application\3d">
       <UniqueIdentifier>{33819f4f-2856-4ac8-84a9-e6f7481a2e1f}</UniqueIdentifier>
@@ -127,11 +106,8 @@
     <Filter Include="ソース ファイル\Application\3d">
       <UniqueIdentifier>{cadf8ed2-1c2f-4092-bd87-36c4460a1909}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application\Adjustment">
-      <UniqueIdentifier>{a32e31ab-d5df-4384-bcdc-aef154816c00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Application\Adjustment">
-      <UniqueIdentifier>{df1f7b7b-1931-4b61-b8f0-e7d2dfedac73}</UniqueIdentifier>
+    <Filter Include="シェーダーファイル\shaders">
+      <UniqueIdentifier>{d23b241f-9dd1-4f13-bea9-141ed214ed54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -219,117 +195,108 @@
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp">
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\3d\RailCamera.cpp">
-      <Filter>ソース ファイル\Engin\3d</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp">
-      <Filter>ソース ファイル\Application\3d</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp">
       <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\3d\Enemy.cpp">
       <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\3d\Skydome.cpp">
-      <Filter>ソース ファイル\Application\3d</Filter>
+    <ClCompile Include="DirectXGame\Engin\Scene\GameSceneManager.cpp">
+      <Filter>ソース ファイル\Engin\Scene</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Scene\GameBaseScene.cpp">
       <Filter>ソース ファイル\Application\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\Scene\GameSceneManager.cpp">
-      <Filter>ソース ファイル\Engin\Scene</Filter>
+    <ClCompile Include="DirectXGame\Application\Scene\GameClearScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\Adjustment\GlobalVariables.cpp">
-      <Filter>ソース ファイル\Application\Adjustment</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\Camera\DebugCamera.cpp">
-      <Filter>ソース ファイル\Engin\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\3d\LevelLoader.cpp">
-      <Filter>ソース ファイル\Engin\3d</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\3d\Boss.cpp">
+    <ClCompile Include="DirectXGame\Application\3d\BackGroundObject.cpp">
       <Filter>ソース ファイル\Application\3d</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engin\Math\EasingManager.cpp">
       <Filter>ソース ファイル\Engin\Math</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\3d\LevelLoader.cpp">
+      <Filter>ソース ファイル\Engin\3d</Filter>
+    </ClCompile>
     <ClCompile Include="DirectXGame\Application\Scene\SceneFactory.cpp">
       <Filter>ソース ファイル\Application\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\Collision\Mesh.cpp">
+    <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp">
+      <Filter>ソース ファイル\Application\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\Collision\CollisionPrimitive.cpp">
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\Collision\MeshCollider.cpp">
+    <ClCompile Include="DirectXGame\Application\Scene\GameOverScene.cpp">
+      <Filter>ソース ファイル\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\3d\Skydome.cpp">
+      <Filter>ソース ファイル\Application\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\Collision\SphereCollider.cpp">
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\2d\PostEffectManager.cpp">
+    <ClCompile Include="DirectXGame\Engin\3d\RailCamera.cpp">
+      <Filter>ソース ファイル\Engin\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\2d\SpriteCommon.cpp">
       <Filter>ソース ファイル\Engin\2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shaders\Basic.hlsli">
-      <Filter>シェーダーファイル</Filter>
+    <None Include="Resources\shaders\FBX.hlsli">
+      <Filter>シェーダーファイル\shaders</Filter>
     </None>
-    <None Include="Resources\shaders\OBJ.hlsli">
-      <Filter>シェーダーファイル\OBJ</Filter>
-    </None>
-    <None Include="Resources\shaders\Sprite.hlsli">
-      <Filter>シェーダーファイル\Sprite</Filter>
+    <None Include="Resources\shaders\OBJShaderHeader.hlsli">
+      <Filter>シェーダーファイル\shaders</Filter>
     </None>
     <None Include="Resources\shaders\Particle.hlsli">
-      <Filter>シェーダーファイル\Particle</Filter>
-    </None>
-    <None Include="Resources\shaders\FBX.hlsli">
-      <Filter>シェーダーファイル\FBX</Filter>
+      <Filter>シェーダーファイル\shaders</Filter>
     </None>
     <None Include="Resources\shaders\PostEffect.hlsli">
-      <Filter>シェーダーファイル\PostEffect</Filter>
+      <Filter>シェーダーファイル\shaders</Filter>
+    </None>
+    <None Include="Resources\shaders\Sprite.hlsli">
+      <Filter>シェーダーファイル\shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\shaders\BasicPS.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\BasicVS.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJPS.hlsl">
-      <Filter>シェーダーファイル\OBJ</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJVS.hlsl">
-      <Filter>シェーダーファイル\OBJ</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\SpritePS.hlsl">
-      <Filter>シェーダーファイル\Sprite</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
-      <Filter>シェーダーファイル\Sprite</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\ParticleGS.hlsl">
-      <Filter>シェーダーファイル\Particle</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\ParticlePS.hlsl">
-      <Filter>シェーダーファイル\Particle</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\ParticleVS.hlsl">
-      <Filter>シェーダーファイル\Particle</Filter>
-    </FxCompile>
     <FxCompile Include="Resources\shaders\FBXPS.hlsl">
-      <Filter>シェーダーファイル\FBX</Filter>
+      <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\FBXVS.hlsl">
-      <Filter>シェーダーファイル\FBX</Filter>
+      <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\PostEffectPS.hlsl">
-      <Filter>シェーダーファイル\PostEffect</Filter>
+    <FxCompile Include="Resources\shaders\OBJPixelShader.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\PostEffectVS.hlsl">
-      <Filter>シェーダーファイル\PostEffect</Filter>
+    <FxCompile Include="Resources\shaders\OBJVertexShader.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ParticleGS.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ParticlePS.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ParticleVS.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffectDepthOfFieldPS.hlsl">
-      <Filter>シェーダーファイル\PostEffect</Filter>
+      <Filter>シェーダーファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffectPS.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffectVS.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SpritePS.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -417,9 +384,6 @@
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionManager.h">
       <Filter>ヘッダー ファイル\Engin\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h">
-      <Filter>ヘッダー ファイル\Engin\3d</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\3d\Player.h">
       <Filter>ヘッダー ファイル\Application\3d</Filter>
     </ClInclude>
@@ -429,46 +393,52 @@
     <ClInclude Include="DirectXGame\Application\3d\Enemy.h">
       <Filter>ヘッダー ファイル\Application\3d</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\3d\Skydome.h">
-      <Filter>ヘッダー ファイル\Application\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\Scene\GameSceneManager.h">
+    <ClInclude Include="DirectXGame\Engin\Scene\GameSceneManager.h">
       <Filter>ヘッダー ファイル\Engin\Scene</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Scene\GameBaseScene.h">
       <Filter>ヘッダー ファイル\Application\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\Adjustment\GlobalVariables.h">
-      <Filter>ヘッダー ファイル\Application\Adjustment</Filter>
+    <ClInclude Include="DirectXGame\Application\Scene\GameClearScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\3d\Boss.h">
+    <ClInclude Include="DirectXGame\Application\3d\BackGroundObject.h">
       <Filter>ヘッダー ファイル\Application\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Camera\DebugCamera.h">
-      <Filter>ヘッダー ファイル\Engin\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\3d\LevelLoader.h">
-      <Filter>ヘッダー ファイル\Engin\3d</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Math\EasingManager.h">
       <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h">
-      <Filter>ヘッダー ファイル\Application\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h">
-      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Collision\Mesh.h">
-      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Collision\MeshCollider.h">
-      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    <ClInclude Include="DirectXGame\Engin\3d\LevelLoader.h">
+      <Filter>ヘッダー ファイル\Engin\3d</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\Scene\AbstractSceneFactory.h">
       <Filter>ヘッダー ファイル\Engin\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\2d\PostEffectManager.h">
+    <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\BaseCollider.h">
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionInfo.h">
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h">
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\Collision\SphereCollider.h">
+      <Filter>ヘッダー ファイル\Engin\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Scene\GameOverScene.h">
+      <Filter>ヘッダー ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\3d\Skydome.h">
+      <Filter>ヘッダー ファイル\Application\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h">
+      <Filter>ヘッダー ファイル\Engin\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\2d\SpriteCommon.h">
       <Filter>ヘッダー ファイル\Engin\2d</Filter>
     </ClInclude>
   </ItemGroup>

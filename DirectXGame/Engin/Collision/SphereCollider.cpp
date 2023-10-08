@@ -8,6 +8,6 @@ void SphereCollider::Update()
 	const XMMATRIX& matWorld = object3d->GetMatWorld();
 
 	// 球のメンバ変数の更新
-	Sphere::center = matWorld.r[3] + offset;
-	Sphere::radius = radius;
+	Sphere::center = matWorld.r[3] + offset_;
+	Sphere::radius = radius_;
 }

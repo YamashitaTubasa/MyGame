@@ -1,12 +1,6 @@
 #include "ParticleManager.h"
-
 #include <d3dcompiler.h>
-
-#pragma warning(push)
-// C4023の警告を見なかったことにする
-#pragma warning(disable:4023)
 #include <DirectXTex.h>
-#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -19,17 +13,17 @@ using namespace std;
 /// </summary>
 const float ParticleManager::radius = 5.0f; // 底面の半径
 const float ParticleManager::prizmHeight = 8.0f; // 柱の高さ
-ID3D12Device* ParticleManager::device = nullptr;
-ID3D12GraphicsCommandList* ParticleManager::cmdList = nullptr;
-ComPtr<ID3D12RootSignature> ParticleManager::rootsignature;
-ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate;
-XMMATRIX ParticleManager::matView{};
-XMMATRIX ParticleManager::matProjection{};
-XMFLOAT3 ParticleManager::eye = { 0,0,-5.0f };
-XMFLOAT3 ParticleManager::target = { 0, 0, 0 };
-XMFLOAT3 ParticleManager::up = { 0, 1, 0 };
-XMMATRIX ParticleManager::matBillboard = XMMatrixIdentity();
-XMMATRIX ParticleManager::matBillboardY = XMMatrixIdentity();
+ID3D12Device* ParticleManager::device_ = nullptr;
+ID3D12GraphicsCommandList* ParticleManager::cmdList_ = nullptr;
+ComPtr<ID3D12RootSignature> ParticleManager::rootsignature_;
+ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate_;
+XMMATRIX ParticleManager::matView_{};
+XMMATRIX ParticleManager::matProjection_{};
+XMFLOAT3 ParticleManager::eye_ = { 0,0,-5.0f };
+XMFLOAT3 ParticleManager::target_ = { 0, 0, 0 };
+XMFLOAT3 ParticleManager::up_ = { 0, 1, 0 };
+XMMATRIX ParticleManager::matBillboard_ = XMMatrixIdentity();
+XMMATRIX ParticleManager::matBillboardY_ = XMMatrixIdentity();
 
 // XMFLOAT3同士の加算処理
 //const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::XMFLOAT3& rhs)
@@ -48,8 +42,8 @@ void ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, i
 	// nullptrチェック
 	assert(device);
 
-	ParticleManager::device = device;
-	Particle::SetDevice(device);
+	ParticleManager::device_ = device;
+	Particle::SetDevice(device_);
 
 	// カメラ初期化
 	InitializeCamera(window_width, window_height);
@@ -61,15 +55,15 @@ void ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, i
 void ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	// PreDrawとPostDrawがペアで呼ばれていなければエラー
-	assert(ParticleManager::cmdList == nullptr);
+	assert(ParticleManager::cmdList_ == nullptr);
 
 	// コマンドリストをセット
-	ParticleManager::cmdList = cmdList;
+	ParticleManager::cmdList_ = cmdList;
 
 	// パイプラインステートの設定
-	cmdList->SetPipelineState(pipelinestate.Get());
+	cmdList->SetPipelineState(pipelinestate_.Get());
 	// ルートシグネチャの設定
-	cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	cmdList->SetGraphicsRootSignature(rootsignature_.Get());
 	// プリミティブ形状を設定
 	//cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
@@ -78,7 +72,7 @@ void ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
 void ParticleManager::PostDraw()
 {
 	// コマンドリストを解除
-	ParticleManager::cmdList = nullptr;
+	ParticleManager::cmdList_ = nullptr;
 }
 
 ParticleManager* ParticleManager::Create()
@@ -101,14 +95,14 @@ ParticleManager* ParticleManager::Create()
 
 void ParticleManager::SetEye(XMFLOAT3 eye)
 {
-	ParticleManager::eye = eye;
+	ParticleManager::eye_ = eye;
 
 	UpdateViewMatrix();
 }
 
 void ParticleManager::SetTarget(XMFLOAT3 target)
 {
-	ParticleManager::target = target;
+	ParticleManager::target_ = target;
 
 	UpdateViewMatrix();
 }
@@ -157,7 +151,7 @@ void ParticleManager::InitializeCamera(int window_width, int window_height)
 	//	window_height, 0,
 	//	0, 1);
 	// 透視投影による射影行列の生成
-	matProjection = XMMatrixPerspectiveFovLH(
+	matProjection_ = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(60.0f),
 		(float)window_width / window_height,
 		0.1f, 1000.0f
@@ -345,15 +339,15 @@ void ParticleManager::InitializeGraphicsPipeline()
 	// バージョン自動判定のシリアライズ
 	result = D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	// ルートシグネチャの生成
-	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootsignature));
+	result = device_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootsignature_));
 	assert(SUCCEEDED(result));
 
-	gpipeline.pRootSignature = rootsignature.Get();
-
+	gpipeline.pRootSignature = rootsignature_.Get();
+	rootsignature_->SetName(L"ParticleMan[RootSignature]");
 	// グラフィックスパイプラインの生成
-	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate));
+	result = device_->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(&pipelinestate_));
 	assert(SUCCEEDED(result));
-
+	pipelinestate_->SetName(L"ParticleMan[pipelinestate]");
 }
 
 void ParticleManager::UpdateViewMatrix()
@@ -361,11 +355,11 @@ void ParticleManager::UpdateViewMatrix()
 	// ビュー行列の更新
 	/*matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));*/
 	// 視点座標
-	XMVECTOR eyePosition = XMLoadFloat3(&eye);
+	XMVECTOR eyePosition = XMLoadFloat3(&eye_);
 	// 注視点座標
-	XMVECTOR targetPosition = XMLoadFloat3(&target);
+	XMVECTOR targetPosition = XMLoadFloat3(&target_);
 	// （仮の）上方向
-	XMVECTOR upVector = XMLoadFloat3(&up);
+	XMVECTOR upVector = XMLoadFloat3(&up_);
 
 	// カメラZ軸（視線方向）
 	XMVECTOR cameraAxisZ = XMVectorSubtract(targetPosition, eyePosition);
@@ -400,7 +394,7 @@ void ParticleManager::UpdateViewMatrix()
 	matCameraRot.r[3] = XMVectorSet(0, 0, 0, 1);
 
 	// 転置により逆行列（逆回転）を計算
-	matView = XMMatrixTranspose(matCameraRot);
+	matView_ = XMMatrixTranspose(matCameraRot);
 
 	//視点座標にー１を掛けた座標
 	XMVECTOR reverseEyePosition = XMVectorNegate(eyePosition);
@@ -412,14 +406,14 @@ void ParticleManager::UpdateViewMatrix()
 	XMVECTOR translation = XMVectorSet(tX.m128_f32[0], tY.m128_f32[1], tZ.m128_f32[2], 1.0f);
 
 	// ビュー行列に平行移動成分を設定
-	matView.r[3] = translation;
+	matView_.r[3] = translation;
 
 #pragma region 全方向ビルボード行列の計算
 	// ビルボード行列
-	matBillboard.r[0] = cameraAxisX;
-	matBillboard.r[1] = cameraAxisY;
-	matBillboard.r[2] = cameraAxisZ;
-	matBillboard.r[3] = XMVectorSet(0, 0, 0, 1);
+	matBillboard_.r[0] = cameraAxisX;
+	matBillboard_.r[1] = cameraAxisY;
+	matBillboard_.r[2] = cameraAxisZ;
+	matBillboard_.r[3] = XMVectorSet(0, 0, 0, 1);
 #pragma endregion
 
 #pragma region Y軸回りビルボード行列の計算
@@ -434,17 +428,17 @@ void ParticleManager::UpdateViewMatrix()
 	ybillCameraAxisZ = XMVector3Cross(ybillCameraAxisX, ybillCameraAxisY);
 
 	// Y軸回りビルボード行列
-	matBillboardY.r[0] = ybillCameraAxisX;
-	matBillboardY.r[1] = ybillCameraAxisY;
-	matBillboardY.r[2] = ybillCameraAxisZ;
-	matBillboardY.r[3] = XMVectorSet(0, 0, 0, 1);
+	matBillboardY_.r[0] = ybillCameraAxisX;
+	matBillboardY_.r[1] = ybillCameraAxisY;
+	matBillboardY_.r[2] = ybillCameraAxisZ;
+	matBillboardY_.r[3] = XMVectorSet(0, 0, 0, 1);
 #pragma endregion
 }
 
 bool ParticleManager::Initialize()
 {
 	// nullptrチェック
-	assert(device);
+	assert(device_);
 
 	HRESULT result;
 
@@ -455,11 +449,12 @@ bool ParticleManager::Initialize()
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
 
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = device_->CreateCommittedResource(
 		&heapProps, // アップロード可能
 		D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&constBuff));
+		IID_PPV_ARGS(&constBuff_));
 	assert(SUCCEEDED(result));
+	constBuff_->SetName(L"ParticleManager[constBuff]");
 
 	return true;
 }
@@ -469,45 +464,43 @@ void ParticleManager::Update()
 	HRESULT result;
 	XMMATRIX matScale, matRot;
 
-	particle->Update();
+	particle_->Update();
 
 	// スケール、回転、平行移動行列の計算
-	matScale = XMMatrixScaling(scale.x, scale.y, scale.z);
+	matScale = XMMatrixScaling(scale_.x, scale_.y, scale_.z);
 	matRot = XMMatrixIdentity();
 
 	// 定数バッファへデータ転送
 	ConstBufferData* constMap = nullptr;
-	result = constBuff->Map(0, nullptr, (void**)&constMap);
+	result = constBuff_->Map(0, nullptr, (void**)&constMap);
 	//constMap->color = color;
 	//constMap->mat = matWorld * matView * matProjection;	// 行列の合成
-	constMap->mat = matView * matProjection; // 行列の合成
-	constMap->matBillboard = matBillboard;
-	constBuff->Unmap(0, nullptr);
+	constMap->mat = matView_ * matProjection_; // 行列の合成
+	constMap->matBillboard = matBillboard_;
+	constBuff_->Unmap(0, nullptr);
 }
 
 void ParticleManager::Draw()
 {
 	// nullptrチェック
-	assert(device);
-	assert(ParticleManager::cmdList);
+	assert(device_);
+	assert(ParticleManager::cmdList_);
 
 	// 定数バッファビューをセット
-	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
+	cmdList_->SetGraphicsRootConstantBufferView(0, constBuff_->GetGPUVirtualAddress());
 
-	particle->Draw(cmdList);
+	particle_->Draw(cmdList_);
 }
 
 void ParticleManager::Execution(Particle* particle, float posx, float posy, float posz, int life, float start_scale, float end_scale)
 {
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 10; i++) {
 		// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-		const float md_pos_x = 5.0f;
-		const float md_pos_y = 5.0f;
-		const float md_pos_z = 5.0f;
+		const float md_pos = 3.0f;
 		XMFLOAT3 pos{};
-		pos.x = (float)rand() / RAND_MAX * md_pos_x - md_pos_x / 2.0f + posx;
-		pos.y = (float)rand() / RAND_MAX * md_pos_y - md_pos_y / 2.0f + posy;
-		pos.z = (float)rand() / RAND_MAX * md_pos_z - md_pos_z / 2.0f + posz;
+		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posx;
+		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posy;
+		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + posz;
 		// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
 		const float md_vel = 0.1f;
 		XMFLOAT3 vel{};

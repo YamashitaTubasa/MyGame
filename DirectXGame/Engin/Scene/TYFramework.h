@@ -6,10 +6,13 @@
 #include "Sprite.h"
 #include "Model.h"
 #include "Object3d.h"
-#include "GamePlayScene.h"
+#include "GameSceneManager.h"
 #include "Camera.h"
 #include "ImGuiManager.h"
+#include "ParticleManager.h"
+#include "FbxLoader.h"
 #include "PostEffect.h"
+#include "AbstractSceneFactory.h"
 
 class TYFramework
 {
@@ -43,12 +46,16 @@ private:
 
 protected:
 	// スプライト
-	SpriteCommon spriteCommon;
 	DirectXCommon* dXCommon = nullptr;
 	WinApp* winApp = nullptr;
 	Input* input = nullptr;
 	ImGuiManager* imGuiManager = nullptr;
 	Camera* camera = nullptr;
+	GameSceneManager* sceneManager_ = nullptr;
 	PostEffect* postEffect = nullptr;
+	PostEffect* postEffect1 = nullptr;
+	// シーンファクトリー
+	AbstractSceneFactory* sceneFactory_ = nullptr;
+	int a = 0;
 };
 

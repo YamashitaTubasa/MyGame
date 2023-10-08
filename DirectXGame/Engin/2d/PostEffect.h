@@ -27,6 +27,7 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	PostEffect();
+	~PostEffect();
 
 	/// <summary>
 	/// 初期化
@@ -65,28 +66,28 @@ public:
 
 private:
 	// テクスチャバッファ
-	ComPtr<ID3D12Resource> texBuff;
+	ComPtr<ID3D12Resource> texBuff_;
 	// SRV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeapSRV;
+	ComPtr<ID3D12DescriptorHeap> descHeapSRV_;
 	// 震度バッファ
-	ComPtr<ID3D12Resource> depthBuff;
+	ComPtr<ID3D12Resource> depthBuff_;
 	// RTV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeapRTV;
+	ComPtr<ID3D12DescriptorHeap> descHeapRTV_;
 	// DSV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeapDSV;
+	ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
 	// グラフィクスパイプライン
-	ComPtr<ID3D12PipelineState> pipelineState;
+	ComPtr<ID3D12PipelineState> pipelineState_;
 	// ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootSignature;
-	ComPtr<ID3D12Device> device;
-	ComPtr<ID3D12GraphicsCommandList> cmdList;
-	ConstBufferData* constMap = nullptr;
+	ComPtr<ID3D12RootSignature> rootSignature_;
+	ComPtr<ID3D12Device> device_;
+	ComPtr<ID3D12GraphicsCommandList> cmdList_;
+	ConstBufferData* constMap_ = nullptr;
 
 protected:
 	// 画面クリアカラー
-	static const float clearColor[4];
+	static const float clearColor_[4];
 	// 頂点数
-	static const int vertNum = 4;
+	static const int vertNum_ = 4;
 	// 色
 	DirectX::XMFLOAT4 color_ = { 1,1,1,1 };
 	// ブラーフラグ

@@ -16,26 +16,26 @@ Input* Input::GetInstance()
 void Input::Initialize(WinApp* winApp)
 {
 	// 借りてきたWinAppのインスタンスを記録
-	this->winApp = winApp;
+	this->winApp_ = winApp;
 
 	HRESULT result;
 
 	// DirectInputのインスタンス生成
 	/*ComPtr<IDirectInput8> directInput = nullptr;*/
-	result = DirectInput8Create(winApp->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
+	result = DirectInput8Create(winApp->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput_, nullptr);
 	assert(SUCCEEDED(result));
 
 	// キーボードデバイスの生成
 	//ComPtr<IDirectInputDevice8> keyboard = nullptr;
-	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	result = directInput_->CreateDevice(GUID_SysKeyboard, &keyboard_, NULL);
 	assert(SUCCEEDED(result));
 
 	// 入力データ形式のセット
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
+	result = keyboard_->SetDataFormat(&c_dfDIKeyboard); // 標準形式
 	assert(SUCCEEDED(result));
 
 	// 排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = keyboard_->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
 
@@ -44,20 +44,20 @@ void Input::Update()
 	HRESULT result;
 
 	// 前回のキー入力を保持
-	memcpy(keyPre, key, sizeof(key));
+	memcpy(keyPre_, key_, sizeof(key_));
 
 	// キーボード情報の取得開始
-	result = keyboard->Acquire();
+	result = keyboard_->Acquire();
 
 	// 全キーの入力状態を取得する
 	/*BYTE key[256] = {};*/
-	result = keyboard->GetDeviceState(sizeof(key), key);
+	result = keyboard_->GetDeviceState(sizeof(key_), key_);
 }
 
 bool Input::PushKey(BYTE keyNumber) 
 {
 	// 指定キーを押していればtrueを返す
-	if (key[keyNumber]) {
+	if (key_[keyNumber]) {
 		return true;
 	}
 	// そうではなければfalseを返す
@@ -66,14 +66,7 @@ bool Input::PushKey(BYTE keyNumber)
 
 bool Input::TriggerKey(BYTE keyNumber)
 {
-	/*if (key[keyNumber]) 
-	{
-		if (keyPre[keyNumber]) {
-			return false;
-		}
-		return true;
-	}*/
-	if (key[keyNumber] && keyPre[keyNumber] == false) {
+	if (key_[keyNumber] && keyPre_[keyNumber] == false) {
 		return true;
 	}
 	

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Matrix4.h"
@@ -8,32 +7,33 @@
 #include <string>
 #include <DirectXMath.h>
 #include <vector>
+#include <DirectXTex.h>
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
+#pragma warning(pop)
 #include <d3dx12.h>
 #include <fbxsdk.h>
 
-#pragma warning(push)
-// C4023の警告を見なかったことにする
-#pragma warning(disable:4023)
-#include <DirectXTex.h>
-#pragma warning(pop)
-
 struct Node
 {
+	// ローカルスケール
+	DirectX::XMVECTOR scaling = { 1,1,1,0 };
+	// ローカル回転角
+	DirectX::XMVECTOR rotation = { 0,0,0,0 };
+	// ローカル移動
+	DirectX::XMVECTOR translation = { 0,0,0,1 };
+	// ローカル変形行列
+	DirectX::XMMATRIX transform;
+	// グローバル変形行列
+	DirectX::XMMATRIX globalTransform;
 	// 名前
 	std::string name;
-	// ローカルスケール
-	Vector4 scaling = { 1,1,1,0 };
-	// ローカル回転角
-	Vector4 rotation = { 0,0,0,0 };
-	// ローカル移動
-	Vector4 translation = { 0,0,0,1 };
-	// ローカル変形行列
-	Matrix4 transform;
-	// グローバル変形行列
-	Matrix4 globalTransform;
 	// 親ノード
 	Node* parent = nullptr;
 };
@@ -47,6 +47,11 @@ public:
 private: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	// DirectX::を省略
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMMATRIX = DirectX::XMMATRIX;
 	using TexMetadata = DirectX::TexMetadata;
 	using ScratchImage = DirectX::ScratchImage;
 	// std::を省略
@@ -61,9 +66,9 @@ public: // サブクラス
 	// 頂点デー構造体
 	struct VertexPosNormalUvSkin 
 	{
-		Vector3 pos;    // xyz座標
-		Vector3 normal; // 法線ベクトル
-		Vector2 uv;     // uv座標
+		DirectX::XMFLOAT3 pos;              // xyz座標
+		DirectX::XMFLOAT3 normal;           // 法線ベクトル
+		DirectX::XMFLOAT2 uv;               // uv座標
 		UINT boneIndex[MAX_BONE_INDICES];   // ボーン　番号
 		float boneWeight[MAX_BONE_INDICES]; // ボーン　重み
 	};
@@ -74,7 +79,7 @@ public: // サブクラス
 		// 名前
 		std::string name;
 		// 初期姿勢の逆行列
-		Matrix4 invInitialPose;
+		DirectX::XMMATRIX invInitialPose;
 		// クラスター(FBX側のボーン情報)
 		FbxCluster* fbxCluster;
 		// コンストラクタ
@@ -95,7 +100,7 @@ public:
 
 public: // getter
 	// モデルの変形行列取得
-	const Matrix4& GetModelTransform() { return meshNode->globalTransform; }
+	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
 	// bonesの取得
 	std::vector<Bone>& GetBones() { return bones; }
 	// fbxSceneの取得
@@ -131,9 +136,9 @@ private:
 	// ボーン配列
 	std::vector<Bone> bones;
 	// アンビエント係数
-	Vector3 ambient = { 1,1,1 };
+	DirectX::XMFLOAT3 ambient = { 1,1,1 };
 	// ディフューズ係数
-	Vector3 diffuse = { 1,1,1 };
+	DirectX::XMFLOAT3 diffuse = { 1,1,1 };
 	// テクスチャメタデータ
 	DirectX::TexMetadata metadata = {};
 	// スクラッチイメージ

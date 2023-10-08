@@ -2,9 +2,15 @@
 
 #include "Particle.h"
 
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <Windows.h>
+#pragma warning(pop)
 #include <wrl.h>
+#pragma warning(push)
+#pragma warning(disable:4820)
 #include <d3d12.h>
+#pragma warning(pop)
 #include <DirectXMath.h>
 #include <d3dx12.h>
 #include <forward_list>
@@ -44,7 +50,7 @@ public: // 静的メンバ関数
 	/// <summary>
 	/// 静的初期化
 	/// </summary>
-	/// <param name="device">デバイス</param>
+	/// <param name="device_">デバイス</param>
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
 	static void StaticInitialize(ID3D12Device* device, int window_width, int window_height);
@@ -70,7 +76,7 @@ public: // 静的メンバ関数
 	/// 視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const XMFLOAT3& GetEye() { return eye; }
+	static const XMFLOAT3& GetEye() { return eye_; }
 
 	/// <summary>
 	/// 視点座標の設定
@@ -82,7 +88,7 @@ public: // 静的メンバ関数
 	/// 注視点座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	static const XMFLOAT3& GetTarget() { return target; }
+	static const XMFLOAT3& GetTarget() { return target_; }
 
 	/// <summary>
 	/// 注視点座標の設定
@@ -104,27 +110,27 @@ public: // 静的メンバ関数
 
 private: // 静的メンバ変数
 	// デバイス
-	static ID3D12Device* device;
+	static ID3D12Device* device_;
 	// コマンドリスト
-	static ID3D12GraphicsCommandList* cmdList;
+	static ID3D12GraphicsCommandList* cmdList_;
 	// ルートシグネチャ
-	static ComPtr<ID3D12RootSignature> rootsignature;
+	static ComPtr<ID3D12RootSignature> rootsignature_;
 	// パイプラインステートオブジェクト
-	static ComPtr<ID3D12PipelineState> pipelinestate;
+	static ComPtr<ID3D12PipelineState> pipelinestate_;
 	// ビュー行列
-	static XMMATRIX matView;
+	static XMMATRIX matView_;
 	// 射影行列
-	static XMMATRIX matProjection;
+	static XMMATRIX matProjection_;
 	// 視点座標
-	static XMFLOAT3 eye;
+	static XMFLOAT3 eye_;
 	// 注視点座標
-	static XMFLOAT3 target;
+	static XMFLOAT3 target_;
 	// 上方向ベクトル
-	static XMFLOAT3 up;
+	static XMFLOAT3 up_;
 	// ビルボード行列
-	static XMMATRIX matBillboard;
+	static XMMATRIX matBillboard_;
 	// Y軸回りビルボード行列
-	static XMMATRIX matBillboardY;
+	static XMMATRIX matBillboardY_;
 
 private:// 静的メンバ関数
 	/// <summary>
@@ -166,7 +172,7 @@ public: // メンバ関数
 	/// モデルの設定
 	/// </summary>
 	/// <param name="particle"></param>
-	void SetModel(Particle* particle) { this->particle = particle; }
+	void SetModel(Particle* particle) { this->particle_ = particle; }
 
 	/// <summary>
 	/// パーティクル実装
@@ -175,10 +181,10 @@ public: // メンバ関数
 
 private: // メンバ変数
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuff;
+	ComPtr<ID3D12Resource> constBuff_;
 	// スケール
-	XMFLOAT3 scale = { 1,1,1 };
+	XMFLOAT3 scale_ = { 1,1,1 };
 	// パーティクル
-	Particle* particle = nullptr;
+	Particle* particle_ = nullptr;
 };
 

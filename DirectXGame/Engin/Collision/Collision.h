@@ -9,6 +9,15 @@ class Collision
 {
 public:
 	/// <summary>
+	/// 球と球の当たり判定
+	/// </summary>
+	/// <param name="sphere">球</param>
+	/// <param name="sphere1">球</param>
+	/// <param name="inter">交点（球上の最近接点）</param>
+	/// <returns>交差しているか否か</returns>
+	static bool CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter = nullptr, DirectX::XMVECTOR* r = nullptr);
+
+	/// <summary>
 	/// 球と平面の当たり判定
 	/// </summary>
 	/// <param name="sphre">球</param>

@@ -1,20 +1,29 @@
 #include "MyGame.h"
 
+#include "SceneFactory.h"
+
 void MyGame::Initialize()
 {	
 	// 基底クラスの初期化処理
 	TYFramework::Initialize();
 
-	// ゲームシーンの初期化
-	gameScene = new GamePlayScene();
-	gameScene->Initialize(camera, spriteCommon);
+	// ポストエフェクト
+	postEffect = new PostEffect();
+	postEffect->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
+	postEffect1 = new PostEffect();
+	postEffect1->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
+
+	// シーンファクトリを生成し、マネージャにセット
+	sceneFactory_ = new SceneFactory();
+	sceneManager_->SetSceneFactory(sceneFactory_);
+	// シーンマネージャに最初のシーンをセット
+	sceneManager_->ChangeScene("TITLE");
 }
 
 void MyGame::Finalize()
 {
-	// ゲームシーンの解放
-	gameScene->Finalize();
-	delete gameScene;
+	delete postEffect;
+	delete postEffect1;
 
 	// 基底クラスの終了処理
 	TYFramework::Finalize();
@@ -24,42 +33,46 @@ void MyGame::Update()
 {
 	// 基底クラスの更新処理
 	TYFramework::Update();
-
-	// ImGui受付開始
-	imGuiManager->Begin();
-
-	// ゲームシーンの更新
-	gameScene->Update();
-
-	// ImGui受付終了
-	imGuiManager->End();
 }
 
 void MyGame::Draw()
 {
+	// コマンドリストの取得
+	ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
+
 #pragma region ゲームシーン描画
 
 	// レンダーテクスチャの前処理
-	postEffect->PreDrawScene(dXCommon->GetCommandList());
+	postEffect->PreDraw(cmdList);
 
-	//=== ゲームシーン描画 ===//
-	gameScene->Draw(camera);
+	//=== シーンマネージャの描画 ===//
+	sceneManager_->Draw();
 
 	// レンダーテクスチャの後処理
-	postEffect->PostDrawScene(dXCommon->GetCommandList());
+	postEffect->PostDraw(cmdList);
 
 #pragma endregion
 
-#pragma region 描画
+#pragma region ポストエフェクトの描画
+
+	// レンダーテクスチャ1の前処理
+	postEffect1->PreDraw(cmdList);
+
+	//=== ポストエフェクトの描画 ===//
+	postEffect->Draw(cmdList);
+
+	// レンダーテクスチャ1の後処理
+	postEffect1->PostDraw(cmdList);
+
+#pragma endregion
+
+#pragma region ポストエフェクト1の描画
 
 	// 描画前処理
 	dXCommon->PreDraw();
 
-	//=== ポストエフェクトの描画 ===//
-	postEffect->Draw(dXCommon->GetCommandList());
-
-	// ImGui描画
-	//imGuiManager->Draw(dXCommon);
+	//=== ポストエフェクト1の描画 ===//
+	postEffect1->Draw(cmdList);
 
 	// 描画後処理
 	dXCommon->PostDraw();

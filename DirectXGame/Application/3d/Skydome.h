@@ -9,6 +9,10 @@
 class Skydome
 {
 public:
+	Skydome();
+	~Skydome();
+
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>

@@ -45,25 +45,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(ProjectDir)lib\fbx_sdk\include;$(ProjectDIr)lib\nlohmann;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\nlohmann;$(IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(ProjectDir)lib\fbx_sdk\include;$(ProjectDIr)lib\nlohmann;$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\imgui;$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\nlohmann;$(IncludePath)</IncludePath>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDir)DirectXGame\Application\Adjustment;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDIr)DirectXGame\Engin\Collision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -79,13 +79,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDir)DirectXGame\Application\Adjustment;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDIr)DirectXGame\Engin\Collision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -103,18 +103,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DirectXGame\Application\3d\Boss.cpp" />
+    <ClCompile Include="DirectXGame\Application\3d\BackGroundObject.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Enemy.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Skydome.cpp" />
-    <ClCompile Include="DirectXGame\Application\Adjustment\GlobalVariables.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameBaseScene.cpp" />
-    <ClCompile Include="DirectXGame\Application\Scene\GameSceneManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\Scene\GameClearScene.cpp" />
+    <ClCompile Include="DirectXGame\Application\Scene\GameOverScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\PostEffect.cpp" />
-    <ClCompile Include="DirectXGame\Engin\2d\PostEffectManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\2d\Sprite.cpp" />
+    <ClCompile Include="DirectXGame\Engin\2d\SpriteCommon.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxLoader.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxModel.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\FbxObject3d.cpp" />
@@ -124,15 +124,17 @@
     <ClCompile Include="DirectXGame\Engin\3d\RailCamera.cpp" />
     <ClCompile Include="DirectXGame\Engin\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engin\Camera\Camera.cpp" />
-    <ClCompile Include="DirectXGame\Engin\Camera\DebugCamera.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Collision\CollisionPrimitive.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Collision\SphereCollider.cpp" />
     <ClCompile Include="DirectXGame\Engin\Effect\Particle.cpp" />
     <ClCompile Include="DirectXGame\Engin\Effect\ParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\EasingManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Quaternion.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Vector4.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Scene\GameSceneManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Scene\TYFramework.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameTitleScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\MyGame.cpp" />
@@ -145,30 +147,15 @@
     <ClCompile Include="DirectXGame\Engin\Platform\FPSFixed.cpp" />
     <ClCompile Include="DirectXGame\Engin\Platform\WinApp.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GamePlayScene.cpp" />
-    <ClCompile Include="DirectXGame\Engin\Collision\MeshCollider.cpp" />
-    <ClCompile Include="DirectXGame\Engin\Collision\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shaders\Basic.hlsli" />
     <None Include="Resources\shaders\FBX.hlsli" />
-    <None Include="Resources\shaders\OBJ.hlsli" />
+    <None Include="Resources\shaders\OBJShaderHeader.hlsli" />
     <None Include="Resources\shaders\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\shaders\BasicPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\BasicVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
     <FxCompile Include="Resources\shaders\FBXPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -181,13 +168,13 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJPS.hlsl">
+    <FxCompile Include="Resources\shaders\OBJPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJVS.hlsl">
+    <FxCompile Include="Resources\shaders\OBJVertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -211,7 +198,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\PostEffectDepthOfFieldPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffectDepthOfFieldPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffectPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -238,17 +230,23 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectXGame\Application\3d\Boss.h" />
+    <ClInclude Include="DirectXGame\Application\3d\BackGroundObject.h" />
     <ClInclude Include="DirectXGame\Application\3d\Enemy.h" />
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
     <ClInclude Include="DirectXGame\Application\3d\Skydome.h" />
-    <ClInclude Include="DirectXGame\Application\Adjustment\GlobalVariables.h" />
-    <ClInclude Include="DirectXGame\Application\Scene\GameBaseScene.h" />
-    <ClInclude Include="DirectXGame\Application\Scene\GameSceneManager.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\GameOverScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h" />
+    <ClInclude Include="DirectXGame\Engin\2d\SpriteCommon.h" />
+    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\BaseCollider.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionInfo.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h" />
+    <ClInclude Include="DirectXGame\Engin\Collision\SphereCollider.h" />
+    <ClInclude Include="DirectXGame\Engin\Scene\AbstractSceneFactory.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\GameBaseScene.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\GameClearScene.h" />
     <ClInclude Include="DirectXGame\Engin\2d\PostEffect.h" />
-    <ClInclude Include="DirectXGame\Engin\2d\PostEffectManager.h" />
     <ClInclude Include="DirectXGame\Engin\2d\Sprite.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxLoader.h" />
     <ClInclude Include="DirectXGame\Engin\3d\FbxModel.h" />
@@ -256,14 +254,11 @@
     <ClInclude Include="DirectXGame\Engin\3d\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Model.h" />
     <ClInclude Include="DirectXGame\Engin\3d\Object3d.h" />
-    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h" />
     <ClInclude Include="DirectXGame\Engin\Audio\Audio.h" />
     <ClInclude Include="DirectXGame\Engin\Camera\Camera.h" />
-    <ClInclude Include="DirectXGame\Engin\Camera\DebugCamera.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\Collision.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionPrimitive.h" />
-    <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h" />
     <ClInclude Include="DirectXGame\Engin\Effect\Particle.h" />
     <ClInclude Include="DirectXGame\Engin\Effect\ParticleManager.h" />
     <ClInclude Include="DirectXGame\Engin\Input\Input.h" />
@@ -276,14 +271,12 @@
     <ClInclude Include="DirectXGame\Engin\Platform\DirectXCommon.h" />
     <ClInclude Include="DirectXGame\Engin\Platform\FPSFixed.h" />
     <ClInclude Include="DirectXGame\Engin\Platform\WinApp.h" />
-    <ClInclude Include="DirectXGame\Engin\Scene\AbstractSceneFactory.h" />
+    <ClInclude Include="DirectXGame\Engin\Scene\GameSceneManager.h" />
     <ClInclude Include="DirectXGame\Engin\Scene\TYFramework.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GamePlayScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameTitleScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\MyGame.h" />
     <ClInclude Include="DirectXGame\Engin\ImGui\ImGuiManager.h" />
-    <ClInclude Include="DirectXGame\Engin\Collision\MeshCollider.h" />
-    <ClInclude Include="DirectXGame\Engin\Collision\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
