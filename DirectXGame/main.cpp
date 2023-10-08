@@ -9,7 +9,5 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	delete game;
 
-	DirectXCommon::ResourceLeakCheck();
-
 	return 0;
 }
