@@ -9,6 +9,7 @@
 #include <DirectXTex.h>
 #include <wrl.h>
 #include <array>
+
 #pragma warning(push)
 #pragma warning(disable:4668)
 #include <Windows.h>

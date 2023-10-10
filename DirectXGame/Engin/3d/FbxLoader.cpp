@@ -35,9 +35,6 @@ void FbxLoader::Finalize()
     // 各種FBXインスタンスの破壊
     fbxImporter->Destroy();
     fbxManager->Destroy();
-
-    // オブジェクト解放
-    device->Release();
 }
 
 FbxModel* FbxLoader::LoadModelFromFile(const string& modelName)
@@ -99,20 +96,18 @@ void FbxLoader::ParseNodeRecursive(FbxModel* fbxModel, FbxNode* fbxNode, Node* p
     node.translation = { (float)translation[0], (float)translation[1],(float)translation[2], 1.0f };
 
     // 回転角をDegree(度)からラジアンに変換
-    node.rotation.x = XMConvertToRadians(node.rotation.x);
-    node.rotation.y = XMConvertToRadians(node.rotation.y);
-    node.rotation.z = XMConvertToRadians(node.rotation.z);
+    node.rotation.m128_f32[0] = XMConvertToRadians(node.rotation.m128_f32[0]);
+    node.rotation.m128_f32[1] = XMConvertToRadians(node.rotation.m128_f32[1]);
+    node.rotation.m128_f32[2] = XMConvertToRadians(node.rotation.m128_f32[2]);
 
     // スケール、回転、平行移動行列の計算
-    Matrix4 matScaling, matRotation, matTranslation, matRotX, matRotY, matRotZ;
-    matScaling.Scale(node.scaling);
-    matRotation = matRotZ.RotateZ(node.rotation.z);
-    matRotation = matRotY.RotateY(node.rotation.y);
-    matRotation = matRotX.RotateX(node.rotation.x);
-    matTranslation.Translate(node.translation);
+    XMMATRIX matScaling, matRotation, matTranslation;
+    matScaling = XMMatrixScalingFromVector(node.scaling);
+    matRotation = XMMatrixRotationRollPitchYawFromVector(node.rotation);
+    matTranslation = XMMatrixTranslationFromVector(node.translation);
 
     // ローカル変形行列の計算
-    node.transform = Matrix4::Identity();
+    node.transform = XMMatrixIdentity();
     node.transform *= matScaling; // ワールド行列にスケーリングを反映
     node.transform *= matRotation; // ワールド行列に回転を反映
     node.transform *= matTranslation; // ワールド行列に平行移動を反映
@@ -158,14 +153,14 @@ void FbxLoader::ParseMesh(FbxModel* fbxModel, FbxNode* fbxNode)
     ParseSkin(fbxModel, fbxMesh);
 }
 
-void FbxLoader::ConvertMatrixFromFbx(Matrix4* dst, const FbxAMatrix& src)
+void FbxLoader::ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src)
 {
     // 行
     for (int i = 0; i < 4; i++) {
         // 列
         for (int j = 0; j < 4; j++) {
             // 1要素コピー
-            //dst->.x = (float)src.Get(i, j);
+            dst->r[i].m128_f32[j] = (float)src.Get(i, j);
         }
     }
 }
@@ -208,14 +203,14 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
     fbxMesh->GetUVSetNames(uvNames);
 
     // 面ごとの情報読み取り
-    for (int i = 0; i < polygonCount; i++) 
+    for (int i = 0; i < polygonCount; i++)
     {
         // 面を構成する頂点の数を取得(3なら三角形ポリゴン)
         const int polygonSize = fbxMesh->GetPolygonSize(i);
         assert(polygonSize <= 4);
 
         // 1頂点ずつ処理
-        for (int j = 0; j < polygonSize; j++) 
+        for (int j = 0; j < polygonSize; j++)
         {
             // FBX頂点配列のインデックス
             int index = fbxMesh->GetPolygonVertex(i, j);
@@ -224,7 +219,7 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
             // 頂点法線読み込み
             FbxModel::VertexPosNormalUvSkin& vertex = vertices[index];
             FbxVector4 normal;
-            if (fbxMesh->GetPolygonVertexNormal(i, j, normal)) 
+            if (fbxMesh->GetPolygonVertexNormal(i, j, normal))
             {
                 vertex.normal.x = (float)normal[0];
                 vertex.normal.y = (float)normal[1];
@@ -237,7 +232,7 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
                 FbxVector2 uvs;
                 bool lUnmappedUV;
                 // 0番決め打ちで読み込み
-                if (fbxMesh->GetPolygonVertexUV(i, j, uvNames[0], uvs, lUnmappedUV)) 
+                if (fbxMesh->GetPolygonVertexUV(i, j, uvNames[0], uvs, lUnmappedUV))
                 {
                     vertex.uv.x = (float)uvs[0];
                     vertex.uv.y = (float)uvs[1];
@@ -246,7 +241,7 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
 
             // インデックス配列に頂点インデックス追加
             // 3番点目までなら
-            if (j < 3){
+            if (j < 3) {
                 // 1点追加し、他の2点と三角形を構築する
                 indices.push_back((unsigned short)index);
             }
@@ -294,7 +289,7 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 
             // ディフューズテクスチャを取り出す
             const FbxProperty diffuseProperty = material->FindProperty(FbxSurfaceMaterial::sDiffuse);
-            if (diffuseProperty.IsValid()) 
+            if (diffuseProperty.IsValid())
             {
                 const FbxFileTexture* texture = diffuseProperty.GetSrcObject<FbxFileTexture>();
                 if (texture) {
@@ -357,12 +352,12 @@ void FbxLoader::ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh)
         FbxAMatrix fbxMat;
         fbxCluster->GetTransformLinkMatrix(fbxMat);
 
-        // Matrix4型に変換する
-        Matrix4 initialPose;
+        // XMMatrix型に変換する
+        XMMATRIX initialPose;
         ConvertMatrixFromFbx(&initialPose, fbxMat);
 
         // 初期姿勢行列の逆行列を得る
-        bone.invInitialPose.MakeInverse();
+        bone.invInitialPose = XMMatrixInverse(nullptr, initialPose);
     }
 
     // ボーン番号とスキンウェイトのペア

@@ -1,7 +1,5 @@
 #include "GameTitleScene.h"
 
-using namespace DirectX;
-
 GameTitleScene::GameTitleScene()
 {
 }

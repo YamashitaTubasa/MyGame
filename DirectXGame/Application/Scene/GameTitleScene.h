@@ -12,6 +12,9 @@
 
 class GameTitleScene : public GameBaseScene
 {
+public: // エイリアス
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+
 public: // メンバ関数
 	// コンストラクタ
 	GameTitleScene();

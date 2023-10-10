@@ -7,6 +7,7 @@
 #pragma warning(disable:4820)
 #include <d3d12.h>
 #pragma warning(pop)
+
 #include <d3dx12.h>
 #include <cassert>
 #include <string>
@@ -66,7 +67,7 @@ public:
 	/// </summary>
 	/// <param name="dst">書き込み先</param>
 	/// <param name="src">元となるFBX行列</param>
-	static void ConvertMatrixFromFbx(Matrix4* dst, const FbxAMatrix& src);
+	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src);
 
 public: // サブ関数
 	// 頂点座標読み取り

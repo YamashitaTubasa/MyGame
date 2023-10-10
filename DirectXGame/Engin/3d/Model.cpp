@@ -25,12 +25,6 @@ Model::~Model()
 	//device->Release();
 }
 
-Model::~Model()
-{
-	// オブジェクトの解放
-	device->Release();
-}
-
 Model* Model::LoadFromOBJ(const string& modelname)
 {
 	// 新たなModel型のインスタンスのメモリを確保
@@ -162,7 +156,7 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 		D3D12_RESOURCE_STATE_GENERIC_READ, // テクスチャ用指定
 		nullptr, IID_PPV_ARGS(&texbuff_));
 	assert(SUCCEEDED(result));
-	
+
 	// テクスチャバッファにデータ転送
 	for (size_t i = 0; i < metadata.mipLevels; i++) {
 		const Image* img = scratchImg.GetImage(i, 0, 0); // 生データ抽出
@@ -312,9 +306,9 @@ void Model::LoadFromOBJInternal(const string& modelname)
 	if (file.fail()) {
 		assert(0);
 	}
-	vector<Vector3> positions; // 頂点座標
-	vector<Vector3> normals;   // 法線ベクトル
-	vector<Vector2> texcoords; // テクスチャUV
+	vector<XMFLOAT3> positions; // 頂点座標
+	vector<XMFLOAT3> normals;   // 法線ベクトル
+	vector<XMFLOAT2> texcoords; // テクスチャUV
 	// １行ずつ読み込む
 	string line;
 	while (getline(file, line)) {
@@ -329,7 +323,7 @@ void Model::LoadFromOBJInternal(const string& modelname)
 		// 先頭文字列がｖなら頂点座標
 		if (key == "v") {
 			// X,Y,Z座標読み込み
-			Vector3 position{};
+			XMFLOAT3 position{};
 			line_stream >> position.x;
 			line_stream >> position.y;
 			line_stream >> position.z;
@@ -370,7 +364,7 @@ void Model::LoadFromOBJInternal(const string& modelname)
 		if (key == "vt")
 		{
 			// U,V成分読み込み
-			Vector2 texcoord{};
+			XMFLOAT2 texcoord{};
 			line_stream >> texcoord.x;
 			line_stream >> texcoord.y;
 			// V方向反転
@@ -382,7 +376,7 @@ void Model::LoadFromOBJInternal(const string& modelname)
 		// 先頭文字列がvnなら法線ベクトル
 		if (key == "vn") {
 			// X,Y,Z成分読み込み
-			Vector3 normal{};
+			XMFLOAT3 normal{};
 			line_stream >> normal.x;
 			line_stream >> normal.y;
 			line_stream >> normal.z;
@@ -524,4 +518,3 @@ void Model::CreateBuffers()
 		constBuffB1_->Unmap(0, nullptr);
 	}
 }
-

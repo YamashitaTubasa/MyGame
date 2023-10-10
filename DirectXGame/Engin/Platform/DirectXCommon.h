@@ -3,10 +3,6 @@
 #include "WinApp.h"
 #include "FPSFixed.h"
 
-#pragma warning(push)
-#pragma warning(disable:4820)
-#include <d3d12.h>
-#pragma warning(pop)
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include <d3dx12.h>
@@ -14,14 +10,18 @@
 #include <thread>
 
 #pragma warning(push)
-// C4023の警告を見なかったことにする
+#pragma warning(disable:4820)
+#include <d3d12.h>
+#pragma warning(pop)
+
+#pragma warning(push)
 #pragma warning(disable:4023)
 #include <DirectXTex.h>
 #pragma warning(pop)
 
-/// <summary>
-/// DirectX基盤
-/// </summary>
+//=============//
+// DirectX基盤 //
+//=============//
 class DirectXCommon final
 {
 public: // メンバ関数

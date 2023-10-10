@@ -8,17 +8,20 @@
 #include <DirectXMath.h>
 #include <vector>
 #include <DirectXTex.h>
+#include <wrl.h>
+#include <d3dx12.h>
+#include <fbxsdk.h>
+
 #pragma warning(push)
 #pragma warning(disable:4668)
 #include <Windows.h>
 #pragma warning(pop)
-#include <wrl.h>
+
 #pragma warning(push)
 #pragma warning(disable:4820)
 #include <d3d12.h>
 #pragma warning(pop)
-#include <d3dx12.h>
-#include <fbxsdk.h>
+
 
 struct Node
 {

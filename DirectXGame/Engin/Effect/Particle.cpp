@@ -1,15 +1,17 @@
 #include "Particle.h"
 
 #include <DirectXTex.h>
-#pragma warning(push)
-#pragma warning(disable:4668)
-#include <Windows.h>
-#pragma warning(pop)
 #include <cassert>
 #include <sstream>
 #include <string>
 #include <fstream>
 #include <vector>
+
+#pragma warning(push)
+#pragma warning(disable:4668)
+#include <Windows.h>
+#pragma warning(pop)
+
 
 using namespace DirectX;
 using namespace std;

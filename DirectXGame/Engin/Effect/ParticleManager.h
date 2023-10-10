@@ -2,19 +2,21 @@
 
 #include "Particle.h"
 
-#pragma warning(push)
-#pragma warning(disable:4668)
-#include <Windows.h>
-#pragma warning(pop)
 #include <wrl.h>
-#pragma warning(push)
-#pragma warning(disable:4820)
-#include <d3d12.h>
-#pragma warning(pop)
 #include <DirectXMath.h>
 #include <d3dx12.h>
 #include <forward_list>
 #include <string>
+
+#pragma warning(push)
+#pragma warning(disable:4668)
+#include <Windows.h>
+#pragma warning(pop)
+
+#pragma warning(push)
+#pragma warning(disable:4820)
+#include <d3d12.h>
+#pragma warning(pop)
 
 /// <summary>
 /// パーティクル
