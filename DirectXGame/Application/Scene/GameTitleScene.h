@@ -82,4 +82,5 @@ private: // メンバ変数
 	// フラグ
 	bool start = false;
 	bool isSpace = true;
+	bool isPos = false;
 };

@@ -75,6 +75,8 @@ void GameTitleScene::Update()
 {
 	// 天球の更新
 	skydome->Update();
+	// 天球の回転処理
+	skydome->RotateSky();
 
 	// 自機の更新
 	object3d->Update();
@@ -92,6 +94,21 @@ void GameTitleScene::Update()
 		isSpace = true;
 		spaceTimer = 0;
 	}
+
+	// 自機の上下移動
+	if (isPos == false) {
+		pPos.y += 0.03f;
+	}
+	if (pPos.y >= -4.0f) {
+		isPos = true;
+	}
+	if (isPos == true) {
+		pPos.y -= 0.03f;
+	}
+	if (pPos.y <= -7.0f) {
+		isPos = false;
+	}
+	object3d->SetPosition(pPos);
 
 	// シーンの切り替え処理
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
