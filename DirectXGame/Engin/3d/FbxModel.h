@@ -4,21 +4,19 @@
 #include "Vector4.h"
 #include "Matrix4.h"
 
+#pragma warning(push)
+#pragma warning(disable:4668)
+#pragma warning(disable:4820)
 #include <string>
 #include <DirectXMath.h>
 #include <vector>
 #include <DirectXTex.h>
-#pragma warning(push)
-#pragma warning(disable:4668)
 #include <Windows.h>
-#pragma warning(pop)
 #include <wrl.h>
-#pragma warning(push)
-#pragma warning(disable:4820)
 #include <d3d12.h>
-#pragma warning(pop)
 #include <d3dx12.h>
 #include <fbxsdk.h>
+#pragma warning(pop)
 
 struct Node
 {

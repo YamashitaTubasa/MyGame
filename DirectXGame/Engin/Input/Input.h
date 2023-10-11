@@ -9,7 +9,6 @@
 #pragma warning(push)
 #pragma warning(disable:4668)
 #include <Windows.h>
-#pragma warning(pop)
 #include <wrl.h>
 #include <dinput.h>
 #include <dwrite.h>
@@ -17,6 +16,7 @@
 #include <wrl/client.h>
 #include <random>
 #include <xinput.h>
+#pragma warning(pop)
 
 #pragma comment(lib,"d3d11.lib")
 #pragma comment(lib,"d2d1.lib")

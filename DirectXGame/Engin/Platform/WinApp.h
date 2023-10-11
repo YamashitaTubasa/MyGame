@@ -2,12 +2,13 @@
 
 #pragma warning(push)
 #pragma warning(disable:4668)
+#pragma warning(disable:5039)
 #include <Windows.h>
 #pragma warning(pop)
 
-/// <summary>
-/// WindowsAPI
-/// </summary>
+//============//
+// WindowsAPI //
+//============//
 class WinApp final
 {
 public: // 静的メンバ関数
@@ -20,12 +21,12 @@ public: // メンバ関数
 	// 終了
 	void Finalize();
 
-	// getter
-	HWND GetHwnd() const { return hwnd_; }
-	HINSTANCE GetHInstance() const { return wc_.hInstance; }
-
 	// メッセージの処理
 	bool ProcessMessage();
+
+public: // Getter
+	[[maybe_unused]] HWND GetHwnd() const { return hwnd_; }
+	[[maybe_unused]] HINSTANCE GetHInstance() const { return wc_.hInstance; }
 
 public:
 	// インスタンスの取得
@@ -33,7 +34,7 @@ public:
 
 private:
 	// コンストラクタ
-	WinApp() = default;
+	[[maybe_unused]] WinApp() {};
 	// デストラクタ
 	~WinApp() = default;
 	// コピーコンストラクタの禁止

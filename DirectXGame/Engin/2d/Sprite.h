@@ -2,6 +2,8 @@
 
 #include "DirectXCommon.h"
 
+#pragma warning(push)
+#pragma warning(disable:4668)
 #include <D3dx12.h>
 #include <DirectXMath.h>
 #include <d3dcompiler.h>
@@ -9,8 +11,6 @@
 #include <DirectXTex.h>
 #include <wrl.h>
 #include <array>
-#pragma warning(push)
-#pragma warning(disable:4668)
 #include <Windows.h>
 #pragma warning(pop)
 

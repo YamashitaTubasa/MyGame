@@ -6,10 +6,10 @@
 #pragma warning(push)
 #pragma warning(disable:4820)
 #include <d3d12.h>
-#pragma warning(pop)
 #include <d3dx12.h>
 #include <cassert>
 #include <string>
+#pragma warning(pop)
 
 class FbxLoader
 {

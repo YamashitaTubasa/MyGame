@@ -1,6 +1,9 @@
 #include "ParticleManager.h"
+
+#pragma warning(push)
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 
