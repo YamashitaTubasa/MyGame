@@ -1,17 +1,17 @@
 #include "Particle.h"
 
+#pragma warning(push)
+#pragma warning(disable:4514)
+#pragma warning(disable:4668)
+#pragma warning(disable:4820)
 #include <DirectXTex.h>
+#include <Windows.h>
 #include <cassert>
 #include <sstream>
 #include <string>
 #include <fstream>
 #include <vector>
-
-#pragma warning(push)
-#pragma warning(disable:4668)
-#include <Windows.h>
 #pragma warning(pop)
-
 
 using namespace DirectX;
 using namespace std;
@@ -74,7 +74,7 @@ void Particle::Update()
 		// 速度による移動
 		it->position = it->position + it->velocity;
 		// 進行度を0～1の範囲に換算
-		float f = (float)it->num_frame / it->frame;
+		float f = float(it->num_frame / it->frame);
 		// スケールの線形補間
 		it->scale = (it->e_scale - it->s_scale) / f,
 			it->scale += it->s_scale;

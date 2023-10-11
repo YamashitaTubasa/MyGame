@@ -1,8 +1,16 @@
 #pragma once
 
 #pragma warning(push)
+#pragma warning(disable:4061)
+#pragma warning(disable:4265)
+#pragma warning(disable:4625)
+#pragma warning(disable:4626)
 #pragma warning(disable:4668)
 #pragma warning(disable:4820)
+#pragma warning(disable:4365)
+#pragma warning(disable:5039)
+#pragma warning(disable:5204)
+#pragma warning(disable:5220)
 #include <Windows.h>
 #include <wrl.h>
 #include <d3d12.h>
@@ -126,7 +134,7 @@ public:// 静的メンバ関数
 	void Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
 
 public:
-	static void SetDevice(ID3D12Device* device) { Particle::device_ = device; } // device_のsetter
+	[[maybe_unused]] static void SetDevice(ID3D12Device* device) { Particle::device_ = device; } // device_のsetter
 
 private: // メンバ変数
 	// 親オブジェクト
