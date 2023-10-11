@@ -4,8 +4,6 @@
 
 #include "DirectXCommon.h"
 
-using namespace DirectX;
-
 // ===================
 // スプライト共通部
 // ===================

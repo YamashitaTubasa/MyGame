@@ -156,7 +156,7 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 		D3D12_RESOURCE_STATE_GENERIC_READ, // テクスチャ用指定
 		nullptr, IID_PPV_ARGS(&texbuff_));
 	assert(SUCCEEDED(result));
-	
+
 	// テクスチャバッファにデータ転送
 	for (size_t i = 0; i < metadata.mipLevels; i++) {
 		const Image* img = scratchImg.GetImage(i, 0, 0); // 生データ抽出
@@ -518,4 +518,3 @@ void Model::CreateBuffers()
 		constBuffB1_->Unmap(0, nullptr);
 	}
 }
-

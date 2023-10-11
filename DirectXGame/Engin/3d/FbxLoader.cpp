@@ -203,14 +203,14 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
     fbxMesh->GetUVSetNames(uvNames);
 
     // 面ごとの情報読み取り
-    for (int i = 0; i < polygonCount; i++) 
+    for (int i = 0; i < polygonCount; i++)
     {
         // 面を構成する頂点の数を取得(3なら三角形ポリゴン)
         const int polygonSize = fbxMesh->GetPolygonSize(i);
         assert(polygonSize <= 4);
 
         // 1頂点ずつ処理
-        for (int j = 0; j < polygonSize; j++) 
+        for (int j = 0; j < polygonSize; j++)
         {
             // FBX頂点配列のインデックス
             int index = fbxMesh->GetPolygonVertex(i, j);
@@ -219,7 +219,7 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
             // 頂点法線読み込み
             FbxModel::VertexPosNormalUvSkin& vertex = vertices[index];
             FbxVector4 normal;
-            if (fbxMesh->GetPolygonVertexNormal(i, j, normal)) 
+            if (fbxMesh->GetPolygonVertexNormal(i, j, normal))
             {
                 vertex.normal.x = (float)normal[0];
                 vertex.normal.y = (float)normal[1];
@@ -232,7 +232,7 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
                 FbxVector2 uvs;
                 bool lUnmappedUV;
                 // 0番決め打ちで読み込み
-                if (fbxMesh->GetPolygonVertexUV(i, j, uvNames[0], uvs, lUnmappedUV)) 
+                if (fbxMesh->GetPolygonVertexUV(i, j, uvNames[0], uvs, lUnmappedUV))
                 {
                     vertex.uv.x = (float)uvs[0];
                     vertex.uv.y = (float)uvs[1];
@@ -241,7 +241,7 @@ void FbxLoader::ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh)
 
             // インデックス配列に頂点インデックス追加
             // 3番点目までなら
-            if (j < 3){
+            if (j < 3) {
                 // 1点追加し、他の2点と三角形を構築する
                 indices.push_back((unsigned short)index);
             }
@@ -289,7 +289,7 @@ void FbxLoader::ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode)
 
             // ディフューズテクスチャを取り出す
             const FbxProperty diffuseProperty = material->FindProperty(FbxSurfaceMaterial::sDiffuse);
-            if (diffuseProperty.IsValid()) 
+            if (diffuseProperty.IsValid())
             {
                 const FbxFileTexture* texture = diffuseProperty.GetSrcObject<FbxFileTexture>();
                 if (texture) {
