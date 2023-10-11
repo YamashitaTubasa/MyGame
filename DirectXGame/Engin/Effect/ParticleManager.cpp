@@ -1,6 +1,8 @@
 #include "ParticleManager.h"
 
 #pragma warning(push)
+#pragma warning(disable:4514)
+#pragma warning(disable:4820)
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 #pragma warning(pop)
@@ -156,7 +158,7 @@ void ParticleManager::InitializeCamera(int window_width, int window_height)
 	// 透視投影による射影行列の生成
 	matProjection_ = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(60.0f),
-		(float)window_width / window_height,
+		float(window_width / window_height),
 		0.1f, 1000.0f
 	);
 }

@@ -170,7 +170,7 @@ public: // メンバ関数
 	/// モデルの設定
 	/// </summary>
 	/// <param name="particle"></param>
-	void SetModel(Particle* particle) { this->particle_ = particle; }
+	[[maybe_unused]] void SetModel(Particle* particle) { this->particle_ = particle; }
 
 	/// <summary>
 	/// パーティクル実装
