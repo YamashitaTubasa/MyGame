@@ -3,25 +3,30 @@
 #include "WinApp.h"
 #include "FPSFixed.h"
 
+#pragma warning(push)
+#pragma warning(disable:4023)
+#pragma warning(disable:4061)
+#pragma warning(disable:4820)
+#pragma warning(disable:4265)
+#pragma warning(disable:4365)
+#pragma warning(disable:4514)
+#pragma warning(disable:4625)
+#pragma warning(disable:4626)
+#pragma warning(disable:4668)
+#pragma warning(disable:5204)
+#pragma warning(disable:5220)
+#include <d3d12.h>
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include <d3dx12.h>
 #include <chrono>
 #include <thread>
-
-#pragma warning(push)
-#pragma warning(disable:4820)
-#include <d3d12.h>
-#pragma warning(pop)
-
-#pragma warning(push)
-#pragma warning(disable:4023)
 #include <DirectXTex.h>
 #pragma warning(pop)
 
-//=============//
-// DirectX基盤 //
-//=============//
+/// <summary>
+/// DirectX基盤
+/// </summary>
 class DirectXCommon final
 {
 public: // メンバ関数
@@ -75,11 +80,11 @@ private: // メンバ関数
 	
 public: // Getter
 	// デバイスの取得
-	ID3D12Device* GetDevice() const { return device_.Get(); }
+	[[maybe_unused]] ID3D12Device* GetDevice() const { return device_.Get(); }
 	// コマンドリスト取得
-	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
+	[[maybe_unused]] ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
 	// バックバッファの数を取得
-	size_t GetBackBufferCount() const { return backBuffers_.size(); }
+	[[maybe_unused]] size_t GetBackBufferCount() const { return backBuffers_.size(); }
 
 private: 
 	// WindowsAPI
@@ -87,7 +92,6 @@ private:
 	// FPS
 	FPSFixed* fpsFixed_ = nullptr;
 
-	HRESULT result_;
 	// DirectX12デバイス
 	Microsoft::WRL::ComPtr<ID3D12Device> device_;
 	// DXGIファクトリ
@@ -107,6 +111,7 @@ private:
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers_;
 	// フェンスの生成
 	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
+
 
 	UINT rtvHD_;
 	UINT64 fenceVal_ = 0;

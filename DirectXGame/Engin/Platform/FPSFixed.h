@@ -1,6 +1,10 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4365)
 #include <chrono>
+#pragma warning(pop)
+
 #include <thread>
 
 class FPSFixed 

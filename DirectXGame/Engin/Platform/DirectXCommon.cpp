@@ -1,9 +1,14 @@
 #include "DirectXCommon.h"
+
+#pragma warning(push)
+#pragma warning(disable:4514)
+#pragma warning(disable:4820)
 #include <vector>
 #include <cassert>
 #include <vector>
 #include <string>
 #include <dxgidebug.h>
+#pragma warning(pop)
 
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "d3d12.lib")
@@ -59,7 +64,7 @@ void DirectXCommon::Initialize(WinApp* winApp)
 
 void DirectXCommon::InitializeDevice()
 {
-
+	HRESULT result_;
 #ifdef _DEBUG
 	// デバックレイヤーをオンに
 	ID3D12Debug1* debugController;
@@ -156,6 +161,8 @@ void DirectXCommon::InitializeDevice()
 
 void DirectXCommon::InitializeCommand()
 {
+	HRESULT result_;
+
 	// コマンドアロケーターを生成
 	result_ = device_->CreateCommandAllocator(
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
@@ -179,6 +186,8 @@ void DirectXCommon::InitializeCommand()
 
 void DirectXCommon::InitializeSwapchain()
 {
+	HRESULT result_;
+
 	// スワップチェーンの設定
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	swapChainDesc.Width = 1280;
@@ -205,6 +214,8 @@ void DirectXCommon::InitializeSwapchain()
 
 void DirectXCommon::InitializeRenderTargetView()
 {
+	HRESULT result_;
+
 	DXGI_SWAP_CHAIN_DESC swcDesc = {};
     result_ = swapChain_->GetDesc(&swcDesc);
     assert(SUCCEEDED(result_));
@@ -256,6 +267,8 @@ void DirectXCommon::InitializeRenderTargetView()
 
 void DirectXCommon::InitializeDepthBuffer()
 {
+	HRESULT result_;
+
 	// リソース設定
 	D3D12_RESOURCE_DESC depthResourceDesc{};
 	depthResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
@@ -301,6 +314,8 @@ void DirectXCommon::InitializeDepthBuffer()
 
 void DirectXCommon::InitializeFence()
 {
+	HRESULT result_;
+
 	result_ = device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
 }
 
@@ -320,7 +335,7 @@ void DirectXCommon::PreDraw()
 	// 2.描画先の変更
 	// レンダーターゲットビューのハンドルを取得
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle =
-		CD3DX12_CPU_DESCRIPTOR_HANDLE(rtvHeap_->GetCPUDescriptorHandleForHeapStart(), bbIndex, rtvHD_);
+		CD3DX12_CPU_DESCRIPTOR_HANDLE(rtvHeap_->GetCPUDescriptorHandleForHeapStart(), (int)bbIndex, rtvHD_);
 	/*rtvHandle.ptr += bbIndex * rtvH;*/
 	// 深度ステンシルビュー用デスクリプタヒープのハンドルを取得
 	CD3DX12_CPU_DESCRIPTOR_HANDLE dsvHandle = 
@@ -362,6 +377,8 @@ void DirectXCommon::PreDraw()
 
 void DirectXCommon::PostDraw()
 {
+	HRESULT result_;
+
 	// バックバッファの番号取得(２つなので0番か1番)
 	UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
 

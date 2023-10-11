@@ -1,19 +1,15 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4668)
+#pragma warning(disable:4820)
+#include <Windows.h>
 #include <wrl.h>
+#include <d3d12.h>
 #include <DirectXMath.h>
 #include <d3dx12.h>
 #include <forward_list>
 #include <string>
-
-#pragma warning(push)
-#pragma warning(disable:4668)
-#include <Windows.h>
-#pragma warning(pop)
-
-#pragma warning(push)
-#pragma warning(disable:4820)
-#include <d3d12.h>
 #pragma warning(pop)
 
 //==============//
