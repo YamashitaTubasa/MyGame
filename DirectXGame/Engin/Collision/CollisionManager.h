@@ -29,10 +29,10 @@ public: // メンバ関数
 private:
 	// コンストラクタ
 	CollisionManager() = default;
-	// コピーコンストラクタの禁止
-	CollisionManager(const CollisionManager&) = delete;
 	// デストラクタ
 	~CollisionManager() = default;
+	// コピーコンストラクタの禁止
+	CollisionManager(const CollisionManager&) = delete;
 	// コピー代入演算子の禁止
 	CollisionManager& operator=(const CollisionManager&) = delete;
 

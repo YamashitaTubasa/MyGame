@@ -4,6 +4,8 @@
 /// 当たり判定プリミティブ
 /// </summary>
 
+#include "Vector3.h"
+
 #include <DirectXMath.h>
 
 /// <summary>
@@ -12,7 +14,7 @@
 struct Sphere 
 {
 	// 抽選座標
-	DirectX::XMVECTOR center = { 0,0,0,1 };
+	Vector3 center = { 0,0,0 };
 	// 半径
 	float radius = 1.0;
 };

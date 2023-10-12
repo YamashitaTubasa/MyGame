@@ -2,19 +2,43 @@
 
 using namespace DirectX;
 
-bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter, [[maybe_unused]]DirectX::XMVECTOR* r)
+bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, Vector3* inter, [[maybe_unused]]Vector3* r)
 {
-	// 座標系の原点から球の中心座標への距離
-	XMVECTOR distV = XMVector3Dot(sphereA.center, sphereB.center);
-	// 距離の絶対値が半径より大きければ当っていない
-	if (sphereB.radius > sphereA.radius) return false;
+	//// 座標系の原点から球の中心座標への距離
+	//XMVECTOR distV = XMVector3Dot(sphereA.center, sphereB.center);
+	//// 距離の絶対値が半径より大きければ当っていない
+	//if (sphereB.radius > sphereA.radius) return false;
 
-	// 擬似交点を計算
-	if (inter) {
-		// 球上の最近接点を、擬似交点とする
-		*inter = sphereB.center + sphereA.center;
+	//// 擬似交点を計算
+	//if (inter) {
+	//	// 球上の最近接点を、擬似交点とする
+	//	*inter = sphereB.center + sphereA.center;
+	//}
+
+	//return false;
+
+	float x = (sphereB.center.x - sphereA.center.x) * (sphereB.center.x - sphereA.center.x);
+	float y = (sphereB.center.y - sphereA.center.y) * (sphereB.center.y - sphereA.center.y);
+	float z = (sphereB.center.z - sphereA.center.z) * (sphereB.center.z - sphereA.center.z);
+
+	float dist = x + y + z;
+	float radius = (sphereA.radius + sphereB.radius) * (sphereA.radius + sphereB.radius);
+
+	if (dist <= radius) {
+		if (inter) {
+			// Aの半径が0の時座標はBの中心  Bの半径が0の時座標はAの中心  となるように補間
+			float t = sphereB.radius / (sphereA.radius + sphereB.radius);
+			*inter = Lerp(sphereA.center, sphereB.center, t);
+		}
+		if (r) {
+			float rejectLen = sphereA.radius + sphereB.radius - sqrtf(dist);
+			Vector3 center = sphereA.center - sphereB.center;
+			*r = center.Normalize();
+			*r *= rejectLen;
+
+		}
+		return true;
 	}
-
 	return false;
 }
 

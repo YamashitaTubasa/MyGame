@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+ * @file BackGroundObject.h
+ * @brief 背景モデルの設置するクラス
+ * @author ヤマシタ_ツバサ
+ */
+
 #include "Object3d.h"
 #include "Model.h"
 #include "LevelLoader.h"

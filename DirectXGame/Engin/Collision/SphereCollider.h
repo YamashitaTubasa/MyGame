@@ -8,7 +8,7 @@
 /// <summary>
 /// 球衝突判定オブジェクト
 /// </summary>
-class SphereCollider : public BaseCollider,public Sphere
+class SphereCollider : public BaseCollider, public Sphere
 {
 private: // エイリアス
 	// DirectX::を省略
