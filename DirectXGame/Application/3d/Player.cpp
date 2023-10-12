@@ -5,8 +5,6 @@
 using namespace std;
 using namespace DirectX;
 
-#define PI 3.141592
-
 Player::Player()
 {
 }

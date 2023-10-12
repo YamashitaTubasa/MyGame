@@ -9,16 +9,19 @@ public:
 	float y; // y成分
 	float z; // z成分
 
-public:
+public: // メンバ関数
 	// コンストラクト
 	Vector3();                            // ゼロベクトルとして生成
 	Vector3(float x, float y, float z);   // x成分,y成分を指定しての生成
 
-	// メンバ関数
-	float Length() const;                 // ノルム(長さ)を求める
-	Vector3& Normalize();                 // 正規化する
-	float Dot(const Vector3& v)const;     // 内積を求める
-	Vector3 Cross(const Vector3& v)const; // 外積を求める
+	// ノルム(長さ)を求める
+	float Length() const;
+	// 正規化する
+	Vector3& Normalize();
+	// 内積を求める
+	float Dot(const Vector3& v)const;
+	// 外積を求める
+	Vector3 Cross(const Vector3& v)const;
 
 	// 単項演算子オーバーロード
 	Vector3 operator+() const;
