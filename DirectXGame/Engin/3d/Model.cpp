@@ -1,11 +1,15 @@
 #include "Model.h"
 
+#pragma warning(push)
+#pragma warning(disable:4514)
+#pragma warning(disable:4820)
 #include <d3dcompiler.h>
 #include <DirectXTex.h>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <cassert>
+#pragma warning(pop)
 
 #pragma comment(lib, "d3dcompiler.lib")
 
@@ -350,9 +354,9 @@ void Model::LoadFromOBJInternal(const string& modelname)
 				index_stream >> indexNormal;
 				// 頂点データの追加
 				VertexPosNormalUv vertex{};
-				vertex.pos = positions[indexPosition - 1];
-				vertex.normal = normals[indexNormal - 1];
-				vertex.uv = texcoords[indexTexcoord - 1];
+				vertex.pos = positions[(unsigned int)indexPosition - 1];
+				vertex.normal = normals[(unsigned int)indexNormal - 1];
+				vertex.uv = texcoords[(unsigned int)indexTexcoord - 1];
 				vertices_.emplace_back(vertex);
 				// 頂点インデックスに追加
 				//indices.emplace_back(indexPosition - 1);
