@@ -1,3 +1,9 @@
+/**
+ * @file GameClearScene.cpp
+ * @brief クリアシーンのクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "GameClearScene.h"
 
 using namespace DirectX;

@@ -1,12 +1,15 @@
+/**
+ * @file SpriteCommon.h
+ * @brief スプライト共通部に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include <DirectXMath.h>
 
 #include "DirectXCommon.h"
 
-// ===================
-// スプライト共通部
-// ===================
 class SpriteCommon
 {
 public:

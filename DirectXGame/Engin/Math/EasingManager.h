@@ -1,8 +1,11 @@
+/**
+ * @file EasingManager.h
+ * @brief イージングの管理クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
-/// <summary>
-/// イージング管理
-/// </summary>
 class EasingManager
 {
 	/// <summary>

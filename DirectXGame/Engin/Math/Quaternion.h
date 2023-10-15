@@ -1,3 +1,9 @@
+/**
+ * @file Quaternion.h
+ * @brief Quaternionクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Vector3.h"

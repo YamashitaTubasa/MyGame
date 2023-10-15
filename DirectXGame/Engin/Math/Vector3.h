@@ -1,3 +1,9 @@
+/**
+ * @file Vector3.h
+ * @brief Vector3クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include <cmath>

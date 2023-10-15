@@ -1,3 +1,9 @@
+/**
+ * @file FbxModel.cpp
+ * @brief Fbxのモデルに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "FbxModel.h"
 
 FbxModel::~FbxModel()

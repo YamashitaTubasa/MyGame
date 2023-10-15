@@ -1,3 +1,9 @@
+/**
+ * @file FPSFixed.h
+ * @brief FPSに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #pragma warning(push)

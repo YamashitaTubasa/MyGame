@@ -1,3 +1,9 @@
+/**
+ * @file Skydome.cpp
+ * @brief 天球に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Skydome.h"
 
 Skydome::Skydome()

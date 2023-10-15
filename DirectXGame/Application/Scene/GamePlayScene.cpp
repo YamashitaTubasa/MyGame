@@ -1,3 +1,9 @@
+/**
+ * @file GamePlayerScene.cpp
+ * @brief ゲームプレイシーンのクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "GamePlayScene.h"
 
 #include "Player.h"

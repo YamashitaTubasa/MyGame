@@ -1,3 +1,9 @@
+/**
+ * @file SphereCollider.cpp
+ * @brief 球の衝突判定オブジェクト
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "BaseCollider.h"
@@ -5,10 +11,7 @@
 
 #include <DirectXMath.h>
 
-/// <summary>
-/// 球衝突判定オブジェクト
-/// </summary>
-class SphereCollider : public BaseCollider,public Sphere
+class SphereCollider : public BaseCollider, public Sphere
 {
 private: // エイリアス
 	// DirectX::を省略

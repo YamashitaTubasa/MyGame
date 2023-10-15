@@ -1,3 +1,9 @@
+/**
+ * @file GameTitleScene.cpp
+ * @brief ゲームタイトルシーンのクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "GameTitleScene.h"
 
 GameTitleScene::GameTitleScene()

@@ -1,3 +1,9 @@
+/**
+ * @file Player.cpp
+ * @brief プレイヤーの挙動に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Player.h"
 
 #include "SphereCollider.h"

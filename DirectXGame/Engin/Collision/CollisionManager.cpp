@@ -1,3 +1,9 @@
+/**
+ * @file CollisionManager.cpp
+ * @brief 当たり判定を管理するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "CollisionManager.h"
 
 #include "BaseCollider.h"

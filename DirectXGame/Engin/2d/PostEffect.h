@@ -1,3 +1,9 @@
+/**
+ * @file PostEffect.h
+ * @brief ポストエフェクトに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Sprite.h"

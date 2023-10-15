@@ -1,3 +1,9 @@
+/**
+ * @file GamePlayerScene.h
+ * @brief ゲームプレイシーンのクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Input.h"
@@ -26,9 +32,6 @@ class PostEffect;
 class CollisionManager;
 class Player;
 
-/// <summary>
-/// ゲームプレイシーン
-/// </summary>
 class GamePlayScene : public GameBaseScene
 {
 private:

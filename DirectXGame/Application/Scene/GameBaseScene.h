@@ -1,3 +1,9 @@
+/**
+ * @file GameBaseScene.h
+ * @brief シーンの基底クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Sprite.h"
@@ -5,7 +11,6 @@
 // 前方宣言
 class GameSceneManager;
 
-// シーン基底クラス
 class GameBaseScene
 {
 public: // メンバ関数

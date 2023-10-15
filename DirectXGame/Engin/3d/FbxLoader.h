@@ -1,3 +1,9 @@
+/**
+ * @file FbxLoader.h
+ * @brief Fbxの読み込みに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "fbxsdk.h"

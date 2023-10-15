@@ -1,3 +1,9 @@
+/**
+ * @file Particle.h
+ * @brief パーティクルに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #pragma warning(push)
@@ -20,9 +26,6 @@
 #include <string>
 #pragma warning(pop)
 
-//==============//
-// パーティクル //
-//==============//
 class Particle
 {
 private:

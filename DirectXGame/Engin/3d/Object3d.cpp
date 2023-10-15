@@ -1,3 +1,9 @@
+/**
+ * @file Object3d.cpp
+ * @brief 3Dオブジェクトに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Object3d.h"
 
 #include "BaseCollider.h"

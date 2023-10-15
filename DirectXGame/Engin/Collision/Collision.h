@@ -1,10 +1,13 @@
+/**
+ * @file Collision.h
+ * @brief 当たり判定に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "CollisionPrimitive.h"
 
-/// <summary>
-/// 当たり判定プリミティブ
-/// </summary>
 class Collision
 {
 public:

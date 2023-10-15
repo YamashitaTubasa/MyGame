@@ -1,11 +1,14 @@
+/**
+ * @file Skydome.h
+ * @brief 天球に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Object3d.h"
 #include "Model.h"
 
-/// <summary>
-/// 天球
-/// </summary>
 class Skydome
 {
 public:

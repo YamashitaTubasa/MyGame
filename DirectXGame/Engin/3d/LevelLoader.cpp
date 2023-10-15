@@ -1,3 +1,9 @@
+/**
+ * @file LevelLoader.cpp
+ * @brief レベルデータを読み込みに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "LevelLoader.h"
 
 LevelData* LevelLoader::LoadFile(const std::string& fileName)

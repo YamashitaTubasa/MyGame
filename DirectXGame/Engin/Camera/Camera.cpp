@@ -1,3 +1,9 @@
+/**
+ * @file Camera.cpp
+ * @brief カメラに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Camera.h"
 #include "WinApp.h"
 

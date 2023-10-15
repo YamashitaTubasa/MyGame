@@ -1,8 +1,14 @@
+/**
+ * @file Collision.cpp
+ * @brief 当たり判定に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Collision.h"
 
 using namespace DirectX;
 
-bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter, [[maybe_unused]]DirectX::XMVECTOR* r)
+bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter, [[maybe_unused]] DirectX::XMVECTOR* r)
 {
 	// 座標系の原点から球の中心座標への距離
 	XMVECTOR distV = XMVector3Dot(sphereA.center, sphereB.center);
@@ -16,6 +22,30 @@ bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB,
 	}
 
 	return false;
+
+	//float x = (sphereB.center.x - sphereA.center.x) * (sphereB.center.x - sphereA.center.x);
+	//float y = (sphereB.center.y - sphereA.center.y) * (sphereB.center.y - sphereA.center.y);
+	//float z = (sphereB.center.z - sphereA.center.z) * (sphereB.center.z - sphereA.center.z);
+
+	//float dist = x + y + z;
+	//float radius = (sphereA.radius + sphereB.radius) * (sphereA.radius + sphereB.radius);
+
+	//if (dist <= radius) {
+	//	if (inter) {
+	//		// Aの半径が0の時座標はBの中心  Bの半径が0の時座標はAの中心  となるように補間
+	//		float t = sphereB.radius / (sphereA.radius + sphereB.radius);
+	//		*inter = Lerp(sphereA.center, sphereB.center, t);
+	//	}
+	//	if (r) {
+	//		float rejectLen = sphereA.radius + sphereB.radius - sqrtf(dist);
+	//		Vector3 center = sphereA.center - sphereB.center;
+	//		*r = center.Normalize();
+	//		*r *= rejectLen;
+
+	//	}
+	//	return true;
+	//}
+	//return false;
 }
 
 bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane& plane, DirectX::XMVECTOR* inter)

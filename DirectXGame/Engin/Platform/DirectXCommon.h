@@ -1,3 +1,9 @@
+/**
+ * @file DirectXCommon.h
+ * @brief DirectXの基盤クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once 
 
 #include "WinApp.h"
@@ -24,9 +30,6 @@
 #include <DirectXTex.h>
 #pragma warning(pop)
 
-/// <summary>
-/// DirectX基盤
-/// </summary>
 class DirectXCommon final
 {
 public: // メンバ関数

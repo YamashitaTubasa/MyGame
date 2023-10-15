@@ -1,3 +1,9 @@
+/**
+ * @file SphereCollider.cpp
+ * @brief 球の衝突判定オブジェクト
+ * @author Yamashita Tubasa
+ */
+
 #include "SphereCollider.h"
 
 using namespace DirectX;

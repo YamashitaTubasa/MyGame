@@ -1,3 +1,9 @@
+/**
+ * @file Particle.cpp
+ * @brief パーティクルに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Particle.h"
 
 #pragma warning(push)

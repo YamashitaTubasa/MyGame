@@ -1,3 +1,9 @@
+/**
+ * @file Enemy.h
+ * @brief 敵の挙動に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Object3d.h"
@@ -5,9 +11,6 @@
 
 #include <sstream>
 
-/// <summary>
-/// 敵クラス
-/// </summary>
 class Enemy : public Object3d
 {
 public:

@@ -1,3 +1,9 @@
+/**
+ * @file Sprite.cpp
+ * @brief スプライトに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Sprite.h"
 
 using namespace DirectX;

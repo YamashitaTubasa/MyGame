@@ -1,3 +1,9 @@
+/**
+ * @file WinApp.cpp
+ * @brief WindowsAPIに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "WinApp.h"
 
 #pragma warning(push)

@@ -1,3 +1,9 @@
+/**
+ * @file Audio.cpp
+ * @brief サウンドに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Audio.h"
 
 Audio* Audio::GetInstance()
@@ -90,7 +96,7 @@ void Audio::LoadWave(const std::string& filename)
 	}
 
 	// DATAチャンクのデータ部(波形データ)の読み込み
-	char* pBuffer = new char[data.size];
+	char* pBuffer = new char[(size_t)data.size];
 	file.read(pBuffer, data.size);
 
 	// WAVEファイルと閉じる
@@ -102,7 +108,7 @@ void Audio::LoadWave(const std::string& filename)
 
 	soundData.wfex = format.fmt;
 	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
-	soundData.bufferSize = data.size;
+	soundData.bufferSize = (unsigned int)data.size;
 
 	// サウンドデータを連想配列に格納
 	soundDatas_.insert(std::make_pair(filename, soundData));

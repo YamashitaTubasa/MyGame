@@ -1,3 +1,9 @@
+/**
+ * @file LevelLoader.h
+ * @brief レベルデータを読み込みに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Vector3.h"
@@ -24,9 +30,6 @@ struct LevelData {
 	std::vector<ObjectData> objects;
 };
 
-/// <summary>
-/// レベルローダー
-/// </summary>
 class LevelLoader
 {
 public:

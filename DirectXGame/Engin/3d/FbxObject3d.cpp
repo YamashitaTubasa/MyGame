@@ -1,3 +1,9 @@
+/**
+ * @file FbxObject3d.cpp
+ * @brief Fbxのオブジェクトに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "FbxObject3d.h"
 
 #include <d3dcompiler.h>

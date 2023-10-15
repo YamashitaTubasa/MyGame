@@ -1,3 +1,9 @@
+/**
+ * @file PlayerBullet.cpp
+ * @brief プレイヤーの弾の挙動に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "PlayerBullet.h"
 
 PlayerBullet::PlayerBullet() 

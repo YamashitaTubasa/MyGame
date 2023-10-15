@@ -1,3 +1,9 @@
+/**
+ * @file SceneFactory.cpp
+ * @brief このゲームのシーンを生成するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "SceneFactory.h"
 
 GameBaseScene* SceneFactory::CreateScene(const std::string& sceneName)

@@ -1,3 +1,9 @@
+/**
+ * @file GameOverScene.cpp
+ * @brief ゲームオーバーシーンのクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "GameOverScene.h"
 
 using namespace DirectX;

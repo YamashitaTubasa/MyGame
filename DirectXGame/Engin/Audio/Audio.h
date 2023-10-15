@@ -1,11 +1,28 @@
+/**
+ * @file Audio.h
+ * @brief サウンドに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable:4265)
+#pragma warning(disable:4365)
+#pragma warning(disable:4625)
+#pragma warning(disable:4626)
+#pragma warning(disable:4668)
+#pragma warning(disable:4820)
+#pragma warning(disable:5039)
+#pragma warning(disable:5204)
+#pragma warning(disable:5220)
 #include <xaudio2.h>
 #include <fstream>
 #include <wrl.h>
 #include <DirectXMath.h>
 #include <map>
 #include <string>
+#pragma warning(pop)
 
 #pragma comment(lib, "xaudio2.lib")
 
@@ -49,9 +66,6 @@ struct SoundData {
 	unsigned int bufferSize;
 };
 
-// =============
-// オーディオクラス
-// =============
 class Audio final
 {
 public:
@@ -109,8 +123,8 @@ public:
 	void SetVolume(const std::string& filename, float volume);
 
 public:
-	IXAudio2* GetxAudio2() { return xAudio2.Get(); }
-	float GetVolume()const { return mVolume; }
+	[[maybe_unused]] IXAudio2* GetxAudio2() { return xAudio2.Get(); }
+	[[maybe_unused]] float GetVolume()const { return mVolume; }
 
 private:
 	HRESULT result;

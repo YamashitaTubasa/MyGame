@@ -1,10 +1,13 @@
+/**
+ * @file MyGame.h
+ * @brief ゲーム全体を司るクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "TYFramework.h"
 
-/// <summary>
-/// ゲーム全体
-/// </summary>
 class MyGame : public TYFramework
 {
 public: // メンバ関数

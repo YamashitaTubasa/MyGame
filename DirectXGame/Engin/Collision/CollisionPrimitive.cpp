@@ -1,3 +1,9 @@
+/**
+ * @file CollisionPrimitive.cpp
+ * @brief 当たり判定プリミティブ
+ * @author Yamashita Tubasa
+ */
+
 #include "CollisionPrimitive.h"
 
 using namespace DirectX;

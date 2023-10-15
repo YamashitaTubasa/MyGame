@@ -1,3 +1,9 @@
+/**
+ * @file EasingManager.cpp
+ * @brief イージングの管理クラス
+ * @author Yamashita Tubasa
+ */
+
 #include "EasingManager.h"
 
 #include <math.h>

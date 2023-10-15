@@ -1,6 +1,9 @@
-// ================
-// Quaternion.cpp
-// ================
+/**
+ * @file Quaternion.cpp
+ * @brief Quaternionクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Quaternion.h"
 #include<cmath>
 

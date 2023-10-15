@@ -1,3 +1,9 @@
+/**
+ * @file Sprite.h
+ * @brief スプライトに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "DirectXCommon.h"
@@ -47,9 +53,6 @@ struct SpriteCommon {
 	ID3D12Resource* GetTexBuffer(uint32_t index) const { return texBuff[index].Get(); }
 };
 
-/// <summary>
-/// スプライト
-/// </summary>
 class Sprite
 {
 private: // エイリアス

@@ -1,3 +1,9 @@
+/**
+ * @file Matrix4.h
+ * @brief Matrix4クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Vector3.h"
@@ -5,9 +11,6 @@
 
 #define PI 3.14159265359
 
-/// <summary>
-/// Matrix4
-/// </summary>
 class Matrix4
 {
 public:
