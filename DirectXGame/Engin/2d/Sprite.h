@@ -149,41 +149,113 @@ public:
 	void Finalize();
 
 public: // セッター
-	// 座標設定
+	/// <summary>
+	/// 座標の設定
+	/// </summary>
+	/// <param name="position">座標</param>
 	void SetPosition(const XMFLOAT3& position) { this->position_ = position; }
-	// サイズ設定
+
+	/// <summary>
+	/// サイズの設定
+	/// </summary>
+	/// <param name="scale">サイズ</param>
 	void SetScale(const XMFLOAT2& scale) { this->scale_ = scale; }
-	// 回転
+
+	/// <summary>
+	/// 回転の設定
+	/// </summary>
+	/// <param name="rotation">回転</param>
 	void SetRotation(float rotation) { this->f_rotation_ = rotation; }
-	// 番号
+
+	/// <summary>
+	/// 番号のセット
+	/// </summary>
+	/// <param name="texNumber">番号</param>
 	void SetTexNumber(UINT texNumber) { this->texNumber_ = texNumber; }
-	// 色
+
+	/// <summary>
+	/// 色の設定
+	/// </summary>
+	/// <param name="color">色</param>
 	void SetColor(const XMFLOAT4& color) { this->color_ = color; }
-	// フリップX,Y
+
+	/// <summary>
+	/// フリップXの設定
+	/// </summary>
+	/// <param name="isFlipX">フリップXフラグ</param>
 	void SetIsFlipX(bool isFlipX) { this->isFlipX_ = isFlipX; }
+
+	/// <summary>
+	/// フリップYの設定
+	/// </summary>
+	/// <param name="isFlipX">フリップYフラグ</param>
 	void SetIsFlipY(bool isFlipY) { this->isFlipY_ = isFlipY; }
-	// テクスチャ左上座標
+
+	/// <summary>
+	/// テクスチャ左上座標
+	/// </summary>
+	/// <param name="texLeftTop">テクスチャ左上座標</param>
 	void SetTexLeftTop(const XMFLOAT2& texLeftTop) { this->texLeftTop_ = texLeftTop; }
-	// テクスチャ切り出しサイズ
+
+	/// <summary>
+	/// テクスチャ切り出しサイズ
+	/// </summary>
+	/// <param name="texSize">テクスチャ切り出しサイズ</param>
 	void SetTexSize(const XMFLOAT2& texSize) { this->texSize_ = texSize; }
 
 public: // ゲッター
-	// 座標
+	/// <summary>
+	/// 座標
+	/// </summary>
+	/// <returns>座標</returns>
 	XMFLOAT3 GetPosition() const { return position_; }
-	// サイズ
+
+	/// <summary>
+	/// サイズ
+	/// </summary>
+	/// <returns>サイズ</returns>
 	XMFLOAT2 GetScale() const { return scale_; }
-	// 回転
+
+	/// <summary>
+	/// 回転
+	/// </summary>
+	/// <returns>回転</returns>
 	float GetRotation() const { return f_rotation_; }
-	// 番号
+
+	/// <summary>
+	/// 番号
+	/// </summary>
+	/// <returns>番号</returns>
 	UINT GetTexNumber() const { return texNumber_; }
-	// 色
+
+	/// <summary>
+	/// 色
+	/// </summary>
+	/// <returns>色</returns>
 	XMFLOAT4 GetColor() const { return color_; }
-	// フリップX,Y
+
+	/// <summary>
+	/// フリップX
+	/// </summary>
+	/// <returns>フリップX</returns>
 	bool GetIsFlipX() const { return isFlipX_; }
+
+	/// <summary>
+	/// フリップY
+	/// </summary>
+	/// <returns>フリップY</returns>
 	bool GetIsFlipY() const { return isFlipY_; }
-	// テクスチャ左上座標
+
+	/// <summary>
+	/// テクスチャ左上座標
+	/// </summary>
+	/// <returns>テクスチャ左上座標</returns>
 	XMFLOAT2 GetTexLeftTop() const { return texLeftTop_; }
-	// テクスチャ切り出しサイズ
+
+	/// <summary>
+	/// テクスチャ切り出しサイズ
+	/// </summary>
+	/// <returns>テクスチャ切り出しサイズ</returns>
 	XMFLOAT2 GetTexSize() const { return texSize_; }
 
 private:

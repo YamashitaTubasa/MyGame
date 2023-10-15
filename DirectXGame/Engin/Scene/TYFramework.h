@@ -27,23 +27,35 @@ public:
 	void Run();
 
 public: // メンバ関数
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	virtual void Initialize();
 
-	// 終了
+	/// <summary>
+	/// 終了
+	/// </summary>
 	virtual void Finalize();
 
-	// 毎フレーム更新
+	/// <summary>
+	/// 毎フレーム更新
+	/// </summary>
 	virtual void Update();
 
-	// 描画
+	/// <summary>
+	/// 描画
+	/// </summary>
 	virtual void Draw() = 0;
 
-	// 終了チェック
+	/// <summary>
+	/// 終了チェック
+	/// </summary>
+	/// <returns></returns>
 	virtual bool IsEndRequst() { return endRequst_; }
 
 
 public:
+	// デストラクタ
 	virtual ~TYFramework() = default;
 
 private:

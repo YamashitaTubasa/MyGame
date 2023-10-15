@@ -18,13 +18,20 @@ public: // 静的メンバ関数
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
 public: // メンバ関数
-	// WindowsAPIの初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
 
-	// 終了
+	/// <summary>
+	/// 解放
+	/// </summary>
 	void Finalize();
 
-	// メッセージの処理
+	/// <summary>
+	/// メッセージの処理
+	/// </summary>
+	/// <returns></returns>
 	bool ProcessMessage();
 
 public: // Getter

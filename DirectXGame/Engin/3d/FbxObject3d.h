@@ -96,19 +96,41 @@ public: // setter
 	/// <param name="model">モデル</param>
 	void SetModel(FbxModel* fbxModel) { this->fbxModel_ = fbxModel; }
 
-	// 座標
+	/// <summary>
+	/// 座標
+	/// </summary>
+	/// <param name="position">座標</param>
 	void SetPosition(const XMFLOAT3& position) { this->position_ = position; }
-	// 回転
+
+	/// <summary>
+	/// 回転
+	/// </summary>
+	/// <param name="rotation">回転</param>
 	void SetRotation(const XMFLOAT3& rotation) { this->rotation_ = rotation; }
-	// スケール
+
+	/// <summary>
+	/// スケール
+	/// </summary>
+	/// <param name="scale">スケール</param>
 	void SetScale(const XMFLOAT3& scale) { this->scale_ = scale; }
 
 public: // getter
-	// 座標
+	/// <summary>
+	/// 座標
+	/// </summary>
+	/// <returns>座標</returns>
 	XMFLOAT3& GetPosition() { return position_; }
-	// 回転
+
+	/// <summary>
+	/// 回転
+	/// </summary>
+	/// <returns>回転</returns>
 	XMFLOAT3& GetRotation() { return rotation_; }
-	// スケール
+
+	/// <summary>
+	/// スケール
+	/// </summary>
+	/// <returns>スケール</returns>
 	XMFLOAT3& GetScale() { return scale_; }
 
 private: // 静的メンバ変数

@@ -26,35 +26,75 @@ public:
 		float m20, float m21, float m22, float m23,
 		float m30, float m31, float m32, float m33);
 
-	// 単位行列を求める
+	/// <summary>
+	/// 形状タイプ取得
+	/// </summary>
+	/// <returns></returns>
 	static Matrix4 Identity();
 
-	// 逆行列を求める
+	/// <summary>
+	/// 逆行列を求める
+	/// </summary>
+	/// <returns></returns>
 	Matrix4 MakeInverse();
 
-	// 拡大縮小行列の設定
+	/// <summary>
+	/// 拡大縮小行列の設定
+	/// </summary>
+	/// <param name="s"></param>
+	/// <returns></returns>
 	Matrix4 Scale(const Vector3& s);
 	Matrix4 Scale(const Vector4& s);
 
-	// 回転行列の設定
+	/// <summary>
+	/// 回転行列の設定
+	/// </summary>
+	/// <param name="angle"></param>
+	/// <returns></returns>
 	Matrix4 RotateX(float angle);
 	Matrix4 RotateY(float angle);
 	Matrix4 RotateZ(float angle);
 
-	// 平行移動行列の作成
+	/// <summary>
+	/// 平行移動行列の作成
+	/// </summary>
+	/// <param name="t"></param>
+	/// <returns></returns>
 	Matrix4 Translate(const Vector3& t);
 	Matrix4 Translate(const Vector4& t);
 
-	// 座標変換（ベクトルと行列の掛け算をする）
+	/// <summary>
+	/// 座標変換（ベクトルと行列の掛け算をする）
+	/// </summary>
+	/// <param name="v"></param>
+	/// <param name="m"></param>
+	/// <returns></returns>
 	Vector3 Transform(const Vector3& v, const Matrix4& m);
 
-	// ビュー行列作成
+	/// <summary>
+	/// ビュー行列作成
+	/// </summary>
+	/// <param name="eye"></param>
+	/// <param name="target"></param>
+	/// <param name="up"></param>
+	/// <returns></returns>
 	Matrix4 ViewMat(Vector3 eye, Vector3 target, Vector3 up);
 
-	// 射影行列
+	/// <summary>
+	/// 射影行列
+	/// </summary>
+	/// <param name="fovAngleY"></param>
+	/// <param name="aspectRatio"></param>
+	/// <param name="nearZ"></param>
+	/// <param name="farZ"></param>
+	/// <returns></returns>
 	Matrix4 ProjectionMat(float fovAngleY, float aspectRatio, float nearZ, float farZ);
 
-	// 代入演算子オーバーロード
+	/// <summary>
+	/// 代入演算子オーバーロード
+	/// </summary>
+	/// <param name="m1"></param>
+	/// <returns></returns>
 	Matrix4& operator*=(const Matrix4& m1);
 
 	Matrix4 operator*(const Matrix4& m1);

@@ -50,7 +50,10 @@ public: // メンバ関数
 	/// <param name="sceneName">ファイル名</param>
 	void ChangeScene(const std::string& sceneName);
 
-	// シーンファクトリーのsetter
+	/// <summary>
+	/// シーンファクトリーのセット
+	/// </summary>
+	/// <param name="sceneFactory"></param>
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { sceneFactory_ = sceneFactory; }
 
 private: // メンバ変数

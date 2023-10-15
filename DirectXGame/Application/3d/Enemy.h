@@ -53,11 +53,23 @@ public: // メンバ関数
 	/// </summary>
 	void UpdateEnemyPopCommands();
 
-public: // ゲッター
+public: // Getter・Setter
+	/// <summary>
+	/// 座標の取得
+	/// </summary>
+	/// <returns>座標</returns>
 	DirectX::XMFLOAT3 GetPosition() const { return position[0]; }
-	// デスフラグの取得
+
+	/// <summary>
+	/// デスフラグの取得
+	/// </summary>
+	/// <returns>デスフラグ</returns>
 	bool GetIsDead() const { return isDead; }
-	// デスフラグのセット
+
+	/// <summary>
+	/// デスフラグのセット
+	/// </summary>
+	/// <param name="isDead_">デスフラグ</param>
 	void SetIsDead(bool isDead_) { isDead = isDead_; }
 
 private:

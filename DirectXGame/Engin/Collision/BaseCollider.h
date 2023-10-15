@@ -40,7 +40,10 @@ public:
 	/// </summary>
 	virtual void Update() = 0;
 
-	// 形状タイプ取得
+	/// <summary>
+	/// 形状タイプ取得
+	/// </summary>
+	/// <returns></returns>
 	inline CollisionShapeType GetShapeType() { return shapeType; }
 
 	/// <summary>

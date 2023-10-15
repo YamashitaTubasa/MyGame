@@ -70,19 +70,9 @@ public:
 	void Finalize() override;
 
 	/// <summary>
-	/// オブジェクトの解放
-	/// </summary>
-	void ObjectFinalize();
-
-	/// <summary>
 	/// スプライト初期化
 	/// </summary>
 	void SpriteInitialize();
-
-	// パーティクルの初期化
-	void ParticleInitialize();
-
-	void ParticleUpdate();
 
 	/// <summary>
 	/// ゲームのリセット
