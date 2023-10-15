@@ -39,6 +39,10 @@ public: // メンバ関数
 	virtual void Finalize() = 0;
 
 public: // メンバ関数
+	/// <summary>
+	/// シーンマネージャのセット
+	/// </summary>
+	/// <param name="gSceneManager">シーンマネージャのインスタンス</param>
 	virtual void SetSceneManager(GameSceneManager* gSceneManager) { gSceneManager_ = gSceneManager; }
 
 private: // メンバ変数

@@ -16,9 +16,14 @@
 class FPSFixed 
 {
 public: // メンバ関数
-	// FPS固定初期化
+	/// <summary>
+	/// FPS固定初期化
+	/// </summary>
 	void InitializeFixFPS();
-	// FPS固定更新
+
+	/// <summary>
+	/// FPS固定更新
+	/// </summary>
 	void UpdateFixFPS();
 
 	// 記録時間(FPS固定用)

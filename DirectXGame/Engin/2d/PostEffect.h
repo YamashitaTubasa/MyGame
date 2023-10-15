@@ -64,10 +64,28 @@ public:
 	void CreateGraphicsPipelineState(const wchar_t* filename);
 
 public:
+	/// <summary>
+	/// 色のセット
+	/// </summary>
+	/// <param name="color">色</param>
 	void SetColor(const DirectX::XMFLOAT4& color);
+
+	/// <summary>
+	/// ポストエフェクトのフラグのセット
+	/// </summary>
+	/// <param name="isPostE">ポストエフェクトのフラグ</param>
 	void SetIsPostE(const bool& isPostE);
+
+	/// <summary>
+	/// アルファ値のセット
+	/// </summary>
+	/// <param name="alpha">アルファ値</param>
 	void SetAlpha(const float& alpha);
 
+	/// <summary>
+	/// 色の取得
+	/// </summary>
+	/// <returns>色</returns>
 	DirectX::XMFLOAT4 GetColor() const { return color_; }
 
 private:

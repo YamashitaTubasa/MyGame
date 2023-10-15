@@ -28,6 +28,10 @@ public:
 	/// </summary>
 	void Update() override;
 
+	/// <summary>
+	/// 半径のセット
+	/// </summary>
+	/// <param name="s_radius"></param>
 	inline void SetRadius(float s_radius) { this->radius_ = s_radius; }
 
 private:

@@ -96,22 +96,44 @@ private: // 定数
 
 public: // 静的メンバ関数
 	
-	// OBJファイルから3Dモデルを読み込む
+	/// <summary>
+	/// OBJファイルから3Dモデルを読み込む
+	/// </summary>
+	/// <param name="modelname">モデル名</param>
+	/// <returns></returns>
 	static Model* LoadFromOBJ(const std::string& modelname);
 
-	// マテリアル読み込み
+	/// <summary>
+	/// マテリアル読み込み
+	/// </summary>
+	/// <param name="directoryPath">ディレクトリパス</param>
+	/// <param name="filename"></param>
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
-	// テクスチャ読み込み
+	/// <summary>
+	/// テクスチャ読み込み
+	/// </summary>
+	/// <param name="directoryPath"></param>
+	/// <param name="filename"></param>
 	void LoadTexture(const std::string& directoryPath, const std::string& filename);
+
+	/// <summary>
+	/// テクスチャ読み込み
+	/// </summary>
+	/// <param name="filename"></param>
 	void LoadTexture(const std::string& filename = "Resources");
 
-	// 描画
+	/// <summary>
+	/// 描画
+	/// </summary>
 	/// <param name="cmdList">描画コマンドリスト</param>
 	/// <param name="rootParamIndexMaterial">マテリアル用ルートパラメータ番号</param>
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
 
-	// setter
+	/// <summary>
+	/// デバイスのセット
+	/// </summary>
+	/// <param name="device"></param>
 	[[maybe_unused]] static void SetDevice(ID3D12Device* device) { Model::device_ = device; }
 
 
@@ -146,12 +168,19 @@ private: // 静的メンバ変数
 	ComPtr<ID3D12Resource> constBuffB1_; // 定数バッファ
 
 private:// 静的メンバ関数
-	// OBJファイルから3Dモデルを読み込む(非公開)
+	/// <summary>
+	/// OBJファイルから3Dモデルを読み込む(非公開)
+	/// </summary>
+	/// <param name="modelname"></param>
 	void LoadFromOBJInternal(const std::string& modelname);
 
-	// デスクリプタヒープの初期化
+	/// <summary>
+	/// デスクリプタヒープの初期化
+	/// </summary>
 	void InitializeDescriptorHeap();
 
-	// 各種バッファ生成
+	/// <summary>
+	/// 各種バッファ生成
+	/// </summary>
 	void CreateBuffers();
 };

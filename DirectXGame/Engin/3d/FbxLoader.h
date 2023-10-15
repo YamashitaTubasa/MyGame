@@ -75,17 +75,46 @@ public:
 	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src);
 
 public: // サブ関数
-	// 頂点座標読み取り
+	/// <summary>
+	/// 頂点座標読み取り
+	/// </summary>
+	/// <param name="fbxModel">モデル</param>
+	/// <param name="fbxMesh">メッシュ</param>
 	void ParseMeshVertices(FbxModel* fbxModel, FbxMesh* fbxMesh);
-	// 面情報読み取り
+
+	/// <summary>
+	/// 面情報読み取り
+	/// </summary>
+	/// <param name="fbxModel">モデル</param>
+	/// <param name="fbxMesh">メッシュ/param>
 	void ParseMeshFaces(FbxModel* fbxModel, FbxMesh* fbxMesh);
-	// マテリアル読み取り
+
+	/// <summary>
+	/// マテリアル読み取り
+	/// </summary>
+	/// <param name="fbxModel">モデル</param>
+	/// <param name="fbxNode">ノード</param>
 	void ParseMaterial(FbxModel* fbxModel, FbxNode* fbxNode);
-	// スキニング情報の読み取り
+
+	/// <summary>
+	/// スキニング情報の読み取り
+	/// </summary>
+	/// <param name="fbxModel">モデル</param>
+	/// <param name="fbxMesh">メッシュ</param>
 	void ParseSkin(FbxModel* fbxModel, FbxMesh* fbxMesh);
-	// テクスチャ読み込み
+
+	/// <summary>
+	/// テクスチャ読み込み
+	/// </summary>
+	/// <param name="fbxModel">モデル</param>
+	/// <param name="fullpath">パス</param>
 	void LoadTexture(FbxModel* fbxModel, const std::string& fullpath);
-	// ディレクトリを含んだファイルパスからファイル名を抽出する
+
+	/// <summary>
+	/// ディレクトリを含んだファイルパスからファイル名を抽出する
+	/// </summary>
+	/// <param name="path">パス</param>
+	/// <returns></returns>
 	std::string ExtractFileName(const std::string& path);
 
 private:

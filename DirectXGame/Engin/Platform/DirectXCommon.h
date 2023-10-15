@@ -33,35 +33,75 @@
 class DirectXCommon final
 {
 public: // メンバ関数
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="winApp"></param>
 	void Initialize(WinApp* winApp);
-	// デバイスの初期化
+
+	/// <summary>
+	/// デバイスの初期化
+	/// </summary>
 	void InitializeDevice();
-	// コマンド関連の初期化
+
+	/// <summary>
+	/// コマンド関連の初期化
+	/// </summary>
 	void InitializeCommand();
-	// スワップチェーンの初期化
+
+	/// <summary>
+	/// スワップチェーンの初期化
+	/// </summary>
 	void InitializeSwapchain();
-	// レンダーターゲットビューの初期化
+
+	/// <summary>
+	/// レンダーターゲットビューの初期化
+	/// </summary>
 	void InitializeRenderTargetView();
-	// 深度バッファの初期化
+
+	/// <summary>
+	/// 深度バッファの初期化
+	/// </summary>
 	void InitializeDepthBuffer();
-	// フェンスの初期化
+
+	/// <summary>
+	/// フェンスの初期化
+	/// </summary>
 	void InitializeFence();
-	// 描画前処理
+
+	/// <summary>
+	/// 描画前処理
+	/// </summary>
 	void PreDraw();
-	// 描画後処理
+
+	/// <summary>
+	/// 描画後処理
+	/// </summary>
 	void PostDraw();
-	// 終了処理
+
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void fpsFixedFinalize();
 
 public:
 	// DirectXCommonのインスタンス
 	static DirectXCommon* instance;
-	// インスタンスの取得
+
+	/// <summary>
+	/// インスタンスの取得
+	/// </summary>
+	/// <returns></returns>
 	static DirectXCommon* GetInstance();
-	// インスタンスの解放
+
+	/// <summary>
+	/// インスタンスの解放
+	/// </summary>
 	void DeleteInstance();
-	// リソースリークチェック
+
+	/// <summary>
+	/// リソースリークチェック
+	/// </summary>
 	static void ResourceLeakCheck();
 
 private:
@@ -82,11 +122,22 @@ private: // メンバ関数
 	}
 	
 public: // Getter
-	// デバイスの取得
+	/// <summary>
+	/// デバイスの取得
+	/// </summary>
+	/// <returns></returns>
 	[[maybe_unused]] ID3D12Device* GetDevice() const { return device_.Get(); }
-	// コマンドリスト取得
+
+	/// <summary>
+	/// コマンドリスト取得
+	/// </summary>
+	/// <returns></returns>
 	[[maybe_unused]] ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
-	// バックバッファの数を取得
+
+	/// <summary>
+	/// バックバッファの数を取得
+	/// </summary>
+	/// <returns></returns>
 	[[maybe_unused]] size_t GetBackBufferCount() const { return backBuffers_.size(); }
 
 private: 

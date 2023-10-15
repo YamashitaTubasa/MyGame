@@ -97,17 +97,35 @@ public:
 	~FbxModel();
 
 public:
-	// バッファ生成
+	/// <summary>
+	/// バッファ生成
+	/// </summary>
+	/// <param name="device">デバイス</param>
 	void CreateBuffers(ID3D12Device* device);
-	// 描画
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="cmdList">コマンドリスト</param>
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 public: // getter
-	// モデルの変形行列取得
+	/// <summary>
+	/// モデルの変形行列取得
+	/// </summary>
+	/// <returns>ノード</returns>
 	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
-	// bonesの取得
+
+	/// <summary>
+	/// bonesの取得
+	/// </summary>
+	/// <returns>ボーン</returns>
 	std::vector<Bone>& GetBones() { return bones; }
-	// fbxSceneの取得
+
+	/// <summary>
+	/// fbxSceneの取得
+	/// </summary>
+	/// <returns></returns>
 	FbxScene* GetFbxScene() { return fbxScene; }
 
 private:

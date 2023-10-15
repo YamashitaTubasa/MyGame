@@ -75,14 +75,40 @@ public: // メンバ関数
 	void Effect();
 
 public: // ゲッター
-	// プレイヤーの座標の取得
+	/// <summary>
+	/// プレイヤーの座標の取得
+	/// </summary>
+	/// <returns>座標</returns>
 	const DirectX::XMFLOAT3& GetPositon() { return pPosition; }
-	// プレイヤーの弾の座標の取得
+
+	/// <summary>
+	/// プレイヤーの弾の座標の取得
+	/// </summary>
+	/// <returns>弾の座標</returns>
 	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP; }
-	// HPの取得
+
+	/// <summary>
+	/// HPの取得
+	/// </summary>
+	/// <returns>HP</returns>
 	int GetHp() const { return hp; }
+
+	/// <summary>
+	/// HPフラグの取得
+	/// </summary>
+	/// <returns>HPフラグ</returns>
 	bool GetIsHp()const { return isHp; }
+
+	/// <summary>
+	/// ポストエフェクトのフラグの取得
+	/// </summary>
+	/// <returns>ポストエフェクトフラグ</returns>
 	bool GetIsPostE() { return isPostE; }
+
+	/// <summary>
+	/// 弾のフラグの取得
+	/// </summary>
+	/// <returns>弾のフラグ</returns>
 	int GetIsBullet() { return isBullet; }
 	
 public: // メンバ変数

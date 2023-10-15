@@ -137,6 +137,10 @@ public:// 静的メンバ関数
 	void Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
 
 public:
+	/// <summary>
+	/// デバイスのセット
+	/// </summary>
+	/// <param name="device"></param>
 	[[maybe_unused]] static void SetDevice(ID3D12Device* device) { Particle::device_ = device; } // device_のsetter
 
 private: // メンバ変数

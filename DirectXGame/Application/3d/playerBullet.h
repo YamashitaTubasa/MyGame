@@ -47,10 +47,16 @@ public: // メンバ関数
 	void Draw();
 
 public: // ゲッター
-	// 座標の取得
+	/// <summary>
+	/// 座標の取得
+	/// </summary>
+	/// <returns>座標</returns>
 	DirectX::XMFLOAT3 GetPosition() const { return pBulletPos; }
 
-	// デスフラグの取得
+	/// <summary>
+	/// デスフラグの取得
+	/// </summary>
+	/// <returns>デスフラグ</returns>
 	bool IsDead() const { return isDead_; }
 
 private:

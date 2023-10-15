@@ -86,35 +86,47 @@ public:
 	// インスタンスを生成
 	static Audio* GetInstance();
 
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="directoryPath"></param>
 	void Initialize(const std::string& directoryPath = "Resources/BGM/");
-	// 解放
+
+	/// <summary>
+	/// 解放
+	/// </summary>
 	void Finalize();
+
 	/// <summary>
 	/// 音声データの読み込み
 	/// </summary>
 	/// <param name="filename">WAVファイル名</param>
 	void LoadWave(const std::string& filename);
+
 	/// <summary>
 	/// 音声データ解放
 	/// </summary>
 	/// <param name="soundData">サウンドデータ</param>
 	void Unload(SoundData* soundData);
+
 	/// <summary>
 	/// 音声再生
 	/// </summary>
 	/// <param name="filename">WAVファイル名</param>
 	void PlayWave(const std::string& filename);
+
 	/// <summary>
 	/// 音声のループ再生
 	/// </summary>
 	/// <param name="filename">WAVファイル名</param>
 	void LoopPlayWave(const std::string& filename);
+
 	/// <summary>
 	/// 音声停止
 	/// </summary>
 	/// <param name="filename">WAVファイル名</param>
 	void StopWave(const std::string& filename);
+
 	/// <summary>
 	/// 音量調節
 	/// </summary>
@@ -123,7 +135,16 @@ public:
 	void SetVolume(const std::string& filename, float volume);
 
 public:
+	/// <summary>
+	/// Audio2の取得
+	/// </summary>
+	/// <returns></returns>
 	[[maybe_unused]] IXAudio2* GetxAudio2() { return xAudio2.Get(); }
+
+	/// <summary>
+	/// 音量の取得
+	/// </summary>
+	/// <returns></returns>
 	[[maybe_unused]] float GetVolume()const { return mVolume; }
 
 private:

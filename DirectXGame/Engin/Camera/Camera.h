@@ -29,16 +29,24 @@ public:
 	using XMMATRIX = DirectX::XMMATRIX;
 
 public:
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
 
-	// 更新
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
 
-	// ビュー行列
+	/// <summary>
+	/// ビュー行列
+	/// </summary>
 	void UpdateViewMatrix();
 
-	// 透視投影
+	/// <summary>
+	/// 透視投影
+	/// </summary>
 	void UpdateProjectionMatrix();
 
 public:

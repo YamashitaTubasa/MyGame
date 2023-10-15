@@ -16,14 +16,26 @@ public:
 	
 
 public: // メンバ関数
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
-	// 更新
+
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
-	// 描画
+
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
 
 public: // getter
+	/// <summary>
+	/// DirectXCommonのインスタンスの取得
+	/// </summary>
+	/// <returns>DirectXCommonのインスタンス</returns>
 	DirectXCommon* GetDirectXCommon() const{ return directXCommon; }
 
 private:
