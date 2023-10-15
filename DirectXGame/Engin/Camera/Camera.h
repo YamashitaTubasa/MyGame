@@ -1,3 +1,9 @@
+/**
+ * @file Camera.h
+ * @brief カメラに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #pragma warning(push)
@@ -15,9 +21,6 @@
 #include <wrl.h>
 #pragma warning(pop)
 
-//========//
-// カメラ //
-//========//
 class Camera
 {
 public:

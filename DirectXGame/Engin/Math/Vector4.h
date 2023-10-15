@@ -1,3 +1,9 @@
+/**
+ * @file Vector4.h
+ * @brief Vector4クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include <cmath>

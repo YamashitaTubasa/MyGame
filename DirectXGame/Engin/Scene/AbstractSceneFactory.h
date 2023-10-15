@@ -1,11 +1,14 @@
+/**
+ * @file SceneFactory.h
+ * @brief シーンを生成するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "GameBaseScene.h"
 #include <string>
 
-/// <summary>
-/// シーン工場
-/// </summary>
 class AbstractSceneFactory
 {
 public:

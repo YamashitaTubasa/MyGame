@@ -1,3 +1,9 @@
+/**
+ * @file Player.h
+ * @brief プレイヤーの挙動に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Object3d.h"
@@ -20,9 +26,6 @@
 #include <iostream>
 #include <list>
 
-/// <summary>
-/// 自キャラ
-/// </summary>
 class Player : public Object3d
 {
 public:

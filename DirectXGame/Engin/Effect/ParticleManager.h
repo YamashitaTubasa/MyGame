@@ -1,3 +1,9 @@
+/**
+ * @file ParticleManager.h
+ * @brief パーティクル管理クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Particle.h"
@@ -14,9 +20,6 @@
 #include <string>
 #pragma warning(pop)
 
-/// <summary>
-/// パーティクル
-/// </summary>
 class ParticleManager
 {
 private: // エイリアス

@@ -1,3 +1,9 @@
+/**
+ * @file MyGame.cpp
+ * @brief ゲーム全体を司るクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "MyGame.h"
 
 #include "SceneFactory.h"

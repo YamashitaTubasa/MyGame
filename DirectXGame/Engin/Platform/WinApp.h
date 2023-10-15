@@ -1,3 +1,9 @@
+/**
+ * @file WinApp.h
+ * @brief WindowsAPIに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #pragma warning(push)
@@ -6,9 +12,6 @@
 #include <Windows.h>
 #pragma warning(pop)
 
-//============//
-// WindowsAPI //
-//============//
 class WinApp final
 {
 public: // 静的メンバ関数

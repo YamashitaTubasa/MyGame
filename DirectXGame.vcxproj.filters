@@ -237,9 +237,6 @@
     <ClCompile Include="DirectXGame\Engin\Collision\SphereCollider.cpp">
       <Filter>ソース ファイル\Engin\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\3d\RailCamera.cpp">
-      <Filter>ソース ファイル\Engin\3d</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Engin\2d\SpriteCommon.cpp">
       <Filter>ソース ファイル\Engin\2d</Filter>
     </ClCompile>
@@ -434,9 +431,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\3d\Skydome.h">
       <Filter>ヘッダー ファイル\Application\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\3d\RailCamera.h">
-      <Filter>ヘッダー ファイル\Engin\3d</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\2d\SpriteCommon.h">
       <Filter>ヘッダー ファイル\Engin\2d</Filter>

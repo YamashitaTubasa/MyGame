@@ -1,3 +1,9 @@
+/**
+ * @file GameOverScene.h
+ * @brief ゲームオーバーシーンのクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Input.h"

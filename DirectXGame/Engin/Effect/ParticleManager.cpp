@@ -1,3 +1,9 @@
+/**
+ * @file ParticleManager.cpp
+ * @brief パーティクル管理クラス
+ * @author Yamashita Tubasa
+ */
+
 #include "ParticleManager.h"
 
 #pragma warning(push)

@@ -1,3 +1,9 @@
+/**
+ * @file Audio.h
+ * @brief サウンドに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #pragma warning(push)
@@ -60,9 +66,6 @@ struct SoundData {
 	unsigned int bufferSize;
 };
 
-// =============
-// オーディオクラス
-// =============
 class Audio final
 {
 public:

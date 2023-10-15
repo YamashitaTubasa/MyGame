@@ -1,8 +1,10 @@
-#pragma once
+/**
+ * @file CollisionPrimitive.h
+ * @brief 当たり判定プリミティブ
+ * @author Yamashita Tubasa
+ */
 
-/// <summary>
-/// 当たり判定プリミティブ
-/// </summary>
+#pragma once
 
 #include "Vector3.h"
 
@@ -14,7 +16,7 @@
 struct Sphere 
 {
 	// 抽選座標
-	Vector3 center = { 0,0,0 };
+	DirectX::XMVECTOR center = { 0,0,0 };
 	// 半径
 	float radius = 1.0;
 };

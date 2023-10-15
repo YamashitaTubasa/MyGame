@@ -1,3 +1,9 @@
+/**
+ * @file TYFramework.cpp
+ * @brief フレームワーククラス
+ * @author Yamashita Tubasa
+ */
+
 #include "TYFramework.h"
 
 void TYFramework::Run()

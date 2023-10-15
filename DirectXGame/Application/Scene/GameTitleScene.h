@@ -1,3 +1,9 @@
+/**
+ * @file GameTitleScene.h
+ * @brief ゲームタイトルシーンのクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "DirectXCommon.h"

@@ -1,3 +1,9 @@
+/**
+ * @file Model.cpp
+ * @brief モデルの読み込みに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Model.h"
 
 #pragma warning(push)

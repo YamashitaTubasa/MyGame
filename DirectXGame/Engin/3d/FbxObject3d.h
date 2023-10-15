@@ -1,3 +1,9 @@
+/**
+ * @file FbxObject3d.h
+ * @brief Fbxのオブジェクトに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "FbxModel.h"

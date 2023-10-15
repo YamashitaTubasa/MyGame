@@ -1,3 +1,9 @@
+/**
+ * @file ImGuiManager.h
+ * @brief ImGuiの管理クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "WinApp.h"
@@ -9,9 +15,6 @@
 #include <imgui_impl_dx12.h>
 #pragma warning(pop)
 
-//==============
-// Imguiの管理
-//==============
 class ImGuiManager 
 {
 public:

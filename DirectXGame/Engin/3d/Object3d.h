@@ -1,3 +1,9 @@
+/**
+ * @file Object3d.h
+ * @brief 3Dオブジェクトに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #pragma warning(push)
@@ -21,9 +27,6 @@
 
 class BaseCollider;
 
-/// <summary>
-/// 3Dオブジェクト
-/// </summary>
 class Object3d
 {
 private: // エイリアス

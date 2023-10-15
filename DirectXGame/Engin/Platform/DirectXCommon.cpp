@@ -1,3 +1,9 @@
+/**
+ * @file DirectXCommon.cpp
+ * @brief DirectXの基盤クラス
+ * @author Yamashita Tubasa
+ */
+
 #include "DirectXCommon.h"
 
 #pragma warning(push)

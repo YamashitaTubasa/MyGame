@@ -1,3 +1,9 @@
+/**
+ * @file FbxLoader.cpp
+ * @brief Fbxの読み込みに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "FbxLoader.h"
 
 using namespace DirectX;

@@ -1,3 +1,9 @@
+/**
+ * @file Vector4.cpp
+ * @brief Vector4クラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Vector4.h"
 
 Vector4::Vector4()

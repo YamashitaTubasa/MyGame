@@ -1,3 +1,9 @@
+/**
+ * @file FbxModel.h
+ * @brief Fbxのモデルに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Vector3.h"

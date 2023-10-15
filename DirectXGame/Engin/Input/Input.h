@@ -1,3 +1,9 @@
+/**
+ * @file Input.h
+ * @brief 入力に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
@@ -23,9 +29,6 @@
 #pragma comment(lib,"dwrite.lib")
 #pragma comment (lib, "xinput.lib")
 
-/// <summary>
-/// 入力
-/// </summary>
 class Input final
 {
 public:

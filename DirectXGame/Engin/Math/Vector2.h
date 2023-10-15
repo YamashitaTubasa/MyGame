@@ -1,3 +1,9 @@
+/**
+ * @file Vector2.h
+ * @brief Vector2クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 class Vector2

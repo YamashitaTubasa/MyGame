@@ -1,3 +1,9 @@
+/**
+ * @file Input.cpp
+ * @brief 入力に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Input.h"
 #include <cassert>
 

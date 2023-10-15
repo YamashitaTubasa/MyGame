@@ -1,3 +1,9 @@
+/**
+ * @file Vector3.cpp
+ * @brief Vector3クラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Vector3.h"
 
 Vector3::Vector3()

@@ -1,10 +1,13 @@
+/**
+ * @file Collision.h
+ * @brief 当たり判定に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "CollisionPrimitive.h"
 
-/// <summary>
-/// 当たり判定プリミティブ
-/// </summary>
 class Collision
 {
 public:
@@ -15,7 +18,7 @@ public:
 	/// <param name="sphere1">球</param>
 	/// <param name="inter">交点（球上の最近接点）</param>
 	/// <returns>交差しているか否か</returns>
-	static bool CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, Vector3* inter = nullptr, Vector3* r = nullptr);
+	static bool CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter = nullptr, DirectX::XMVECTOR* r = nullptr);
 
 	/// <summary>
 	/// 球と平面の当たり判定

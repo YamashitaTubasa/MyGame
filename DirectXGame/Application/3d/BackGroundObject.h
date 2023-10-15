@@ -1,10 +1,10 @@
-#pragma once
-
 /**
  * @file BackGroundObject.h
- * @brief 背景モデルの設置するクラス
- * @author ヤマシタ_ツバサ
+ * @brief 背景モデルを設置するクラス
+ * @author Yamashita Tubasa
  */
+
+#pragma once
 
 #include "Object3d.h"
 #include "Model.h"
@@ -13,9 +13,6 @@
 #include <DirectXMath.h>
 #include <map>
 
-/// <summary>
-/// 背景モデル
-/// </summary>
 class BackGroundObject
 {
 private:

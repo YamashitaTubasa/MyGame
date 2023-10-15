@@ -1,3 +1,9 @@
+/**
+ * @file CollisionInfo.h
+ * @brief 衝突情報に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include <DirectXMath.h>
@@ -5,9 +11,6 @@
 class Object3d;
 class BaseCollider;
 
-/// <summary>
-/// 衝突情報
-/// </summary>
 struct CollisionInfo
 {
 public:

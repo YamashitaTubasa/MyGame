@@ -1,3 +1,9 @@
+/**
+ * @file GameSceneManager.cpp
+ * @brief シーンを管理するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "GameSceneManager.h"
 
 GameSceneManager::~GameSceneManager()

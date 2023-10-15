@@ -1,3 +1,9 @@
+/**
+ * @file TYFramework.h
+ * @brief フレームワーククラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Input.h"

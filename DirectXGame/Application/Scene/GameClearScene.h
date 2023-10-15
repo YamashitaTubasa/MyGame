@@ -1,3 +1,9 @@
+/**
+ * @file GameClearScene.h
+ * @brief クリアシーンのクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "DirectXCommon.h"

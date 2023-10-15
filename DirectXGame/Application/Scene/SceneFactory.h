@@ -1,3 +1,9 @@
+/**
+ * @file SceneFactory.h
+ * @brief このゲームのシーンを生成するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "AbstractSceneFactory.h"
@@ -6,9 +12,6 @@
 #include "GameClearScene.h"
 #include "GameOverScene.h"
 
-/// <summary>
-/// このゲーム用のシーン工場
-/// </summary>
 class SceneFactory : public AbstractSceneFactory
 {
 public:

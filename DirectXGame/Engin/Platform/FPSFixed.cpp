@@ -1,3 +1,9 @@
+/**
+ * @file FPSFixed.cpp
+ * @brief FPSに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "FPSFixed.h"
 
 void FPSFixed::InitializeFixFPS() {

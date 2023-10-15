@@ -1,3 +1,9 @@
+/**
+ * @file main.cpp
+ * @brief メインのクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "MyGame.h"
 
 // windowsアプリでのエントリーポイント(main関数)

@@ -1,3 +1,9 @@
+/**
+ * @file PlayerBullet.h
+ * @brief プレイヤーの弾の挙動に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "Vector2.h"
@@ -11,9 +17,6 @@ struct BulletMove {
 	DirectX::XMFLOAT3 transform = { 0,0,0 };
 };
 
-/// <summary>
-/// 自キャラの弾
-/// </summary>
 class PlayerBullet
 {
 public:

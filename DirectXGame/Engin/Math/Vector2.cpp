@@ -1,3 +1,9 @@
+/**
+ * @file Vector2.cpp
+ * @brief Vector2クラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Vector2.h"
 #include <cmath>
 

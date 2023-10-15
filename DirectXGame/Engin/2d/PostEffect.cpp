@@ -1,3 +1,9 @@
+/**
+ * @file PostEffect.cpp
+ * @brief ポストエフェクトに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "PostEffect.h"
 
 #include <d3dx12.h>

@@ -1,12 +1,15 @@
+/**
+ * @file BaseCollider.h
+ * @brief コライダーの基底クラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "CollisionTypes.h"
 #include "Object3d.h"
 #include "CollisionInfo.h"
 
-/// <summary>
-/// コライダー基底クラス
-/// </summary>
 class BaseCollider
 {
 public:

@@ -1,12 +1,15 @@
+/**
+ * @file CollisionManager.h
+ * @brief 当たり判定を管理するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include <forward_list>
 
 class BaseCollider;
 
-/// <summary>
-/// 衝突マネージャ
-/// </summary>
 class CollisionManager
 {
 public: // 静的メンバ関数

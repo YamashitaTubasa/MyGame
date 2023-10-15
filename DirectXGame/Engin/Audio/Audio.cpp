@@ -1,3 +1,9 @@
+/**
+ * @file Audio.cpp
+ * @brief サウンドに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Audio.h"
 
 Audio* Audio::GetInstance()

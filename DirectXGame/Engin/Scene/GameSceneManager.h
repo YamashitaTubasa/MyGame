@@ -1,11 +1,14 @@
+/**
+ * @file GameSceneManager.h
+ * @brief シーンを管理するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #include "GameBaseScene.h"
 #include "AbstractSceneFactory.h"
 
-/// <summary>
-/// シーン管理
-/// </summary>
 class GameSceneManager final
 {
 private: // メンバ関数

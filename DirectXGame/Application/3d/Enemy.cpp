@@ -1,3 +1,9 @@
+/**
+ * @file Enemy.cpp
+ * @brief 敵の挙動に関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "Enemy.h"
 
 #include "CollisionManager.h"

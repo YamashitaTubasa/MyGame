@@ -1,3 +1,9 @@
+/**
+ * @file BackGroundObject.cpp
+ * @brief 背景モデルを設置するクラス
+ * @author Yamashita Tubasa
+ */
+
 #include "BackGroundObject.h"
 
 BackGroundObject::BackGroundObject()

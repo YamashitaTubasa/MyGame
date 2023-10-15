@@ -1,3 +1,9 @@
+/**
+ * @file Model.h
+ * @brief モデルの読み込みに関するクラス
+ * @author Yamashita Tubasa
+ */
+
 #pragma once
 
 #pragma warning(push)

@@ -1,3 +1,9 @@
+/**
+ * @file ImGuiManager.cpp
+ * @brief ImGuiの管理クラス
+ * @author Yamashita Tubasa
+ */
+
 #include "ImGuiManager.h"
 
 ImGuiManager::ImGuiManager()
