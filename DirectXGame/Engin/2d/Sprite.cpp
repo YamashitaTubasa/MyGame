@@ -298,7 +298,6 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 	assert(SUCCEEDED(result));
 	constBuff_->SetName(L"Sprite[constBuff]");
 	// 定数バッファにデータ転送
-	ConstBufferData* constMap = nullptr;
 	result = constBuff_->Map(0, nullptr, (void**)&constMap); // マッピング
 	constMap->color = color_;
 	assert(SUCCEEDED(result));
@@ -398,7 +397,6 @@ void Sprite::SpriteUpdate(Sprite* sprite, const SpriteCommon& spriteCommon)
 
 	HRESULT result;
 	// 定数バッファの転送
-	ConstBufferData* constMap = nullptr;
 	result = sprite->constBuff_->Map(0, nullptr, (void**)&constMap);
 	constMap->mat = sprite->matWorld_ * spriteCommon.matProjection;
 	sprite->constBuff_->Unmap(0, nullptr);
@@ -547,4 +545,14 @@ void Sprite::SpriteTransferVertexBuffer(const Sprite* sprite, [[maybe_unused]] c
 
 void Sprite::Finalize()
 {
+}
+
+void Sprite::SetAlpha(float alpha)
+{
+	// 定数バッファの転送
+	HRESULT result;
+	result = constBuff_->Map(0, nullptr, (void**)&constMap);
+	constMap->color.w = alpha;
+	constBuff_->Unmap(0, nullptr);
+	assert(SUCCEEDED(result));
 }
