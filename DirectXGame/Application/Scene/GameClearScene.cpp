@@ -54,6 +54,21 @@ void GameClearScene::Initialize()
 	// スプライトの頂点バッファの転送
 	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, 2);
 
+	//===== Blackの描画 =====//
+	black_ = new Sprite();
+	// テクスチャの読み込み
+	black_->LoadTexture(spriteCommon_, 3, L"Resources/Image/black.png");
+	// スプライトの生成
+	black_->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	black_->SetColor({ 1,1,1,1 });
+	black_->SetPosition({ 0,0,0 });
+	black_->SetScale({ 1280,720 });
+	black_->SetRotation(0.0f);
+	black_->SetAlpha(bAlpha_);
+	// スプライトの頂点バッファの転送
+	black_->SpriteTransferVertexBuffer(black_, spriteCommon_, 3);
+
 	// 天球の初期化
 	skydome_ = new Skydome();
 	skydome_->Initialize();
@@ -61,8 +76,10 @@ void GameClearScene::Initialize()
 
 void GameClearScene::Update()
 {
+	timer++;
+
 	// SPACEを押したら
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 100) {
 		// ゲームタイトルシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("TITLE");
 	}
@@ -72,6 +89,31 @@ void GameClearScene::Update()
 
 	// スプライトの更新
 	space_->SpriteUpdate(space_, spriteCommon_);
+	black_->SpriteUpdate(black_, spriteCommon_);
+
+	// フェードアウト処理
+	if (isFadeOut) {
+		if (bAlpha_ > 0.0f) {
+			bAlpha_ -= 0.01f;
+		}
+		if (bAlpha_ <= 0.01f) {
+			bAlpha_ = 0.0f;
+			isFadeOut = false;
+		}
+	}
+
+	// フェードインの処理
+	if (isFadeIn) {
+		if (bAlpha_ < 1.0f) {
+			bAlpha_ += 0.01f;
+		}
+		if (bAlpha_ >= 1.0f) {
+			bAlpha_ = 1.0f;
+			isFadeIn = false;
+			isScene = true;
+		}
+	}
+	black_->SetAlpha(bAlpha_);
 
 	// Press SPACEの描画の点滅処理
 	spaceTimer++;
@@ -109,6 +151,9 @@ void GameClearScene::Draw()
 
 	//=== スプライトの描画 ===//
 	clear_->SpriteDraw(spriteCommon_);
+	if (isFadeIn == true || isFadeOut == true) {
+		black_->SpriteDraw(spriteCommon_);
+	}
 	if (isSpace) {
 		space_->SpriteDraw(spriteCommon_);
 	}

@@ -61,6 +61,36 @@ void GameTitleScene::Initialize()
 	// スプライトの頂点バッファの転送
 	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, 2);
 
+	//===== InBlackの描画 =====//
+	inBlack_ = new Sprite();
+	// テクスチャの読み込み
+	inBlack_->LoadTexture(spriteCommon_, 3, L"Resources/Image/black.png");
+	// スプライトの生成
+	inBlack_->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	inBlack_->SetColor({ 1,1,1,1 });
+	inBlack_->SetPosition({ 0,0,0 });
+	inBlack_->SetScale({ 1280,720 });
+	inBlack_->SetRotation(0.0f);
+	inBlack_->SetAlpha(bInAlpha_);
+	// スプライトの頂点バッファの転送
+	inBlack_->SpriteTransferVertexBuffer(inBlack_, spriteCommon_, 3);
+
+	//===== InBlackの描画 =====//
+	outBlack_ = new Sprite();
+	// テクスチャの読み込み
+	outBlack_->LoadTexture(spriteCommon_, 4, L"Resources/Image/black.png");
+	// スプライトの生成
+	outBlack_->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	outBlack_->SetColor({ 1,1,1,1 });
+	outBlack_->SetPosition({ 0,0,0 });
+	outBlack_->SetScale({ 1280,720 });
+	outBlack_->SetRotation(0.0f);
+	outBlack_->SetAlpha(bOutAlpha_);
+	// スプライトの頂点バッファの転送
+	outBlack_->SpriteTransferVertexBuffer(outBlack_, spriteCommon_, 4);
+
 	// OBJモデルの読み込み
 	model = new Model();
 	model = Model::LoadFromOBJ("fighter");
@@ -90,6 +120,31 @@ void GameTitleScene::Update()
 	// スプライトの更新
 	title_->SpriteUpdate(title_, spriteCommon_);
 	space_->SpriteUpdate(space_, spriteCommon_);
+	inBlack_->SpriteUpdate(inBlack_, spriteCommon_);
+	outBlack_->SpriteUpdate(outBlack_, spriteCommon_);
+	if (Input::GetInstance()->TriggerKey(DIK_R)) {
+		int a;
+		a = 0;
+	}
+
+	// フェードアウト処理
+	if (isFadeOut) {
+		if (bInAlpha_ > 0.0f) {
+			bInAlpha_ -= 0.01f;
+		}
+		if (bInAlpha_ <= 0.01f) {
+			bInAlpha_ = 0.0f;
+			isFadeOut = false;
+		}
+	}
+
+	// フェードインの処理
+	if (isFadeIn) {
+		if (bInAlpha_ < 1.0f) {
+			bInAlpha_ += 0.01f;
+		}
+	}
+	inBlack_->SetAlpha(bInAlpha_);
 
 	// Press SPACEの描画の点滅処理
 	spaceTimer++;
@@ -117,8 +172,10 @@ void GameTitleScene::Update()
 	object3d->SetPosition(pPos);
 
 	// シーンの切り替え処理
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-		start = true;
+	if (isFadeIn == false && isFadeOut == false) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			start = true;
+		}
 	}
 	if (start) {
 		startTimer++;
@@ -128,6 +185,8 @@ void GameTitleScene::Update()
 
 		object3d->SetPosition(pPos);
 		object3d->SetEye(eye);
+
+		isFadeIn = true;
 	}
 	if (startTimer >= 200) {
 		// タイマーを初期値に戻す
@@ -168,6 +227,10 @@ void GameTitleScene::Draw()
 		if (isSpace) {
 			space_->SpriteDraw(spriteCommon_);
 		}
+	}
+	if (isFadeIn == true || isFadeOut == true) {
+		inBlack_->SpriteDraw(spriteCommon_);
+		//outBlack_->SpriteDraw(spriteCommon_);
 	}
 	
 	// スプライト描画後処理

@@ -100,6 +100,7 @@ private:
 	Sprite* ult = nullptr;
 	Sprite* X = nullptr;
 	Sprite* damage = nullptr;
+	Sprite* black_ = nullptr;
 	Sprite* number[5];
 	SpriteCommon spriteCommon_;
 
@@ -153,4 +154,14 @@ private:
 	int count = 0;
 	bool isDamage = false;
 	int damageTime = 0;
+
+	// アルファ値
+	float bAlpha_ = 1.0f;
+
+	// フェードアウト・インのフラグ
+	bool isFadeIn = false;
+	bool isFadeOut = true;
+
+	// シーンフラグ
+	bool isScene = false;
 };

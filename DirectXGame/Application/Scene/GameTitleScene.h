@@ -58,6 +58,8 @@ private: // メンバ変数
 	Sprite* sprite_ = nullptr;
 	Sprite* title_ = nullptr;
 	Sprite* space_ = nullptr;
+	Sprite* inBlack_ = nullptr;
+	Sprite* outBlack_ = nullptr;
 
 	// 天球
 	Skydome* skydome = nullptr;
@@ -89,4 +91,12 @@ private: // メンバ変数
 	bool start = false;
 	bool isSpace = true;
 	bool isPos = false;
+
+	// スプライトのアルファ値
+	float bInAlpha_ = 1.0f;
+	float bOutAlpha_ = 1.0f;
+
+	// フェードイン・アウトフラグ
+	bool isFadeIn = false;
+	bool isFadeOut = true;
 };

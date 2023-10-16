@@ -114,8 +114,13 @@ void GamePlayScene::Update()
 {
 	count++;
 
+	if (player->GetPosition().z >= 90) {
+		isFadeIn = true;
+	}
+
 	// シーン切り替え
 	if (player->GetPositon().z >= 150) {
+		isFadeIn = true;
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
@@ -229,6 +234,29 @@ void GamePlayScene::Update()
 	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon_, 7);
 	enemyHp->SpriteUpdate(enemyHp, spriteCommon_);
 
+	// フェードアウト処理
+	if (isFadeOut) {
+		if (bAlpha_ > 0.0f) {
+			bAlpha_ -= 0.01f;
+		}
+		if (bAlpha_ <= 0.01f) {
+			bAlpha_ = 0.0f;
+			isFadeOut = false;
+		}
+	}
+
+	// フェードインの処理
+	if (isFadeIn) {
+		if (bAlpha_ < 1.0f) {
+			bAlpha_ += 0.01f;
+		}
+		if (bAlpha_ > 1.0f) {
+			bAlpha_ = 1.0f;
+			isScene = true;
+		}
+	}
+	black_->SetAlpha(bAlpha_);
+
 	if (input->PushKey(DIK_I)) {
 		isDamage = true;
 	}
@@ -244,6 +272,9 @@ void GamePlayScene::Update()
 	}
 
 	if (hpScale.x <= 0) {
+		isFadeIn = true;
+	}
+	if (isScene) {
 		// ゲームオーバー（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("OVER");
 	}
@@ -331,6 +362,10 @@ void GamePlayScene::Draw()
 	// ダメージの描画
 	if (isDamage) {
 		damage->SpriteDraw(spriteCommon_);
+	}
+	// 黒
+	if (isFadeIn == true || isFadeOut == true) {
+		black_->SpriteDraw(spriteCommon_);
 	}
 
 	// スプライト描画後処理
@@ -465,6 +500,21 @@ void GamePlayScene::SpriteInitialize()
 	damage->SetRotation(0.0f);
 	damage->SpriteTransferVertexBuffer(damage, spriteCommon_, 11);
 	damage->SpriteUpdate(damage, spriteCommon_);
+
+	//===== Blackの描画 =====//
+	black_ = new Sprite();
+	// テクスチャの読み込み
+	black_->LoadTexture(spriteCommon_, 12, L"Resources/Image/black.png");
+	// スプライトの生成
+	black_->SpriteCreate(1280, 720, 12, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	black_->SetColor({ 1,1,1,1 });
+	black_->SetPosition({ 0,0,0 });
+	black_->SetScale({ 1280,720 });
+	black_->SetRotation(0.0f);
+	black_->SetAlpha(bAlpha_);
+	// スプライトの頂点バッファの転送
+	black_->SpriteTransferVertexBuffer(black_, spriteCommon_, 12);
 }
 
 void GamePlayScene::GameReset()
