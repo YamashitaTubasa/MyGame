@@ -54,6 +54,7 @@ private: // メンバ変数
 	Sprite* sprite_ = nullptr;
 	Sprite* clear_ = nullptr;
 	Sprite* space_ = nullptr;
+	Sprite* black_ = nullptr;
 	SpriteCommon spriteCommon_;
 
 	// 天球
@@ -74,4 +75,15 @@ private: // メンバ変数
 
 	// タイマー
 	int spaceTimer = 0;
+	int timer = 0;
+
+	// アルファ値
+	float bAlpha_ = 1.0f;
+
+	// フェードアウト・インのフラグ
+	bool isFadeIn = false;
+	bool isFadeOut = true;
+
+	// シーンフラグ
+	bool isScene = false;
 };
