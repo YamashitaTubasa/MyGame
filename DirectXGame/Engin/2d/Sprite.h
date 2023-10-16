@@ -203,6 +203,12 @@ public: // セッター
 	/// <param name="texSize">テクスチャ切り出しサイズ</param>
 	void SetTexSize(const XMFLOAT2& texSize) { this->texSize_ = texSize; }
 
+	/// <summary>
+	/// アルファ値
+	/// </summary>
+	/// <param name="alpha"></param>
+	void SetAlpha(float alpha);
+
 public: // ゲッター
 	/// <summary>
 	/// 座標
@@ -280,6 +286,7 @@ protected:
 	static const size_t kMaxSRVCount_ = 2056;
 	// テクスチャバッファ
 	std::array<ComPtr<ID3D12Resource>, kMaxSRVCount_> texBuffers_;
+	ConstBufferData* constMap = nullptr;
 
 	// テクスチャ番号
 	UINT texNumber_ = 0;
