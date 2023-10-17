@@ -36,7 +36,7 @@ void GameTitleScene::Initialize()
 	//===== タイトル描画の初期化 =====//
 	title_ = new Sprite();
 	// テクスチャの読み込み
-	title_->LoadTexture(spriteCommon_, 1, L"Resources/Image/title6.png");
+	title_->LoadTexture(spriteCommon_, 1, L"Resources/Image/t1.png");
 	// スプライトの生成
 	title_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
@@ -50,7 +50,7 @@ void GameTitleScene::Initialize()
 	//===== SPACEの描画 =====//
 	space_ = new Sprite();
 	// テクスチャの読み込み
-	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/space2.png");
+	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/pressSpace.png");
 	// スプライトの生成
 	space_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
@@ -64,7 +64,7 @@ void GameTitleScene::Initialize()
 	//===== InBlackの描画 =====//
 	inBlack_ = new Sprite();
 	// テクスチャの読み込み
-	inBlack_->LoadTexture(spriteCommon_, 3, L"Resources/Image/black.png");
+	inBlack_->LoadTexture(spriteCommon_, 3, L"Resources/Image/white.png");
 	// スプライトの生成
 	inBlack_->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
@@ -76,20 +76,63 @@ void GameTitleScene::Initialize()
 	// スプライトの頂点バッファの転送
 	inBlack_->SpriteTransferVertexBuffer(inBlack_, spriteCommon_, 3);
 
-	//===== InBlackの描画 =====//
-	outBlack_ = new Sprite();
+	//===== ロードの描画 =====//
+	nowLoding_ = new Sprite();
 	// テクスチャの読み込み
-	outBlack_->LoadTexture(spriteCommon_, 4, L"Resources/Image/black.png");
+	nowLoding_->LoadTexture(spriteCommon_, 4, L"Resources/Image/nl1.png");
 	// スプライトの生成
-	outBlack_->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	nowLoding_->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
-	outBlack_->SetColor({ 1,1,1,1 });
-	outBlack_->SetPosition({ 0,0,0 });
-	outBlack_->SetScale({ 1280,720 });
-	outBlack_->SetRotation(0.0f);
-	outBlack_->SetAlpha(bOutAlpha_);
+	nowLoding_->SetColor({ 1,1,1,1 });
+	nowLoding_->SetPosition(nowLodingPos_);
+	nowLoding_->SetScale(nowLodingScale_);
+	nowLoding_->SetRotation(0.0f);
+	nowLoding_->SetAlpha(lodingAlpha_);
 	// スプライトの頂点バッファの転送
-	outBlack_->SpriteTransferVertexBuffer(outBlack_, spriteCommon_, 4);
+	nowLoding_->SpriteTransferVertexBuffer(nowLoding_, spriteCommon_, 4);
+
+	//===== 点の描画 =====//
+	dot_[0] = new Sprite();
+	// テクスチャの読み込み
+	dot_[0]->LoadTexture(spriteCommon_, 5, L"Resources/Image/dot.png");
+	// スプライトの生成
+	dot_[0]->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	dot_[0]->SetColor({ 1,1,1,1 });
+	dot_[0]->SetPosition(dotPos_[0]);
+	dot_[0]->SetScale(dotScale_);
+	dot_[0]->SetRotation(0.0f);
+	dot_[0]->SetAlpha(1.0f);
+	// スプライトの頂点バッファの転送
+	dot_[0]->SpriteTransferVertexBuffer(dot_[0], spriteCommon_, 5);
+
+	dot_[1] = new Sprite();
+	// テクスチャの読み込み
+	dot_[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/dot.png");
+	// スプライトの生成
+	dot_[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	dot_[1]->SetColor({ 1,1,1,1 });
+	dot_[1]->SetPosition(dotPos_[1]);
+	dot_[1]->SetScale(dotScale_);
+	dot_[1]->SetRotation(0.0f);
+	dot_[1]->SetAlpha(1.0f);
+	// スプライトの頂点バッファの転送
+	dot_[1]->SpriteTransferVertexBuffer(dot_[1], spriteCommon_, 6);
+
+	dot_[2] = new Sprite();
+	// テクスチャの読み込み
+	dot_[2]->LoadTexture(spriteCommon_, 7, L"Resources/Image/dot.png");
+	// スプライトの生成
+	dot_[2]->SpriteCreate(1280, 720, 7, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	// 色、座標、サイズ、回転角の設定
+	dot_[2]->SetColor({ 1,1,1,1 });
+	dot_[2]->SetPosition(dotPos_[2]);
+	dot_[2]->SetScale(dotScale_);
+	dot_[2]->SetRotation(0.0f);
+	dot_[2]->SetAlpha(1.0f);
+	// スプライトの頂点バッファの転送
+	dot_[2]->SpriteTransferVertexBuffer(dot_[2], spriteCommon_, 7);
 
 	// OBJモデルの読み込み
 	model = new Model();
@@ -121,12 +164,13 @@ void GameTitleScene::Update()
 	title_->SpriteUpdate(title_, spriteCommon_);
 	space_->SpriteUpdate(space_, spriteCommon_);
 	inBlack_->SpriteUpdate(inBlack_, spriteCommon_);
-	outBlack_->SpriteUpdate(outBlack_, spriteCommon_);
-	if (Input::GetInstance()->TriggerKey(DIK_R)) {
-		int a;
-		a = 0;
+	nowLoding_->SpriteUpdate(nowLoding_, spriteCommon_);
+	/*for (auto& i : dot_) {
+		i->SpriteUpdate(i, spriteCommon_);
+	}*/
+	for (int i = 0; i < 3; i++) {
+		dot_[i]->SpriteUpdate(dot_[i], spriteCommon_);
 	}
-
 	// フェードアウト処理
 	if (isFadeOut) {
 		if (bInAlpha_ > 0.0f) {
@@ -230,9 +274,17 @@ void GameTitleScene::Draw()
 	}
 	if (isFadeIn == true || isFadeOut == true) {
 		inBlack_->SpriteDraw(spriteCommon_);
-		//outBlack_->SpriteDraw(spriteCommon_);
 	}
-	
+	if (bInAlpha_ >= 1.0f) {
+		nowLoding_->SpriteDraw(spriteCommon_);
+		/*for (auto& i : dot_) {
+			i->SpriteDraw(spriteCommon_);
+		}*/
+		for (int i = 0; i < 3; i++) {
+			dot_[i]->SpriteDraw(spriteCommon_);
+		}
+	}
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
