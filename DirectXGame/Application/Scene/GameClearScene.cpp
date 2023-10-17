@@ -57,7 +57,7 @@ void GameClearScene::Initialize()
 	//===== Blackの描画 =====//
 	black_ = new Sprite();
 	// テクスチャの読み込み
-	black_->LoadTexture(spriteCommon_, 3, L"Resources/Image/black.png");
+	black_->LoadTexture(spriteCommon_, 3, L"Resources/Image/white.png");
 	// スプライトの生成
 	black_->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
