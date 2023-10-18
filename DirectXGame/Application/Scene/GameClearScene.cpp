@@ -80,9 +80,11 @@ void GameClearScene::Update()
 	timer++;
 
 	// SPACEを押したら
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 500) {
-		// ゲームタイトルシーン（次シーン）を生成
-		GameSceneManager::GetInstance()->ChangeScene("TITLE");
+	if (isFadeIn == false && isFadeOut == false) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 500) {
+			// ゲームタイトルシーン（次シーン）を生成
+			GameSceneManager::GetInstance()->ChangeScene("TITLE");
+		}
 	}
 
 	// 天球の更新

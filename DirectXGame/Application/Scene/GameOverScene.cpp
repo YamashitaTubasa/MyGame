@@ -100,8 +100,10 @@ void GameOverScene::Update()
 	timer++;
 
 	// 十字キーの右を押したら
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 500) {
-		isFadeIn = true;
+	if (isFadeIn == false && isFadeOut == false) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 500) {
+			isFadeIn = true;
+		}
 	}
 
 	if (isScene == true) {
