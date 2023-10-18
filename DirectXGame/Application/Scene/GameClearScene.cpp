@@ -32,7 +32,7 @@ void GameClearScene::Initialize()
 
 	// タイトル
 	clear_ = new Sprite();
-	clear_->LoadTexture(spriteCommon_, 1, L"Resources/Image/clear2.png");
+	clear_->LoadTexture(spriteCommon_, 1, L"Resources/Image/gameClear.png");
 	clear_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	clear_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	clear_->SetPosition(clearPos_);
@@ -44,13 +44,14 @@ void GameClearScene::Initialize()
 	//===== SPACEの描画 =====//
 	space_ = new Sprite();
 	// テクスチャの読み込み
-	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/space2.png");
+	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/pressSpace.png");
 	// スプライトの生成
 	space_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
 	space_->SetColor(spaceColor_);
 	space_->SetPosition(spacePos_);
 	space_->SetScale(spaceScale_);
+	space_->SetAlpha(sAlpha_);
 	// スプライトの頂点バッファの転送
 	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, 2);
 
@@ -79,7 +80,7 @@ void GameClearScene::Update()
 	timer++;
 
 	// SPACEを押したら
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 100) {
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 500) {
 		// ゲームタイトルシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("TITLE");
 	}
@@ -116,14 +117,7 @@ void GameClearScene::Update()
 	black_->SetAlpha(bAlpha_);
 
 	// Press SPACEの描画の点滅処理
-	spaceTimer++;
-	if (spaceTimer >= 50 && spaceTimer <= 99) {
-		isSpace = false;
-	}
-	if (spaceTimer >= 100) {
-		isSpace = true;
-		spaceTimer = 0;
-	}
+	GameClearScene::FlashSpace();
 }
 
 void GameClearScene::Draw()
@@ -166,4 +160,31 @@ void GameClearScene::Draw()
 
 void GameClearScene::Finalize()
 {
+}
+
+void GameClearScene::FlashSpace()
+{
+	if (isSpace) {
+		spaceTimer++;
+		if (spaceTimer >= 50 && spaceTimer < 100) {
+			if (sAlpha_ > 0.0f) {
+				sAlpha_ -= 0.05f;
+			}
+			if (sAlpha_ <= 0.0f) {
+				sAlpha_ = 0.0f;
+			}
+		}
+		if (spaceTimer >= 100 && spaceTimer < 150) {
+			if (sAlpha_ < 1.0f) {
+				sAlpha_ += 0.05f;
+			}
+			if (sAlpha_ >= 1.0f) {
+				sAlpha_ = 1.0f;
+			}
+		}
+		if (spaceTimer >= 150) {
+			spaceTimer = 0;
+		}
+		space_->SetAlpha(sAlpha_);
+	}
 }

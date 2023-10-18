@@ -49,7 +49,7 @@ void GameOverScene::Initialize()
 	//===== ゲームオーバー描画 =====//
 	over_ = new Sprite();
 	// テクスチャの読み込み
-	over_->LoadTexture(spriteCommon_, 1, L"Resources/Image/gameOver2.png");
+	over_->LoadTexture(spriteCommon_, 1, L"Resources/Image/gameOver.png");
 	// スプライトの生成
 	over_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
@@ -64,13 +64,14 @@ void GameOverScene::Initialize()
 	//===== SPACEの描画 =====//
 	space_ = new Sprite();
 	// テクスチャの読み込み
-	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/spaceOver.png");
+	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/pressSpaceOver.png");
 	// スプライトの生成
 	space_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
 	space_->SetColor(spaceColor_);
 	space_->SetPosition(spacePos_);
 	space_->SetScale(spaceScale_);
+	space_->SetAlpha(sAlpha_);
 	// スプライトの頂点バッファの転送
 	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, 2);
 
@@ -99,7 +100,7 @@ void GameOverScene::Update()
 	timer++;
 
 	// 十字キーの右を押したら
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 100) {
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 500) {
 		isFadeIn = true;
 	}
 
@@ -140,14 +141,7 @@ void GameOverScene::Update()
 	fBlack_->SetAlpha(bAlpha_);
 
 	// Press SPACEの描画の点滅処理
-	spaceTimer++;
-	if (spaceTimer >= 50 && spaceTimer <= 99) {
-		isSpace = false;
-	}
-	if (spaceTimer >= 100) {
-		isSpace = true;
-		spaceTimer = 0;
-	}
+	GameOverScene::FlashSpace();
 }
 
 void GameOverScene::Draw()
@@ -190,4 +184,31 @@ void GameOverScene::Draw()
 
 void GameOverScene::Finalize()
 {
+}
+
+void GameOverScene::FlashSpace()
+{
+	if (isSpace) {
+		spaceTimer++;
+		if (spaceTimer >= 50 && spaceTimer < 100) {
+			if (sAlpha_ > 0.0f) {
+				sAlpha_ -= 0.05f;
+			}
+			if (sAlpha_ <= 0.0f) {
+				sAlpha_ = 0.0f;
+			}
+		}
+		if (spaceTimer >= 100 && spaceTimer < 150) {
+			if (sAlpha_ < 1.0f) {
+				sAlpha_ += 0.05f;
+			}
+			if (sAlpha_ >= 1.0f) {
+				sAlpha_ = 1.0f;
+			}
+		}
+		if (spaceTimer >= 150) {
+			spaceTimer = 0;
+		}
+		space_->SetAlpha(sAlpha_);
+	}
 }
