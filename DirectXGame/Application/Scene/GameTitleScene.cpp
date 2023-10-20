@@ -110,7 +110,7 @@ void GameTitleScene::Update()
 	}
 	if (start) {
 		startTimer++;
-		pPos.z += 1.5f;
+		pPos.z += 1.8f;
 		pPos.y += 0.25f;
 		eye.y -= 0.06f;
 
