@@ -64,16 +64,15 @@ private:
 
 protected:
 	// スプライト
-	DirectXCommon* dXCommon = nullptr;
-	WinApp* winApp = nullptr;
-	Input* input = nullptr;
-	ImGuiManager* imGuiManager = nullptr;
-	Camera* camera = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
+	WinApp* winApp_ = nullptr;
+	Input* input_ = nullptr;
+	ImGuiManager* imGuiManager_ = nullptr;
+	Camera* camera_ = nullptr;
 	GameSceneManager* sceneManager_ = nullptr;
-	PostEffect* postEffect = nullptr;
-	PostEffect* postEffect1 = nullptr;
+	PostEffect* postEffect_ = nullptr;
+	PostEffect* postEffect1_ = nullptr;
 	// シーンファクトリー
 	AbstractSceneFactory* sceneFactory_ = nullptr;
-	int a = 0;
 };
 

@@ -13,33 +13,33 @@ PlayerBullet::PlayerBullet()
 PlayerBullet::~PlayerBullet() 
 {
 	// 3Dオブジェクト解放
-	delete bulletO3;
+	delete bulletO3_;
 	// 3Dモデル解放
-	delete bulletM;
+	delete bulletM_;
 }
 
 void PlayerBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::XMFLOAT3& velocity)
 {
 	// 引数で受け取った速度をメンバ変数に代入
-	this->velocity_ = velocity;
+	this->velocity__ = velocity;
 	
 	// OBJからモデルデータを読み込む
-	bulletM = Model::LoadFromOBJ("bullet");
+	bulletM_ = Model::LoadFromOBJ("bullet");
 	// 3Dオブジェクト生成
-	bulletO3 = Object3d::Create();
+	bulletO3_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	bulletO3->SetModel(bulletM);
+	bulletO3_->SetModel(bulletM_);
 	// 3Dオブジェクトの位置を指定
-	pBulletPos = position;
-	bulletO3->SetPosition(pBulletPos);
-	bulletO3->SetScale({ 3,3,3 });
-	bulletO3->SetRotation({ 0, 180, 0 });
+	pBulletPos_ = position;
+	bulletO3_->SetPosition(pBulletPos_);
+	bulletO3_->SetScale({ 3,3,3 });
+	bulletO3_->SetRotation({ 0, 180, 0 });
 }
 
 void PlayerBullet::Update()
 {
 	// 3Dオブジェクト更新
-	bulletO3->Update();
+	bulletO3_->Update();
 
 	// 時間経過でデス
 	if (--deathTimer_ <= 0) {
@@ -47,14 +47,14 @@ void PlayerBullet::Update()
 	}
 
 	// 弾に速度追加
-	pBulletPos.z += velocity_.z;
+	pBulletPos_.z += velocity__.z;
 
 	// 弾の座標にセット
-	bulletO3->SetPosition(pBulletPos);
+	bulletO3_->SetPosition(pBulletPos_);
 }
 
 void PlayerBullet::Draw()
 {
 	// 弾の描画
-	bulletO3->Draw();
+	bulletO3_->Draw();
 }

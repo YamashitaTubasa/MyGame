@@ -11,9 +11,9 @@ using namespace DirectX;
 void SphereCollider::Update()
 {
 	// ワールド行列から座標を抽出
-	const XMMATRIX& matWorld = object3d->GetMatWorld();
+	const XMMATRIX& matWorld = object3d_->GetMatWorld();
 
 	// 球のメンバ変数の更新
-	Sphere::center = matWorld.r[3] + offset_;
-	Sphere::radius = radius_;
+	Sphere::center_ = matWorld.r[3] + offset_;
+	Sphere::radius_ = radius_;
 }

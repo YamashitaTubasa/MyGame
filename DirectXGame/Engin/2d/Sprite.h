@@ -24,33 +24,33 @@
 
 // 頂点データ
 struct VertexPosUv {
-	DirectX::XMFLOAT3 pos;
-	DirectX::XMFLOAT2 uv;
+	DirectX::XMFLOAT3 pos_;
+	DirectX::XMFLOAT2 uv_;
 };
 
 // パイプラインセット
 struct PipelineSet {
 	// パイプラインステートオブジェクト
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelinestate;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelinestate_;
 	// ルートシグネチャ
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootsignature;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootsignature_;
 };
 
 // スプライトの共通データ
 struct SpriteCommon {
 	
 	// パイプラインセット
-	PipelineSet pipelineSet;
+	PipelineSet pipelineSet_;
 	// 射影行列
-	DirectX::XMMATRIX matProjection{};
+	DirectX::XMMATRIX matProjection_{};
 	// テクスチャ用デスクリプタヒープの生成
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeap;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeap_;
 	// SRVの最大枚数
-	static const size_t kMaxSRVCount = 512;
+	static const size_t kMaxSRVCount_ = 512;
 	// テクスチャソース(テクスチャバッファ)の配列
-	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff[kMaxSRVCount];
+	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff_[kMaxSRVCount_];
 	// テクスチャバッファ取得
-	ID3D12Resource* GetTexBuffer(uint32_t index) const { return texBuff[index].Get(); }
+	ID3D12Resource* GetTexBuffer(uint32_t index) const { return texBuff_[index].Get(); }
 };
 
 class Sprite
@@ -76,9 +76,9 @@ public:
 
 private:
 	struct ConstBufferData {
-		XMFLOAT4 color; // 色 (RGBA)
-		float alpha; // アルファ値
-		XMMATRIX mat; //座標
+		XMFLOAT4 color_; // 色 (RGBA)
+		float alpha_; // アルファ値
+		XMMATRIX mat_; //座標
 	};
 
 public:

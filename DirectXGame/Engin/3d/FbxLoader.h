@@ -131,7 +131,7 @@ private:
 	// D3D12デバイス
 	ID3D12Device* device_ = nullptr;
 	// FBXマネージャ
-	FbxManager* fbxManager = nullptr;
+	FbxManager* fbxManager_ = nullptr;
 	// FBXインポータ
-	FbxImporter* fbxImporter = nullptr;
+	FbxImporter* fbxImporter_ = nullptr;
 };

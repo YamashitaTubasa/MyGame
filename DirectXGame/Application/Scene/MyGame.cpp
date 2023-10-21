@@ -14,10 +14,10 @@ void MyGame::Initialize()
 	TYFramework::Initialize();
 
 	// ポストエフェクト
-	postEffect = new PostEffect();
-	postEffect->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
-	postEffect1 = new PostEffect();
-	postEffect1->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
+	postEffect_ = new PostEffect();
+	postEffect_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
+	postEffect1_ = new PostEffect();
+	postEffect1_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
 
 	// シーンファクトリを生成し、マネージャにセット
 	sceneFactory_ = new SceneFactory();
@@ -28,8 +28,8 @@ void MyGame::Initialize()
 
 void MyGame::Finalize()
 {
-	delete postEffect;
-	delete postEffect1;
+	delete postEffect_;
+	delete postEffect1_;
 
 	// 基底クラスの終了処理
 	TYFramework::Finalize();
@@ -44,44 +44,44 @@ void MyGame::Update()
 void MyGame::Draw()
 {
 	// コマンドリストの取得
-	ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
+	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
 
 #pragma region ゲームシーン描画
 
 	// レンダーテクスチャの前処理
-	postEffect->PreDraw(cmdList);
+	postEffect_->PreDraw(cmdList);
 
 	//=== シーンマネージャの描画 ===//
 	sceneManager_->Draw();
 
 	// レンダーテクスチャの後処理
-	postEffect->PostDraw(cmdList);
+	postEffect_->PostDraw(cmdList);
 
 #pragma endregion
 
 #pragma region ポストエフェクトの描画
 
 	// レンダーテクスチャ1の前処理
-	postEffect1->PreDraw(cmdList);
+	postEffect1_->PreDraw(cmdList);
 
 	//=== ポストエフェクトの描画 ===//
-	postEffect->Draw(cmdList);
+	postEffect_->Draw(cmdList);
 
 	// レンダーテクスチャ1の後処理
-	postEffect1->PostDraw(cmdList);
+	postEffect1_->PostDraw(cmdList);
 
 #pragma endregion
 
 #pragma region ポストエフェクト1の描画
 
 	// 描画前処理
-	dXCommon->PreDraw();
+	dxCommon_->PreDraw();
 
 	//=== ポストエフェクト1の描画 ===//
-	postEffect1->Draw(cmdList);
+	postEffect1_->Draw(cmdList);
 
 	// 描画後処理
-	dXCommon->PostDraw();
+	dxCommon_->PostDraw();
 
 #pragma endregion
 }

@@ -18,11 +18,11 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
-	delete enemyO3;
-	delete enemyO1;
-	delete enemyO2;
-	delete enemyO4;
-	delete enemyM;
+	delete enemyO3_;
+	delete enemyO1_;
+	delete enemyO2_;
+	delete enemyO4_;
+	delete enemyM_;
 }
 
 Enemy* Enemy::Create(Model* model)
@@ -55,34 +55,34 @@ bool Enemy::Initialize()
 	}
 
 	// OBJからモデルデータを読み込む
-	enemyM = Model::LoadFromOBJ("enemy");
+	enemyM_ = Model::LoadFromOBJ("enemy");
 	// 3Dオブジェクト生成
-	enemyO3 = Object3d::Create();
-	enemyO1 = Object3d::Create();
-	enemyO2 = Object3d::Create();
-	enemyO4 = Object3d::Create();
+	enemyO3_ = Object3d::Create();
+	enemyO1_ = Object3d::Create();
+	enemyO2_ = Object3d::Create();
+	enemyO4_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	enemyO3->SetModel(enemyM);
-	enemyO1->SetModel(enemyM);
-	enemyO2->SetModel(enemyM);
-	enemyO4->SetModel(enemyM);
-	enemyO3->SetCollider(new SphereCollider);
+	enemyO3_->SetModel(enemyM_);
+	enemyO1_->SetModel(enemyM_);
+	enemyO2_->SetModel(enemyM_);
+	enemyO4_->SetModel(enemyM_);
+	enemyO3_->SetCollider(new SphereCollider);
 	// 3Dオブジェクトの位置を指定
-	position[0] = { 0,0,0 };
-	rotation[0] = { 0,180,0 };
-	enemyO3->SetPosition(position[0]);
-	enemyO3->SetScale({ 5, 5, 5 });
-	enemyO3->SetRotation(rotation[0]);
+	position_[0] = { 0,0,0 };
+	rotation_[0] = { 0,180,0 };
+	enemyO3_->SetPosition(position_[0]);
+	enemyO3_->SetScale({ 5, 5, 5 });
+	enemyO3_->SetRotation(rotation_[0]);
 
-	enemyO1->SetPosition({ 10,1,10 });
-	enemyO1->SetScale({ 5, 5, 5 });
-	enemyO1->SetRotation(rotation[0]);
-	enemyO2->SetPosition({ -8,-1,20 });
-	enemyO2->SetScale({ 5, 5, 5 });
-	enemyO2->SetRotation(rotation[0]);
-	enemyO4->SetPosition({ 0,0,30 });
-	enemyO4->SetScale({ 5, 5, 5 });
-	enemyO4->SetRotation(rotation[0]);
+	enemyO1_->SetPosition({ 10,1,10 });
+	enemyO1_->SetScale({ 5, 5, 5 });
+	enemyO1_->SetRotation(rotation_[0]);
+	enemyO2_->SetPosition({ -8,-1,20 });
+	enemyO2_->SetScale({ 5, 5, 5 });
+	enemyO2_->SetRotation(rotation_[0]);
+	enemyO4_->SetPosition({ 0,0,30 });
+	enemyO4_->SetScale({ 5, 5, 5 });
+	enemyO4_->SetRotation(rotation_[0]);
 
 	// 敵発生データの読み込み
 	LoadEnemyPopData();
@@ -93,13 +93,13 @@ bool Enemy::Initialize()
 void Enemy::Update()
 {
 	// 敵の更新
-	enemyO3->Update();
-	enemyO1->Update();
-	enemyO2->Update();
-	enemyO4->Update();
+	enemyO3_->Update();
+	enemyO1_->Update();
+	enemyO2_->Update();
+	enemyO4_->Update();
 
 	if (Input::GetInstance()->TriggerKey(DIK_T)) {
-		isDead = true;
+		isDead_ = true;
 	}
 	
 	// 敵を発生
@@ -109,12 +109,12 @@ void Enemy::Update()
 void Enemy::Draw()
 {
 	// 敵の描画
-	if (!isDead) {
-		enemyO3->Draw();
+	if (!isDead_) {
+		enemyO3_->Draw();
 	}
-	enemyO1->Draw();
-	enemyO2->Draw();
-	enemyO4->Draw();
+	enemyO1_->Draw();
+	enemyO2_->Draw();
+	enemyO4_->Draw();
 }
 
 void Enemy::LoadEnemyPopData()
@@ -125,7 +125,7 @@ void Enemy::LoadEnemyPopData()
 	assert(file.is_open());
 
 	// ファイルの内容を文字列ストリームにコピー
-	enemyPopCommands << file.rdbuf();
+	enemyPopCommands_ << file.rdbuf();
 
 	// ファイルを閉じる
 	file.close();
@@ -134,11 +134,11 @@ void Enemy::LoadEnemyPopData()
 void Enemy::UpdateEnemyPopCommands()
 {
 	// 待機処理
-	if (isWait) {
-		waitTimer--;
-		if (waitTimer <= 0) {
+	if (isWait_) {
+		waitTimer_--;
+		if (waitTimer_ <= 0) {
 			// 待機完了
-			isWait = false;
+			isWait_ = false;
 		}
 		return;
 	}
@@ -147,7 +147,7 @@ void Enemy::UpdateEnemyPopCommands()
 	std::string line;
 
 	// コマンド実行ループ
-	while (getline(enemyPopCommands, line)) {
+	while (getline(enemyPopCommands_, line)) {
 		// 1行分の文字列をストリームに変換して解析しやすくする
 		std::istringstream line_stream(line);
 
@@ -187,8 +187,8 @@ void Enemy::UpdateEnemyPopCommands()
 			int32_t waitTime = atoi(word.c_str());
 
 			// 待機開始
-			isWait = true;
-			waitTimer = waitTime;
+			isWait_ = true;
+			waitTimer_ = waitTime;
 
 			// コマンドループを抜ける
 			break;

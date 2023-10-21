@@ -97,16 +97,16 @@ void GameOverScene::Initialize()
 
 void GameOverScene::Update()
 {
-	timer++;
+	timer_++;
 
 	// 十字キーの右を押したら
-	if (isFadeIn == false && isFadeOut == false) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 500) {
-			isFadeIn = true;
+	if (isFadeIn_ == false && isFadeOut_ == false) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= 500) {
+			isFadeIn_ = true;
 		}
 	}
 
-	if (isScene == true) {
+	if (isScene_ == true) {
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("TITLE");
 	}
@@ -120,24 +120,24 @@ void GameOverScene::Update()
 	fBlack_->SpriteUpdate(black_, spriteCommon_);
 
 	// フェードアウト処理
-	if (isFadeOut) {
+	if (isFadeOut_) {
 		if (bAlpha_ > 0.0f) {
 			bAlpha_ -= 0.01f;
 		}
 		if (bAlpha_ <= 0.01f) {
 			bAlpha_ = 0.0f;
-			isFadeOut = false;
+			isFadeOut_ = false;
 		}
 	}
 
 	// フェードインの処理
-	if (isFadeIn) {
+	if (isFadeIn_) {
 		if (bAlpha_ < 1.0f) {
 			bAlpha_ += 0.01f;
 		}
 		if (bAlpha_ >= 1.0f) {
 			bAlpha_ = 1.0f;
-			isScene = true;
+			isScene_ = true;
 		}
 	}
 	fBlack_->SetAlpha(bAlpha_);
@@ -172,10 +172,10 @@ void GameOverScene::Draw()
 	// タイトルの描画
 	black_->SpriteDraw(spriteCommon_);
 	over_->SpriteDraw(spriteCommon_);
-	if (isSpace) {
+	if (isSpace_) {
 		space_->SpriteDraw(spriteCommon_);
 	}
-	if (isFadeIn == true || isFadeOut == true) {
+	if (isFadeIn_ == true || isFadeOut_ == true) {
 		fBlack_->SpriteDraw(spriteCommon_);
 	}
 	// スプライト描画後処理
@@ -190,9 +190,9 @@ void GameOverScene::Finalize()
 
 void GameOverScene::FlashSpace()
 {
-	if (isSpace) {
-		spaceTimer++;
-		if (spaceTimer >= 50 && spaceTimer < 100) {
+	if (isSpace_) {
+		spaceTimer_++;
+		if (spaceTimer_ >= 50 && spaceTimer_ < 100) {
 			if (sAlpha_ > 0.0f) {
 				sAlpha_ -= 0.05f;
 			}
@@ -200,7 +200,7 @@ void GameOverScene::FlashSpace()
 				sAlpha_ = 0.0f;
 			}
 		}
-		if (spaceTimer >= 100 && spaceTimer < 150) {
+		if (spaceTimer_ >= 100 && spaceTimer_ < 150) {
 			if (sAlpha_ < 1.0f) {
 				sAlpha_ += 0.05f;
 			}
@@ -208,8 +208,8 @@ void GameOverScene::FlashSpace()
 				sAlpha_ = 1.0f;
 			}
 		}
-		if (spaceTimer >= 150) {
-			spaceTimer = 0;
+		if (spaceTimer_ >= 150) {
+			spaceTimer_ = 0;
 		}
 		space_->SetAlpha(sAlpha_);
 	}

@@ -36,8 +36,8 @@ public: // getter
 	/// DirectXCommonのインスタンスの取得
 	/// </summary>
 	/// <returns>DirectXCommonのインスタンス</returns>
-	DirectXCommon* GetDirectXCommon() const{ return directXCommon; }
+	DirectXCommon* GetDirectXCommon() const{ return dxCommon_; }
 
 private:
-	DirectXCommon* directXCommon = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
 };

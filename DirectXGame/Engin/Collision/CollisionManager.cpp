@@ -22,11 +22,11 @@ void CollisionManager::CheckAllCollisions()
     std::forward_list<BaseCollider*>::iterator itB;
 
     // 全ての組み合わせについて総当たりチェック
-    itA = colliders.begin();
-    for (; itA != colliders.end(); ++itA) {
+    itA = colliders_.begin();
+    for (; itA != colliders_.end(); ++itA) {
         itB = itA;
         ++itB;
-        for (; itB != colliders.end(); ++itB) {
+        for (; itB != colliders_.end(); ++itB) {
             BaseCollider* colA = *itA;
             BaseCollider* colB = *itB;
 

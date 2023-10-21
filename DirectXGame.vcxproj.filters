@@ -40,9 +40,6 @@
     <Filter Include="ソース ファイル\Engin\Math">
       <UniqueIdentifier>{8152ca19-82f8-4073-bc9a-9e6db5058dd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engin\Platform">
-      <UniqueIdentifier>{8313e8fc-96f9-4156-a4c0-69b810bb4a41}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engin\Scene">
       <UniqueIdentifier>{7d80bbdf-9987-4b89-9561-e707fdab62b3}</UniqueIdentifier>
     </Filter>
@@ -69,9 +66,6 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Engin\Math">
       <UniqueIdentifier>{ebecd654-a393-4b77-bd95-d95cb1db3147}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engin\Platform">
-      <UniqueIdentifier>{317ea29b-1be7-4b4c-a825-1b16cd0976fe}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Engin\Scene">
       <UniqueIdentifier>{f0d58c0f-172f-42ef-bfbc-3433e4501edb}</UniqueIdentifier>
@@ -109,19 +103,25 @@
     <Filter Include="シェーダーファイル\shaders">
       <UniqueIdentifier>{d23b241f-9dd1-4f13-bea9-141ed214ed54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engin\Base">
+      <UniqueIdentifier>{8313e8fc-96f9-4156-a4c0-69b810bb4a41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Base">
+      <UniqueIdentifier>{317ea29b-1be7-4b4c-a825-1b16cd0976fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Engin\Input\Input.cpp">
       <Filter>ソース ファイル\Engin\Input</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\Platform\DirectXCommon.cpp">
-      <Filter>ソース ファイル\Engin\Platform</Filter>
+    <ClCompile Include="DirectXGame\Engin\Base\DirectXCommon.cpp">
+      <Filter>ソース ファイル\Engin\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\Platform\WinApp.cpp">
-      <Filter>ソース ファイル\Engin\Platform</Filter>
+    <ClCompile Include="DirectXGame\Engin\Base\WinApp.cpp">
+      <Filter>ソース ファイル\Engin\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engin\Platform\FPSFixed.cpp">
-      <Filter>ソース ファイル\Engin\Platform</Filter>
+    <ClCompile Include="DirectXGame\Engin\Base\FPSFixed.cpp">
+      <Filter>ソース ファイル\Engin\Base</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engin\2d\Sprite.cpp">
       <Filter>ソース ファイル\Engin\2d</Filter>
@@ -300,14 +300,14 @@
     <ClInclude Include="DirectXGame\Engin\Input\Input.h">
       <Filter>ヘッダー ファイル\Engin\Input</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Platform\DirectXCommon.h">
-      <Filter>ヘッダー ファイル\Engin\Platform</Filter>
+    <ClInclude Include="DirectXGame\Engin\Base\DirectXCommon.h">
+      <Filter>ヘッダー ファイル\Engin\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Platform\WinApp.h">
-      <Filter>ヘッダー ファイル\Engin\Platform</Filter>
+    <ClInclude Include="DirectXGame\Engin\Base\WinApp.h">
+      <Filter>ヘッダー ファイル\Engin\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engin\Platform\FPSFixed.h">
-      <Filter>ヘッダー ファイル\Engin\Platform</Filter>
+    <ClInclude Include="DirectXGame\Engin\Base\FPSFixed.h">
+      <Filter>ヘッダー ファイル\Engin\Base</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\2d\Sprite.h">
       <Filter>ヘッダー ファイル\Engin\2d</Filter>

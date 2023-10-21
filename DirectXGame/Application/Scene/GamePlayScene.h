@@ -85,83 +85,83 @@ public:
 	bool CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1);
 
 private:
-	WinApp* winApp = nullptr;
+	WinApp* winApp_ = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
 	// 入力
-	Input* input = nullptr;
+	Input* input_ = nullptr;
 	
 	// スプライト
-	Sprite* sprite = nullptr;
-	Sprite* hp = nullptr;
-	Sprite* hpBar = nullptr;
-	Sprite* hpBack = nullptr;
-	Sprite* enemyHp = nullptr;
-	Sprite* enemyHpBar = nullptr;
-	Sprite* enemyHpBack = nullptr;
-	Sprite* ult = nullptr;
-	Sprite* X = nullptr;
-	Sprite* damage = nullptr;
+	Sprite* sprite_ = nullptr;
+	Sprite* hp_ = nullptr;
+	Sprite* hpBar_ = nullptr;
+	Sprite* hpBack_ = nullptr;
+	Sprite* enemyHp_ = nullptr;
+	Sprite* enemyHpBar_ = nullptr;
+	Sprite* enemyHpBack_ = nullptr;
+	Sprite* ult_ = nullptr;
+	Sprite* X_ = nullptr;
+	Sprite* damage_ = nullptr;
 	Sprite* black_ = nullptr;
-	Sprite* number[5];
+	Sprite* number_[5];
 	SpriteCommon spriteCommon_;
 
 	// パーティクル
-	ParticleManager* particleMan = nullptr;
-	Particle* particle = nullptr;
+	ParticleManager* particleMan_ = nullptr;
+	Particle* particle_ = nullptr;
 
-	DirectXCommon* dXCommon = nullptr;
-
-	ImGuiManager* imGuiManager = nullptr;
-	Camera* camera = nullptr;
-	FbxModel* fbxModel = nullptr;
-	FbxObject3d* fbxObject = nullptr;
-	/*PostEffect* postEffect = nullptr;
-	PostEffect* postEffect1 = nullptr;*/
-	Player* player = nullptr;
-	Player* pBullet = nullptr;
-	Enemy* enemy = nullptr;
-	BackGroundObject* backGroundObj = nullptr;
-	Skydome* skydome = nullptr;
+	ImGuiManager* imGuiManager_ = nullptr;
+	Camera* camera_ = nullptr;
+	FbxModel* fbxModel_ = nullptr;
+	FbxObject3d* fbxObject_ = nullptr;
+	Player* player_ = nullptr;
+	Enemy* enemy_ = nullptr;
+	BackGroundObject* backGroundObj_ = nullptr;
+	Skydome* skydome_ = nullptr;
 	// 衝突マネージャ
-	CollisionManager* collisionMan = nullptr;
+	CollisionManager* collisionMan_ = nullptr;
 	// 敵キャラ
 	std::list<std::unique_ptr<Enemy>> enemys_;
 
-	DirectX::XMFLOAT3 position[5]{};
-	DirectX::XMFLOAT3 rotation[5]{};
-	DirectX::XMFLOAT3 scale[5]{};
-	DirectX::XMFLOAT3 eye[5]{};
-	DirectX::XMFLOAT3 target[5]{};
-	DirectX::XMFLOAT3 hpPosition = { 30,30,0 };
-	DirectX::XMFLOAT2 hpScale = { 500, 20 };
-	DirectX::XMFLOAT3 hpMove = { -1, 0, 0 };
-	DirectX::XMFLOAT3 hpBarPosition = { 29,29,0 };
-	DirectX::XMFLOAT3 hpBackPosition = { 30,30,0 };
-	DirectX::XMFLOAT3 enemyHpPosition = { 1250,30,0 };
-	DirectX::XMFLOAT2 enemyHpScale = { 500, 20 };
-	DirectX::XMFLOAT3 enemyHpMove = { -1, 0, 0 };
-	DirectX::XMFLOAT3 enemyHpBarPosition = { 1251,29,0 };
-	DirectX::XMFLOAT3 enemyHpBackPosition = { 1251,30,0 };
+	DirectX::XMFLOAT3 position_[5]{};
+	DirectX::XMFLOAT3 rotation_[5]{};
+	DirectX::XMFLOAT3 scale_[5]{};
+	DirectX::XMFLOAT3 eye_[5]{};
+	DirectX::XMFLOAT3 target_[5]{};
+	DirectX::XMFLOAT3 hpPosition_ = { 30,30,0 };
+	DirectX::XMFLOAT2 hpScale_ = { 500, 20 };
+	DirectX::XMFLOAT3 hpMove_ = { -1, 0, 0 };
+	DirectX::XMFLOAT3 hpBarPosition_ = { 29,29,0 };
+	DirectX::XMFLOAT3 hpBackPosition_ = { 30,30,0 };
+	DirectX::XMFLOAT3 enemyHpPosition_ = { 1250,30,0 };
+	DirectX::XMFLOAT2 enemyHpScale_ = { 500, 20 };
+	DirectX::XMFLOAT3 enemyHpMove_ = { -1, 0, 0 };
+	DirectX::XMFLOAT3 enemyHpBarPosition_ = { 1251,29,0 };
+	DirectX::XMFLOAT3 enemyHpBackPosition_ = { 1251,30,0 };
 
-	bool isPush_D = false;
-	bool isPush_A = false;
+	bool isPushD_ = false;
+	bool isPushA_ = false;
 
-	int playerHp = 3;
-	int time = 0;
-	float particleTime = 0;
-	bool particl = false;
-	bool isEnemyDeth = false;
+	int playerHp_ = 3;
+	int time_ = 0;
 
-	int count = 0;
-	bool isDamage = false;
-	int damageTime = 0;
+	// パーティクル
+	float particleTime_ = 0;
+	bool particl_ = false;
+	bool isEnemyDeth_ = false;
+
+	int count_ = 0;
+
+	// ダメージ
+	bool isDamage_ = false;
+	int damageTime_ = 0;
 
 	// アルファ値
 	float bAlpha_ = 1.0f;
 
 	// フェードアウト・インのフラグ
-	bool isFadeIn = false;
-	bool isFadeOut = true;
+	bool isFadeIn_ = false;
+	bool isFadeOut_ = true;
 
 	// シーンフラグ
-	bool isScene = false;
+	bool isScene_ = false;
 };

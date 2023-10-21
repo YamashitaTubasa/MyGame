@@ -77,19 +77,19 @@ private: // メンバ変数
 	DirectX::XMFLOAT2 spaceScale_ { 443.0f, 86.0f };
 	float spaceRot_ = 0.0f;
 	float sAlpha_ = 1.0f;
-	int spaceTimer = 0;
-	bool isSpace = true;
+	int spaceTimer_ = 0;
+	bool isSpace_ = true;
 
 	// タイマー
-	int timer = 0;
+	int timer_ = 0;
 
 	// アルファ値
 	float bAlpha_ = 1.0f;
 
 	// フェードアウト・インのフラグ
-	bool isFadeIn = false;
-	bool isFadeOut = true;
+	bool isFadeIn_ = false;
+	bool isFadeOut_ = true;
 
 	// シーンフラグ
-	bool isScene = false;
+	bool isScene_ = false;
 };

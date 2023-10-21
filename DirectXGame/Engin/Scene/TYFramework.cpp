@@ -33,20 +33,20 @@ void TYFramework::Run()
 void TYFramework::Initialize()
 {
 	// WindowsAPIの初期化
-	winApp = WinApp::GetInstance();
-	winApp->Initialize();
+	winApp_ = WinApp::GetInstance();
+	winApp_->Initialize();
 
 	// DirectXの初期化
-	dXCommon = DirectXCommon::GetInstance();
-	dXCommon->Initialize(winApp);
+	dxCommon_ = DirectXCommon::GetInstance();
+	dxCommon_->Initialize(winApp_);
 
 	// 入力の初期化
-	input = Input::GetInstance();
-	input->Initialize(winApp);
+	input_ = Input::GetInstance();
+	input_->Initialize(winApp_);
 
 	// ImGuiの初期化
-	imGuiManager = new ImGuiManager();
-	imGuiManager->Initialize(dXCommon, winApp);
+	imGuiManager_ = new ImGuiManager();
+	imGuiManager_->Initialize(dxCommon_, winApp_);
 
 	// シーンマネージャの生成
 	sceneManager_ = GameSceneManager::GetInstance();
@@ -56,13 +56,13 @@ void TYFramework::Initialize()
 	camera->Initialize();*/
 
 	// FBX
-	FbxLoader::GetInstance()->Initialize(dXCommon->GetDevice());
+	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 
 	// 3Dオブジェクト静的初期化
-	Object3d::StaticInitialize(dXCommon->GetDevice(), WinApp::window_width, WinApp::window_height, camera);
+	Object3d::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height, camera_);
 
 	// パーティクル静的初期化
-	ParticleManager::StaticInitialize(dXCommon->GetDevice(), WinApp::window_width, WinApp::window_height);
+	ParticleManager::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
 }
 
 void TYFramework::Finalize()
@@ -74,36 +74,36 @@ void TYFramework::Finalize()
 	FbxLoader::GetInstance()->Finalize();
 
 	// imguiの終了処理
-	imGuiManager->Finalize();
+	imGuiManager_->Finalize();
 	// imguiの解放
-	delete imGuiManager;
-	imGuiManager = nullptr;
+	delete imGuiManager_;
+	imGuiManager_ = nullptr;
 
 	// WindowsAPIの終了処理
-	winApp->Finalize();
+	winApp_->Finalize();
 
 	// DirectX解放
-	dXCommon->fpsFixedFinalize();
-	dXCommon->DeleteInstance();
+	dxCommon_->fpsFixedFinalize();
+	dxCommon_->DeleteInstance();
 }
 
 void TYFramework::Update()
 {
 	// Windowsのメッセージ処理
-	if (winApp->ProcessMessage()) {
+	if (winApp_->ProcessMessage()) {
 		// ゲームループを抜ける
 		endRequst_ = true;
 	}
 
 	// 入力の更新
-	input->Update();
+	input_->Update();
 
 	// ImGui受付開始
-	imGuiManager->Begin();
+	imGuiManager_->Begin();
 
 	// シーンマネージャの更新
 	sceneManager_->Update();
 
 	// ImGui受付終了
-	imGuiManager->End();
+	imGuiManager_->End();
 }

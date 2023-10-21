@@ -128,11 +128,11 @@ void FbxObject3d::Update()
 		// 今の姿勢行列
 		XMMATRIX matCurrentPose;
 		// 今の姿勢行列を取得
-		FbxAMatrix fbxCurrentPose = bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime_);
+		FbxAMatrix fbxCurrentPose = bones[i].fbxCluster_->GetLink()->EvaluateGlobalTransform(currentTime_);
 		// XMMATRIXに変換
 		FbxLoader::ConvertMatrixFromFbx(&matCurrentPose, fbxCurrentPose);
 		// 合成してスキニング行列に
-		constMapSkin->bones[i] = bones[i].invInitialPose * matCurrentPose;
+		constMapSkin->bones[i] = bones[i].invInitialPose_ * matCurrentPose;
 	}
 	constBuffSkin_->Unmap(0, nullptr);
 }

@@ -22,17 +22,17 @@ private:
 
 private:
 	struct ConstBufferData {
-		DirectX::XMFLOAT4 color; // 色 (RGBA)
-		DirectX::XMMATRIX mat; // 座標
-		bool isPostE; // ブラーフラグ
-		float alpha; // アルファ値
+		DirectX::XMFLOAT4 color_; // 色 (RGBA)
+		DirectX::XMMATRIX mat_; // 座標
+		bool isPostE_; // ブラーフラグ
+		float alpha_; // アルファ値
 	};
 
 public:
-	/// <summary>
-	/// コンストラクタ
-	/// </summary>
+	// コンストラクタ
 	PostEffect();
+
+	// デストラクタ
 	~PostEffect();
 
 	/// <summary>

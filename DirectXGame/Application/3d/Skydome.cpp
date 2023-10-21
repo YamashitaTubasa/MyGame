@@ -12,39 +12,39 @@ Skydome::Skydome()
 
 Skydome::~Skydome()
 {
-	delete skydomeObj;
-	delete skydomeModel;
+	delete skydomeObj_;
+	delete skydomeModel_;
 }
 
 void Skydome::Initialize()
 {
 	// OBJからモデルデータを読み込む
-	skydomeModel = Model::LoadFromOBJ("skydome");
+	skydomeModel_ = Model::LoadFromOBJ("skydome");
 	// 3Dオブジェクトの生成
-	skydomeObj = Object3d::Create();
+	skydomeObj_ = Object3d::Create();
 	// 3Dオブジェクトにモデルをセット
-	skydomeObj->SetModel(skydomeModel);
+	skydomeObj_->SetModel(skydomeModel_);
 	// オブジェクトの位置の設定
-	skydomeObj->SetPosition({ 0,30,0 });
-	skydomeObj->SetScale({ 300,300,300 });
-	skydomeObj->SetRotation(rotate);
+	skydomeObj_->SetPosition({ 0,30,0 });
+	skydomeObj_->SetScale({ 300,300,300 });
+	skydomeObj_->SetRotation(rotate_);
 }
 
 void Skydome::Update()
 {
 	// オブジェクトの更新
-	skydomeObj->Update();
+	skydomeObj_->Update();
 }
 
 void Skydome::Draw()
 {
 	// オブジェクトの描画
-	skydomeObj->Draw();
+	skydomeObj_->Draw();
 }
 
 void Skydome::RotateSky()
 {
 	// 天球の回転
-	rotate.y += skySpeed;
-	skydomeObj->SetRotation(rotate);
+	rotate_.y += skySpeed_;
+	skydomeObj_->SetRotation(rotate_);
 }

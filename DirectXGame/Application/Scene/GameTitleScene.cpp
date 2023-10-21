@@ -14,10 +14,10 @@ GameTitleScene::~GameTitleScene()
 {
 	delete sprite_;
 	delete title_;
-	delete skydome;
+	delete skydome_;
 	delete space_;
-	delete object3d;
-	delete model;
+	delete object3d_;
+	delete model_;
 }
 
 void GameTitleScene::Initialize()
@@ -26,8 +26,8 @@ void GameTitleScene::Initialize()
 	dxCommon_ = DirectXCommon::GetInstance();
 
 	// 天球の初期化
-	skydome = new Skydome();
-	skydome->Initialize();
+	skydome_ = new Skydome();
+	skydome_->Initialize();
 
 	// スプライトの初期化
 	sprite_ = new Sprite();
@@ -37,30 +37,30 @@ void GameTitleScene::Initialize()
 	LoadSprite();
 
 	// OBJモデルの読み込み
-	model = new Model();
-	model = Model::LoadFromOBJ("fighter");
+	model_ = new Model();
+	model_ = Model::LoadFromOBJ("fighter");
 	// オブジェクトの生成
-	object3d = new Object3d();
-	object3d = Object3d::Create();
+	object3d_ = new Object3d();
+	object3d_ = Object3d::Create();
 	// オブジェクトにモデルをセット
-	object3d->SetModel(model);
+	object3d_->SetModel(model_);
 	// オブジェクトの位置の設定
-	object3d->SetPosition(pPos);
-	object3d->SetScale({5,5,5});
-	object3d->SetRotation({0,0,0});
-	object3d->SetTarget(object3d->GetPosition());
-	object3d->SetEye(eye);
+	object3d_->SetPosition(pPos_);
+	object3d_->SetScale({5,5,5});
+	object3d_->SetRotation({0,0,0});
+	object3d_->SetTarget(object3d_->GetPosition());
+	object3d_->SetEye(eye_);
 }
 
 void GameTitleScene::Update()
 {
 	// 天球の更新
-	skydome->Update();
+	skydome_->Update();
 	// 天球の回転処理
-	skydome->RotateSky();
+	skydome_->RotateSky();
 
 	// 自機の更新
-	object3d->Update();
+	object3d_->Update();
 
 	// スプライトの更新
 	title_->SpriteUpdate(title_, spriteCommon_);
@@ -84,44 +84,44 @@ void GameTitleScene::Update()
 	GameTitleScene::Load();
 
 	// 自機の上下移動
-	if (isPos == false) {
-		pPos.y += 0.03f;
+	if (isPos_ == false) {
+		pPos_.y += 0.03f;
 	}
-	if (pPos.y >= -4.0f) {
-		isPos = true;
+	if (pPos_.y >= -4.0f) {
+		isPos_ = true;
 	}
-	if (isPos == true) {
-		pPos.y -= 0.03f;
+	if (isPos_ == true) {
+		pPos_.y -= 0.03f;
 	}
-	if (pPos.y <= -7.0f) {
-		isPos = false;
+	if (pPos_.y <= -7.0f) {
+		isPos_ = false;
 	}
-	object3d->SetPosition(pPos);
+	object3d_->SetPosition(pPos_);
 	if (Input::GetInstance()->TriggerKey(DIK_R)) {
 		int a;
 		a = 0;
 	}
 
 	// シーンの切り替え処理
-	if (isFadeIn == false && isFadeOut == false) {
+	if (isFadeIn_ == false && isFadeOut_ == false) {
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			start = true;
+			start_ = true;
 		}
 	}
-	if (start) {
-		startTimer++;
-		pPos.z += 1.8f;
-		pPos.y += 0.25f;
-		eye.y -= 0.06f;
+	if (start_) {
+		startTimer_++;
+		pPos_.z += 1.8f;
+		pPos_.y += 0.25f;
+		eye_.y -= 0.06f;
 
-		object3d->SetPosition(pPos);
-		object3d->SetEye(eye);
+		object3d_->SetPosition(pPos_);
+		object3d_->SetEye(eye_);
 
-		isFadeIn = true;
+		isFadeIn_ = true;
 	}
-	if (startTimer >= 200) {
+	if (startTimer_ >= 200) {
 		// タイマーを初期値に戻す
-		startTimer = 0;
+		startTimer_ = 0;
 
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");
@@ -139,8 +139,8 @@ void GameTitleScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	//=== オブジェクトの描画 ===//
-	skydome->Draw();
-	object3d->Draw();
+	skydome_->Draw();
+	object3d_->Draw();
 
 	// オブジェクトの後処理
 	Object3d::PostDraw();
@@ -153,15 +153,15 @@ void GameTitleScene::Draw()
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
 	//=== スプライトの描画 ===//
-	if (!start) {
+	if (!start_) {
 		title_->SpriteDraw(spriteCommon_);
-		if (isSpace) {
+		if (isSpace_) {
 			space_->SpriteDraw(spriteCommon_);
 		}
 	}
 
 	// フェードインとフェードアウトの描画
-	if (isFadeIn == true || isFadeOut == true) {
+	if (isFadeIn_ == true || isFadeOut_ == true) {
 		inBlack_->SpriteDraw(spriteCommon_);
 	}
 
@@ -296,18 +296,18 @@ void GameTitleScene::LoadSprite()
 void GameTitleScene::Fade()
 {
 	// フェードアウト処理
-	if (isFadeOut) {
+	if (isFadeOut_) {
 		if (bInAlpha_ > 0.0f) {
 			bInAlpha_ -= 0.01f;
 		}
 		if (bInAlpha_ <= 0.01f) {
 			bInAlpha_ = 0.0f;
-			isFadeOut = false;
+			isFadeOut_ = false;
 		}
 	}
 
 	// フェードインの処理
-	if (isFadeIn) {
+	if (isFadeIn_) {
 		if (bInAlpha_ < 1.0f) {
 			bInAlpha_ += 0.01f;
 		}
@@ -317,9 +317,9 @@ void GameTitleScene::Fade()
 
 void GameTitleScene::FlashSpace()
 {
-	if (isSpace) {
-		spaceTimer++;
-		if (spaceTimer >= 50 && spaceTimer < 100) {
+	if (isSpace_) {
+		spaceTimer_++;
+		if (spaceTimer_ >= 50 && spaceTimer_ < 100) {
 			if (sAlpha_ > 0.0f) {
 				sAlpha_ -= 0.05f;
 			}
@@ -327,7 +327,7 @@ void GameTitleScene::FlashSpace()
 				sAlpha_ = 0.0f;
 			}
 		}
-		if (spaceTimer >= 100 && spaceTimer < 150) {
+		if (spaceTimer_ >= 100 && spaceTimer_ < 150) {
 			if (sAlpha_ < 1.0f) {
 				sAlpha_ += 0.05f;
 			}
@@ -335,8 +335,8 @@ void GameTitleScene::FlashSpace()
 				sAlpha_ = 1.0f;
 			}
 		}
-		if (spaceTimer >= 150) {
-			spaceTimer = 0;
+		if (spaceTimer_ >= 150) {
+			spaceTimer_ = 0;
 		}
 		space_->SetAlpha(sAlpha_);
 	}

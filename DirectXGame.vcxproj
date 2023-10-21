@@ -65,7 +65,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDIr)DirectXGame\Engin\Collision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Base;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDIr)DirectXGame\Engin\Collision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Platform;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDIr)DirectXGame\Engin\Collision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Engin\2d;$(ProjectDir)DirectXGame\Engin\3d;$(ProjectDir)DirectXGame\Engin\Audio;$(ProjectDir)DirectXGame\Engin\Effect;$(ProjectDir)DirectXGame\Engin\Input;$(ProjectDir)DirectXGame\Engin\Math;$(ProjectDir)DirectXGame\Engin\Base;$(ProjectDir)DirectXGame\Engin\Scene;$(ProjectDir)DirectXGame\Engin\ImGui;$(ProjectDir)DirectXGame\Engin\Camera;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Application\Platform;$(ProjectDir)DirectXGame\Application\3d;$(ProjectDIr)DirectXGame\Engin\Collision;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -144,9 +144,9 @@
     <ClCompile Include="DirectXGame\Engin\Math\Matrix4.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Vector2.cpp" />
     <ClCompile Include="DirectXGame\Engin\Math\Vector3.cpp" />
-    <ClCompile Include="DirectXGame\Engin\Platform\DirectXCommon.cpp" />
-    <ClCompile Include="DirectXGame\Engin\Platform\FPSFixed.cpp" />
-    <ClCompile Include="DirectXGame\Engin\Platform\WinApp.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Base\DirectXCommon.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Base\FPSFixed.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Base\WinApp.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GamePlayScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -268,9 +268,9 @@
     <ClInclude Include="DirectXGame\Engin\Math\Vector2.h" />
     <ClInclude Include="DirectXGame\Engin\Math\Vector3.h" />
     <ClInclude Include="DirectXGame\Engin\Math\Vector4.h" />
-    <ClInclude Include="DirectXGame\Engin\Platform\DirectXCommon.h" />
-    <ClInclude Include="DirectXGame\Engin\Platform\FPSFixed.h" />
-    <ClInclude Include="DirectXGame\Engin\Platform\WinApp.h" />
+    <ClInclude Include="DirectXGame\Engin\Base\DirectXCommon.h" />
+    <ClInclude Include="DirectXGame\Engin\Base\FPSFixed.h" />
+    <ClInclude Include="DirectXGame\Engin\Base\WinApp.h" />
     <ClInclude Include="DirectXGame\Engin\Scene\GameSceneManager.h" />
     <ClInclude Include="DirectXGame\Engin\Scene\TYFramework.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GamePlayScene.h" />

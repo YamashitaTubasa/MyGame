@@ -85,11 +85,11 @@ private: // メンバ変数
 	Sprite* dot_[5];
 
 	// 天球
-	Skydome* skydome = nullptr;
+	Skydome* skydome_ = nullptr;
 
 	// オブジェクト
-	Object3d* object3d = nullptr;
-	Model* model = nullptr;
+	Object3d* object3d_ = nullptr;
+	Model* model_ = nullptr;
 
 	// タイトルの設定
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
@@ -103,8 +103,8 @@ private: // メンバ変数
 	DirectX::XMFLOAT2 spaceScale_ = { 415.0f, 94.0f };
 	float spaceRot_ = 0.0f;
 	float sAlpha_ = 1.0f;
-	int spaceTimer = 0;
-	bool isSpace = true;
+	int spaceTimer_ = 0;
+	bool isSpace_ = true;
 
 	// ロードの設定
 	DirectX::XMFLOAT3 nowLodingPos_ = { 740, 580, 0 };
@@ -118,20 +118,20 @@ private: // メンバ変数
 	bool isDot_[5] = { false, false, false, false, false };
 	int dotTimer_ = 0;
 
-	DirectX::XMFLOAT3 pPos = { 0,-5,-30 };
-	DirectX::XMFLOAT3 eye = { 0,0,-50 };
+	DirectX::XMFLOAT3 pPos_ = { 0,-5,-30 };
+	DirectX::XMFLOAT3 eye_ = { 0,0,-50 };
 
 	// タイマー
-	int startTimer = 0;
+	int startTimer_ = 0;
 
 	// フラグ
-	bool start = false;
-	bool isPos = false;
+	bool start_ = false;
+	bool isPos_ = false;
 
 	// フェードイン・アウト時ののアルファ値
 	float bInAlpha_ = 1.0f;
 
 	// フェードイン・アウトフラグ
-	bool isFadeIn = false;
-	bool isFadeOut = true;
+	bool isFadeIn_ = false;
+	bool isFadeOut_ = true;
 };

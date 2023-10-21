@@ -19,278 +19,278 @@ GamePlayScene::GamePlayScene()
 
 GamePlayScene::~GamePlayScene()
 {
-	delete skydome;
-	delete player;
-	delete sprite;
-	delete camera;
-	delete fbxObject;
-	delete fbxModel;
-	delete hp;
-	delete hpBar;
-	delete hpBack;
-	delete enemyHp;
-	delete enemyHpBar;
-	delete enemyHpBack;
-	delete ult;
-	delete X;
-	delete damage;
-	delete particle;
-	delete particleMan;
-	delete enemy;
+	delete skydome_;
+	delete player_;
+	delete sprite_;
+	delete camera_;
+	delete fbxObject_;
+	delete fbxModel_;
+	delete hp_;
+	delete hpBar_;
+	delete hpBack_;
+	delete enemyHp_;
+	delete enemyHpBar_;
+	delete enemyHpBack_;
+	delete ult_;
+	delete X_;
+	delete damage_;
+	delete particle_;
+	delete particleMan_;
+	delete enemy_;
 	for (int i = 0; i < 5; i++) {
-		delete number[i];
+		delete number_[i];
 	}
-	delete backGroundObj;
+	delete backGroundObj_;
 }
 
 void GamePlayScene::Initialize()
 {
-	winApp = WinApp::GetInstance();
-	input = Input::GetInstance();
-	dXCommon = DirectXCommon::GetInstance();
-	collisionMan = CollisionManager::GetInstance();
+	winApp_ = WinApp::GetInstance();
+	input_ = Input::GetInstance();
+	dxCommon_ = DirectXCommon::GetInstance();
+	collisionMan_ = CollisionManager::GetInstance();
 
 	// カメラ
-	camera = new Camera();
-	camera->Initialize();
+	camera_ = new Camera();
+	camera_->Initialize();
 
 	// デバイスをセット
-	FbxObject3d::SetDevice(dXCommon->GetDevice());
+	FbxObject3d::SetDevice(dxCommon_->GetDevice());
 	// カメラをセット
-	FbxObject3d::SetCamera(camera);
+	FbxObject3d::SetCamera(camera_);
 	// グラフィックスパイプライン生成
 	FbxObject3d::CreateGraphicsPipeline();
 
 	// FBXの3Dオブジェクト生成とモデルのセット
-	fbxObject = new FbxObject3d();
-	fbxObject->Initialize();
+	fbxObject_ = new FbxObject3d();
+	fbxObject_->Initialize();
 	// モデル名を指定してファイル読み込み
-	fbxModel = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	fbxModel_ = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 	// FBXオブジェクトにFBXモデルを割り当てる
-	fbxObject->SetModel(fbxModel);
+	fbxObject_->SetModel(fbxModel_);
 	// スケール、回転、座標
-	fbxObject->SetRotation({ 0,90,0 });
+	fbxObject_->SetRotation({ 0,90,0 });
 
 	// カメラの注視点をセット
-	target[0] = { 0,2.5f,0 };
-	eye[0] = { 0,0,-10 };
-	camera->SetTarget(target[0]);
-	camera->SetEye(eye[0]);
-	camera->SetDistance(8.0f);
+	target_[0] = { 0,2.5f,0 };
+	eye_[0] = { 0,0,-10 };
+	camera_->SetTarget(target_[0]);
+	camera_->SetEye(eye_[0]);
+	camera_->SetDistance(8.0f);
 
 	// 自キャラ生成
-	player = new Player();
-	player = Player::Create();
-	player->SetCollider(new SphereCollider);
+	player_ = new Player();
+	player_ = Player::Create();
+	player_->SetCollider(new SphereCollider);
 
 	// 敵キャラ生成
-	enemy = new Enemy();
-	enemy = Enemy::Create();
-	enemy->SetCollider(new SphereCollider);
+	enemy_ = new Enemy();
+	enemy_ = Enemy::Create();
+	enemy_->SetCollider(new SphereCollider);
 
 	// 背景のオブジェクトの初期化
-	backGroundObj = new BackGroundObject();
-	backGroundObj->Initialize();
+	backGroundObj_ = new BackGroundObject();
+	backGroundObj_->Initialize();
 
 	// 天球の初期化
-	skydome = new Skydome();
-	skydome->Initialize();
+	skydome_ = new Skydome();
+	skydome_->Initialize();
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle = Particle::LoadFromOBJ("bombEffect.png");
+	particle_ = Particle::LoadFromOBJ("bombEffect.png");
 	// パーティクルの生成
-	particleMan = ParticleManager::Create();
+	particleMan_ = ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルセットする
-	particleMan->SetModel(particle);
+	particleMan_->SetModel(particle_);
 	
 	// スプライトの初期化
 	SpriteInitialize();
 
 	// FBXアニメーションの実行
-	fbxObject->PlayAnimation();
+	fbxObject_->PlayAnimation();
 }
 
 void GamePlayScene::Update()
 {
-	count++;
+	count_++;
 
-	if (player->GetPosition().z >= 90) {
-		isFadeIn = true;
+	if (player_->GetPosition().z >= 90) {
+		isFadeIn_ = true;
 	}
 
 	// シーン切り替え
-	if (player->GetPositon().z >= 150) {
-		isFadeIn = true;
+	if (player_->GetPositon().z >= 150) {
+		isFadeIn_ = true;
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
 
 	// カメラの更新
-	camera->Update();
+	camera_->Update();
 
 	// FBXオブジェクトの更新
-	fbxObject->Update();
+	fbxObject_->Update();
 
 	// 自キャラの更新
-	player->Update();
+	player_->Update();
 
 	// 敵キャラ更新
-	enemy->Update();
+	enemy_->Update();
 	// デスフラグの立った敵を削除
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy_) {
 		return enemy_->GetIsDead();
 	});
 
 	// 背景のオブジェクトの更新
-	backGroundObj->Update();
+	backGroundObj_->Update();
 
 	// 天球の更新
-	skydome->Update();
+	skydome_->Update();
 
 	/*if (CheckCollision(player->GetpBulletP(), enemy->GetPosition())) {
 		isEnemyDeth = true;
 	}*/
 
-	if (input->PushKey(DIK_RIGHT)) {
-		eye[0].x += 0.5;
+	if (input_->PushKey(DIK_RIGHT)) {
+		eye_[0].x += 0.5;
 	}
-	if (input->PushKey(DIK_LEFT)) {
-		eye[0].x -= 0.5;
+	if (input_->PushKey(DIK_LEFT)) {
+		eye_[0].x -= 0.5;
 	}
-	if (input->PushKey(DIK_UP)) {
-		eye[0].y += 0.5;
+	if (input_->PushKey(DIK_UP)) {
+		eye_[0].y += 0.5;
 	}
-	if (input->PushKey(DIK_DOWN)) {
-		eye[0].y -= 0.5;
+	if (input_->PushKey(DIK_DOWN)) {
+		eye_[0].y -= 0.5;
 	}
-	camera->SetEye(eye[0]);
+	camera_->SetEye(eye_[0]);
 	
-	if (input->TriggerKey(DIK_U)) {
-		particl = true;
+	if (input_->TriggerKey(DIK_U)) {
+		particl_ = true;
 	}
-	if (particl == true) {
-		particleTime++;
+	if (particl_ == true) {
+		particleTime_++;
 	}
-	if (particleTime >= 10) { 
-		particl = false; 
-		particleTime = 0; 
+	if (particleTime_ >= 10) { 
+		particl_ = false; 
+		particleTime_ = 0; 
 	}
-	if (particl == true) {
+	if (particl_ == true) {
 		// パーティクルの実行
 		//particleMan->Execution(particle, 0.0f, 0.0f, 0.5f, 20, 0.9f, 0.0f);
 		//particleMan1->Execution(particle1, 6.0f, 0.0f, 0.0f, 20, 1.0f, 0.0f);
 	}
 
-	if (player->GetIsHp()) {
-		if (hpScale.x >= 0) {
-			hpScale.x -= 15;
+	if (player_->GetIsHp()) {
+		if (hpScale_.x >= 0) {
+			hpScale_.x -= 15;
 		}
 	}
-	if (player->GetHp() == 8) {
-		if (hpScale.x >= 0) {
-			hpScale.x -= 10;
+	if (player_->GetHp() == 8) {
+		if (hpScale_.x >= 0) {
+			hpScale_.x -= 10;
 		}
 	}
-	if (player->GetHp() == 7) {
-		if (hpScale.x >= 0) {
-			hpScale.x -= 10;
+	if (player_->GetHp() == 7) {
+		if (hpScale_.x >= 0) {
+			hpScale_.x -= 10;
 		}
 	}
-	if (player->GetHp() == 6) {
-		if (hpScale.x >= 100) {
-			hpScale.x -= 10;
+	if (player_->GetHp() == 6) {
+		if (hpScale_.x >= 100) {
+			hpScale_.x -= 10;
 		}
 	}
-	if (player->GetHp() == 5) {
-		if (hpScale.x >= 0) {
-			hpScale.x -= 10;
+	if (player_->GetHp() == 5) {
+		if (hpScale_.x >= 0) {
+			hpScale_.x -= 10;
 		}
 	}
-	if (player->GetHp() == 4) {
-		if (hpScale.x >= 150) {
-			hpScale.x -= 10;
+	if (player_->GetHp() == 4) {
+		if (hpScale_.x >= 150) {
+			hpScale_.x -= 10;
 		}
 	}
-	if (player->GetHp() == 3) {
-		if (hpScale.x >= 100) {
-			hpScale.x -= 10;
+	if (player_->GetHp() == 3) {
+		if (hpScale_.x >= 100) {
+			hpScale_.x -= 10;
 		}
 	}
-	if (player->GetHp() == 2) {
-		if (hpScale.x >= 50) {
-			hpScale.x -= 10;
+	if (player_->GetHp() == 2) {
+		if (hpScale_.x >= 50) {
+			hpScale_.x -= 10;
 		}
 	}
-	if (player->GetHp() == 1) {
-		if (hpScale.x >= 0) {
-			hpScale.x -= 10;
+	if (player_->GetHp() == 1) {
+		if (hpScale_.x >= 0) {
+			hpScale_.x -= 10;
 		}
 	}
-	hp->SetPosition(hpPosition);
-	hp->SetScale(hpScale);
-	hp->SpriteTransferVertexBuffer(hp, spriteCommon_, 1);
-	hp->SpriteUpdate(hp, spriteCommon_);
-	enemyHp->SetScale(enemyHpScale);
-	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon_, 7);
-	enemyHp->SpriteUpdate(enemyHp, spriteCommon_);
+	hp_->SetPosition(hpPosition_);
+	hp_->SetScale(hpScale_);
+	hp_->SpriteTransferVertexBuffer(hp_, spriteCommon_, 1);
+	hp_->SpriteUpdate(hp_, spriteCommon_);
+	enemyHp_->SetScale(enemyHpScale_);
+	enemyHp_->SpriteTransferVertexBuffer(enemyHp_, spriteCommon_, 7);
+	enemyHp_->SpriteUpdate(enemyHp_, spriteCommon_);
 
 	// フェードアウト処理
-	if (isFadeOut) {
+	if (isFadeOut_) {
 		if (bAlpha_ > 0.0f) {
 			bAlpha_ -= 0.01f;
 		}
 		if (bAlpha_ <= 0.01f) {
 			bAlpha_ = 0.0f;
-			isFadeOut = false;
+			isFadeOut_ = false;
 		}
 	}
 
 	// フェードインの処理
-	if (isFadeIn) {
+	if (isFadeIn_) {
 		if (bAlpha_ < 1.0f) {
 			bAlpha_ += 0.01f;
 		}
 		if (bAlpha_ > 1.0f) {
 			bAlpha_ = 1.0f;
-			isScene = true;
+			isScene_ = true;
 		}
 	}
 	black_->SetAlpha(bAlpha_);
 
-	if (input->PushKey(DIK_I)) {
-		isDamage = true;
+	if (input_->PushKey(DIK_I)) {
+		isDamage_ = true;
 	}
-	if (isDamage) {
-		damageTime++;
-		if (hpScale.x >= 0) {
-			hpScale.x -= 5;
+	if (isDamage_) {
+		damageTime_++;
+		if (hpScale_.x >= 0) {
+			hpScale_.x -= 5;
 		}
 	}
-	if (damageTime >= 20) {
-		isDamage = false;
-		damageTime = 0;
+	if (damageTime_ >= 20) {
+		isDamage_ = false;
+		damageTime_ = 0;
 	}
 
-	if (hpScale.x <= 0) {
-		isFadeIn = true;
+	if (hpScale_.x <= 0) {
+		isFadeIn_ = true;
 	}
-	if (isScene) {
+	if (isScene_) {
 		// ゲームオーバー（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("OVER");
 	}
 
 	// パーティクルの更新
-	particleMan->Update();
+	particleMan_->Update();
 	//particleMan1->Update();
 
 	// 全ての衝突をチェック
-	collisionMan->CheckAllCollisions();
+	collisionMan_->CheckAllCollisions();
 }
 
 void GamePlayScene::Draw()
 {
 	// コマンドライン取得
-	ID3D12GraphicsCommandList* cmdList = dXCommon->GetCommandList();
+	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
 
 	#pragma region 3Dオブジェクトの描画
 
@@ -298,14 +298,14 @@ void GamePlayScene::Draw()
 	Object3d::PreDraw(cmdList);
 
 	// 3Dオブジェクトの描画
-	skydome->Draw();
-	player->Draw();
-	if (!isEnemyDeth) {
-		enemy->Draw();
+	skydome_->Draw();
+	player_->Draw();
+	if (!isEnemyDeth_) {
+		enemy_->Draw();
 	}
 
 	// 背景のオブジェクトの描画
-	backGroundObj->Draw();
+	backGroundObj_->Draw();
 
 	// FBX3Dオブジェクトの描画
 	//fbxObject->Draw(dXCommon->GetCommandList());
@@ -321,9 +321,9 @@ void GamePlayScene::Draw()
 	ParticleManager::PreDraw(cmdList);
 
 	// パーティクルの描画
-	particleMan->Draw();
+	particleMan_->Draw();
 	//particleMan1->Draw();
-	player->Effect();
+	player_->Effect();
 
 	// パーティクル描画後処理
 	ParticleManager::PostDraw();
@@ -336,21 +336,21 @@ void GamePlayScene::Draw()
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
 	// HPバーの描画
-	hpBar->SpriteDraw(spriteCommon_);
+	hpBar_->SpriteDraw(spriteCommon_);
 	// HPの背景描画
-	hpBack->SpriteDraw(spriteCommon_);
+	hpBack_->SpriteDraw(spriteCommon_);
 	// HPの描画
-	hp->SpriteDraw(spriteCommon_);
+	hp_->SpriteDraw(spriteCommon_);
 	// ULTの描画
 	//ult->SpriteDraw(spriteCommon_);
 	// Xの描画
 	//X->SpriteDraw(spriteCommon_);
 	// 0の描画
-	if (player->GetIsBullet() == 0) {
+	if (player_->GetIsBullet() == 0) {
 		//number[0]->SpriteDraw(spriteCommon_);
 	}
 	// 1の描画
-	if (player->GetIsBullet() == 1) {
+	if (player_->GetIsBullet() == 1) {
 		//number[1]->SpriteDraw(spriteCommon_);
 	}
 	// 敵のHPバーの描画
@@ -360,11 +360,11 @@ void GamePlayScene::Draw()
 	// 敵のHPの描画
 	//enemyHp->SpriteDraw(spriteCommon_);
 	// ダメージの描画
-	if (isDamage) {
-		damage->SpriteDraw(spriteCommon_);
+	if (isDamage_) {
+		damage_->SpriteDraw(spriteCommon_);
 	}
 	// 黒
-	if (isFadeIn == true || isFadeOut == true) {
+	if (isFadeIn_ == true || isFadeOut_ == true) {
 		black_->SpriteDraw(spriteCommon_);
 	}
 
@@ -385,121 +385,121 @@ void GamePlayScene::Finalize()
 void GamePlayScene::SpriteInitialize()
 {
 	// スプライト
-	sprite = new Sprite();
-	spriteCommon_ = sprite->SpriteCommonCreate();
+	sprite_ = new Sprite();
+	spriteCommon_ = sprite_->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite->SpriteCreateGraphicsPipeline();
+	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 
 	// HP
-	hp = new Sprite();
-	hp->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
-	hp->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hp->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hp->SetPosition(hpPosition);
-	hp->SetScale(hpScale);
-	hp->SetRotation(0.0f);
-	hp->SpriteTransferVertexBuffer(hp, spriteCommon_, 1);
-	hp->SpriteUpdate(hp, spriteCommon_);
+	hp_ = new Sprite();
+	hp_->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
+	hp_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	hp_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hp_->SetPosition(hpPosition_);
+	hp_->SetScale(hpScale_);
+	hp_->SetRotation(0.0f);
+	hp_->SpriteTransferVertexBuffer(hp_, spriteCommon_, 1);
+	hp_->SpriteUpdate(hp_, spriteCommon_);
 	// HPバー
-	hpBar = new Sprite();
-	hpBar->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png");
-	hpBar->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hpBar->SetPosition(hpBarPosition);
-	hpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
-	hpBar->SetRotation(0.0f);
-	hpBar->SpriteTransferVertexBuffer(hpBar, spriteCommon_, 2);
-	hpBar->SpriteUpdate(hpBar, spriteCommon_);
+	hpBar_ = new Sprite();
+	hpBar_->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png");
+	hpBar_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBar_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hpBar_->SetPosition(hpBarPosition_);
+	hpBar_->SetScale(XMFLOAT2(502 * 1, 22 * 1));
+	hpBar_->SetRotation(0.0f);
+	hpBar_->SpriteTransferVertexBuffer(hpBar_, spriteCommon_, 2);
+	hpBar_->SpriteUpdate(hpBar_, spriteCommon_);
 	// HP背景
-	hpBack = new Sprite();
-	hpBack->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png");
-	hpBack->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	hpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
-	hpBack->SetPosition(hpBackPosition);
-	hpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
-	hpBack->SetRotation(0.0f);
-	hpBack->SpriteTransferVertexBuffer(hpBack, spriteCommon_, 3);
-	hpBack->SpriteUpdate(hpBack, spriteCommon_);
+	hpBack_ = new Sprite();
+	hpBack_->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png");
+	hpBack_->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	hpBack_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	hpBack_->SetPosition(hpBackPosition_);
+	hpBack_->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	hpBack_->SetRotation(0.0f);
+	hpBack_->SpriteTransferVertexBuffer(hpBack_, spriteCommon_, 3);
+	hpBack_->SpriteUpdate(hpBack_, spriteCommon_);
 	// ULT
-	ult = new Sprite();
-	ult->LoadTexture(spriteCommon_, 4, L"Resources/Image/ult.png");
-	ult->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	ult->SetColor(XMFLOAT4(1, 1, 1, 1));
-	ult->SetPosition({ 1010,610, 0 });
-	ult->SetScale({ 1600 * 0.05, 1600 * 0.05 });
-	ult->SetRotation(0.0f);
-	ult->SpriteTransferVertexBuffer(ult, spriteCommon_, 4);
-	ult->SpriteUpdate(ult, spriteCommon_);
+	ult_ = new Sprite();
+	ult_->LoadTexture(spriteCommon_, 4, L"Resources/Image/ult.png");
+	ult_->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	ult_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	ult_->SetPosition({ 1010,610, 0 });
+	ult_->SetScale({ 1600 * 0.05, 1600 * 0.05 });
+	ult_->SetRotation(0.0f);
+	ult_->SpriteTransferVertexBuffer(ult_, spriteCommon_, 4);
+	ult_->SpriteUpdate(ult_, spriteCommon_);
 	// X
-	X = new Sprite();
-	X->LoadTexture(spriteCommon_, 5, L"Resources/Image/x.png");
-	X->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	X->SetColor(XMFLOAT4(1, 1, 1, 1));
-	X->SetPosition({ 1120,630, 0 });
-	X->SetScale({ 64.0f * 0.7f, 64.0f * 0.7f });
-	X->SetRotation(0.0f);
-	X->SpriteTransferVertexBuffer(X, spriteCommon_, 5);
-	X->SpriteUpdate(X, spriteCommon_);
+	X_ = new Sprite();
+	X_->LoadTexture(spriteCommon_, 5, L"Resources/Image/x.png");
+	X_->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	X_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	X_->SetPosition({ 1120,630, 0 });
+	X_->SetScale({ 64.0f * 0.7f, 64.0f * 0.7f });
+	X_->SetRotation(0.0f);
+	X_->SpriteTransferVertexBuffer(X_, spriteCommon_, 5);
+	X_->SpriteUpdate(X_, spriteCommon_);
 	// 0
-	number[0] = new Sprite();
-	number[0]->LoadTexture(spriteCommon_, 10, L"Resources/Image/0.png");
-	number[0]->SpriteCreate(1280, 720, 10, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	number[0]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number[0]->SetPosition({ 1200, 620, 0 });
-	number[0]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
-	number[0]->SetRotation(0.0f);
-	number[0]->SpriteTransferVertexBuffer(number[0], spriteCommon_, 10);
-	number[0]->SpriteUpdate(number[0], spriteCommon_);
+	number_[0] = new Sprite();
+	number_[0]->LoadTexture(spriteCommon_, 10, L"Resources/Image/0.png");
+	number_[0]->SpriteCreate(1280, 720, 10, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[0]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[0]->SetPosition({ 1200, 620, 0 });
+	number_[0]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[0]->SetRotation(0.0f);
+	number_[0]->SpriteTransferVertexBuffer(number_[0], spriteCommon_, 10);
+	number_[0]->SpriteUpdate(number_[0], spriteCommon_);
 	// 1
-	number[1] = new Sprite();
-	number[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
-	number[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	number[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number[1]->SetPosition({ 1200, 620, 0 });
-	number[1]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
-	number[1]->SetRotation(0.0f);
-	number[1]->SpriteTransferVertexBuffer(number[1], spriteCommon_, 6);
-	number[1]->SpriteUpdate(number[1], spriteCommon_);
+	number_[1] = new Sprite();
+	number_[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
+	number_[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[1]->SetPosition({ 1200, 620, 0 });
+	number_[1]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[1]->SetRotation(0.0f);
+	number_[1]->SpriteTransferVertexBuffer(number_[1], spriteCommon_, 6);
+	number_[1]->SpriteUpdate(number_[1], spriteCommon_);
 	// 敵のHP
-	enemyHp = new Sprite();
-	enemyHp->LoadTexture(spriteCommon_, 7, L"Resources/Image/enemyHp.png");
-	enemyHp->SpriteCreate(1280, 720, 7, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
-	enemyHp->SetColor(XMFLOAT4(1, 1, 1, 1));
-	enemyHp->SetPosition(enemyHpPosition);
-	enemyHp->SetScale(enemyHpScale);
-	enemyHp->SetRotation(0.0f);
-	enemyHp->SpriteTransferVertexBuffer(enemyHp, spriteCommon_, 7);
-	enemyHp->SpriteUpdate(enemyHp, spriteCommon_);
+	enemyHp_ = new Sprite();
+	enemyHp_->LoadTexture(spriteCommon_, 7, L"Resources/Image/enemyHp.png");
+	enemyHp_->SpriteCreate(1280, 720, 7, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHp_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHp_->SetPosition(enemyHpPosition_);
+	enemyHp_->SetScale(enemyHpScale_);
+	enemyHp_->SetRotation(0.0f);
+	enemyHp_->SpriteTransferVertexBuffer(enemyHp_, spriteCommon_, 7);
+	enemyHp_->SpriteUpdate(enemyHp_, spriteCommon_);
 	// 敵のHPバー
-	enemyHpBar = new Sprite();
-	enemyHpBar->LoadTexture(spriteCommon_, 8, L"Resources/Image/enemyHpBar.png");
-	enemyHpBar->SpriteCreate(1280, 720, 8, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
-	enemyHpBar->SetColor(XMFLOAT4(1, 1, 1, 1));
-	enemyHpBar->SetPosition(enemyHpBarPosition);
-	enemyHpBar->SetScale(XMFLOAT2(502 * 1, 22 * 1));
-	enemyHpBar->SetRotation(0.0f);
-	enemyHpBar->SpriteTransferVertexBuffer(enemyHpBar, spriteCommon_, 8);
-	enemyHpBar->SpriteUpdate(enemyHpBar, spriteCommon_);
+	enemyHpBar_ = new Sprite();
+	enemyHpBar_->LoadTexture(spriteCommon_, 8, L"Resources/Image/enemyHpBar.png");
+	enemyHpBar_->SpriteCreate(1280, 720, 8, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHpBar_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHpBar_->SetPosition(enemyHpBarPosition_);
+	enemyHpBar_->SetScale(XMFLOAT2(502 * 1, 22 * 1));
+	enemyHpBar_->SetRotation(0.0f);
+	enemyHpBar_->SpriteTransferVertexBuffer(enemyHpBar_, spriteCommon_, 8);
+	enemyHpBar_->SpriteUpdate(enemyHpBar_, spriteCommon_);
 	// 敵のHP背景
-	enemyHpBack = new Sprite();
-	enemyHpBack->LoadTexture(spriteCommon_, 9, L"Resources/Image/enemyHpBack.png");
-	enemyHpBack->SpriteCreate(1280, 720, 9, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
-	enemyHpBack->SetColor(XMFLOAT4(1, 1, 1, 1));
-	enemyHpBack->SetPosition(enemyHpBackPosition);
-	enemyHpBack->SetScale(XMFLOAT2(500 * 1, 20 * 1));
-	enemyHpBack->SetRotation(0.0f);
-	enemyHpBack->SpriteTransferVertexBuffer(enemyHpBack, spriteCommon_, 9);
-	enemyHpBack->SpriteUpdate(enemyHpBack, spriteCommon_);
+	enemyHpBack_ = new Sprite();
+	enemyHpBack_->LoadTexture(spriteCommon_, 9, L"Resources/Image/enemyHpBack.png");
+	enemyHpBack_->SpriteCreate(1280, 720, 9, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHpBack_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHpBack_->SetPosition(enemyHpBackPosition_);
+	enemyHpBack_->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	enemyHpBack_->SetRotation(0.0f);
+	enemyHpBack_->SpriteTransferVertexBuffer(enemyHpBack_, spriteCommon_, 9);
+	enemyHpBack_->SpriteUpdate(enemyHpBack_, spriteCommon_);
 	// ダメージ
-	damage = new Sprite();
-	damage->LoadTexture(spriteCommon_, 11, L"Resources/Image/damage.png");
-	damage->SpriteCreate(1280, 720, 11, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	damage->SetColor(XMFLOAT4(1, 1, 1, 1));
-	damage->SetPosition({ 0.0f, 0.0f, 0.0f});
-	damage->SetScale(XMFLOAT2(1280 * 1, 720 * 1));
-	damage->SetRotation(0.0f);
-	damage->SpriteTransferVertexBuffer(damage, spriteCommon_, 11);
-	damage->SpriteUpdate(damage, spriteCommon_);
+	damage_ = new Sprite();
+	damage_->LoadTexture(spriteCommon_, 11, L"Resources/Image/damage.png");
+	damage_->SpriteCreate(1280, 720, 11, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	damage_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	damage_->SetPosition({ 0.0f, 0.0f, 0.0f});
+	damage_->SetScale(XMFLOAT2(1280 * 1, 720 * 1));
+	damage_->SetRotation(0.0f);
+	damage_->SpriteTransferVertexBuffer(damage_, spriteCommon_, 11);
+	damage_->SpriteUpdate(damage_, spriteCommon_);
 
 	//===== Blackの描画 =====//
 	black_ = new Sprite();
@@ -519,8 +519,8 @@ void GamePlayScene::SpriteInitialize()
 
 void GamePlayScene::GameReset()
 {
-	playerHp = 3;
-	time = 0;
+	playerHp_ = 3;
+	time_ = 0;
 }
 
 bool GamePlayScene::CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1)

@@ -20,7 +20,7 @@ private: // エイリアス
 public:
 	SphereCollider(XMVECTOR offset = { 0,0,0,0 }, float radius = 1.0f) : offset_(offset), radius_(radius) {
 		// 球形状をセット
-		shapeType = COLLISIONSHAPE_SPHERE;
+		shapeType_ = COLLISIONSHAPE_SPHERE;
 	}
 
 	/// <summary>

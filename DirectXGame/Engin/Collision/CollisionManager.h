@@ -17,11 +17,11 @@ public: // 静的メンバ関数
 
 public: // メンバ関数
 	inline void AddCollider(BaseCollider* collider) {
-		colliders.push_front(collider);
+		colliders_.push_front(collider);
 	}
 
 	inline void RemoveCollider(BaseCollider* collider) {
-		colliders.remove(collider);
+		colliders_.remove(collider);
 	}
 
 	/// <summary>
@@ -41,5 +41,5 @@ private:
 
 private:
 	// コライダーのリスト
-	std::forward_list<BaseCollider*> colliders;
+	std::forward_list<BaseCollider*> colliders_;
 };

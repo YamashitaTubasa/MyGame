@@ -58,42 +58,42 @@ public: // Getter・Setter
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	DirectX::XMFLOAT3 GetPosition() const { return position[0]; }
+	DirectX::XMFLOAT3 GetPosition() const { return position_[0]; }
 
 	/// <summary>
 	/// デスフラグの取得
 	/// </summary>
 	/// <returns>デスフラグ</returns>
-	bool GetIsDead() const { return isDead; }
+	bool GetIsDead() const { return isDead_; }
 
 	/// <summary>
 	/// デスフラグのセット
 	/// </summary>
 	/// <param name="isDead_">デスフラグ</param>
-	void SetIsDead(bool isDead_) { isDead = isDead_; }
+	void SetIsDead(bool isDead) { isDead_ = isDead; }
 
 private:
 	// オブジェクト
-	Object3d* enemyO3 = nullptr;
-	Object3d* enemyO1 = nullptr;
-	Object3d* enemyO2 = nullptr;
-	Object3d* enemyO4 = nullptr;
+	Object3d* enemyO3_ = nullptr;
+	Object3d* enemyO1_ = nullptr;
+	Object3d* enemyO2_ = nullptr;
+	Object3d* enemyO4_ = nullptr;
 	// モデル
-	Model* enemyM = nullptr;
+	Model* enemyM_ = nullptr;
 	// 敵発生コマンド
-	std::stringstream enemyPopCommands;
+	std::stringstream enemyPopCommands_;
 
-	DirectX::XMFLOAT3 position[5]{};
-	DirectX::XMFLOAT3 rotation[5]{};
-	DirectX::XMFLOAT3 scale[5]{};
-	DirectX::XMFLOAT3 eye[5]{};
-	DirectX::XMFLOAT3 target[5]{};
+	DirectX::XMFLOAT3 position_[5]{};
+	DirectX::XMFLOAT3 rotation_[5]{};
+	DirectX::XMFLOAT3 scale_[5]{};
+	DirectX::XMFLOAT3 eye_[5]{};
+	DirectX::XMFLOAT3 target_[5]{};
 
 	// 待機フラグ
-	bool isWait = false;
+	bool isWait_ = false;
 	// 待機タイマー
-	int waitTimer = 0;
+	int waitTimer_ = 0;
 	// 敵のデスフラグ
-	bool isDead = false;
+	bool isDead_ = false;
 };
 
