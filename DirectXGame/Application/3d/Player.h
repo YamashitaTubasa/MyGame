@@ -79,130 +79,130 @@ public: // ゲッター
 	/// プレイヤーの座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const DirectX::XMFLOAT3& GetPositon() { return pPosition; }
+	const DirectX::XMFLOAT3& GetPositon() { return pPosition_; }
 
 	/// <summary>
 	/// プレイヤーの弾の座標の取得
 	/// </summary>
 	/// <returns>弾の座標</returns>
-	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP; }
+	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP_; }
 
 	/// <summary>
 	/// HPの取得
 	/// </summary>
 	/// <returns>HP</returns>
-	int GetHp() const { return hp; }
+	int GetHp() const { return hp_; }
 
 	/// <summary>
 	/// HPフラグの取得
 	/// </summary>
 	/// <returns>HPフラグ</returns>
-	bool GetIsHp()const { return isHp; }
+	bool GetIsHp()const { return isHp_; }
 
 	/// <summary>
 	/// ポストエフェクトのフラグの取得
 	/// </summary>
 	/// <returns>ポストエフェクトフラグ</returns>
-	bool GetIsPostE() { return isPostE; }
+	bool GetIsPostE() { return isPostE_; }
 
 	/// <summary>
 	/// 弾のフラグの取得
 	/// </summary>
 	/// <returns>弾のフラグ</returns>
-	int GetIsBullet() { return isBullet; }
+	int GetIsBullet() { return isBullet_; }
 	
 public: // メンバ変数
-	DirectXCommon* dxCommon = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
 	// モデル
-	Model* playerM = nullptr;
-	Model* reticleM = nullptr;
-	Model* reticle1M = nullptr;
+	Model* playerM_ = nullptr;
+	Model* reticleM_ = nullptr;
+	Model* reticle1M_ = nullptr;
 	// オブジェクト
-	Object3d* playerO3 = nullptr;
-	Object3d* reticleO3 = nullptr;
-	Object3d* reticle1O3 = nullptr;
+	Object3d* playerO3_ = nullptr;
+	Object3d* reticleO3_ = nullptr;
+	Object3d* reticle1O3_ = nullptr;
 	// 入力
-	Input* input = nullptr;
+	Input* input_ = nullptr;
 	// カメラ
 	Camera* camera_ = nullptr;
 	// 自キャラ弾
-	std::list<PlayerBullet*> pBullets;
+	std::list<PlayerBullet*> pBullets_;
 	// 敵キャラ
 	std::list<std::unique_ptr<Enemy>> enemys_;
-	Enemy* enemy = nullptr;
+	Enemy* enemy_ = nullptr;
 	// パーティクル
-	Particle* particle = nullptr;
-	ParticleManager* particleMan = nullptr;
+	Particle* particle_ = nullptr;
+	ParticleManager* particleMan_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
 	// プレイヤーの移動量
-	DirectX::XMFLOAT3 move = { 0,0.25,0 };
+	DirectX::XMFLOAT3 move_ = { 0,0.25,0 };
 	// プレイヤーの座標
-	DirectX::XMFLOAT3 pPosition = { 0,0,0 };
+	DirectX::XMFLOAT3 pPosition_ = { 0,0,0 };
 	// プレイヤーの回転
-	DirectX::XMFLOAT3 pRotation = { 0,0,0 };
+	DirectX::XMFLOAT3 pRotation_ = { 0,0,0 };
 	// プレイヤーのサイズ
-	DirectX::XMFLOAT3 pScale = { 1,1,1 };
+	DirectX::XMFLOAT3 pScale_ = { 1,1,1 };
 	// プレイヤーの弾の座標
-	DirectX::XMFLOAT3 pBulletP = { 0,0,0 };
+	DirectX::XMFLOAT3 pBulletP_ = { 0,0,0 };
 
 	// レティクルの移動量
-	DirectX::XMFLOAT3 rmove = { 0,0.25,0 };
-	DirectX::XMFLOAT3 r1move = { 0,0.25,0 };
+	DirectX::XMFLOAT3 rmove_ = { 0,0.25,0 };
+	DirectX::XMFLOAT3 r1move_ = { 0,0.25,0 };
 	// レティクルの座標
-	DirectX::XMFLOAT3 rPosition = { 0,0,-1 };
-	DirectX::XMFLOAT3 r1Position = { 0,0,-1 };
+	DirectX::XMFLOAT3 rPosition_ = { 0,0,-1 };
+	DirectX::XMFLOAT3 r1Position_ = { 0,0,-1 };
 	// レティクルの回転
-	DirectX::XMFLOAT3 rRotation = { 0,0,0 };
-	DirectX::XMFLOAT3 r1Rotation = { 0,0,0 };
+	DirectX::XMFLOAT3 rRotation_ = { 0,0,0 };
+	DirectX::XMFLOAT3 r1Rotation_ = { 0,0,0 };
 	// レティクルのサイズ
-	DirectX::XMFLOAT3 rScale = { 0.4f, 0.4f, 0.4f };
-	DirectX::XMFLOAT3 r1Scale = { 0.2f, 0.2f, 0.2f };
+	DirectX::XMFLOAT3 rScale_ = { 0.4f, 0.4f, 0.4f };
+	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
-	DirectX::XMFLOAT3 eye = { 0,30,-100 };
+	DirectX::XMFLOAT3 eye_ = { 0,30,-100 };
 	// 注視点
-	DirectX::XMFLOAT3 target = { 0,0,0 };
+	DirectX::XMFLOAT3 target_ = { 0,0,0 };
 
 	// 右への移動フラグ
-	bool isRightMove = false;
+	bool isRightMove_ = false;
 	// 左への移動フラグ
-	bool isLeftMove = false;
+	bool isLeftMove_ = false;
 	// 上への移動フラグ
-	bool isUpMove = false;
+	bool isUpMove_ = false;
 	// 下への移動フラグ
-	bool isDownMove = false;
+	bool isDownMove_ = false;
 	// イージング変数
-	bool isEaseFlag = false;
-	float eTime = 0.0f;
-	float eFrame = 0.0f;
-	float eEndFrame = 80.0f;
-	float eStart = 0.0f;
-	float eEnd = 360.0f;
+	bool isEaseFlag_ = false;
+	float eTime_ = 0.0f;
+	float eFrame_ = 0.0f;
+	float eEndFrame_ = 80.0f;
+	float eStart_ = 0.0f;
+	float eEnd_ = 360.0f;
 	// 回転のフラグ
-	bool isRot = false;
+	bool isRot_ = false;
 	// HP
-	int hp = 10;
-	int time = 0;
-	bool isTime = false;
+	int hp_ = 10;
+	int time_ = 0;
+	bool isTime_ = false;
 	// レティクルフラグ
-	bool isReticle = false;
+	bool isReticle_ = false;
 	// スタート時の演出フラグ
-	bool isStartStaging = true;
+	bool isStartStaging_ = true;
 	// スタート演出タイム
-	int startCount = 0;
+	int startCount_ = 0;
 	// ゴール時の演出フラグ
-	bool isEndStaging = false;
+	bool isEndStaging_ = false;
 	// ゴール演出タイム
-	int endCount = 0;
-	bool isPostE = false;
+	int endCount_ = 0;
+	bool isPostE_ = false;
 	// 自機のフラグ
-	bool isPlayer = true;
-	int isBullet = 1;
-	bool isEffect = false;
-	int effectTime = 0;
-	bool isHp = false;
+	bool isPlayer_ = true;
+	int isBullet_ = 1;
+	bool isEffect_ = false;
+	int effectTime_ = 0;
+	bool isHp_ = false;
 };
 

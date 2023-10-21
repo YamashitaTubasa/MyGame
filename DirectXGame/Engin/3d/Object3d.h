@@ -43,7 +43,7 @@ public: // サブクラス
 	struct ConstBufferDataB0
 	{
 		//XMFLOAT4 color;	// 色 (RGBA)
-		XMMATRIX mat;	// ３Ｄ変換行列
+		XMMATRIX mat_;	// ３Ｄ変換行列
 	};
 
 public:

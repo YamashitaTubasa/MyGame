@@ -230,10 +230,10 @@ void PostEffect::Initialize(const wchar_t* filename)
 
 	// 定数バッファにデータ転送
 	result = constBuff_->Map(0, nullptr, (void**)&constMap_); // マッピング
-	constMap_->color = color_;
-	constMap_->isPostE = isPostE_;
-	constMap_->alpha = alpha_;
-	constMap_->mat = XMMatrixIdentity();
+	constMap_->color_ = color_;
+	constMap_->isPostE_ = isPostE_;
+	constMap_->alpha_ = alpha_;
+	constMap_->mat_ = XMMatrixIdentity();
 	assert(SUCCEEDED(result));
 }
 
@@ -466,7 +466,7 @@ void PostEffect::SetColor(const DirectX::XMFLOAT4& color)
 
 	// 定数バッファにデータ転送
 	result = constBuff_->Map(0, nullptr, (void**)&constMap_); // マッピング
-	constMap_->color = color;
+	constMap_->color_ = color;
 	assert(SUCCEEDED(result));
 }
 
@@ -476,7 +476,7 @@ void PostEffect::SetIsPostE(const bool& isPostE)
 
 	// 定数バッファにデータ転送
 	result = constBuff_->Map(0, nullptr, (void**)&constMap_); // マッピング
-	constMap_->isPostE = isPostE;
+	constMap_->isPostE_ = isPostE;
 	assert(SUCCEEDED(result));
 }
 
@@ -486,6 +486,6 @@ void PostEffect::SetAlpha(const float& alpha)
 
 	// 定数バッファにデータ転送
 	result = constBuff_->Map(0, nullptr, (void**)&constMap_);
-	constMap_->alpha = alpha;
+	constMap_->alpha_ = alpha;
 	assert(SUCCEEDED(result));
 }

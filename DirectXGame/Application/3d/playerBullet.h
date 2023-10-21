@@ -14,7 +14,7 @@
 #include "Object3d.h"
 
 struct BulletMove {
-	DirectX::XMFLOAT3 transform = { 0,0,0 };
+	DirectX::XMFLOAT3 transform_ = { 0,0,0 };
 };
 
 class PlayerBullet
@@ -28,7 +28,7 @@ public:
 
 private: // 定数
 	// 寿命
-	static const int32_t kLifeTime = 60 * 5;
+	static const int32_t kLifeTime_ = 60 * 5;
 
 public: // メンバ関数
 	/// <summary>
@@ -51,7 +51,7 @@ public: // ゲッター
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	DirectX::XMFLOAT3 GetPosition() const { return pBulletPos; }
+	DirectX::XMFLOAT3 GetPosition() const { return pBulletPos_; }
 
 	/// <summary>
 	/// デスフラグの取得
@@ -61,25 +61,25 @@ public: // ゲッター
 
 private:
 	// モデル
-	Model* bulletM = nullptr;
+	Model* bulletM_ = nullptr;
 	// オブジェクト
-	Object3d* bulletO3 = nullptr;
+	Object3d* bulletO3_ = nullptr;
 	// 自キャラの弾の処理
-	BulletMove bulletMove;
+	BulletMove bulletMove_;
 
 	// 自キャラの弾の座標
-	DirectX::XMFLOAT3 pBulletPos = { 0,0,0 };
+	DirectX::XMFLOAT3 pBulletPos_ = { 0,0,0 };
 	// 自キャラの弾の回転
-	DirectX::XMFLOAT3 pBulletRot = { 0,0,0 };
+	DirectX::XMFLOAT3 pBulletRot_ = { 0,0,0 };
 	// 自キャラの弾のサイズ
-	DirectX::XMFLOAT3 pBulletSca = { 1,1,1 };
+	DirectX::XMFLOAT3 pBulletSca_ = { 1,1,1 };
 	// 自キャラの弾の速度
-	DirectX::XMFLOAT3 velocity_ = { 0,0,0 };
-	DirectX::XMFLOAT3 eye[5]{};
-	DirectX::XMFLOAT3 target[5]{};
+	DirectX::XMFLOAT3 velocity__ = { 0,0,0 };
+	DirectX::XMFLOAT3 eye_[5]{};
+	DirectX::XMFLOAT3 target_[5]{};
 
 	// デスタイマー
-	int32_t deathTimer_ = kLifeTime;
+	int32_t deathTimer_ = kLifeTime_;
 	// デスフラグ
 	bool isDead_ = false;
 };

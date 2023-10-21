@@ -34,11 +34,11 @@ class Input final
 public:
 	struct CountrolerState
 	{
-		XINPUT_STATE state; // コントローラーの状態の取得
-		XINPUT_VIBRATION vibration;  // バイブレーション
+		XINPUT_STATE state_; // コントローラーの状態の取得
+		XINPUT_VIBRATION vibration_;  // バイブレーション
 		//bool Connected;
 	};
-	CountrolerState GamePad;
+	CountrolerState GamePad_;
 
 public:
 	// namespace

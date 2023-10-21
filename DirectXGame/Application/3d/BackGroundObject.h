@@ -41,20 +41,20 @@ public:
 
 private:
 	// モデル
-	Model* buildingM = nullptr;
-	Model* asphaltM = nullptr;
-	Model* bridgeM = nullptr;
-	Model* treeM = nullptr;
-	Model* wheelM = nullptr;
+	Model* buildingM_ = nullptr;
+	Model* asphaltM_ = nullptr;
+	Model* bridgeM_ = nullptr;
+	Model* treeM_ = nullptr;
+	Model* wheelM_ = nullptr;
 	// モデルデータコンテナ
-	std::map<std::string, Model*> models;
+	std::map<std::string, Model*> models_;
 	// オブジェクト
-	std::vector<Object3d*> objects;
+	std::vector<Object3d*> objects_;
 	// レベルデータ
-	LevelData* levelData = nullptr;
+	LevelData* levelData_ = nullptr;
 
-	XMFLOAT3 modelPos = { 0,0,0 };
-	XMFLOAT3 modelEye = { 0,0,-3 };
-	XMFLOAT3 modelTarget = { 0,0,0 };
+	XMFLOAT3 modelPos_ = { 0,0,0 };
+	XMFLOAT3 modelEye_ = { 0,0,-3 };
+	XMFLOAT3 modelTarget_ = { 0,0,0 };
 };
 

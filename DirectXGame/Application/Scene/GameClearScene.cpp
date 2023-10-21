@@ -77,11 +77,11 @@ void GameClearScene::Initialize()
 
 void GameClearScene::Update()
 {
-	timer++;
+	timer_++;
 
 	// SPACEを押したら
-	if (isFadeIn == false && isFadeOut == false) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer >= 500) {
+	if (isFadeIn_ == false && isFadeOut_ == false) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= 500) {
 			// ゲームタイトルシーン（次シーン）を生成
 			GameSceneManager::GetInstance()->ChangeScene("TITLE");
 		}
@@ -95,25 +95,25 @@ void GameClearScene::Update()
 	black_->SpriteUpdate(black_, spriteCommon_);
 
 	// フェードアウト処理
-	if (isFadeOut) {
+	if (isFadeOut_) {
 		if (bAlpha_ > 0.0f) {
 			bAlpha_ -= 0.01f;
 		}
 		if (bAlpha_ <= 0.01f) {
 			bAlpha_ = 0.0f;
-			isFadeOut = false;
+			isFadeOut_ = false;
 		}
 	}
 
 	// フェードインの処理
-	if (isFadeIn) {
+	if (isFadeIn_) {
 		if (bAlpha_ < 1.0f) {
 			bAlpha_ += 0.01f;
 		}
 		if (bAlpha_ >= 1.0f) {
 			bAlpha_ = 1.0f;
-			isFadeIn = false;
-			isScene = true;
+			isFadeIn_ = false;
+			isScene_ = true;
 		}
 	}
 	black_->SetAlpha(bAlpha_);
@@ -147,10 +147,10 @@ void GameClearScene::Draw()
 
 	//=== スプライトの描画 ===//
 	clear_->SpriteDraw(spriteCommon_);
-	if (isFadeIn == true || isFadeOut == true) {
+	if (isFadeIn_ == true || isFadeOut_ == true) {
 		black_->SpriteDraw(spriteCommon_);
 	}
-	if (isSpace) {
+	if (isSpace_) {
 		space_->SpriteDraw(spriteCommon_);
 	}
 
@@ -166,9 +166,9 @@ void GameClearScene::Finalize()
 
 void GameClearScene::FlashSpace()
 {
-	if (isSpace) {
-		spaceTimer++;
-		if (spaceTimer >= 50 && spaceTimer < 100) {
+	if (isSpace_) {
+		spaceTimer_++;
+		if (spaceTimer_ >= 50 && spaceTimer_ < 100) {
 			if (sAlpha_ > 0.0f) {
 				sAlpha_ -= 0.05f;
 			}
@@ -176,7 +176,7 @@ void GameClearScene::FlashSpace()
 				sAlpha_ = 0.0f;
 			}
 		}
-		if (spaceTimer >= 100 && spaceTimer < 150) {
+		if (spaceTimer_ >= 100 && spaceTimer_ < 150) {
 			if (sAlpha_ < 1.0f) {
 				sAlpha_ += 0.05f;
 			}
@@ -184,8 +184,8 @@ void GameClearScene::FlashSpace()
 				sAlpha_ = 1.0f;
 			}
 		}
-		if (spaceTimer >= 150) {
-			spaceTimer = 0;
+		if (spaceTimer_ >= 150) {
+			spaceTimer_ = 0;
 		}
 		space_->SetAlpha(sAlpha_);
 	}

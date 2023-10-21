@@ -46,53 +46,53 @@ public: // サブクラス
 	// 頂点データ構造体
 	struct VertexPosNormalUv
 	{
-		XMFLOAT3 pos; // xyz座標
-		XMFLOAT3 normal; // 法線ベクトル
-		XMFLOAT2 uv;  // uv座標
+		XMFLOAT3 pos_; // xyz座標
+		XMFLOAT3 normal_; // 法線ベクトル
+		XMFLOAT2 uv_;  // uv座標
 	};
 
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
 		//XMFLOAT4 color;	// 色 (RGBA)
-		XMMATRIX mat;	// ３Ｄ変換行列
+		XMMATRIX mat_;	// ３Ｄ変換行列
 	};
 
 	// 定数バッファ用データ構造体B1
 	struct ConstBufferDataB1
 	{
-		XMFLOAT3 ambient; // アンビエント係数
-		float pad1;       // パディング
-		XMFLOAT3 diffuse; // ディフューズ係数
-		float pad2;       // パディング
-		XMFLOAT3 specular; // スペキュラー係数
-		float alpha;       // アルファ
+		XMFLOAT3 ambient_;  // アンビエント係数
+		float pad1_;        // パディング
+		XMFLOAT3 diffuse_;  // ディフューズ係数
+		float pad2_;        // パディング
+		XMFLOAT3 specular_; // スペキュラー係数
+		float alpha_;       // アルファ
 	};
 
 	// マテリアル
 	struct Material
 	{
-		std::string name; // マテリアル名
-		XMFLOAT3 ambient; // アンビエント影響度
-		XMFLOAT3 diffuse; // ディフェーズ影響度
-		XMFLOAT3 specular;// スペキュラー影響度
-		float alpha;      // アルファ
-		std::string textureFilename; // テクスチャファイル名
+		std::string name_;  // マテリアル名
+		XMFLOAT3 ambient_;  // アンビエント影響度
+		XMFLOAT3 diffuse_;  // ディフェーズ影響度
+		XMFLOAT3 specular_; // スペキュラー影響度
+		float alpha_;       // アルファ
+		std::string textureFilename_; // テクスチャファイル名
 		// コンストラクタ
 		Material() {
-			ambient = { 0.3f,0.3f,0.3f };
-			diffuse = { 0.0f,0.0f,0.0f };
-			specular = { 0.0f,0.0f,0.0f };
-			alpha = 1.0f;
+			ambient_ = { 0.3f,0.3f,0.3f };
+			diffuse_ = { 0.0f,0.0f,0.0f };
+			specular_ = { 0.0f,0.0f,0.0f };
+			alpha_ = 1.0f;
 		}
 	};
 
 private: // 定数
-	static const int division = 50; // 分割数
-	static const float radius; // 底面の半径
-	static const float prizmHeight; // 柱の高さ
-	static const int planeCount = division * 2 + division * 2; // 面の数
-	static const int vertexCount = planeCount * 3; // 頂点数
+	static const int division_ = 50; // 分割数
+	static const float radius_; // 底面の半径
+	static const float prizmHeight_; // 柱の高さ
+	static const int planeCount_ = division_ * 2 + division_ * 2; // 面の数
+	static const int vertexCount_ = planeCount_ * 3; // 頂点数
 
 public: // 静的メンバ関数
 	

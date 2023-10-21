@@ -28,42 +28,42 @@
 
 //定数バッファ用データ構造体(マテリアル)
 struct ConstBufferDataMaterial {
-	DirectX::XMFLOAT4 color;//色(RGBA)
+	DirectX::XMFLOAT4 color_;//色(RGBA)
 };
 
 //定数バッファ用データ構造体(3D変換行列)
 struct ConstBufferDataTransform {
-	DirectX::XMMATRIX mat; //3D変換行列
+	DirectX::XMMATRIX mat_; //3D変換行列
 };
 
 // チャンクヘッダ
 struct ChunkHeader
 {
-	char id[4]; // チャンク前のID
-	int32_t size; // チャンクサイズ
+	char id_[4]; // チャンク前のID
+	int32_t size_; // チャンクサイズ
 };
 
 // RIFFヘッダチャンク
 struct RiffHeader
 {
-	ChunkHeader chunk; // "RIFF"
-	char type[4]; // "WAVE"
+	ChunkHeader chunk_; // "RIFF"
+	char type_[4]; // "WAVE"
 };
 
 // FMTチャンク
 struct FormatChunk {
-	ChunkHeader chunk; // "fmt"
-	WAVEFORMATEX fmt; // 波形フォーマット
+	ChunkHeader chunk_; // "fmt"
+	WAVEFORMATEX fmt_; // 波形フォーマット
 };
 
 // 音声データ
 struct SoundData {
 	// 波形フォーマット
-	WAVEFORMATEX wfex;
+	WAVEFORMATEX wfex_;
 	// バッファの先頭アドレス
-	BYTE* pBuffer;
+	BYTE* pBuffer_;
 	// バッファのサイズ
-	unsigned int bufferSize;
+	unsigned int bufferSize_;
 };
 
 class Audio final
@@ -139,26 +139,26 @@ public:
 	/// Audio2の取得
 	/// </summary>
 	/// <returns></returns>
-	[[maybe_unused]] IXAudio2* GetxAudio2() { return xAudio2.Get(); }
+	[[maybe_unused]] IXAudio2* GetxAudio2() { return xAudio2_.Get(); }
 
 	/// <summary>
 	/// 音量の取得
 	/// </summary>
 	/// <returns></returns>
-	[[maybe_unused]] float GetVolume()const { return mVolume; }
+	[[maybe_unused]] float GetVolume()const { return mVolume_; }
 
 private:
-	HRESULT result;
-	ComPtr<IXAudio2> xAudio2; // XAudio2インターフェイス
-	IXAudio2MasteringVoice* mVoice; // マスターボイス
-	IXAudio2SourceVoice* sVoice; // ソースボイス
-	XAUDIO2_BUFFER buf{};
+	HRESULT result_;
+	ComPtr<IXAudio2> xAudio2_; // XAudio2インターフェイス
+	IXAudio2MasteringVoice* mVoice_; // マスターボイス
+	IXAudio2SourceVoice* sVoice_; // ソースボイス
+	XAUDIO2_BUFFER buf_{};
 
 	// サウンドデータの連想配列
 	std::map<std::string, SoundData> soundDatas_;
 	// サウンド格納ディレクトリ
 	std::string directoryPath_;
 
-	float mVolume;
+	float mVolume_;
 };
 

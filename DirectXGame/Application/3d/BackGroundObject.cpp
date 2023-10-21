@@ -12,12 +12,12 @@ BackGroundObject::BackGroundObject()
 
 BackGroundObject::~BackGroundObject()
 {
-	delete buildingM;
-	delete asphaltM;
-	delete bridgeM;
-	delete treeM;
-	delete wheelM;
-	for (auto& object: objects) {
+	delete buildingM_;
+	delete asphaltM_;
+	delete bridgeM_;
+	delete treeM_;
+	delete wheelM_;
+	for (auto& object: objects_) {
 		delete object;
 	}
 }
@@ -25,61 +25,61 @@ BackGroundObject::~BackGroundObject()
 void BackGroundObject::Initialize()
 {
 	// レベルデータの読み込み
-	levelData = LevelLoader::LoadFile("backGroundObject.json");
+	levelData_ = LevelLoader::LoadFile("backGroundObject.json");
 
 	// モデルデータを読み込む
-	buildingM = Model::LoadFromOBJ("building");
-	asphaltM = Model::LoadFromOBJ("asphalt");
-	bridgeM = Model::LoadFromOBJ("bridge");
-	treeM = Model::LoadFromOBJ("tree");
-	wheelM = Model::LoadFromOBJ("wheel");
+	buildingM_ = Model::LoadFromOBJ("building");
+	asphaltM_ = Model::LoadFromOBJ("asphalt");
+	bridgeM_ = Model::LoadFromOBJ("bridge");
+	treeM_ = Model::LoadFromOBJ("tree");
+	wheelM_ = Model::LoadFromOBJ("wheel");
 
-	models.insert(std::make_pair("building", buildingM));
-	models.insert(std::make_pair("asphalt", asphaltM));
-	models.insert(std::make_pair("bridge", bridgeM));
-	models.insert(std::make_pair("tree", treeM));
-	models.insert(std::make_pair("wheel", wheelM));
+	models_.insert(std::make_pair("building", buildingM_));
+	models_.insert(std::make_pair("asphalt", asphaltM_));
+	models_.insert(std::make_pair("bridge", bridgeM_));
+	models_.insert(std::make_pair("tree", treeM_));
+	models_.insert(std::make_pair("wheel", wheelM_));
 
 	// レベルデータからオブジェクトを生成、配置
-	for (auto& objectData : levelData->objects) {
+	for (auto& objectData : levelData_->objects_) {
 		// ファイル名から登録済みモデルを検索
 		Model* model = nullptr;
-		decltype(models)::iterator it = models.find(objectData.fileName);
-		if (it != models.end()) { model = it->second; }
+		decltype(models_)::iterator it = models_.find(objectData.fileName_);
+		if (it != models_.end()) { model = it->second; }
 		// モデルを指定して3Dオブジェクトを生成
 		Object3d* newObject = Object3d::Create();
 		newObject->SetModel(model);
 		// 座標
 		DirectX::XMFLOAT3 pos;
-		DirectX::XMStoreFloat3(&pos, objectData.translation);
+		DirectX::XMStoreFloat3(&pos, objectData.translation_);
 		newObject->SetPosition(pos);
 		// 回転
 		DirectX::XMFLOAT3 rot;
-		DirectX::XMStoreFloat3(&rot, objectData.rotation);
+		DirectX::XMStoreFloat3(&rot, objectData.rotation_);
 		newObject->SetRotation(rot);
 		// サイズ
 		DirectX::XMFLOAT3 scale;
-		DirectX::XMStoreFloat3(&scale, objectData.scaling);
+		DirectX::XMStoreFloat3(&scale, objectData.scaling_);
 		newObject->SetScale(scale);
 
 		// 配列に登録
-		objects.push_back(newObject);
+		objects_.push_back(newObject);
 	}
 
-	modelEye = { 0.0f,0.0f,-3.0f };
-	Object3d::SetEye(modelEye);
+	modelEye_ = { 0.0f,0.0f,-3.0f };
+	Object3d::SetEye(modelEye_);
 }
 
 void BackGroundObject::Update()
 {
-	for (auto& object : objects) {
+	for (auto& object : objects_) {
 		object->Update();
 	}
 }
 
 void BackGroundObject::Draw()
 {
-	for (auto& object : objects) {
+	for (auto& object : objects_) {
 		object->Draw();
 	}
 }

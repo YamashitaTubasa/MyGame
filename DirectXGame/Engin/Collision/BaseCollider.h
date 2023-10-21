@@ -24,7 +24,7 @@ public:
 	/// </summary>
 	/// <param name="object">オブジェクト</param>
 	inline void SetObject(Object3d* object) {
-		this->object3d = object;
+		this->object3d_ = object;
 	}
 
 	/// <summary>
@@ -32,7 +32,7 @@ public:
 	/// </summary>
 	/// <returns>オブジェクト</returns>
 	inline Object3d* GetObject3d() {
-		return object3d;
+		return object3d_;
 	}
 
 	/// <summary>
@@ -44,18 +44,18 @@ public:
 	/// 形状タイプ取得
 	/// </summary>
 	/// <returns></returns>
-	inline CollisionShapeType GetShapeType() { return shapeType; }
+	inline CollisionShapeType GetShapeType() { return shapeType_; }
 
 	/// <summary>
 	/// 衝突時コールバック関数
 	/// </summary>
 	/// <param name="info">衝突情報</param>
 	inline void OnCollision(const CollisionInfo& info) {
-		object3d->OnCollision(info);
+		object3d_->OnCollision(info);
 	}
 
 protected:
-	Object3d* object3d = nullptr;
+	Object3d* object3d_ = nullptr;
 	// 形状タイプ
-	CollisionShapeType shapeType = SHAPE_UNKNOWN;
+	CollisionShapeType shapeType_ = SHAPE_UNKNOWN;
 };

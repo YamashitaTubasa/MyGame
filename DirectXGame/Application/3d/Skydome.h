@@ -42,16 +42,16 @@ public:
 
 private:
 	// オブジェクト
-	Object3d* skydomeObj = nullptr;
+	Object3d* skydomeObj_ = nullptr;
 	// モデル
-	Model* skydomeModel = nullptr;
+	Model* skydomeModel_ = nullptr;
 
 	// 天球の回転角
-	DirectX::XMFLOAT3 rotate = { 0,0,0 };
+	DirectX::XMFLOAT3 rotate_ = { 0,0,0 };
 
 	// フラグ
-	bool isSkydome = false;
+	bool isSkydome_ = false;
 	// 天球の回転速度
-	float skySpeed = 0.05f;
+	float skySpeed_ = 0.05f;
 };
 

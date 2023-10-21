@@ -18,16 +18,16 @@ struct LevelData {
 	// オブジェクトデータ
 	struct ObjectData {
 		// 移動
-		DirectX::XMVECTOR translation;
+		DirectX::XMVECTOR translation_;
 		// 回転角
-		DirectX::XMVECTOR rotation;
+		DirectX::XMVECTOR rotation_;
 		// スケール
-		DirectX::XMVECTOR scaling;
+		DirectX::XMVECTOR scaling_;
 		// ファイル名
-		std::string fileName;
+		std::string fileName_;
 	};
 
-	std::vector<ObjectData> objects;
+	std::vector<ObjectData> objects_;
 };
 
 class LevelLoader

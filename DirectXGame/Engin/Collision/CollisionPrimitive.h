@@ -16,9 +16,9 @@
 struct Sphere 
 {
 	// 抽選座標
-	DirectX::XMVECTOR center = { 0,0,0 };
+	DirectX::XMVECTOR center_ = { 0,0,0 };
 	// 半径
-	float radius = 1.0;
+	float radius_ = 1.0;
 };
 
 /// <summary>
@@ -27,9 +27,9 @@ struct Sphere
 struct Plane 
 {
 	// 法線ベクトル
-	DirectX::XMVECTOR normal = { 0,1,0,0 };
+	DirectX::XMVECTOR normal_ = { 0,1,0,0 };
 	// 原点(0,0,0)からの距離
-	float distance = 0.0f;
+	float distance_ = 0.0f;
 };
 
 /// <summary>
@@ -38,9 +38,9 @@ struct Plane
 struct Ray
 {
 	// 始点座標
-	DirectX::XMVECTOR start = { 0,0,0,1 };
+	DirectX::XMVECTOR start_ = { 0,0,0,1 };
 	// 方向
-	DirectX::XMVECTOR dir = { 1,0,0,0 };
+	DirectX::XMVECTOR dir_ = { 1,0,0,0 };
 };
 
 /// <summary>
@@ -50,11 +50,11 @@ class Triangle
 {
 public:
 	// 頂点座標3つ
-	DirectX::XMVECTOR p0;
-	DirectX::XMVECTOR p1;
-	DirectX::XMVECTOR p2;
+	DirectX::XMVECTOR p0_;
+	DirectX::XMVECTOR p1_;
+	DirectX::XMVECTOR p2_;
 	// 法線ベクトル
-	DirectX::XMVECTOR normal;
+	DirectX::XMVECTOR normal_;
 
 public:
 	/// <summary>

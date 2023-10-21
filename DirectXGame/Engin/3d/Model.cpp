@@ -82,35 +82,35 @@ void Model::LoadMaterial(const std::string& directoryPath, const std::string& fi
 		if (key == "newmtl")
 		{
 			// マテリアル名読み込み
-			line_stream >> material_.name;
+			line_stream >> material_.name_;
 		}
 		// 先頭文字列がKaならアンビエント色
 		if (key == "Ka")
 		{
-			line_stream >> material_.ambient.x;
-			line_stream >> material_.ambient.y;
-			line_stream >> material_.ambient.z;
+			line_stream >> material_.ambient_.x;
+			line_stream >> material_.ambient_.y;
+			line_stream >> material_.ambient_.z;
 		}
 		// 先頭文字列がKdならディフューズ色
 		if (key == "Kd")
 		{
-			line_stream >> material_.diffuse.x;
-			line_stream >> material_.diffuse.y;
-			line_stream >> material_.diffuse.z;
+			line_stream >> material_.diffuse_.x;
+			line_stream >> material_.diffuse_.y;
+			line_stream >> material_.diffuse_.z;
 		}
 		// 先頭文字列がKsならスペキュラー色
 		if (key == "Ks")
 		{
-			line_stream >> material_.specular.x;
-			line_stream >> material_.specular.y;
-			line_stream >> material_.specular.z;
+			line_stream >> material_.specular_.x;
+			line_stream >> material_.specular_.y;
+			line_stream >> material_.specular_.z;
 		}
 		// 先頭文字列がmap_Kdならテクスチャファイル名
 		if (key == "map_Kd") {
 			// テクスチャのファイル名読み込み
-			line_stream >> material_.textureFilename;
+			line_stream >> material_.textureFilename_;
 			// テクスチャ読み込み
-			LoadTexture(directoryPath, material_.textureFilename);
+			LoadTexture(directoryPath, material_.textureFilename_);
 		}
 	}
 	// ファイルを閉じる
@@ -295,7 +295,7 @@ void Model::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial
 	ID3D12DescriptorHeap* ppHeaps[] = { descHeap_.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
-	if (material_.textureFilename.size() > 0) {
+	if (material_.textureFilename_.size() > 0) {
 		// シェーダリソースビューをセット
 		cmdList->SetGraphicsRootDescriptorTable(2, gpuDescHandleSRV_);
 	}
@@ -360,9 +360,9 @@ void Model::LoadFromOBJInternal(const string& modelname)
 				index_stream >> indexNormal;
 				// 頂点データの追加
 				VertexPosNormalUv vertex{};
-				vertex.pos = positions[(unsigned int)indexPosition - 1];
-				vertex.normal = normals[(unsigned int)indexNormal - 1];
-				vertex.uv = texcoords[(unsigned int)indexTexcoord - 1];
+				vertex.pos_ = positions[(unsigned int)indexPosition - 1];
+				vertex.normal_ = normals[(unsigned int)indexNormal - 1];
+				vertex.uv_ = texcoords[(unsigned int)indexTexcoord - 1];
 				vertices_.emplace_back(vertex);
 				// 頂点インデックスに追加
 				//indices.emplace_back(indexPosition - 1);
@@ -521,10 +521,10 @@ void Model::CreateBuffers()
 	ConstBufferDataB1* constMap1 = nullptr;
 	result = constBuffB1_->Map(0, nullptr, (void**)&constMap1);
 	if (SUCCEEDED(result)) {
-		constMap1->ambient = material_.ambient;
-		constMap1->diffuse = material_.diffuse;
-		constMap1->specular = material_.specular;
-		constMap1->alpha = material_.alpha;
+		constMap1->ambient_ = material_.ambient_;
+		constMap1->diffuse_ = material_.diffuse_;
+		constMap1->specular_ = material_.specular_;
+		constMap1->alpha_ = material_.alpha_;
 		constBuffB1_->Unmap(0, nullptr);
 	}
 }
