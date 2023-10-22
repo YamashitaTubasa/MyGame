@@ -346,13 +346,11 @@ void GamePlayScene::Draw()
 	// Xの描画
 	//X->SpriteDraw(spriteCommon_);
 	// 0の描画
-	if (player_->GetIsBullet() == 0) {
-		//number[0]->SpriteDraw(spriteCommon_);
-	}
+	//number[0]->SpriteDraw(spriteCommon_);
+	
 	// 1の描画
-	if (player_->GetIsBullet() == 1) {
-		//number[1]->SpriteDraw(spriteCommon_);
-	}
+	//number[1]->SpriteDraw(spriteCommon_);
+	
 	// 敵のHPバーの描画
 	//enemyHpBar->SpriteDraw(spriteCommon_);
 	// 敵のHPの背景描画
