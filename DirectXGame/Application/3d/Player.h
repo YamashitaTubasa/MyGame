@@ -82,12 +82,6 @@ public: // ゲッター
 	const DirectX::XMFLOAT3& GetPositon() { return pPosition_; }
 
 	/// <summary>
-	/// プレイヤーの弾の座標の取得
-	/// </summary>
-	/// <returns>弾の座標</returns>
-	const DirectX::XMFLOAT3& GetpBulletP() { return pBulletP_; }
-
-	/// <summary>
 	/// HPの取得
 	/// </summary>
 	/// <returns>HP</returns>
@@ -99,19 +93,7 @@ public: // ゲッター
 	/// <returns>HPフラグ</returns>
 	bool GetIsHp()const { return isHp_; }
 
-	/// <summary>
-	/// ポストエフェクトのフラグの取得
-	/// </summary>
-	/// <returns>ポストエフェクトフラグ</returns>
-	bool GetIsPostE() { return isPostE_; }
-
-	/// <summary>
-	/// 弾のフラグの取得
-	/// </summary>
-	/// <returns>弾のフラグ</returns>
-	int GetIsBullet() { return isBullet_; }
-	
-public: // メンバ変数
+private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	// モデル
 	Model* playerM_ = nullptr;
