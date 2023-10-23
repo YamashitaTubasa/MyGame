@@ -7,6 +7,7 @@
 #include "Player.h"
 
 #include "SphereCollider.h"
+#include "GameSceneManager.h"
 
 using namespace std;
 using namespace DirectX;
@@ -87,7 +88,7 @@ bool Player::Initialize()
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
-	pPosition_ = { 0,-2,-55 };
+	pPosition_ = { 0,-2,-190 };
 	pRotation_ = { 0,0,0 };
 	playerO3_->SetPosition(pPosition_);
 	playerO3_->SetScale({ 5, 5, 5 });
@@ -104,6 +105,7 @@ bool Player::Initialize()
 	reticle1O3_->SetRotation(r1Rotation_);
 
 	Object3d::SetEye(eye_);
+	target_ = pPosition_;
 	Object3d::SetTarget(target_);
 
 	// OBJの名前を指定してモデルデータを読み込む
@@ -119,6 +121,11 @@ bool Player::Initialize()
 void Player::Update()
 {
 	input_ = Input::GetInstance();
+
+	if (pPosition_.z >= -40) {
+		// ゲームプレイシーン（次シーン）を生成
+		GameSceneManager::GetInstance()->ChangeScene("TITLE");
+	}
 
 	// 3Dオブジェクト更新
 	playerO3_->Update();
@@ -145,9 +152,13 @@ void Player::Update()
 
 	// パーティクルの実行
 	particleMan_->Execution(particle_, 0.0f, 0.0f, 0.0f, 20, 0.9f, 0.0f);
+	if (input_->TriggerKey(DIK_R)) {
+		int a;
+		a = 0;
+	}
 
 	startCount_++;
-	if (startCount_ >= 90) {
+	if (pPosition_.z >= -60) {
 		isStartStaging_ = false;
 	}
 	if (!isStartStaging_) {
@@ -155,23 +166,31 @@ void Player::Update()
 		isReticle_ = true;
 	}
 	if (isStartStaging_) {
-		pPosition_.z += 0.1f;
-		rPosition_.z += 0.1f;
-		r1Position_.z += 0.1f;
+		if (pPosition_.z <= -100) {
+			pPosition_.z += 0.4f;
+			rPosition_.z += 0.4f;
+			r1Position_.z += 0.4f;
+		}
+		if (pPosition_.z >= -100) {
+			pPosition_.z += 1.0f;
+			rPosition_.z += 1.0f;
+			r1Position_.z += 1.0f;
+		}
 		if (eye_.z <= -45.0f) {
-			eye_.z += 0.4f;
 		}
-		if (eye_.y >= 0.0f) {
+			eye_.z += 0.3f;
+		/*if (eye_.y >= 0.0f) {
 			eye_.y -= 0.4f;
-		}
+		}*/
 	}
 	if (!isStartStaging_) {
 		if (pPosition_.z < 100) {
 			pPosition_.z += 0.4f;
 			rPosition_.z += 0.4f;
 			r1Position_.z += 0.4f;
-			target_.z += 0.4f;
+			//target_.z += 0.4f;
 			eye_.z += 0.4f;
+			target_ = pPosition_;
 		}
 	}
 
@@ -429,10 +448,12 @@ void Player::Draw()
 		playerO3_->Draw();
 	}
 
-	if (isReticle_ == true) {
-		reticleO3_->Draw();
-		reticle1O3_->Draw();
-	}
+	/*if (!isStartStaging_) {
+		if (isReticle_ == true) {
+			reticleO3_->Draw();
+			reticle1O3_->Draw();
+		}
+	}*/
 
 	// 弾描画
 	for (PlayerBullet* bullet : pBullets_) {

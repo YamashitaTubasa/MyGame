@@ -335,12 +335,14 @@ void GamePlayScene::Draw()
 	// スプライト描画前処理
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
-	// HPバーの描画
-	hpBar_->SpriteDraw(spriteCommon_);
-	// HPの背景描画
-	hpBack_->SpriteDraw(spriteCommon_);
-	// HPの描画
-	hp_->SpriteDraw(spriteCommon_);
+	if (player_->GetPosition().z >= 100) {
+		// HPバーの描画
+		hpBar_->SpriteDraw(spriteCommon_);
+		// HPの背景描画
+		hpBack_->SpriteDraw(spriteCommon_);
+		// HPの描画
+		hp_->SpriteDraw(spriteCommon_);
+	}
 	// ULTの描画
 	//ult->SpriteDraw(spriteCommon_);
 	// Xの描画
