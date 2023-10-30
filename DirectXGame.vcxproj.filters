@@ -245,7 +245,7 @@
     <None Include="Resources\shaders\FBX.hlsli">
       <Filter>シェーダーファイル\shaders</Filter>
     </None>
-    <None Include="Resources\shaders\OBJShaderHeader.hlsli">
+    <None Include="Resources\shaders\OBJ.hlsli">
       <Filter>シェーダーファイル\shaders</Filter>
     </None>
     <None Include="Resources\shaders\Particle.hlsli">
@@ -265,10 +265,10 @@
     <FxCompile Include="Resources\shaders\FBXVS.hlsl">
       <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJPixelShader.hlsl">
+    <FxCompile Include="Resources\shaders\OBJPS.hlsl">
       <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJVertexShader.hlsl">
+    <FxCompile Include="Resources\shaders\OBJVS.hlsl">
       <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ParticleGS.hlsl">

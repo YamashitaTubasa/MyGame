@@ -44,7 +44,7 @@ void GameClearScene::Initialize()
 	//===== SPACEの描画 =====//
 	space_ = new Sprite();
 	// テクスチャの読み込み
-	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/pressSpace.png");
+	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/pressSpace1.png");
 	// スプライトの生成
 	space_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
@@ -82,9 +82,13 @@ void GameClearScene::Update()
 	// SPACEを押したら
 	if (isFadeIn_ == false && isFadeOut_ == false) {
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= 500) {
-			// ゲームタイトルシーン（次シーン）を生成
-			GameSceneManager::GetInstance()->ChangeScene("TITLE");
+			isFadeIn_ = true;
 		}
+	}
+
+	if (isScene_ == true) {
+		// ゲームタイトルシーン（次シーン）を生成
+		GameSceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 
 	// 天球の更新
@@ -112,7 +116,6 @@ void GameClearScene::Update()
 		}
 		if (bAlpha_ >= 1.0f) {
 			bAlpha_ = 1.0f;
-			isFadeIn_ = false;
 			isScene_ = true;
 		}
 	}
@@ -147,11 +150,11 @@ void GameClearScene::Draw()
 
 	//=== スプライトの描画 ===//
 	clear_->SpriteDraw(spriteCommon_);
-	if (isFadeIn_ == true || isFadeOut_ == true) {
-		black_->SpriteDraw(spriteCommon_);
-	}
 	if (isSpace_) {
 		space_->SpriteDraw(spriteCommon_);
+	}
+	if (isFadeIn_ == true || isFadeOut_ == true) {
+		black_->SpriteDraw(spriteCommon_);
 	}
 
 	// スプライト描画後処理

@@ -151,7 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli" />
-    <None Include="Resources\shaders\OBJShaderHeader.hlsli" />
+    <None Include="Resources\shaders\OBJ.hlsli" />
     <None Include="Resources\shaders\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
@@ -169,13 +169,13 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJPixelShader.hlsl">
+    <FxCompile Include="Resources\shaders\OBJPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OBJVertexShader.hlsl">
+    <FxCompile Include="Resources\shaders\OBJVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>

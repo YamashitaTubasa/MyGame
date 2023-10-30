@@ -93,6 +93,12 @@ public: // ゲッター
 	/// <returns>HPフラグ</returns>
 	bool GetIsHp()const { return isHp_; }
 
+	/// <summary>
+	/// スタート演出フラグ
+	/// </summary>
+	/// <returns></returns>
+	bool GetIsStartStaging() const{ return isStartStaging_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	// モデル
@@ -115,6 +121,8 @@ private: // メンバ変数
 	// パーティクル
 	Particle* particle_ = nullptr;
 	ParticleManager* particleMan_ = nullptr;
+	ParticleManager* blackSmokeMan_ = nullptr;
+	Particle* blackSmoke_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
@@ -144,7 +152,7 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
-	DirectX::XMFLOAT3 eye_ = { 0,30,-100 };
+	DirectX::XMFLOAT3 eye_ = { 0,-1,-120 };
 	// 注視点
 	DirectX::XMFLOAT3 target_ = { 0,0,0 };
 
