@@ -74,8 +74,8 @@ private: // メンバ変数
 
 	// スペースの設定
 	DirectX::XMFLOAT4 spaceColor_ = { 1,1,1,1 };
-	DirectX::XMFLOAT3 spacePos_ = { 420,520,0 };
-	DirectX::XMFLOAT2 spaceScale_ { 505, 93 };
+	DirectX::XMFLOAT3 spacePos_ = { 430,520,0 };
+	DirectX::XMFLOAT2 spaceScale_ { 415, 96 };
 	float spaceRot_ = 0.0f;
 	float sAlpha_ = 1.0f;
 	int spaceTimer_ = 0;

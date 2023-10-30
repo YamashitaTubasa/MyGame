@@ -26,6 +26,8 @@ Player::~Player()
 	delete reticle1M_;
 	delete particle_;
 	delete particleMan_;
+	delete blackSmokeMan_;
+	delete blackSmoke_;
 	// 弾の解放
 	for (PlayerBullet* bullet : pBullets_) {
 		delete bullet;
@@ -88,7 +90,7 @@ bool Player::Initialize()
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
-	pPosition_ = { 0,-2,-190 };
+	pPosition_ = { 0,-2,-140 };
 	pRotation_ = { 0,0,0 };
 	playerO3_->SetPosition(pPosition_);
 	playerO3_->SetScale({ 5, 5, 5 });
@@ -110,10 +112,13 @@ bool Player::Initialize()
 
 	// OBJの名前を指定してモデルデータを読み込む
 	particle_ = Particle::LoadFromOBJ("bombEffect.png");
+	blackSmoke_ = Particle::LoadFromOBJ("bomb.png");
 	// パーティクルの生成
 	particleMan_ = ParticleManager::Create();
+	blackSmokeMan_ = ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルを割り当てる
 	particleMan_->SetModel(particle_);
+	blackSmokeMan_->SetModel(blackSmoke_);
 
 	return true;
 }
@@ -122,10 +127,10 @@ void Player::Update()
 {
 	input_ = Input::GetInstance();
 
-	if (pPosition_.z >= -40) {
-		// ゲームプレイシーン（次シーン）を生成
-		GameSceneManager::GetInstance()->ChangeScene("TITLE");
-	}
+	//if (pPosition_.z >= -40) {
+	//	// ゲームプレイシーン（次シーン）を生成
+	//	GameSceneManager::GetInstance()->ChangeScene("TITLE");
+	//}
 
 	// 3Dオブジェクト更新
 	playerO3_->Update();
@@ -134,6 +139,7 @@ void Player::Update()
 
 	// パーティクルの更新
 	particleMan_->Update();
+	blackSmokeMan_->Update();
 
 	// デスフラグの立った敵を削除
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy_) {
@@ -152,6 +158,36 @@ void Player::Update()
 
 	// パーティクルの実行
 	particleMan_->Execution(particle_, 0.0f, 0.0f, 0.0f, 20, 0.9f, 0.0f);
+
+	if (hp_ == -20) {
+
+		pPosition_.y -= 0.05f;
+		playerO3_->SetPosition(pPosition_);
+
+		// パーティクルの実行
+		for (int i = 0; i < 3; i++) {
+			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+			const float md_pos = 0.5f;
+			DirectX::XMFLOAT3 pos{};
+			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
+			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
+			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
+			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+			const float md_vel = 0.1f;
+			DirectX::XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+			DirectX::XMFLOAT3 acc{};
+			const float md_acc = 0.02f;
+			acc.y = (float)rand() / RAND_MAX * md_acc;
+
+			// 追加
+			blackSmoke_->Add(30, pos, vel, acc, 0.9f, 0.0f);
+		}
+	}
+
 	if (input_->TriggerKey(DIK_R)) {
 		int a;
 		a = 0;
@@ -501,6 +537,7 @@ void Player::Effect()
 	if (isEffect_) {
 		particleMan_->Draw();
 	}
+	blackSmokeMan_->Draw();
 
 #pragma endregion
 }

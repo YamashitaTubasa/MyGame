@@ -108,6 +108,8 @@ private:
 	// パーティクル
 	ParticleManager* particleMan_ = nullptr;
 	Particle* particle_ = nullptr;
+	ParticleManager* blackSmokeMan_ = nullptr;
+	Particle* blackSmoke_ = nullptr;
 
 	ImGuiManager* imGuiManager_ = nullptr;
 	Camera* camera_ = nullptr;
@@ -143,6 +145,8 @@ private:
 
 	int playerHp_ = 3;
 	int time_ = 0;
+	int overTimer_ = 0;
+	bool isOver_ = false;
 
 	// パーティクル
 	float particleTime_ = 0;

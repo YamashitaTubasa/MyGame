@@ -64,7 +64,7 @@ void GameOverScene::Initialize()
 	//===== SPACEの描画 =====//
 	space_ = new Sprite();
 	// テクスチャの読み込み
-	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/pressSpaceOver.png");
+	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/pressSpace2.png");
 	// スプライトの生成
 	space_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定
