@@ -90,7 +90,7 @@ bool Player::Initialize()
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
-	pPosition_ = { 0,-2,-140 };
+	pPosition_ = { 0,-2,-10 };
 	pRotation_ = { 0,0,0 };
 	playerO3_->SetPosition(pPosition_);
 	playerO3_->SetScale({ 5, 5, 5 });
@@ -111,7 +111,7 @@ bool Player::Initialize()
 	Object3d::SetTarget(target_);
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle_ = Particle::LoadFromOBJ("bombEffect.png");
+	particle_ = Particle::LoadFromOBJ("bomb.png");
 	blackSmoke_ = Particle::LoadFromOBJ("bomb.png");
 	// パーティクルの生成
 	particleMan_ = ParticleManager::Create();
@@ -157,7 +157,7 @@ void Player::Update()
 	});
 
 	// パーティクルの実行
-	particleMan_->Execution(particle_, 0.0f, 0.0f, 0.0f, 20, 0.9f, 0.0f);
+	particleMan_->Execution(particle_, 0.0f, 0.0f, 0.0f, 20, 0.6f, 0.0f);
 
 	if (hp_ == -20) {
 
@@ -165,15 +165,15 @@ void Player::Update()
 		playerO3_->SetPosition(pPosition_);
 
 		// パーティクルの実行
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 2; i++) {
 			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-			const float md_pos = 0.5f;
+			const float md_pos = 0.4f;
 			DirectX::XMFLOAT3 pos{};
 			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
 			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
 			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
 			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
-			const float md_vel = 0.1f;
+			const float md_vel = 0.05f;
 			DirectX::XMFLOAT3 vel{};
 			vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
 			vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
@@ -184,7 +184,7 @@ void Player::Update()
 			acc.y = (float)rand() / RAND_MAX * md_acc;
 
 			// 追加
-			blackSmoke_->Add(30, pos, vel, acc, 0.9f, 0.0f);
+			blackSmoke_->Add(35, pos, vel, acc, 0.4f, 0.0f);
 		}
 	}
 
