@@ -172,8 +172,8 @@ void ParticleManager::InitializeCamera(int window_width, int window_height)
 void ParticleManager::InitializeGraphicsPipeline()
 {
 	HRESULT result = S_FALSE;
-	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
-	ComPtr<ID3DBlob>gsBlob; // ジオメトリシェーダオブジェクト
+	ComPtr<ID3DBlob> vsBlob;    // 頂点シェーダオブジェクト
+	ComPtr<ID3DBlob> gsBlob;    // ジオメトリシェーダオブジェクト
 	ComPtr<ID3DBlob> psBlob;	// ピクセルシェーダオブジェクト
 	ComPtr<ID3DBlob> errorBlob; // エラーオブジェクト
 

@@ -101,14 +101,14 @@ void GameOverScene::Update()
 
 	// 十字キーの右を押したら
 	if (isFadeIn_ == false && isFadeOut_ == false) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= 100) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= 200) {
 			isFadeIn_ = true;
 		}
 	}
 
 	if (isScene_ == true) {
 		// ゲームプレイシーン（次シーン）を生成
-		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");
+		GameSceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 
 	// 天球の更新

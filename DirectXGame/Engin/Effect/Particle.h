@@ -67,7 +67,7 @@ public: // サブクラス
 	};
 
 private: // 定数
-	static const int vertexCount_ = 1024; // 頂点数
+	static const int vertexCount_ = 3000; // 頂点数
 	static const std::string baseDirectory_;
 
 private: // 静的メンバ変数

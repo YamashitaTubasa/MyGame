@@ -90,7 +90,7 @@ bool Player::Initialize()
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
-	pPosition_ = { 0,-2,-10 };
+	pPosition_ = { 0,-2,-140 };
 	pRotation_ = { 0,0,0 };
 	playerO3_->SetPosition(pPosition_);
 	playerO3_->SetScale({ 5, 5, 5 });
@@ -112,7 +112,7 @@ bool Player::Initialize()
 
 	// OBJの名前を指定してモデルデータを読み込む
 	particle_ = Particle::LoadFromOBJ("bomb.png");
-	blackSmoke_ = Particle::LoadFromOBJ("bomb.png");
+	blackSmoke_ = Particle::LoadFromOBJ("bombEffect.png");
 	// パーティクルの生成
 	particleMan_ = ParticleManager::Create();
 	blackSmokeMan_ = ParticleManager::Create();
@@ -161,36 +161,40 @@ void Player::Update()
 
 	if (hp_ == -20) {
 
+		isGameOverStaging_ = true;
+	}
+
+	if (isGameOverStaging_) {
+
 		pPosition_.y -= 0.05f;
 		playerO3_->SetPosition(pPosition_);
 
 		// パーティクルの実行
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 100; i++) {
 			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-			const float md_pos = 0.4f;
+			const float md_pos = 0.25f;
 			DirectX::XMFLOAT3 pos{};
 			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
 			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
 			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
 			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
-			const float md_vel = 0.05f;
+			const float md_vel_x = 0.01f;
+			const float md_vel_y = 0.05f;
+			const float md_vel_z = 0.05f;
 			DirectX::XMFLOAT3 vel{};
-			vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-			vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-			vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			vel.x = (float)rand() / RAND_MAX * md_vel_x - md_vel_x / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * md_vel_y - md_vel_y / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * md_vel_z - md_vel_z / 2.0f;
 			// 重力に見立ててYのみ[-0.001f,0]でランダム分布
 			DirectX::XMFLOAT3 acc{};
-			const float md_acc = 0.02f;
-			acc.y = (float)rand() / RAND_MAX * md_acc;
+			const float md_acc_x = 0.00f;
+			const float md_acc_y = 0.04f;
+			acc.x = (float)rand() / RAND_MAX * md_acc_x;
+			acc.y = (float)rand() / RAND_MAX * md_acc_y;
 
 			// 追加
-			blackSmoke_->Add(35, pos, vel, acc, 0.4f, 0.0f);
+			blackSmoke_->Add(20, pos, vel, acc, 0.4f, 0.0f);
 		}
-	}
-
-	if (input_->TriggerKey(DIK_R)) {
-		int a;
-		a = 0;
 	}
 
 	startCount_++;
@@ -232,7 +236,7 @@ void Player::Update()
 
 	//===== プレイヤーの移動範囲の制限 =====//
 	// 左右への移動範囲制限
-	if (!isEndStaging_) {
+	if (isEndStaging_ == false && isGameOverStaging_ == false) {
 		if (pPosition_.x <= -8) {
 			pPosition_.x += 0.3f;
 			rPosition_.x += 0.3f;
@@ -265,7 +269,7 @@ void Player::Update()
 	}
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
-	if (!isStartStaging_ && !isEndStaging_) {
+	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_W)) {
 			pPosition_.y += 0.3f;
 			rPosition_.y += 0.3f;
@@ -292,7 +296,7 @@ void Player::Update()
 	}
 
 	// 左への移動処理
-	if (!isStartStaging_ && !isEndStaging_) {
+	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_A)) {
 			pPosition_.x -= 0.3f;
 			rPosition_.x -= 0.3f;
@@ -325,7 +329,7 @@ void Player::Update()
 	}
 
 	// 下への移動処理
-	if (!isStartStaging_ && !isEndStaging_) {
+	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_S)) {
 			pPosition_.y -= 0.3f;
 			rPosition_.y -= 0.3f;
@@ -352,7 +356,7 @@ void Player::Update()
 	}
 
 	// 右への移動処理
-	if (!isStartStaging_ && !isEndStaging_) {
+	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_D)) {
 			pPosition_.x += 0.3f;
 			rPosition_.x += 0.3f;
