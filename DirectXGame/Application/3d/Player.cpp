@@ -193,7 +193,7 @@ void Player::Update()
 			acc.y = (float)rand() / RAND_MAX * md_acc_y;
 
 			// 追加
-			blackSmoke_->Add(20, pos, vel, acc, 0.4f, 0.0f);
+			blackSmoke_->Add(15, pos, vel, acc, 0.4f, 0.0f);
 		}
 	}
 
