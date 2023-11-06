@@ -38,12 +38,35 @@ private: // エイリアス
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: // サブクラス
+protected: // サブクラス
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
 		//XMFLOAT4 color;	// 色 (RGBA)
 		XMMATRIX mat_;	// ３Ｄ変換行列
+	};
+
+	// ルートパラメータ
+	enum Rootparams
+	{
+		rZero,
+		rOne,
+		rTwo,
+		rMax
+	};
+
+	// シェーダ
+	enum ShaderRegister
+	{
+		sZero,
+		sOne,
+	};
+
+	// デスクリプタ
+	enum Descriptor
+	{
+		dZero,
+		dOne
 	};
 
 public:
@@ -260,5 +283,7 @@ protected: // メンバ変数
 	const char* name_ = nullptr;
 	// コライダー
 	BaseCollider* collider_ = nullptr;
+	// ルートパラメータ
+	Rootparams rootparams_;
 };
 

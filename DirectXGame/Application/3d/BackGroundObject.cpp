@@ -66,7 +66,7 @@ void BackGroundObject::Initialize()
 		objects_.push_back(newObject);
 	}
 
-	modelEye_ = { 0.0f,0.0f,-3.0f };
+	modelEye_ = eye_;
 	Object3d::SetEye(modelEye_);
 }
 

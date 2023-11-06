@@ -129,9 +129,9 @@ void GamePlayScene::Update()
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
-	if (input_->TriggerKey(DIK_T)) {
+	/*if (input_->TriggerKey(DIK_T)) {
 		GameSceneManager::GetInstance()->ChangeScene("TITLE");
-	}
+	}*/
 
 	// カメラの更新
 	camera_->Update();
@@ -185,9 +185,9 @@ void GamePlayScene::Update()
 	}
 	if (player_->GetHp() == 9) {
 		// パーティクルの実行
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 1; i++) {
 			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-			const float md_pos = 0.5f;
+			const float md_pos = 0.4f;
 			XMFLOAT3 pos{};
 			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
 			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
