@@ -56,5 +56,7 @@ private:
 	XMFLOAT3 modelPos_ = { 0,0,0 };
 	XMFLOAT3 modelEye_ = { 0,0,-3 };
 	XMFLOAT3 modelTarget_ = { 0,0,0 };
+
+	const XMFLOAT3 eye_ = { 0.0f,0.0f,-3.0f };
 };
 

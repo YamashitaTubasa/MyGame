@@ -90,18 +90,12 @@ bool Player::Initialize()
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
-	pPosition_ = { 0,-2,-140 };
-	pRotation_ = { 0,0,0 };
 	playerO3_->SetPosition(pPosition_);
-	playerO3_->SetScale({ 5, 5, 5 });
+	playerO3_->SetScale(pScale_);
 	playerO3_->SetRotation(pRotation_);
-	rPosition_ = { 0,-2,-45 };
-	rRotation_ = { 0,90,0 };
 	reticleO3_->SetPosition(rPosition_);
 	reticleO3_->SetScale(rScale_);
 	reticleO3_->SetRotation(rRotation_);
-	r1Position_ = { 0,-2.5f,-40 };
-	r1Rotation_ = { 0,90,0 };
 	reticle1O3_->SetPosition(r1Position_);
 	reticle1O3_->SetScale(r1Scale_);
 	reticle1O3_->SetRotation(r1Rotation_);
@@ -157,7 +151,7 @@ void Player::Update()
 	});
 
 	// パーティクルの実行
-	particleMan_->Execution(particle_, 0.0f, 0.0f, 0.0f, 20, 0.6f, 0.0f);
+	particleMan_->Execution(particle_, particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
 
 	if (hp_ == -20) {
 
@@ -166,25 +160,26 @@ void Player::Update()
 
 	if (isGameOverStaging_) {
 
-		pPosition_.y -= 0.05f;
+		pPosition_.y -= playerFall_;
 		playerO3_->SetPosition(pPosition_);
 
 		// パーティクルの実行
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < fireParticleMax_; i++) {
 			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
 			const float md_pos = 0.25f;
+			const float md = 2.0f;
 			DirectX::XMFLOAT3 pos{};
-			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
-			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
-			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + 0.0f;
+			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / md;
+			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / md;
+			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / md;
 			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
 			const float md_vel_x = 0.01f;
 			const float md_vel_y = 0.05f;
 			const float md_vel_z = 0.05f;
 			DirectX::XMFLOAT3 vel{};
-			vel.x = (float)rand() / RAND_MAX * md_vel_x - md_vel_x / 2.0f;
-			vel.y = (float)rand() / RAND_MAX * md_vel_y - md_vel_y / 2.0f;
-			vel.z = (float)rand() / RAND_MAX * md_vel_z - md_vel_z / 2.0f;
+			vel.x = (float)rand() / RAND_MAX * md_vel_x - md_vel_x / md;
+			vel.y = (float)rand() / RAND_MAX * md_vel_y - md_vel_y / md;
+			vel.z = (float)rand() / RAND_MAX * md_vel_z - md_vel_z / md;
 			// 重力に見立ててYのみ[-0.001f,0]でランダム分布
 			DirectX::XMFLOAT3 acc{};
 			const float md_acc_x = 0.00f;
@@ -193,7 +188,7 @@ void Player::Update()
 			acc.y = (float)rand() / RAND_MAX * md_acc_y;
 
 			// 追加
-			blackSmoke_->Add(15, pos, vel, acc, 0.4f, 0.0f);
+			blackSmoke_->Add(fireParticleLife, pos, vel, acc, fireParticleStartScale_, fireParticleEndScale_);
 		}
 	}
 
@@ -207,9 +202,9 @@ void Player::Update()
 	}
 	if (isStartStaging_) {
 		if (pPosition_.z <= -100) {
-			pPosition_.z += 0.4f;
-			rPosition_.z += 0.4f;
-			r1Position_.z += 0.4f;
+			pPosition_.z += startSpeed_;
+			rPosition_.z += startSpeed_;
+			r1Position_.z += startSpeed_;
 		}
 		if (pPosition_.z >= -100) {
 			pPosition_.z += 1.0f;
@@ -219,17 +214,13 @@ void Player::Update()
 		if (eye_.z <= -45.0f) {
 		}
 			eye_.z += 0.3f;
-		/*if (eye_.y >= 0.0f) {
-			eye_.y -= 0.4f;
-		}*/
 	}
 	if (!isStartStaging_) {
 		if (pPosition_.z < 100) {
-			pPosition_.z += 0.4f;
-			rPosition_.z += 0.4f;
-			r1Position_.z += 0.4f;
-			//target_.z += 0.4f;
-			eye_.z += 0.4f;
+			pPosition_.z += startSpeed_;
+			rPosition_.z += startSpeed_;
+			r1Position_.z += startSpeed_;
+			eye_.z += startSpeed_;
 			target_ = pPosition_;
 		}
 	}
@@ -238,44 +229,44 @@ void Player::Update()
 	// 左右への移動範囲制限
 	if (isEndStaging_ == false && isGameOverStaging_ == false) {
 		if (pPosition_.x <= -8) {
-			pPosition_.x += 0.3f;
-			rPosition_.x += 0.3f;
-			r1Position_.x += 0.3f;
-			target_.x += 0.3f;
-			eye_.x += 0.3f;
+			pPosition_.x += playerSpeed_;
+			rPosition_.x += playerSpeed_;
+			r1Position_.x += playerSpeed_;
+			target_.x += playerSpeed_;
+			eye_.x += playerSpeed_;
 		}
 		if (pPosition_.x >= 8) {
-			pPosition_.x -= 0.3f;
-			rPosition_.x -= 0.3f;
-			r1Position_.x -= 0.3f;
-			target_.x -= 0.3f;
-			eye_.x -= 0.3f;
+			pPosition_.x -= playerSpeed_;
+			rPosition_.x -= playerSpeed_;
+			r1Position_.x -= playerSpeed_;
+			target_.x -= playerSpeed_;
+			eye_.x -= playerSpeed_;
 		}
 		// 上下への移動範囲制限
 		if (pPosition_.y <= -6) {
-			pPosition_.y += 0.3f;
-			rPosition_.y += 0.3f;
-			r1Position_.y += 0.3f;
-			target_.y += 0.3f;
-			eye_.y += 0.3f;
+			pPosition_.y += playerSpeed_;
+			rPosition_.y += playerSpeed_;
+			r1Position_.y += playerSpeed_;
+			target_.y += playerSpeed_;
+			eye_.y += playerSpeed_;
 		}
 		if (pPosition_.y >= 6) {
-			pPosition_.y -= 0.3f;
-			rPosition_.y -= 0.3f;
-			r1Position_.y -= 0.3f;
-			target_.y -= 0.3f;
-			eye_.y -= 0.3f;
+			pPosition_.y -= playerSpeed_;
+			rPosition_.y -= playerSpeed_;
+			r1Position_.y -= playerSpeed_;
+			target_.y -= playerSpeed_;
+			eye_.y -= playerSpeed_;
 		}
 	}
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
 	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_W)) {
-			pPosition_.y += 0.3f;
-			rPosition_.y += 0.3f;
-			r1Position_.y += 0.3f;
-			target_.y += 0.3f;
-			eye_.y += 0.3f;
+			pPosition_.y += playerSpeed_;
+			rPosition_.y += playerSpeed_;
+			r1Position_.y += playerSpeed_;
+			target_.y += playerSpeed_;
+			eye_.y += playerSpeed_;
 			isUpMove_ = true;
 		}
 	}
@@ -285,24 +276,24 @@ void Player::Update()
 	
 	// 上へ行くときの傾き処理
 	if (isUpMove_) {
-		if (pRotation_.x >= -20) {
-			pRotation_.x -= 1.0f;
+		if (pRotation_.x >= playerSlopeMax_) {
+			pRotation_.x -= playerRotSpeed_;
 		}
 	}
 	else {
-		if (pRotation_.x <= 0) {
-			pRotation_.x += 1.0f;
+		if (pRotation_.x <= playerSlopeMin_) {
+			pRotation_.x += playerRotSpeed_;
 		}
 	}
 
 	// 左への移動処理
 	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_A)) {
-			pPosition_.x -= 0.3f;
-			rPosition_.x -= 0.3f;
-			r1Position_.x -= 0.3f;
-			target_.x -= 0.3f;
-			eye_.x -= 0.3f;
+			pPosition_.x -= playerSpeed_;
+			rPosition_.x -= playerSpeed_;
+			r1Position_.x -= playerSpeed_;
+			target_.x -= playerSpeed_;
+			eye_.x -= playerSpeed_;
 			isLeftMove_ = true;
 		}
 	}
@@ -312,30 +303,30 @@ void Player::Update()
 	
 	// 左へ行くときの機体の傾き処理
 	if (isLeftMove_) {
-		if (pRotation_.z <= 20.0f) {
-			pRotation_.z += 1.0f;
+		if (pRotation_.z <= playerSlopeMaxPlus_) {
+			pRotation_.z += playerRotSpeed_;
 		}
-		if (pRotation_.y >= -10.0f) {
-			pRotation_.y -= 1.0f;
+		if (pRotation_.y >= playerSlopeMaxY_) {
+			pRotation_.y -= playerRotSpeed_;
 		}
 	}
 	else {
-		if (pRotation_.z >= 0.0f) {
-			pRotation_.z -= 1.0f;
+		if (pRotation_.z >= playerSlopeMin_) {
+			pRotation_.z -= playerRotSpeed_;
 		}
-		if (pRotation_.y <= 0.0f) {
-			pRotation_.y += 1.0f;
+		if (pRotation_.y <= playerSlopeMin_) {
+			pRotation_.y += playerRotSpeed_;
 		}
 	}
 
 	// 下への移動処理
 	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_S)) {
-			pPosition_.y -= 0.3f;
-			rPosition_.y -= 0.3f;
-			r1Position_.y -= 0.3f;
-			target_.y -= 0.3f;
-			eye_.y -= 0.3f;
+			pPosition_.y -= playerSpeed_;
+			rPosition_.y -= playerSpeed_;
+			r1Position_.y -= playerSpeed_;
+			target_.y -= playerSpeed_;
+			eye_.y -= playerSpeed_;
 			isDownMove_ = true;
 		}
 	}
@@ -345,24 +336,24 @@ void Player::Update()
 	
 	// 下へ行く時の傾き処理
 	if (isDownMove_) {
-		if (pRotation_.x <= 20) {
-			pRotation_.x += 1.0f;
+		if (pRotation_.x <= playerSlopeMaxPlus_) {
+			pRotation_.x += playerRotSpeed_;
 		}
 	}
 	else {
-		if (pRotation_.x >= 0) {
-			pRotation_.x -= 1.0f;
+		if (pRotation_.x >= playerSlopeMin_) {
+			pRotation_.x -= playerRotSpeed_;
 		}
 	}
 
 	// 右への移動処理
 	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_D)) {
-			pPosition_.x += 0.3f;
-			rPosition_.x += 0.3f;
-			r1Position_.x += 0.3f;
-			target_.x += 0.3f;
-			eye_.x += 0.3f;
+			pPosition_.x += playerSpeed_;
+			rPosition_.x += playerSpeed_;
+			r1Position_.x += playerSpeed_;
+			target_.x += playerSpeed_;
+			eye_.x += playerSpeed_;
 			isRightMove_ = true;
 		}
 	}
@@ -372,19 +363,19 @@ void Player::Update()
 	
 	// 右へ行くときの傾き処理
 	if (isRightMove_) {
-		if (pRotation_.z >= -20.0f) {
-			pRotation_.z -= 1.0f;
+		if (pRotation_.z >= playerSlopeMax_) {
+			pRotation_.z -= playerRotSpeed_;
 		}
-		if (pRotation_.y <= 10.0f) {
-			pRotation_.y += 1.0f;
+		if (pRotation_.y <= playerSlopeMaxY_) {
+			pRotation_.y += playerRotSpeed_;
 		}
 	}
 	else {
-		if (pRotation_.z <= 0.0f) {
-			pRotation_.z += 1.0f;
+		if (pRotation_.z <= playerSlopeMin_) {
+			pRotation_.z += playerRotSpeed_;
 		}
-		if (pRotation_.y >= 0.0f) {
-			pRotation_.y -= 1.0f;
+		if (pRotation_.y >= playerSlopeMin_) {
+			pRotation_.y -= playerRotSpeed_;
 		}
 	}
 
