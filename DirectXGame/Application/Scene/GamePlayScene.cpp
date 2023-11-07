@@ -120,12 +120,14 @@ void GamePlayScene::Update()
 	count_++;
 
 	if (player_->GetPosition().z >= 90) {
-		isFadeIn_ = true;
+		isClearFadeIn_ = true;
 	}
 
 	// シーン切り替え
 	if (player_->GetPositon().z >= 150) {
-		isFadeIn_ = true;
+		isClearFadeIn_ = true;
+	}
+	if (isClearScene_) {
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
@@ -273,13 +275,22 @@ void GamePlayScene::Update()
 	}
 
 	// フェードインの処理
-	if (isFadeIn_) {
+	if (isOverFadeIn_) {
 		if (bAlpha_ < 1.0f) {
 			bAlpha_ += 0.01f;
 		}
 		if (bAlpha_ > 1.0f) {
 			bAlpha_ = 1.0f;
-			isScene_ = true;
+			isOverScene_ = true;
+		}
+	}
+	if (isClearFadeIn_) {
+		if (bAlpha_ < 1.0f) {
+			bAlpha_ += 0.01f;
+		}
+		if (bAlpha_ > 1.0f) {
+			bAlpha_ = 1.0f;
+			isClearScene_ = true;
 		}
 	}
 	black_->SetAlpha(bAlpha_);
@@ -304,11 +315,11 @@ void GamePlayScene::Update()
 
 		if (overTimer_ >= 50) {
 
-			isFadeIn_ = true;
+			isOverFadeIn_ = true;
 			overTimer_ = 0;
 		}
 	}
-	if (isScene_) {
+	if (isOverScene_) {
 		// ゲームオーバー（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("OVER");
 	}
@@ -396,7 +407,7 @@ void GamePlayScene::Draw()
 		damage_->SpriteDraw(spriteCommon_);
 	}
 	// 黒
-	if (isFadeIn_ == true || isFadeOut_ == true) {
+	if (isOverFadeIn_ == true || isClearFadeIn_ == true || isFadeOut_ == true) {
 		black_->SpriteDraw(spriteCommon_);
 	}
 
