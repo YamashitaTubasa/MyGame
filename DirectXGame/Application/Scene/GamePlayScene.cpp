@@ -336,7 +336,7 @@ void GamePlayScene::Draw()
 	// コマンドライン取得
 	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
 
-	#pragma region 3Dオブジェクトの描画
+#pragma region 3Dオブジェクトの描画
 
 	// 3Dオブジェクト描画前処理
 	Object3d::PreDraw(cmdList);
@@ -357,9 +357,9 @@ void GamePlayScene::Draw()
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
 
-	#pragma endregion 
+#pragma endregion 
 
-	#pragma region パーティクルの描画
+#pragma region パーティクルの描画
 
 	// パーティクル描画前処理
 	ParticleManager::PreDraw(cmdList);
@@ -371,14 +371,16 @@ void GamePlayScene::Draw()
 	// パーティクル描画後処理
 	ParticleManager::PostDraw();
 
-	#pragma endregion
+#pragma endregion
 
-	#pragma region スプライト描画
+#pragma region スプライト描画
 
 	// スプライト描画前処理
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
-	if (player_->GetIsStartStaging() == false) {
+	if (player_->GetIsStartStaging() == false && player_->GetIsGameClearStaging() == false && 
+		player_->GetIsGameOverStaging() == false) {
+
 		// HPバーの描画
 		hpBar_->SpriteDraw(spriteCommon_);
 		// HPの背景描画
@@ -414,11 +416,10 @@ void GamePlayScene::Draw()
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
-	#pragma endregion
+#pragma endregion
 
 	// ImGui描画
 	//imGuiManager->Draw(dXCommon);
-
 }
 
 void GamePlayScene::Finalize()

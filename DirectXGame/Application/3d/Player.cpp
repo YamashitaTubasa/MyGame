@@ -408,9 +408,9 @@ void Player::Update()
 			pRotation_.y -= playerRotSpeed_;
 		}
 	}
-
+	
 	// ブースト時の回転処理
-	if (input_->TriggerKey(DIK_U) || pPosition_.z == 5.09989643f && pPosition_.x >= -2 && pPosition_.x <= 2 && pPosition_.y >= 2 && pPosition_.y <= 6) {
+	if (input_->TriggerKey(DIK_U) || pPosition_.z == 100.000114f) {
 		isEaseFlag_ = true;
 		isRot_ = true;
 		eFrame_ = 0;
@@ -433,8 +433,8 @@ void Player::Update()
 	if (pPosition_.z >= 100) {
 		isReticle_ = false;
 		isGameClearStaging_ = true;
-		pPosition_.y += 0.2f;
-		pPosition_.z += 1.2f;
+		pPosition_.y += 0.3f;
+		pPosition_.z += 2.0f;
 		rPosition_.z += 0.1f;
 		r1Position_.z += 0.1f;
 		target_ = pPosition_;

@@ -111,11 +111,11 @@ float EasingManager::EaseOutCubic(float x)
 	return static_cast<float>(1 - pow(1 - x, 3));
 }
 
-float EasingManager::EaseOutQuintP(float t, float b, float c, float d)
+float EasingManager::EaseOutQuintP(float time, float startPos, float endPos, float totalTime)
 {
-	float x = t / d;
+	float x = time / totalTime;
 	float v = EaseOutQuint(x);
-	float result = c * v + b;
+	float result = endPos * v + startPos;
 
 	return result;
 }

@@ -99,6 +99,18 @@ public: // ゲッター
 	/// <returns></returns>
 	bool GetIsStartStaging() const{ return isStartStaging_; }
 
+	/// <summary>
+	/// クリア演出フラグ
+	/// </summary>
+	/// <returns></returns>
+	bool GetIsGameClearStaging() const { return isGameClearStaging_; }
+
+	/// <summary>
+	/// ゲームオーバー演出フラグ
+	/// </summary>
+	/// <returns></returns>
+	bool GetIsGameOverStaging() const { return isGameOverStaging_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	// モデル
