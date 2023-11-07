@@ -192,6 +192,36 @@ void Player::Update()
 		}
 	}
 
+	if (isGameClearStaging_) {
+		// パーティクルの実行
+		//for (int i = 0; i < 2; i++) {
+		//	// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+		//	const float md_pos = 0.3f;
+		//	const float md = 2.0f;
+		//	DirectX::XMFLOAT3 pos{};
+		//	pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / md * -2.0f;
+		//	pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / md * 0.0f;
+		//	pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / md * 0.0f;
+		//	// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+		//	const float md_vel_x = 0.05f;
+		//	const float md_vel_y = 0.05f;
+		//	const float md_vel_z = 0.05f;
+		//	DirectX::XMFLOAT3 vel{};
+		//	vel.x = (float)rand() / RAND_MAX * md_vel_x - md_vel_x / md;
+		//	vel.y = (float)rand() / RAND_MAX * md_vel_y - md_vel_y / md;
+		//	vel.z = (float)rand() / RAND_MAX * md_vel_z - md_vel_z / md;
+		//	// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+		//	DirectX::XMFLOAT3 acc{};
+		//	const float md_acc_x = 0.04f;
+		//	const float md_acc_y = 0.04f;
+		//	acc.x = (float)rand() / RAND_MAX * md_acc_x - md_acc_x / 2.0f;
+		//	acc.y = (float)rand() / RAND_MAX * md_acc_y - md_acc_y / 2.0f;
+
+		//	// 追加
+		//	blackSmoke_->Add(fireParticleLife, pos, vel, acc, fireParticleStartScale_, fireParticleEndScale_);
+		//}
+	}
+
 	startCount_++;
 	if (pPosition_.z >= -60) {
 		isStartStaging_ = false;
@@ -402,14 +432,16 @@ void Player::Update()
 
 	if (pPosition_.z >= 100) {
 		isReticle_ = false;
-		isEndStaging_ = true;
+		isGameClearStaging_ = true;
 		pPosition_.y += 0.2f;
 		pPosition_.z += 1.2f;
 		rPosition_.z += 0.1f;
 		r1Position_.z += 0.1f;
 		target_ = pPosition_;
 	}
-
+	if (pPosition_.z >= 150) {
+		isEndStaging_ = true;
+	}
 	if (isEndStaging_) {
 		isPostE_ = true;
 	}

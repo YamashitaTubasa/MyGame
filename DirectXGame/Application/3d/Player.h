@@ -121,8 +121,10 @@ private: // メンバ変数
 	// パーティクル
 	Particle* particle_ = nullptr;
 	ParticleManager* particleMan_ = nullptr;
-	ParticleManager* blackSmokeMan_ = nullptr;
 	Particle* blackSmoke_ = nullptr;
+	ParticleManager* blackSmokeMan_ = nullptr;
+	Particle* circleMan_ = nullptr;
+	ParticleManager* circle_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
@@ -130,7 +132,7 @@ private: // メンバ変数
 	// プレイヤーの移動量
 	DirectX::XMFLOAT3 move_ = { 0,0.25,0 };
 	// プレイヤーの座標
-	DirectX::XMFLOAT3 pPosition_ = { 0,-1,-140 };
+	DirectX::XMFLOAT3 pPosition_ = { 0,-1,70 };
 	// プレイヤーの回転
 	DirectX::XMFLOAT3 pRotation_ = { 0,0,0 };
 	// プレイヤーのサイズ
@@ -152,7 +154,7 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
-	DirectX::XMFLOAT3 eye_ = { 0,-1,-120 };
+	DirectX::XMFLOAT3 eye_ = { 0,-1,50 };
 	// 注視点
 	DirectX::XMFLOAT3 target_ = { 0,0,0 };
 
@@ -204,6 +206,7 @@ private: // メンバ変数
 	int effectTime_ = 0;
 	bool isHp_ = false;
 	bool isGameOverStaging_ = false;
+	bool isGameClearStaging_ = false;
 	// ゲームオーバーの演出
 	const float playerFall_ = 0.05f;
 

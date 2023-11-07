@@ -107,8 +107,8 @@ private: // メンバ変数
 	bool isSpace_ = true;
 
 	// ロードの設定
-	DirectX::XMFLOAT3 nowLodingPos_ = { 740, 580, 0 };
-	DirectX::XMFLOAT2 nowLodingScale_ = { 452.0f * 1.0f, 125 * 1.0f };
+	DirectX::XMFLOAT3 nowLodingPos_ = { 700, 580, 0 };
+	DirectX::XMFLOAT2 nowLodingScale_ = { 442.0f * 1.1f, 110 * 1.1f };
 	bool isLoding_ = false;
 	float lodingAlpha_ = 1.0f;
 

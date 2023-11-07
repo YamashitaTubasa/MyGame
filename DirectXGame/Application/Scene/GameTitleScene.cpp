@@ -237,7 +237,7 @@ void GameTitleScene::LoadSprite()
 	//===== ロードの描画 =====//
 	nowLoding_ = new Sprite();
 	// テクスチャの読み込み
-	nowLoding_->LoadTexture(spriteCommon_, 4, L"Resources/Image/nowLoding.png");
+	nowLoding_->LoadTexture(spriteCommon_, 4, L"Resources/Image/nowLoading.png");
 	// スプライトの生成
 	nowLoding_->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	// 色、座標、サイズ、回転角の設定

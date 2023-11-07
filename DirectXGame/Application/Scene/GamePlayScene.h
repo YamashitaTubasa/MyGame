@@ -163,9 +163,11 @@ private:
 	float bAlpha_ = 1.0f;
 
 	// フェードアウト・インのフラグ
-	bool isFadeIn_ = false;
+	bool isOverFadeIn_ = false;
+	bool isClearFadeIn_ = false;
 	bool isFadeOut_ = true;
 
 	// シーンフラグ
-	bool isScene_ = false;
+	bool isClearScene_ = false;
+	bool isOverScene_ = false;
 };
