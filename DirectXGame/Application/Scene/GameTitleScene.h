@@ -21,6 +21,19 @@ class GameTitleScene : public GameBaseScene
 public: // エイリアス
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 
+public:
+	// スプライトの番号
+	enum SpriteNum
+	{
+		titleNum = 1,
+		spaceNum,
+		inBlackNum,
+		nowLoadingNum,
+		dotZeroNum,
+		dotOneNum,
+		dotTwoNum
+	};
+
 public: // メンバ関数
 	// コンストラクタ
 	GameTitleScene();
@@ -71,6 +84,11 @@ private:
 	/// </summary>
 	void Load();
 
+	/// <summary>
+	/// 自機の回転処理
+	/// </summary>
+	void PlayerRotation();
+
 private: // メンバ変数
 	Input* input_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
@@ -81,7 +99,7 @@ private: // メンバ変数
 	Sprite* space_ = nullptr;
 	Sprite* inBlack_ = nullptr;
 	Sprite* outBlack_ = nullptr;
-	Sprite* nowLoding_ = nullptr;
+	Sprite* nowLoading_ = nullptr;
 	Sprite* dot_[5];
 
 	// 天球
@@ -103,7 +121,14 @@ private: // メンバ変数
 	DirectX::XMFLOAT2 spaceScale_ = { 415.0f, 94.0f };
 	float spaceRot_ = 0.0f;
 	float sAlpha_ = 1.0f;
+	const float sAlphaMin_ = 0.0f;
+	const float sAlphaMax_ = 1.0f;
+	const float sAlphaMove_ = 0.05f;
 	int spaceTimer_ = 0;
+	const int spaceTimerMin_ = 0;
+	const int spaceTimerOne_ = 50;
+	const int spaceTimerTwo_ = 100;
+	const int spaceTimerMax_ = 150;
 	bool isSpace_ = true;
 
 	// ロードの設定
@@ -117,12 +142,22 @@ private: // メンバ変数
 	DirectX::XMFLOAT2 dotScale_ = { 30, 30 };
 	bool isDot_[5] = { false, false, false, false, false };
 	int dotTimer_ = 0;
+	const int dotTimerMin_ = 0;
+	const int dotTimerOne_ = 40;
+	const int dotTimerTwo_ = 70;
+	const int dotTimerThree_ = 100;
+	const int dotTimerMax_ = 140;
+	const int defaultDotTimer_ = 0;
+	const int dotMax_ = 3;
 
 	DirectX::XMFLOAT3 pPos_ = { 0,-5,-30 };
+	DirectX::XMFLOAT3 pRot_ = { 0,0,0 };
 	DirectX::XMFLOAT3 eye_ = { 0,0,-50 };
 
 	// タイマー
 	int startTimer_ = 0;
+	const int defaultStartTimer_ = 0;
+	const int MaxStartTimer_ = 200;
 
 	// フラグ
 	bool start_ = false;
@@ -130,8 +165,45 @@ private: // メンバ変数
 
 	// フェードイン・アウト時ののアルファ値
 	float bInAlpha_ = 1.0f;
+	float bInAlphaMax_ = 1.0f;
 
 	// フェードイン・アウトフラグ
 	bool isFadeIn_ = false;
 	bool isFadeOut_ = true;
+	const float bFadeMax_ = 1.0f;
+	const float bFadeMin_ = 0.0f;
+	const float bFadeMove_ = 0.01f;
+
+	// アンカーポイント
+	const XMFLOAT2 defaultAnchorpoint_ = { 0.0f,0.0f };
+	const float defaultAnchorpointX_ = 0.0f;
+	const float defaultAnchorpointY_ = 0.0f;
+
+	// イージング変数
+	bool isEaseFlag_ = false;
+	float eTime_ = 0.0f;
+	float eFrame_ = 0.0f;
+	const float defaultFrame_ = 0.0f;
+	const float eEndFrame_ = 80.0f;
+	const float eStart_ = 0.0f;
+	const float eEnd_ = 360.0f;
+	const float eStartPos_ = 0.0f;
+	const float eEndPos_ = 360.0f;
+	const float eTotalTime_ = 60.0f;
+	// 回転のフラグ
+	bool isRot_ = false;
+
+	// プレイヤー
+	const float playerMaxRotation_ = 360.0f;
+	const float playerMinRotation_ = 0.0f;
+
+	// 自機の上下移動
+	const float playerPosYMin_ = -4.0f;
+	const float playerPosYMax_ = -7.0f;
+	const float playerPosYMove_ = 0.03f;
+
+	// スタート
+	const float sPlayerPosMoveY_ = 0.25f;
+	const float sPlayerPosMoveZ_ = 1.8f;
+	const float sPlayerEyeMove_ = 0.06f;
 };

@@ -42,7 +42,7 @@ public: // 中間地点が一番速い挙動(下にいくほど挙動の差が�
 	static float EaseOutCubicP(float t, float b, float c, float d);
 	static float EaseOutCubic(float x);
 
-	static float EaseOutQuintP(float t, float b, float c, float d);
+	static float EaseOutQuintP(float time, float startPos, float endPos, float totalTime);
 	static float EaseOutQuint(float x);
 
 	static float EaseOutCircP(float t, float b, float c, float d);
