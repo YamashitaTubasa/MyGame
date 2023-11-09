@@ -24,51 +24,8 @@ void GameClearScene::Initialize()
 {
 	dxCommon_ = DirectXCommon::GetInstance();
 
-	// スプライト
-	sprite_ = new Sprite();
-	spriteCommon_ = sprite_->SpriteCommonCreate();
-	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
-
-	// タイトル
-	clear_ = new Sprite();
-	clear_->LoadTexture(spriteCommon_, 1, L"Resources/Image/gameClear.png");
-	clear_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	clear_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	clear_->SetPosition(clearPos_);
-	clear_->SetScale(clearScale_);
-	clear_->SetRotation(0.0f);
-	clear_->SpriteTransferVertexBuffer(clear_, spriteCommon_, 1);
-	clear_->SpriteUpdate(clear_, spriteCommon_);
-
-	//===== SPACEの描画 =====//
-	space_ = new Sprite();
-	// テクスチャの読み込み
-	space_->LoadTexture(spriteCommon_, 2, L"Resources/Image/pressSpace1.png");
-	// スプライトの生成
-	space_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	// 色、座標、サイズ、回転角の設定
-	space_->SetColor(spaceColor_);
-	space_->SetPosition(spacePos_);
-	space_->SetScale(spaceScale_);
-	space_->SetAlpha(sAlpha_);
-	// スプライトの頂点バッファの転送
-	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, 2);
-
-	//===== Blackの描画 =====//
-	black_ = new Sprite();
-	// テクスチャの読み込み
-	black_->LoadTexture(spriteCommon_, 3, L"Resources/Image/white.png");
-	// スプライトの生成
-	black_->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	// 色、座標、サイズ、回転角の設定
-	black_->SetColor({ 1,1,1,1 });
-	black_->SetPosition({ 0,0,0 });
-	black_->SetScale({ 1280,720 });
-	black_->SetRotation(0.0f);
-	black_->SetAlpha(bAlpha_);
-	// スプライトの頂点バッファの転送
-	black_->SpriteTransferVertexBuffer(black_, spriteCommon_, 3);
+	// スプライトの読み込み
+	GameClearScene::LoadSprite();
 
 	// 天球の初期化
 	skydome_ = new Skydome();
@@ -77,49 +34,19 @@ void GameClearScene::Initialize()
 
 void GameClearScene::Update()
 {
-	timer_++;
-
-	// SPACEを押したら
-	if (isFadeIn_ == false && isFadeOut_ == false) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= 200) {
-			isFadeIn_ = true;
-		}
-	}
-
-	if (isScene_ == true) {
-		// ゲームタイトルシーン（次シーン）を生成
-		GameSceneManager::GetInstance()->ChangeScene("TITLE");
-	}
+	// シーンの切り替え処理
+	GameClearScene::SceneChange();
 
 	// 天球の更新
 	skydome_->Update();
 
 	// スプライトの更新
+	clear_->SpriteUpdate(clear_, spriteCommon_);
 	space_->SpriteUpdate(space_, spriteCommon_);
 	black_->SpriteUpdate(black_, spriteCommon_);
 
 	// フェードアウト処理
-	if (isFadeOut_) {
-		if (bAlpha_ > 0.0f) {
-			bAlpha_ -= 0.01f;
-		}
-		if (bAlpha_ <= 0.01f) {
-			bAlpha_ = 0.0f;
-			isFadeOut_ = false;
-		}
-	}
-
-	// フェードインの処理
-	if (isFadeIn_) {
-		if (bAlpha_ < 1.0f) {
-			bAlpha_ += 0.01f;
-		}
-		if (bAlpha_ >= 1.0f) {
-			bAlpha_ = 1.0f;
-			isScene_ = true;
-		}
-	}
-	black_->SetAlpha(bAlpha_);
+	GameClearScene::Fade();
 
 	// Press SPACEの描画の点滅処理
 	GameClearScene::FlashSpace();
@@ -171,25 +98,113 @@ void GameClearScene::FlashSpace()
 {
 	if (isSpace_) {
 		spaceTimer_++;
-		if (spaceTimer_ >= 50 && spaceTimer_ < 100) {
-			if (sAlpha_ > 0.0f) {
-				sAlpha_ -= 0.05f;
+		if (spaceTimer_ >= spaceTimerOne_ && spaceTimer_ < spaceTimerTwo_) {
+			if (sAlpha_ > sAlphaMin_) {
+				sAlpha_ -= sAlphaMove_;
 			}
-			if (sAlpha_ <= 0.0f) {
-				sAlpha_ = 0.0f;
-			}
-		}
-		if (spaceTimer_ >= 100 && spaceTimer_ < 150) {
-			if (sAlpha_ < 1.0f) {
-				sAlpha_ += 0.05f;
-			}
-			if (sAlpha_ >= 1.0f) {
-				sAlpha_ = 1.0f;
+			if (sAlpha_ <= sAlphaMin_) {
+				sAlpha_ = sAlphaMin_;
 			}
 		}
-		if (spaceTimer_ >= 150) {
-			spaceTimer_ = 0;
+		if (spaceTimer_ >= spaceTimerTwo_ && spaceTimer_ < spaceTimerMax_) {
+			if (sAlpha_ < sAlphaMax_) {
+				sAlpha_ += sAlphaMove_;
+			}
+			if (sAlpha_ >= sAlphaMax_) {
+				sAlpha_ = sAlphaMax_;
+			}
+		}
+		if (spaceTimer_ >= spaceTimerMax_) {
+			spaceTimer_ = spaceTimerMin_;
 		}
 		space_->SetAlpha(sAlpha_);
 	}
+}
+
+void GameClearScene::Fade()
+{
+	if (isFadeOut_) {
+		if (bAlpha_ > blackFadeMin_) {
+			bAlpha_ -= blackFadeMove_;
+		}
+		if (bAlpha_ <= blackFadeMove_) {
+			bAlpha_ = blackFadeMin_;
+			isFadeOut_ = false;
+		}
+	}
+
+	// フェードインの処理
+	if (isFadeIn_) {
+		if (bAlpha_ < blackFadeMax_) {
+			bAlpha_ += blackFadeMove_;
+		}
+		if (bAlpha_ >= blackFadeMax_) {
+			bAlpha_ = blackFadeMax_;
+			isScene_ = true;
+		}
+	}
+	black_->SetAlpha(bAlpha_);
+}
+
+void GameClearScene::SceneChange()
+{
+	timer_++;
+
+	// SPACEを押したら
+	if (isFadeIn_ == false && isFadeOut_ == false) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= changeSceneTimer_) {
+			isFadeIn_ = true;
+		}
+	}
+
+	if (isScene_ == true) {
+		// ゲームタイトルシーン（次シーン）を生成
+		GameSceneManager::GetInstance()->ChangeScene("TITLE");
+	}
+}
+
+void GameClearScene::LoadSprite()
+{
+	// スプライト
+	sprite_ = new Sprite();
+	spriteCommon_ = sprite_->SpriteCommonCreate();
+	// スプライト用パイプライン生成呼び出し
+	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
+
+	// タイトル
+	clear_ = new Sprite();
+	clear_->LoadTexture(spriteCommon_, titleNum, L"Resources/Image/gameClear.png");
+	clear_->SpriteCreate(WinApp::window_width, WinApp::window_height, titleNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	clear_->SetColor(clearColor_);
+	clear_->SetPosition(clearPos_);
+	clear_->SetScale(clearScale_);
+	clear_->SpriteTransferVertexBuffer(clear_, spriteCommon_, titleNum);
+
+	//===== SPACEの描画 =====//
+	space_ = new Sprite();
+	// テクスチャの読み込み
+	space_->LoadTexture(spriteCommon_, spaceNum, L"Resources/Image/pressSpace1.png");
+	// スプライトの生成
+	space_->SpriteCreate(WinApp::window_width, WinApp::window_height, spaceNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	// 色、座標、サイズ、回転角の設定
+	space_->SetColor(spaceColor_);
+	space_->SetPosition(spacePos_);
+	space_->SetScale(spaceScale_);
+	space_->SetAlpha(sAlpha_);
+	// スプライトの頂点バッファの転送
+	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, spaceNum);
+
+	//===== Blackの描画 =====//
+	black_ = new Sprite();
+	// テクスチャの読み込み
+	black_->LoadTexture(spriteCommon_, blackNum, L"Resources/Image/white.png");
+	// スプライトの生成
+	black_->SpriteCreate(WinApp::window_width, WinApp::window_height, blackNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	// 色、座標、サイズ、回転角の設定
+	black_->SetColor(blackColor_);
+	black_->SetPosition(blackPos_);
+	black_->SetScale(blackScale_);
+	black_->SetAlpha(bAlpha_);
+	// スプライトの頂点バッファの転送
+	black_->SpriteTransferVertexBuffer(black_, spriteCommon_, blackNum);
 }
