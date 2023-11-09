@@ -135,6 +135,17 @@ void GamePlayScene::Update()
 		GameSceneManager::GetInstance()->ChangeScene("TITLE");
 	}*/
 
+#ifdef _DEBUG
+
+	if (input_->TriggerKey(DIK_O)) {
+		GameSceneManager::GetInstance()->ChangeScene("OVER");
+	}
+	if (input_->TriggerKey(DIK_C)) {
+		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
+	}
+
+#endif
+
 	// カメラの更新
 	camera_->Update();
 

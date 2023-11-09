@@ -18,8 +18,8 @@ GameTitleScene::~GameTitleScene()
 	delete title_;
 	delete skydome_;
 	delete space_;
-	delete object3d_;
-	delete model_;
+	delete player_;
+	delete playerModel_;
 }
 
 void GameTitleScene::Initialize()
@@ -39,19 +39,19 @@ void GameTitleScene::Initialize()
 	LoadSprite();
 
 	// OBJモデルの読み込み
-	model_ = new Model();
-	model_ = Model::LoadFromOBJ("fighter");
+	playerModel_ = new Model();
+	playerModel_ = Model::LoadFromOBJ("fighter");
 	// オブジェクトの生成
-	object3d_ = new Object3d();
-	object3d_ = Object3d::Create();
+	player_ = new Object3d();
+	player_ = Object3d::Create();
 	// オブジェクトにモデルをセット
-	object3d_->SetModel(model_);
+	player_->SetModel(playerModel_);
 	// オブジェクトの位置の設定
-	object3d_->SetPosition(pPos_);
-	object3d_->SetScale({5,5,5});
-	object3d_->SetRotation(pRot_);
-	object3d_->SetTarget(object3d_->GetPosition());
-	object3d_->SetEye(eye_);
+	player_->SetPosition(pPos_);
+	player_->SetScale(pScale_);
+	player_->SetRotation(pRot_);
+	player_->SetTarget(player_->GetPosition());
+	player_->SetEye(eye_);
 }
 
 void GameTitleScene::Update()
@@ -62,7 +62,7 @@ void GameTitleScene::Update()
 	skydome_->RotateSky();
 
 	// 自機の更新
-	object3d_->Update();
+	player_->Update();
 
 	// スプライトの更新
 	title_->SpriteUpdate(title_, spriteCommon_);
@@ -85,7 +85,7 @@ void GameTitleScene::Update()
 	// ロード中の点の点滅処理
 	GameTitleScene::Load();
 
-	// 自機の上下移動
+	// 自機の移動
 	if (isPos_ == false) {
 		pPos_.y += playerPosYMove_;
 	}
@@ -98,34 +98,10 @@ void GameTitleScene::Update()
 	if (pPos_.y <= playerPosYMax_) {
 		isPos_ = false;
 	}
-	object3d_->SetPosition(pPos_);
+	player_->SetPosition(pPos_);
 
 	// シーンの切り替え処理
-	if (isFadeIn_ == false && isFadeOut_ == false) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-
-			start_ = true;
-		}
-	}
-	if (start_) {
-		PlayerRotation();
-		startTimer_++;
-		pPos_.z += sPlayerPosMoveZ_;
-		pPos_.y += sPlayerPosMoveY_;
-		eye_.y -= sPlayerEyeMove_;
-
-		object3d_->SetPosition(pPos_);
-		object3d_->SetEye(eye_);
-
-		isFadeIn_ = true;
-	}
-	if (startTimer_ >= MaxStartTimer_) {
-		// タイマーを初期値に戻す
-		startTimer_ = defaultStartTimer_;
-
-		// ゲームプレイシーン（次シーン）を生成
-		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");
-	}
+	GameTitleScene::SceneChange();
 }
 
 void GameTitleScene::Draw()
@@ -140,7 +116,7 @@ void GameTitleScene::Draw()
 
 	//=== オブジェクトの描画 ===//
 	skydome_->Draw();
-	object3d_->Draw();
+	player_->Draw();
 
 	// オブジェクトの後処理
 	Object3d::PostDraw();
@@ -226,10 +202,9 @@ void GameTitleScene::LoadSprite()
 	// スプライトの生成
 	inBlack_->SpriteCreate(WinApp::window_width, WinApp::window_height, inBlackNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
-	inBlack_->SetColor({ 1,1,1,1 });
-	inBlack_->SetPosition({ 0,0,0 });
-	inBlack_->SetScale({ 1280,720 });
-	inBlack_->SetRotation(0.0f);
+	inBlack_->SetColor(inBlackColor_);
+	inBlack_->SetPosition(inBlackPosition_);
+	inBlack_->SetScale(inBlackScale_);
 	inBlack_->SetAlpha(bInAlpha_);
 	// スプライトの頂点バッファの転送
 	inBlack_->SpriteTransferVertexBuffer(inBlack_, spriteCommon_, inBlackNum);
@@ -241,10 +216,9 @@ void GameTitleScene::LoadSprite()
 	// スプライトの生成
 	nowLoading_->SpriteCreate(WinApp::window_width, WinApp::window_height, nowLoadingNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
-	nowLoading_->SetColor({ 1,1,1,1 });
-	nowLoading_->SetPosition(nowLodingPos_);
-	nowLoading_->SetScale(nowLodingScale_);
-	nowLoading_->SetRotation(0.0f);
+	nowLoading_->SetColor(nowLoadingColor_);
+	nowLoading_->SetPosition(nowLoadingPos_);
+	nowLoading_->SetScale(nowLoadingScale_);
 	nowLoading_->SetAlpha(lodingAlpha_);
 	// スプライトの頂点バッファの転送
 	nowLoading_->SpriteTransferVertexBuffer(nowLoading_, spriteCommon_, nowLoadingNum);
@@ -256,11 +230,10 @@ void GameTitleScene::LoadSprite()
 	// スプライトの生成
 	dot_[0]->SpriteCreate(WinApp::window_width, WinApp::window_height, dotZeroNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
-	dot_[0]->SetColor({ 1,1,1,1 });
+	dot_[0]->SetColor(dotColor_[0]);
 	dot_[0]->SetPosition(dotPos_[0]);
-	dot_[0]->SetScale(dotScale_);
-	dot_[0]->SetRotation(0.0f);
-	dot_[0]->SetAlpha(1.0f);
+	dot_[0]->SetScale(dotScale_[0]);
+	dot_[0]->SetAlpha(dotAlpha_[0]);
 	// スプライトの頂点バッファの転送
 	dot_[0]->SpriteTransferVertexBuffer(dot_[0], spriteCommon_, dotZeroNum);
 
@@ -270,11 +243,10 @@ void GameTitleScene::LoadSprite()
 	// スプライトの生成
 	dot_[1]->SpriteCreate(WinApp::window_width, WinApp::window_height, dotOneNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
-	dot_[1]->SetColor({ 1,1,1,1 });
+	dot_[1]->SetColor(dotColor_[1]);
 	dot_[1]->SetPosition(dotPos_[1]);
-	dot_[1]->SetScale(dotScale_);
-	dot_[1]->SetRotation(0.0f);
-	dot_[1]->SetAlpha(1.0f);
+	dot_[1]->SetScale(dotScale_[1]);
+	dot_[1]->SetAlpha(dotAlpha_[1]);
 	// スプライトの頂点バッファの転送
 	dot_[1]->SpriteTransferVertexBuffer(dot_[1], spriteCommon_, dotOneNum);
 
@@ -284,11 +256,10 @@ void GameTitleScene::LoadSprite()
 	// スプライトの生成
 	dot_[2]->SpriteCreate(WinApp::window_width, WinApp::window_height, dotTwoNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
-	dot_[2]->SetColor({ 1,1,1,1 });
+	dot_[2]->SetColor(dotColor_[2]);
 	dot_[2]->SetPosition(dotPos_[2]);
-	dot_[2]->SetScale(dotScale_);
-	dot_[2]->SetRotation(0.0f);
-	dot_[2]->SetAlpha(1.0f);
+	dot_[2]->SetScale(dotScale_[2]);
+	dot_[2]->SetAlpha(dotAlpha_[2]);
 	// スプライトの頂点バッファの転送
 	dot_[2]->SpriteTransferVertexBuffer(dot_[2], spriteCommon_, dotTwoNum);
 }
@@ -391,6 +362,35 @@ void GameTitleScene::PlayerRotation()
 		}
 	}
 
-	object3d_->SetPosition(pPos_);
-	object3d_->SetRotation(pRot_);
+	player_->SetPosition(pPos_);
+	player_->SetRotation(pRot_);
+}
+
+void GameTitleScene::SceneChange()
+{
+	if (isFadeIn_ == false && isFadeOut_ == false) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+
+			start_ = true;
+		}
+	}
+	if (start_) {
+		GameTitleScene::PlayerRotation();
+		startTimer_++;
+		pPos_.z += sPlayerPosMoveZ_;
+		pPos_.y += sPlayerPosMoveY_;
+		eye_.y -= sPlayerEyeMove_;
+
+		player_->SetPosition(pPos_);
+		player_->SetEye(eye_);
+
+		isFadeIn_ = true;
+	}
+	if (startTimer_ >= MaxStartTimer_) {
+		// タイマーを初期値に戻す
+		startTimer_ = defaultStartTimer_;
+
+		// ゲームプレイシーン（次シーン）を生成
+		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");
+	}
 }

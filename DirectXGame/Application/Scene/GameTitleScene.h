@@ -89,6 +89,11 @@ private:
 	/// </summary>
 	void PlayerRotation();
 
+	/// <summary>
+	/// シーンの切り替え処理
+	/// </summary>
+	void SceneChange();
+
 private: // メンバ変数
 	Input* input_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
@@ -100,14 +105,14 @@ private: // メンバ変数
 	Sprite* inBlack_ = nullptr;
 	Sprite* outBlack_ = nullptr;
 	Sprite* nowLoading_ = nullptr;
-	Sprite* dot_[5];
+	Sprite* dot_[5]{};
 
 	// 天球
 	Skydome* skydome_ = nullptr;
 
 	// オブジェクト
-	Object3d* object3d_ = nullptr;
-	Model* model_ = nullptr;
+	Object3d* player_ = nullptr;
+	Model* playerModel_ = nullptr;
 
 	// タイトルの設定
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
@@ -132,14 +137,17 @@ private: // メンバ変数
 	bool isSpace_ = true;
 
 	// ロードの設定
-	DirectX::XMFLOAT3 nowLodingPos_ = { 700, 580, 0 };
-	DirectX::XMFLOAT2 nowLodingScale_ = { 442.0f * 1.1f, 110 * 1.1f };
+	DirectX::XMFLOAT4 nowLoadingColor_ = { 1,1,1,1 };
+	DirectX::XMFLOAT3 nowLoadingPos_ = { 700, 580, 0 };
+	DirectX::XMFLOAT2 nowLoadingScale_ = { 442.0f * 1.1f, 110 * 1.1f };
 	bool isLoding_ = false;
 	float lodingAlpha_ = 1.0f;
 
 	// 点の設定
+	std::vector<DirectX::XMFLOAT4> dotColor_ { {1, 1, 1, 1}, { 1,1,1,1 }, { 1,1,1,1 } };
 	std::vector<DirectX::XMFLOAT3> dotPos_ = { { 1170, 640, 0 }, { 1190, 640, 0 }, { 1210, 640, 0 } };
-	DirectX::XMFLOAT2 dotScale_ = { 30, 30 };
+	std::vector<DirectX::XMFLOAT2> dotScale_ = { { 30, 30 },{ 30,30 },{ 30,30 } };
+	std::vector<float> dotAlpha_ = { {1.0f},{1.0f},{1.0f} };
 	bool isDot_[5] = { false, false, false, false, false };
 	int dotTimer_ = 0;
 	const int dotTimerMin_ = 0;
@@ -150,8 +158,14 @@ private: // メンバ変数
 	const int defaultDotTimer_ = 0;
 	const int dotMax_ = 3;
 
+	// フェード
+	DirectX::XMFLOAT4 inBlackColor_ = { 1,1,1,1 };
+	DirectX::XMFLOAT3 inBlackPosition_ = { 0,0,0 };
+	DirectX::XMFLOAT2 inBlackScale_ = { 1280,720 };
+
 	DirectX::XMFLOAT3 pPos_ = { 0,-5,-30 };
 	DirectX::XMFLOAT3 pRot_ = { 0,0,0 };
+	DirectX::XMFLOAT3 pScale_ = { 5,5,5 };
 	DirectX::XMFLOAT3 eye_ = { 0,0,-50 };
 
 	// タイマー
@@ -175,7 +189,7 @@ private: // メンバ変数
 	const float bFadeMove_ = 0.01f;
 
 	// アンカーポイント
-	const XMFLOAT2 defaultAnchorpoint_ = { 0.0f,0.0f };
+	const DirectX::XMFLOAT2 defaultAnchorpoint_ = { 0.0f,0.0f };
 	const float defaultAnchorpointX_ = 0.0f;
 	const float defaultAnchorpointY_ = 0.0f;
 
