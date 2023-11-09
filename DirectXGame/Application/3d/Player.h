@@ -144,7 +144,7 @@ private: // メンバ変数
 	// プレイヤーの移動量
 	DirectX::XMFLOAT3 move_ = { 0,0.25,0 };
 	// プレイヤーの座標
-	DirectX::XMFLOAT3 pPosition_ = { 0,-1,70 };
+	DirectX::XMFLOAT3 pPosition_ = { 0,-1,-140 };
 	// プレイヤーの回転
 	DirectX::XMFLOAT3 pRotation_ = { 0,0,0 };
 	// プレイヤーのサイズ
@@ -166,7 +166,7 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
-	DirectX::XMFLOAT3 eye_ = { 0,-1,50 };
+	DirectX::XMFLOAT3 eye_ = { 0,-1,-120 };
 	// 注視点
 	DirectX::XMFLOAT3 target_ = { 0,0,0 };
 
