@@ -146,6 +146,11 @@ void GamePlayScene::Update()
 
 #endif
 
+	enemy_->SetDamage(player_->GetDamage());
+	enemy_->SetDamage01(player_->GetDamage01());
+	enemy_->SetDamage02(player_->GetDamage02());
+	enemy_->SetDamage03(player_->GetDamage03());
+
 	// カメラの更新
 	camera_->Update();
 
