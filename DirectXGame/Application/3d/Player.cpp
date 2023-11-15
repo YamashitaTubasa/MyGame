@@ -471,7 +471,9 @@ void Player::Update()
 	}
 
 	// 自キャラの攻撃処理
-	Attack();
+	if (!isStartStaging_ && !isEndStaging_) {
+		Attack();
+	}
 
 	// 弾更新
 	for (PlayerBullet* bullet : pBullets_) {
