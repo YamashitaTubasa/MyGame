@@ -609,3 +609,32 @@ void Player::Effect()
 
 #pragma endregion
 }
+
+void Player::Shake()
+{
+	// 乱数を取得
+	std::random_device rnd;
+	// 乱数のシードを設定
+	std::mt19937 mt(rnd());
+	std::uniform_int_distribution<> rand(shakeMin_, shakeMax_);
+
+	shakePos_ = rand(mt) / shakeMd_;
+	shakeEye_ = rand(mt) / shakeMdM_;
+	
+	shakeTimer_++;
+
+	if (shakeTimer_ >= defaultShakeTimer_) {
+		pPosition_.x -= shakePos_;
+		eye_.x -= shakePos_;
+	}
+	if (shakeTimer_ >= shakeTimer10_) {
+		pPosition_.x -= shakeEye_;
+		eye_.x -= shakeEye_;
+	}
+	if (shakeTimer_ >= shakeTimer20_) {
+		shakeTimer_ = defaultShakeTimer_;
+	}
+	
+	Object3d::SetEye(eye_);
+	playerO3_->SetPosition(pPosition_);
+}

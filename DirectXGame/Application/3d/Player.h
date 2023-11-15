@@ -74,6 +74,11 @@ public: // メンバ関数
 	/// </summary>
 	void Effect();
 
+	/// <summary>
+	/// シェイク
+	/// </summary>
+	void Shake();
+
 public: // ゲッター
 	/// <summary>
 	/// プレイヤーの座標の取得
@@ -175,7 +180,7 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
-	DirectX::XMFLOAT3 eye_ = { 0,-1,-120 };
+	DirectX::XMFLOAT3 eye_ = { 0, 0, -120 };
 	// 注視点
 	DirectX::XMFLOAT3 target_ = { 0,0,0 };
 
@@ -250,5 +255,17 @@ private: // メンバ変数
 	bool damage01_ = false;
 	bool damage02_ = false;
 	bool damage03_ = false;
+
+	// シェイク
+	const int shakeMin_ = -1;
+	const int shakeMax_ = 1;
+	const float shakeMd_ = 5.0f;
+	const float shakeMdM_ = 10.0f;
+	int shakeTimer_ = 0;
+	const int defaultShakeTimer_ = 0;
+	const int shakeTimer10_ = 10;
+	const int shakeTimer20_ = 20;
+	float shakePos_ = 0.0f;
+	float shakeEye_ = 0.0f;
 };
 

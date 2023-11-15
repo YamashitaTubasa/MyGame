@@ -101,6 +101,7 @@ private:
 	Sprite* ult_ = nullptr;
 	Sprite* X_ = nullptr;
 	Sprite* damage_ = nullptr;
+	Sprite* white_ = nullptr;
 	Sprite* black_ = nullptr;
 	Sprite* number_[5];
 	SpriteCommon spriteCommon_;
@@ -127,11 +128,11 @@ private:
 	DirectX::XMFLOAT3 position_[5]{};
 	DirectX::XMFLOAT3 rotation_[5]{};
 	DirectX::XMFLOAT3 scale_[5]{};
-	DirectX::XMFLOAT3 eye_[5]{};
-	DirectX::XMFLOAT3 target_[5]{};
+	std::vector<DirectX::XMFLOAT3> eye_ = { { 0,0,-10 } };
+	std::vector<DirectX::XMFLOAT3> target_ = { {0.0f, 2.5f, 0.0f} };
 	DirectX::XMFLOAT3 hpPosition_ = { 30,30,0 };
 	DirectX::XMFLOAT2 hpScale_ = { 500, 20 };
-	DirectX::XMFLOAT3 hpMove_ = { -1, 0, 0 };
+	DirectX::XMFLOAT3 hpMove_ = { 10, 0, 0 };
 	DirectX::XMFLOAT3 hpBarPosition_ = { 29,29,0 };
 	DirectX::XMFLOAT3 hpBackPosition_ = { 30,30,0 };
 	DirectX::XMFLOAT3 enemyHpPosition_ = { 1250,30,0 };
