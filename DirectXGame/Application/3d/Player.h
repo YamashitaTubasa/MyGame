@@ -111,6 +111,15 @@ public: // ゲッター
 	/// <returns></returns>
 	bool GetIsGameOverStaging() const { return isGameOverStaging_; }
 
+	/// <summary>
+	/// ダメージ
+	/// </summary>
+	/// <returns></returns>
+	bool GetDamage() const { return damage_; }
+	bool GetDamage01() const { return damage01_; }
+	bool GetDamage02() const { return damage02_; }
+	bool GetDamage03() const { return damage03_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	// モデル
@@ -235,5 +244,11 @@ private: // メンバ変数
 	const float fireParticleStartScale_ = 0.4f;
 	const float fireParticleEndScale_ = 0.0f;
 	const int fireParticleMax_ = 100;
+
+	// ダメージ
+	bool damage_ = false;
+	bool damage01_ = false;
+	bool damage02_ = false;
+	bool damage03_ = false;
 };
 

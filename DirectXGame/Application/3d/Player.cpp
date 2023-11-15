@@ -471,16 +471,33 @@ void Player::Update()
 	}
 
 	// 自キャラの攻撃処理
-	Attack();
+	if (!isStartStaging_ && !isEndStaging_) {
+		Attack();
+	}
 
 	// 弾更新
 	for (PlayerBullet* bullet : pBullets_) {
 		bullet->Update();
 		pBulletP_ = bullet->GetPosition();
-		if (bullet->GetPosition().z >= 10 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 4 && 
+		if (bullet->GetPosition().z >= 10 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 && 
 			bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
-			hp_ -= 1;
-			enemy_->SetIsDead(true);
+
+			damage_ = true;
+		}
+		if (bullet->GetPosition().z >= 10 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 &&
+			bullet->GetPosition().x > 6 && bullet->GetPosition().x < 14) {
+
+			damage01_ = true;
+		}
+		if (bullet->GetPosition().z >= 20 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 &&
+			bullet->GetPosition().x > -12 && bullet->GetPosition().x < -4) {
+
+			damage02_ = true;
+		}
+		if (bullet->GetPosition().z >= 30 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 4 &&
+			bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
+
+			damage03_ = true;
 		}
 	}
 
@@ -502,6 +519,30 @@ void Player::Update()
 		isHp_ = false;
 		effectTime_ = 0;
 	}
+
+#ifdef _DEBUG
+
+	if (input_->PushKey(DIK_UP)) {
+		eye_.y -= 1;
+	}
+	if (input_->PushKey(DIK_DOWN)) {
+		eye_.y += 1;
+	}
+	if (input_->PushKey(DIK_RIGHT)) {
+		eye_.x += 1;
+	}
+	if (input_->PushKey(DIK_LEFT)) {
+		eye_.x -= 1;
+	}
+
+	Object3d::SetEye(eye_);
+
+	if (input_->TriggerKey(DIK_R)) {
+		int a;
+		a = 0;
+	}
+
+#endif
 }
 
 void Player::Draw()
@@ -527,7 +568,7 @@ void Player::Draw()
 void Player::Attack()
 {
 	// プレイヤーの攻撃処理
-	if (input_->TriggerKey(DIK_SPACE) && isTime_ == false) {
+	if (input_->PushKey(DIK_SPACE) && isTime_ == false) {
 		isTime_ = true;
 
 		// 弾の速度
@@ -545,7 +586,7 @@ void Player::Attack()
 	if (isTime_ == true) {
 		time_++;
 	}
-	if (time_ >= 100) {
+	if (time_ >= 10) {
 		time_ = 0;
 		isTime_ = false;
 	}

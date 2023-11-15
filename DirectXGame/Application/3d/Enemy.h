@@ -72,6 +72,15 @@ public: // Getter・Setter
 	/// <param name="isDead_">デスフラグ</param>
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
 
+	/// <summary>
+	/// ダメージ
+	/// </summary>
+	/// <param name="damage"></param>
+	void SetDamage(bool damage) { damage_ = damage; }
+	void SetDamage01(bool damage01) { damage01_ = damage01; }
+	void SetDamage02(bool damage02) { damage02_ = damage02; }
+	void SetDamage03(bool damage03) { damage03_ = damage03; }
+
 private:
 	// オブジェクト
 	Object3d* enemyO3_ = nullptr;
@@ -95,5 +104,9 @@ private:
 	int waitTimer_ = 0;
 	// 敵のデスフラグ
 	bool isDead_ = false;
+	bool damage_ = false;
+	bool damage01_ = false;
+	bool damage02_ = false;
+	bool damage03_ = false;
 };
 

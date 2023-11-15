@@ -97,10 +97,6 @@ void Enemy::Update()
 	enemyO1_->Update();
 	enemyO2_->Update();
 	enemyO4_->Update();
-
-	if (Input::GetInstance()->TriggerKey(DIK_T)) {
-		isDead_ = true;
-	}
 	
 	// 敵を発生
 	UpdateEnemyPopCommands();
@@ -109,12 +105,18 @@ void Enemy::Update()
 void Enemy::Draw()
 {
 	// 敵の描画
-	if (!isDead_) {
+	if (!damage_) {
 		enemyO3_->Draw();
 	}
-	enemyO1_->Draw();
-	enemyO2_->Draw();
-	enemyO4_->Draw();
+	if (!damage01_) {
+		enemyO1_->Draw();
+	}
+	if (!damage02_) {
+		enemyO2_->Draw();
+	}
+	if (!damage03_) {
+		enemyO4_->Draw();
+	}
 }
 
 void Enemy::LoadEnemyPopData()

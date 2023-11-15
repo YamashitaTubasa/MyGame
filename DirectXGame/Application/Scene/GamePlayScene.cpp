@@ -62,17 +62,7 @@ void GamePlayScene::Initialize()
 	FbxObject3d::SetCamera(camera_);
 	// グラフィックスパイプライン生成
 	FbxObject3d::CreateGraphicsPipeline();
-
-	// FBXの3Dオブジェクト生成とモデルのセット
-	fbxObject_ = new FbxObject3d();
-	fbxObject_->Initialize();
-	// モデル名を指定してファイル読み込み
-	fbxModel_ = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
-	// FBXオブジェクトにFBXモデルを割り当てる
-	fbxObject_->SetModel(fbxModel_);
-	// スケール、回転、座標
-	fbxObject_->SetRotation({ 0,90,0 });
-
+	
 	// カメラの注視点をセット
 	target_[0] = { 0,2.5f,0 };
 	eye_[0] = { 0,0,-10 };
@@ -110,9 +100,6 @@ void GamePlayScene::Initialize()
 	
 	// スプライトの初期化
 	SpriteInitialize();
-
-	// FBXアニメーションの実行
-	fbxObject_->PlayAnimation();
 }
 
 void GamePlayScene::Update()
@@ -146,11 +133,13 @@ void GamePlayScene::Update()
 
 #endif
 
+	enemy_->SetDamage(player_->GetDamage());
+	enemy_->SetDamage01(player_->GetDamage01());
+	enemy_->SetDamage02(player_->GetDamage02());
+	enemy_->SetDamage03(player_->GetDamage03());
+
 	// カメラの更新
 	camera_->Update();
-
-	// FBXオブジェクトの更新
-	fbxObject_->Update();
 
 	// 自キャラの更新
 	player_->Update();
@@ -361,9 +350,6 @@ void GamePlayScene::Draw()
 
 	// 背景のオブジェクトの描画
 	backGroundObj_->Draw();
-
-	// FBX3Dオブジェクトの描画
-	//fbxObject->Draw(dXCommon->GetCommandList());
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
