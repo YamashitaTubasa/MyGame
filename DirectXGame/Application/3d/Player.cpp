@@ -18,12 +18,6 @@ Player::Player()
 
 Player::~Player()
 {
-	delete playerO3_;
-	delete reticleO3_;
-	delete reticle1O3_;
-	delete playerM_;
-	delete reticleM_;
-	delete reticle1M_;
 	delete particle_;
 	delete particleMan_;
 	delete blackSmokeMan_;
@@ -84,9 +78,9 @@ bool Player::Initialize()
 	reticleO3_ = Object3d::Create();
 	reticle1O3_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	playerO3_->SetModel(playerM_);
-	reticleO3_->SetModel(reticleM_);
-	reticle1O3_->SetModel(reticle1M_);
+	playerO3_->SetModel(playerM_.get());
+	reticleO3_->SetModel(reticleM_.get());
+	reticle1O3_->SetModel(reticle1M_.get());
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定

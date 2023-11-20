@@ -41,11 +41,11 @@ public:
 
 private:
 	// モデル
-	Model* buildingM_ = nullptr;
-	Model* asphaltM_ = nullptr;
-	Model* bridgeM_ = nullptr;
-	Model* treeM_ = nullptr;
-	Model* wheelM_ = nullptr;
+	std::unique_ptr<Model> buildingM_ = nullptr;
+	std::unique_ptr<Model> asphaltM_ = nullptr;
+	std::unique_ptr<Model> bridgeM_ = nullptr;
+	std::unique_ptr<Model> treeM_ = nullptr;
+	std::unique_ptr<Model> wheelM_ = nullptr;
 	// モデルデータコンテナ
 	std::map<std::string, Model*> models_;
 	// オブジェクト

@@ -117,7 +117,7 @@ private:
 	FbxModel* fbxModel_ = nullptr;
 	FbxObject3d* fbxObject_ = nullptr;
 	Player* player_ = nullptr;
-	Enemy* enemy_ = nullptr;
+	std::unique_ptr<Enemy> enemy_ = nullptr;
 	BackGroundObject* backGroundObj_ = nullptr;
 	Skydome* skydome_ = nullptr;
 	// 衝突マネージャ

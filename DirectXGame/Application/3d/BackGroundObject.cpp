@@ -12,14 +12,6 @@ BackGroundObject::BackGroundObject()
 
 BackGroundObject::~BackGroundObject()
 {
-	delete buildingM_;
-	delete asphaltM_;
-	delete bridgeM_;
-	delete treeM_;
-	delete wheelM_;
-	for (auto& object: objects_) {
-		delete object;
-	}
 }
 
 void BackGroundObject::Initialize()
@@ -34,21 +26,21 @@ void BackGroundObject::Initialize()
 	treeM_ = Model::LoadFromOBJ("tree");
 	//wheelM_ = Model::LoadFromOBJ("wheel");
 
-	models_.insert(std::make_pair("building", buildingM_));
-	models_.insert(std::make_pair("asphalt", asphaltM_));
-	models_.insert(std::make_pair("bridge", bridgeM_));
-	models_.insert(std::make_pair("tree", treeM_));
+	models_.insert(std::make_pair("building", buildingM_.get()));
+	models_.insert(std::make_pair("asphalt", asphaltM_.get()));
+	models_.insert(std::make_pair("bridge", bridgeM_.get()));
+	models_.insert(std::make_pair("tree", treeM_.get()));
 	//models_.insert(std::make_pair("wheel", wheelM_));
 
 	// レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData_->objects_) {
 		// ファイル名から登録済みモデルを検索
-		Model* model = nullptr;
+		std::unique_ptr<Model> model = nullptr; 
 		decltype(models_)::iterator it = models_.find(objectData.fileName_);
 		if (it != models_.end()) { model = it->second; }
 		// モデルを指定して3Dオブジェクトを生成
-		Object3d* newObject = Object3d::Create();
-		newObject->SetModel(model);
+		std::unique_ptr<Object3d> newObject = Object3d::Create();
+		newObject->SetModel(model.get());
 		// 座標
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMStoreFloat3(&pos, objectData.translation_);
@@ -63,7 +55,7 @@ void BackGroundObject::Initialize()
 		newObject->SetScale(scale);
 
 		// 配列に登録
-		objects_.push_back(newObject);
+		objects_.push_back(newObject.get());
 	}
 
 	modelEye_ = eye_;

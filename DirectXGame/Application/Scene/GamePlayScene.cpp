@@ -38,7 +38,6 @@ GamePlayScene::~GamePlayScene()
 	delete particleMan_;
 	delete blackSmokeMan_;
 	delete blackSmoke_;
-	delete enemy_;
 	for (int i = 0; i < 5; i++) {
 		delete number_[i];
 	}
@@ -74,7 +73,7 @@ void GamePlayScene::Initialize()
 	player_->SetCollider(new SphereCollider);
 
 	// 敵キャラ生成
-	enemy_ = new Enemy();
+	enemy_ = std::make_unique<Enemy>();
 	enemy_ = Enemy::Create();
 	enemy_->SetCollider(new SphereCollider);
 

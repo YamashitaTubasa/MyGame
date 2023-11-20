@@ -99,20 +99,20 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	
 	// スプライト
-	Sprite* sprite_ = nullptr;
-	Sprite* title_ = nullptr;
-	Sprite* space_ = nullptr;
-	Sprite* inBlack_ = nullptr;
-	Sprite* outBlack_ = nullptr;
-	Sprite* nowLoading_ = nullptr;
-	Sprite* dot_[5]{};
+	std::unique_ptr<Sprite> sprite_ = nullptr;
+	std::unique_ptr<Sprite> title_ = nullptr;
+	std::unique_ptr<Sprite> space_ = nullptr;
+	std::unique_ptr<Sprite> inBlack_ = nullptr;
+	std::unique_ptr<Sprite> outBlack_ = nullptr;
+	std::unique_ptr<Sprite> nowLoading_ = nullptr;
+	std::unique_ptr<Sprite> dot_[5]{};
 
 	// 天球
-	Skydome* skydome_ = nullptr;
+	std::unique_ptr<Skydome> skydome_ = nullptr;
 
 	// オブジェクト
-	Object3d* player_ = nullptr;
-	Model* playerModel_ = nullptr;
+	std::unique_ptr<Object3d> player_ = nullptr;
+	std::unique_ptr<Model> playerModel_ = nullptr;
 
 	// タイトルの設定
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };

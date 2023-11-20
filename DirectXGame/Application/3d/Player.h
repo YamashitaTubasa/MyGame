@@ -128,13 +128,13 @@ public: // ゲッター
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	// モデル
-	Model* playerM_ = nullptr;
-	Model* reticleM_ = nullptr;
-	Model* reticle1M_ = nullptr;
+	std::unique_ptr<Model> playerM_ = nullptr;
+	std::unique_ptr<Model> reticleM_ = nullptr;
+	std::unique_ptr<Model> reticle1M_ = nullptr;
 	// オブジェクト
-	Object3d* playerO3_ = nullptr;
-	Object3d* reticleO3_ = nullptr;
-	Object3d* reticle1O3_ = nullptr;
+	std::unique_ptr<Object3d> playerO3_ = nullptr;
+	std::unique_ptr<Object3d> reticleO3_ = nullptr;
+	std::unique_ptr<Object3d> reticle1O3_ = nullptr;
 	// 入力
 	Input* input_ = nullptr;
 	// カメラ

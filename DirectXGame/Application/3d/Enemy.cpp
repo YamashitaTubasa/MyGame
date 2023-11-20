@@ -18,24 +18,18 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
-	delete enemyO3_;
-	delete enemyO1_;
-	delete enemyO2_;
-	delete enemyO4_;
-	delete enemyM_;
 }
 
-Enemy* Enemy::Create(Model* model)
+std::unique_ptr<Enemy> Enemy::Create(Model* model)
 {
 	// 3Dオブジェクトのインスタンス生成
-	Enemy* instance = new Enemy();
+	std::unique_ptr<Enemy> instance = std::make_unique<Enemy>();
 	if (instance == nullptr) {
 		return nullptr;
 	}
 
 	// 初期化
 	if (!instance->Initialize()) {
-		delete instance;
 		assert(0);
 	}
 
@@ -62,10 +56,10 @@ bool Enemy::Initialize()
 	enemyO2_ = Object3d::Create();
 	enemyO4_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	enemyO3_->SetModel(enemyM_);
-	enemyO1_->SetModel(enemyM_);
-	enemyO2_->SetModel(enemyM_);
-	enemyO4_->SetModel(enemyM_);
+	enemyO3_->SetModel(enemyM_.get());
+	enemyO1_->SetModel(enemyM_.get());
+	enemyO2_->SetModel(enemyM_.get());
+	enemyO4_->SetModel(enemyM_.get());
 	enemyO3_->SetCollider(new SphereCollider);
 	// 3Dオブジェクトの位置を指定
 	position_[0] = { 0,0,0 };

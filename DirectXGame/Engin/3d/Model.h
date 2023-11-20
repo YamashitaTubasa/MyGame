@@ -101,7 +101,7 @@ public: // 静的メンバ関数
 	/// </summary>
 	/// <param name="modelname">モデル名</param>
 	/// <returns></returns>
-	static Model* LoadFromOBJ(const std::string& modelname);
+	static std::unique_ptr<Model> LoadFromOBJ(const std::string& modelname);
 
 	/// <summary>
 	/// マテリアル読み込み

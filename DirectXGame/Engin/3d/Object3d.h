@@ -104,7 +104,7 @@ public: // 静的メンバ関数
 	/// 3Dオブジェクト生成
 	/// </summary>
 	/// <returns></returns>
-	static Object3d* Create();
+	static std::unique_ptr<Object3d> Create();
 
 	/// <summary>
 	/// 視点座標の取得

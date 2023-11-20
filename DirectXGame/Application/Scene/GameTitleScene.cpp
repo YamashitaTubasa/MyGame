@@ -14,12 +14,6 @@ GameTitleScene::GameTitleScene()
 
 GameTitleScene::~GameTitleScene()
 {
-	delete sprite_;
-	delete title_;
-	delete skydome_;
-	delete space_;
-	delete player_;
-	delete playerModel_;
 }
 
 void GameTitleScene::Initialize()
@@ -28,24 +22,18 @@ void GameTitleScene::Initialize()
 	dxCommon_ = DirectXCommon::GetInstance();
 
 	// 天球の初期化
-	skydome_ = new Skydome();
+	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize();
-
-	// スプライトの初期化
-	sprite_ = new Sprite();
-	spriteCommon_ = sprite_->SpriteCommonCreate();
 
 	// スプライトの読み込み
 	LoadSprite();
 
 	// OBJモデルの読み込み
-	playerModel_ = new Model();
 	playerModel_ = Model::LoadFromOBJ("fighter");
 	// オブジェクトの生成
-	player_ = new Object3d();
 	player_ = Object3d::Create();
 	// オブジェクトにモデルをセット
-	player_->SetModel(playerModel_);
+	player_->SetModel(playerModel_.get());
 	// オブジェクトの位置の設定
 	player_->SetPosition(pPos_);
 	player_->SetScale(pScale_);
@@ -65,15 +53,15 @@ void GameTitleScene::Update()
 	player_->Update();
 
 	// スプライトの更新
-	title_->SpriteUpdate(title_, spriteCommon_);
-	space_->SpriteUpdate(space_, spriteCommon_);
-	inBlack_->SpriteUpdate(inBlack_, spriteCommon_);
-	nowLoading_->SpriteUpdate(nowLoading_, spriteCommon_);
+	title_->SpriteUpdate(title_.get(), spriteCommon_);
+	space_->SpriteUpdate(space_.get(), spriteCommon_);
+	inBlack_->SpriteUpdate(inBlack_.get(), spriteCommon_);
+	nowLoading_->SpriteUpdate(nowLoading_.get(), spriteCommon_);
 	/*for (auto& i : dot_) {
 		i->SpriteUpdate(i, spriteCommon_);
 	}*/
 	for (int i = 0; i < dotMax_; i++) {
-		dot_[i]->SpriteUpdate(dot_[i], spriteCommon_);
+		dot_[i]->SpriteUpdate(dot_[i].get(), spriteCommon_);
 	}
 	
 	// フェードイン・アウトの処理
@@ -166,8 +154,12 @@ void GameTitleScene::Finalize()
 
 void GameTitleScene::LoadSprite()
 {
+	// スプライトの初期化
+	sprite_ = std::make_unique<Sprite>();
+	spriteCommon_ = sprite_->SpriteCommonCreate();
+
 	//===== タイトル描画の初期化 =====//
-	title_ = new Sprite();
+	title_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	title_->LoadTexture(spriteCommon_, titleNum, L"Resources/Image/title.png");
 	// スプライトの生成
@@ -178,10 +170,10 @@ void GameTitleScene::LoadSprite()
 	title_->SetScale(titleScale_);
 	title_->SetRotation(titleRot_);
 	// スプライトの頂点バッファの転送
-	title_->SpriteTransferVertexBuffer(title_, spriteCommon_, titleNum);
+	title_->SpriteTransferVertexBuffer(title_.get(), spriteCommon_, titleNum);
 
 	//===== SPACEの描画 =====//
-	space_ = new Sprite();
+	space_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	space_->LoadTexture(spriteCommon_, spaceNum, L"Resources/Image/pressSpace1.png");
 	// スプライトの生成
@@ -193,10 +185,10 @@ void GameTitleScene::LoadSprite()
 	space_->SetRotation(spaceRot_);
 	space_->SetAlpha(sAlpha_);
 	// スプライトの頂点バッファの転送
-	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, spaceNum);
+	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, spaceNum);
 
 	//===== InBlackの描画 =====//
-	inBlack_ = new Sprite();
+	inBlack_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	inBlack_->LoadTexture(spriteCommon_, inBlackNum, L"Resources/Image/white.png");
 	// スプライトの生成
@@ -207,10 +199,10 @@ void GameTitleScene::LoadSprite()
 	inBlack_->SetScale(inBlackScale_);
 	inBlack_->SetAlpha(bInAlpha_);
 	// スプライトの頂点バッファの転送
-	inBlack_->SpriteTransferVertexBuffer(inBlack_, spriteCommon_, inBlackNum);
+	inBlack_->SpriteTransferVertexBuffer(inBlack_.get(), spriteCommon_, inBlackNum);
 
 	//===== ロードの描画 =====//
-	nowLoading_ = new Sprite();
+	nowLoading_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	nowLoading_->LoadTexture(spriteCommon_, nowLoadingNum, L"Resources/Image/nowLoading.png");
 	// スプライトの生成
@@ -221,10 +213,10 @@ void GameTitleScene::LoadSprite()
 	nowLoading_->SetScale(nowLoadingScale_);
 	nowLoading_->SetAlpha(lodingAlpha_);
 	// スプライトの頂点バッファの転送
-	nowLoading_->SpriteTransferVertexBuffer(nowLoading_, spriteCommon_, nowLoadingNum);
+	nowLoading_->SpriteTransferVertexBuffer(nowLoading_.get(), spriteCommon_, nowLoadingNum);
 
 	//===== 点の描画 =====//
-	dot_[0] = new Sprite();
+	dot_[0] = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	dot_[0]->LoadTexture(spriteCommon_, dotZeroNum, L"Resources/Image/dot.png");
 	// スプライトの生成
@@ -235,9 +227,9 @@ void GameTitleScene::LoadSprite()
 	dot_[0]->SetScale(dotScale_[0]);
 	dot_[0]->SetAlpha(dotAlpha_[0]);
 	// スプライトの頂点バッファの転送
-	dot_[0]->SpriteTransferVertexBuffer(dot_[0], spriteCommon_, dotZeroNum);
+	dot_[0]->SpriteTransferVertexBuffer(dot_[0].get(), spriteCommon_, dotZeroNum);
 
-	dot_[1] = new Sprite();
+	dot_[1] = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	dot_[1]->LoadTexture(spriteCommon_, dotOneNum, L"Resources/Image/dot.png");
 	// スプライトの生成
@@ -248,9 +240,9 @@ void GameTitleScene::LoadSprite()
 	dot_[1]->SetScale(dotScale_[1]);
 	dot_[1]->SetAlpha(dotAlpha_[1]);
 	// スプライトの頂点バッファの転送
-	dot_[1]->SpriteTransferVertexBuffer(dot_[1], spriteCommon_, dotOneNum);
+	dot_[1]->SpriteTransferVertexBuffer(dot_[1].get(), spriteCommon_, dotOneNum);
 
-	dot_[2] = new Sprite();
+	dot_[2] = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	dot_[2]->LoadTexture(spriteCommon_, dotTwoNum, L"Resources/Image/dot.png");
 	// スプライトの生成
@@ -261,7 +253,7 @@ void GameTitleScene::LoadSprite()
 	dot_[2]->SetScale(dotScale_[2]);
 	dot_[2]->SetAlpha(dotAlpha_[2]);
 	// スプライトの頂点バッファの転送
-	dot_[2]->SpriteTransferVertexBuffer(dot_[2], spriteCommon_, dotTwoNum);
+	dot_[2]->SpriteTransferVertexBuffer(dot_[2].get(), spriteCommon_, dotTwoNum);
 }
 
 void GameTitleScene::Fade()

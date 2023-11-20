@@ -35,10 +35,10 @@ Model::~Model()
 	//device->Release();
 }
 
-Model* Model::LoadFromOBJ(const string& modelname)
+std::unique_ptr<Model> Model::LoadFromOBJ(const string& modelname)
 {
 	// 新たなModel型のインスタンスのメモリを確保
-	Model* model = new Model();
+	std::unique_ptr<Model> model = std::make_unique<Model>();
 
 	// デスクリプタヒープの生成
 	model->InitializeDescriptorHeap();
