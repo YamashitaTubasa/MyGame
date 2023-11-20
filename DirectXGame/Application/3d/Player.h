@@ -259,8 +259,8 @@ private: // メンバ変数
 	// シェイク
 	const int shakeMin_ = -1;
 	const int shakeMax_ = 1;
-	const float shakeMd_ = 5.0f;
-	const float shakeMdM_ = 10.0f;
+	const float shakeMd_ = 2.5f;
+	const float shakeMdM_ = 5.0f;
 	int shakeTimer_ = 0;
 	const int defaultShakeTimer_ = 0;
 	const int shakeTimer10_ = 10;
@@ -268,4 +268,3 @@ private: // メンバ変数
 	float shakePos_ = 0.0f;
 	float shakeEye_ = 0.0f;
 };
-

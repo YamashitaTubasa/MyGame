@@ -138,14 +138,14 @@ private: // メンバ変数
 
 	// ロードの設定
 	DirectX::XMFLOAT4 nowLoadingColor_ = { 1,1,1,1 };
-	DirectX::XMFLOAT3 nowLoadingPos_ = { 700, 580, 0 };
+	DirectX::XMFLOAT3 nowLoadingPos_ = { 700, 590, 0 };
 	DirectX::XMFLOAT2 nowLoadingScale_ = { 442.0f * 1.1f, 110 * 1.1f };
 	bool isLoding_ = false;
 	float lodingAlpha_ = 1.0f;
 
 	// 点の設定
 	std::vector<DirectX::XMFLOAT4> dotColor_ { {1, 1, 1, 1}, { 1,1,1,1 }, { 1,1,1,1 } };
-	std::vector<DirectX::XMFLOAT3> dotPos_ = { { 1170, 640, 0 }, { 1190, 640, 0 }, { 1210, 640, 0 } };
+	std::vector<DirectX::XMFLOAT3> dotPos_ = { { 1170, 650, 0 }, { 1190, 650, 0 }, { 1210, 650, 0 } };
 	std::vector<DirectX::XMFLOAT2> dotScale_ = { { 30, 30 },{ 30,30 },{ 30,30 } };
 	std::vector<float> dotAlpha_ = { {1.0f},{1.0f},{1.0f} };
 	bool isDot_[5] = { false, false, false, false, false };
