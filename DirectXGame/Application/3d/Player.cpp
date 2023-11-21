@@ -617,21 +617,34 @@ void Player::Shake()
 	// 乱数のシードを設定
 	std::mt19937 mt(rnd());
 	std::uniform_int_distribution<> rand(shakeMin_, shakeMax_);
+	std::uniform_int_distribution<> rand1(shakeMin_, shakeMax_);
 
-	shakePos_ = rand(mt) / shakeMd_;
-	shakeEye_ = rand(mt) / shakeMdM_;
+	shakeDefaultPos_ = pPosition_.x;
+	shakeDefaultEye_ = eye_.x;
+
+	shakePosX_ = rand(mt) / shakeMdX_;
+	shakePosX2_ = rand(mt) / shakeMdMX_;
+
+	shakePosY_ = rand1(mt) / shakeMdY_;
+	shakePosY2_ = rand1(mt) / shakeMdMY_;
 	
 	shakeTimer_++;
 
 	if (shakeTimer_ >= defaultShakeTimer_) {
-		pPosition_.x -= shakePos_;
-		eye_.x -= shakePos_;
+		pPosition_.x -= shakePosX_;
+		eye_.x -= shakePosX_;
+		pPosition_.y -= shakePosY_;
+		eye_.y -= shakePosY_;
 	}
 	if (shakeTimer_ >= shakeTimer10_) {
-		pPosition_.x -= shakeEye_;
-		eye_.x -= shakeEye_;
+		pPosition_.x -= shakePosX2_;
+		eye_.x -= shakePosX2_;
+		pPosition_.y -= shakePosY2_;
+		eye_.y -= shakePosY2_;
 	}
 	if (shakeTimer_ >= shakeTimer20_) {
+		pPosition_.x = shakeDefaultPos_;
+		eye_.x = shakeDefaultEye_;
 		shakeTimer_ = defaultShakeTimer_;
 	}
 	
