@@ -152,7 +152,7 @@ void Player::Update()
 
 	// パーティクルの実行
 	particleMan_->Execution(particle_, particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
-	particleMan_->Update();
+
 	if (hp_ == -20) {
 
 		isGameOverStaging_ = true;
