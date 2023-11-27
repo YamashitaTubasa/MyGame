@@ -105,7 +105,7 @@ bool Player::Initialize()
 	Object3d::SetTarget(target_);
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle_ = Particle::LoadFromOBJ("bomb.png");
+	particle_ = Particle::LoadFromOBJ("bombEffect.png");
 	blackSmoke_ = Particle::LoadFromOBJ("bombEffect.png");
 	// パーティクルの生成
 	particleMan_ = ParticleManager::Create();
@@ -152,7 +152,7 @@ void Player::Update()
 
 	// パーティクルの実行
 	particleMan_->Execution(particle_, particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
-
+	particleMan_->Update();
 	if (hp_ == -20) {
 
 		isGameOverStaging_ = true;
@@ -191,6 +191,37 @@ void Player::Update()
 			blackSmoke_->Add(fireParticleLife, pos, vel, acc, fireParticleStartScale_, fireParticleEndScale_);
 		}
 	}
+
+	//if (damage_ == true) {
+
+	//	// パーティクルの実行
+	//	for (int i = 0; i < 3; i++) {
+	//		// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+	//		const float md_pos = 0.5f;
+	//		const float md = 2.0f;
+	//		DirectX::XMFLOAT3 pos{};
+	//		pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / md;
+	//		pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / md;
+	//		pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / md;
+	//		// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+	//		const float md_vel_x = 0.01f;
+	//		const float md_vel_y = 0.05f;
+	//		const float md_vel_z = 0.05f;
+	//		DirectX::XMFLOAT3 vel{};
+	//		vel.x = (float)rand() / RAND_MAX * md_vel_x - md_vel_x / md;
+	//		vel.y = (float)rand() / RAND_MAX * md_vel_y - md_vel_y / md;
+	//		vel.z = (float)rand() / RAND_MAX * md_vel_z - md_vel_z / md;
+	//		// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+	//		DirectX::XMFLOAT3 acc{};
+	//		const float md_acc_x = 0.00f;
+	//		const float md_acc_y = 0.04f;
+	//		acc.x = (float)rand() / RAND_MAX * md_acc_x;
+	//		acc.y = (float)rand() / RAND_MAX * md_acc_y;
+
+	//		// 追加
+	//		particle_->Add(15, pos, vel, acc, 1.0f, 0.0f);
+	//	}
+	//}
 
 	if (isGameClearStaging_) {
 		// パーティクルの実行
