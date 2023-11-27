@@ -123,6 +123,7 @@
     <ClCompile Include="DirectXGame\Engin\3d\LevelLoader.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\Model.cpp" />
     <ClCompile Include="DirectXGame\Engin\3d\Object3d.cpp" />
+    <ClCompile Include="DirectXGame\Engin\3d\WorldTransform.cpp" />
     <ClCompile Include="DirectXGame\Engin\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engin\Camera\Camera.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameOverScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Engin\2d\SpriteCommon.h" />
+    <ClInclude Include="DirectXGame\Engin\3d\WorldTransform.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\BaseCollider.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionInfo.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h" />

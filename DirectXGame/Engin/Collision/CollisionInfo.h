@@ -7,6 +7,7 @@
 #pragma once
 
 #include <DirectXMath.h>
+#include "Vector3.h"
 
 class Object3d;
 class BaseCollider;
@@ -14,7 +15,7 @@ class BaseCollider;
 struct CollisionInfo
 {
 public:
-	CollisionInfo(Object3d* object, BaseCollider* collider, const DirectX::XMVECTOR& inter) {
+	CollisionInfo(Object3d* object, BaseCollider* collider, const Vector3& inter) {
 		this->object_ = object;
 		this->collider_ = collider;
 		this->inter_ = inter;
@@ -25,5 +26,5 @@ public:
 	// 衝突相手のコライダー
 	BaseCollider* collider_ = nullptr;
 	// 衝突点
-	DirectX::XMVECTOR inter_;
+	Vector3 inter_;
 };

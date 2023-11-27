@@ -25,7 +25,7 @@ public: // メンバ関数
 	// 正規化する
 	Vector3& Normalize();
 	// 内積を求める
-	float Dot(const Vector3& v)const;
+	float Dot(const Vector3& v, const Vector3& v1)const;
 	// 外積を求める
 	Vector3 Cross(const Vector3& v)const;
 

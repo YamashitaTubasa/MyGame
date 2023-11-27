@@ -31,12 +31,14 @@ void CollisionManager::CheckAllCollisions()
             BaseCollider* colB = *itB;
 
             // ともに球
-            if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE && colB->GetShapeType() == COLLISIONSHAPE_SPHERE) {
+            if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
+                colB->GetShapeType() == COLLISIONSHAPE_SPHERE) {
                 Sphere* SphereA = dynamic_cast<Sphere*>(colA);
                 Sphere* SphereB = dynamic_cast<Sphere*>(colB);
 
-                DirectX::XMVECTOR inter;
-                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB, &inter)) {
+                Vector3 inter;
+                Vector3 r;
+                if (Collision::CheckSphere2Sphere(*SphereA, *SphereB, &inter, &r)) {
                     colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
                     colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
                 }

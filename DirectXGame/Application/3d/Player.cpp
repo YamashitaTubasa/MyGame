@@ -68,9 +68,9 @@ bool Player::Initialize()
 	enemy_ = new Enemy();
 
 	// コライダーの追加
-	float radius = 0.6f;
+	float radius = 2.0f;
 	// 半径分だけ足元から浮いた座標を球の中心にする
-	SetCollider(new SphereCollider(XMVECTOR({ 0, radius, 0, 0 }), radius));
+	SetCollider(new SphereCollider(Vector3({ 0, 0, 0 }), radius));
 
 	// カメラをセット
 	//this->camera_ = camera;

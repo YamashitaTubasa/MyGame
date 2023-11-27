@@ -31,9 +31,9 @@ Vector3& Vector3::Normalize()
 	return*this;
 }
 
-float Vector3::Dot(const Vector3& v)const
+float Vector3::Dot(const Vector3& v, const Vector3& v1)const
 {
-	return x * v.x + y * v.y + z * v.z;
+	return v.x * v1.x + v.y * v1.y + v.z * v1.z;
 }
 
 Vector3 Vector3::Cross(const Vector3& v)const

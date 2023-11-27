@@ -240,6 +240,9 @@
     <ClCompile Include="DirectXGame\Engin\2d\SpriteCommon.cpp">
       <Filter>ソース ファイル\Engin\2d</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engin\3d\WorldTransform.cpp">
+      <Filter>ソース ファイル\Engin\3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -434,6 +437,9 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Engin\2d\SpriteCommon.h">
       <Filter>ヘッダー ファイル\Engin\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engin\3d\WorldTransform.h">
+      <Filter>ヘッダー ファイル\Engin\3d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
