@@ -42,8 +42,6 @@ Object3d::~Object3d()
 		CollisionManager::GetInstance()->RemoveCollider(collider_);
 		delete collider_;
 	}
-
-	//device_->Release();
 }
 
 void Object3d::StaticInitialize(ID3D12Device * device, int window_width, int window_height, [[maybe_unused]] Camera* camera)
@@ -103,8 +101,9 @@ Object3d * Object3d::Create()
 	}
 
 	// スケールをセット
-	float scale_val = 20;
-	object3d->scale_ = { scale_val,scale_val,scale_val };
+	//float scale_val = 20;
+	//object3d->scale_ = { scale_val,scale_val,scale_val };
+	//object3d->worldTransform_.scale_ = { scale_val,scale_val,scale_val };
 
 	return object3d;
 }
@@ -323,57 +322,14 @@ bool Object3d::Initialize()
 	// クラス名の文字列を取得
 	name_ = typeid(*this).name();
 
-	HRESULT result;
+	worldTransform_.Initialize();
 
-	// ヒーププロパティ
-	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-	// リソース設定
-	CD3DX12_RESOURCE_DESC resourceDesc =
-		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB0) + 0xff) & ~0xff);
-
-	// 定数バッファの生成
-	result = device_->CreateCommittedResource(
-		&heapProps, // アップロード可能
-		D3D12_HEAP_FLAG_NONE, 
-		&resourceDesc, 
-		D3D12_RESOURCE_STATE_GENERIC_READ, 
-		nullptr,
-		IID_PPV_ARGS(&constBuffB0_));
-	assert(SUCCEEDED(result));
-	constBuffB0_->SetName(L"Object3d[constBuffB0]");
 	return true;
 }
 
 void Object3d::Update()
 {
-	HRESULT result;
-	XMMATRIX matScale, matRot, matTrans;
-
-	// スケール、回転、平行移動行列の計算
-	matScale = XMMatrixScaling(scale_.x, scale_.y, scale_.z);
-	matRot = XMMatrixIdentity();
-	matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation_.z));
-	matRot *= XMMatrixRotationX(XMConvertToRadians(rotation_.x));
-	matRot *= XMMatrixRotationY(XMConvertToRadians(rotation_.y));
-	matTrans = XMMatrixTranslation(position_.x, position_.y, position_.z);
-
-	// ワールド行列の合成
-	matWorld_ = XMMatrixIdentity(); // 変形をリセット
-	matWorld_ *= matScale; // ワールド行列にスケーリングを反映
-	matWorld_ *= matRot; // ワールド行列に回転を反映
-	matWorld_ *= matTrans; // ワールド行列に平行移動を反映
-
-	// 親オブジェクトがあれば
-	if (parent_ != nullptr) {
-		// 親オブジェクトのワールド行列を掛ける
-		matWorld_ *= parent_->matWorld_;
-	}
-
-	// 定数バッファへデータ転送
-	ConstBufferDataB0* constMap = nullptr;
-	result = constBuffB0_->Map(0, nullptr, (void**)&constMap);
-	constMap->mat_ = matWorld_ * matView_ * matProjection_;	// 行列の合成
-	constBuffB0_->Unmap(0, nullptr);
+	worldTransform_.UpdateMatrix();
 	
 	// 当たり判定更新
 	if (collider_) {
@@ -391,7 +347,7 @@ void Object3d::Draw()
 	if (model_ == nullptr) return;
 
 	// 定数バッファビューをセット
-	cmdList_->SetGraphicsRootConstantBufferView(0, constBuffB0_->GetGPUVirtualAddress());
+	cmdList_->SetGraphicsRootConstantBufferView(0, worldTransform_.GetConstBuffer()->GetGPUVirtualAddress());
 
 	// モデルを描画
 	model_->Draw(cmdList_, 1);

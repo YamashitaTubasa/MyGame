@@ -1,12 +1,19 @@
 /**
  * @file WorldTransform.cpp
- * @brief 定数バッファクラス
+ * @brief ワールドトランスフォームクラス
  * @author Yamashita Tubasa
  */
 
 #include "WorldTransform.h"
 
 void WorldTransform::Initialize()
+{
+	CreateConstBuffer();
+	Map();
+	UpdateMatrix();
+}
+
+void WorldTransform::CreateConstBuffer()
 {
 	HRESULT result;
 
@@ -17,29 +24,35 @@ void WorldTransform::Initialize()
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
 
 	// 定数バッファの生成
-	result = device_->CreateCommittedResource(
+	result = DirectXCommon::GetInstance()->GetDevice()->CreateCommittedResource(
 		&heapProps, // アップロード可能
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuff_));
+		IID_PPV_ARGS(&constBuffer_));
 	assert(SUCCEEDED(result));
 }
 
-void WorldTransform::Update()
+void WorldTransform::Map()
 {
+	// 定数バッファとのデータリンク
 	HRESULT result;
+	result = constBuffer_->Map(0, nullptr, (void**)&constMap_);
+	assert(SUCCEEDED(result));
+}
 
+void WorldTransform::UpdateMatrix()
+{
 	Matrix4 matScale, matRot, matTrans;
 	Matrix4 m, matRotX, matRotY, matRotZ;
 
 	// スケール、回転、平行移動行列の計算
 	matScale = m.Scale(scale_);
 	matRot = Matrix4::Identity();
-	matRot *= matRotX.RotateZ(ToRadian(rotation_.z));
-	matRot *= matRotY.RotateX(ToRadian(rotation_.x));
-	matRot *= matRotZ.RotateY(ToRadian(rotation_.y));
+	matRot *= matRotZ.RotateZ(ToRadian(rotation_.z));
+	matRot *= matRotX.RotateX(ToRadian(rotation_.x));
+	matRot *= matRotY.RotateY(ToRadian(rotation_.y));
 	matTrans = m.Translate(position_);
 
 	// ワールド行列の合成
@@ -49,13 +62,5 @@ void WorldTransform::Update()
 	matWorld_ *= matTrans;           // ワールド行列に平行移動を反映
 
 	// 定数バッファへデータ転送
-	result = constBuff_->Map(0, nullptr, (void**)&constMap);
-	constMap->mat_ = matWorld_;	// 行列の合成
-	constBuff_->Unmap(0, nullptr);
-}
-
-void WorldTransform::Draw()
-{
-	// 定数バッファビューをセット
-	cmdList_->SetGraphicsRootConstantBufferView(0, constBuff_->GetGPUVirtualAddress());
+	constMap_->mat_ = matWorld_;	 // 行列の合成
 }

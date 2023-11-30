@@ -8,15 +8,11 @@
 
 #include "BaseCollider.h"
 #include "CollisionPrimitive.h"
-
+#include "Object3d.h"
 #include <DirectXMath.h>
 
 class SphereCollider : public BaseCollider, public Sphere
 {
-private: // エイリアス
-	// DirectX::を省略
-	using XMVECTOR = DirectX::XMVECTOR;
-
 public:
 	SphereCollider(Vector3 offset = { 0,0,0 }, float radius = 1.0f) : offset_(offset), radius_(radius) {
 		// 球形状をセット
@@ -35,6 +31,8 @@ public:
 	inline void SetRadius(float s_radius) { this->radius_ = s_radius; }
 
 private:
+	// オブジェクト3D
+	Object3d* object3d_ = nullptr;
 	// オブジェクト中心からのオフセット
 	Vector3 offset_;
 	// 半径

@@ -24,6 +24,7 @@
 #include "Model.h"
 #include "Camera.h"
 #include "CollisionInfo.h"
+#include "WorldTransform.h"
 
 class BaseCollider;
 
@@ -40,11 +41,11 @@ private: // エイリアス
 
 protected: // サブクラス
 	// 定数バッファ用データ構造体B0
-	struct ConstBufferDataB0
-	{
-		//XMFLOAT4 color;	// 色 (RGBA)
-		XMMATRIX mat_;	// ３Ｄ変換行列
-	};
+	//struct ConstBufferDataB0
+	//{
+	//	//XMFLOAT4 color;	// 色 (RGBA)
+	//	XMMATRIX mat_;	// ３Ｄ変換行列
+	//};
 
 	// ルートパラメータ
 	enum Rootparams
@@ -262,9 +263,17 @@ public:
 	/// <param name="camera">カメラ</param>
 	static void SetCamera(Camera* camera) { Object3d::camera_ = camera; }
 
+	/// <summary>
+	/// ワールドトランスフォームの取得
+	/// </summary>
+	/// <returns>ワールドトランスフォーム</returns>
+	WorldTransform GetWorldTransform() { return worldTransform_; }
+
 protected: // メンバ変数
 	// モデル
 	Model* model_ = nullptr;
+	// ワールドトランスフォーム
+	WorldTransform worldTransform_;
 	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0_; 
 	// 色

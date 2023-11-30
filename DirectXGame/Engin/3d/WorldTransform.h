@@ -1,6 +1,6 @@
 /**
  * @file WorldTransform.h
- * @brief 定数バッファクラス
+ * @brief ワールドトランスフォームクラス
  * @author Yamashita Tubasa
  */
 
@@ -8,6 +8,7 @@
 
 #include "Matrix4.h"
 #include "Vector3.h"
+#include "DirectXCommon.h"
 
 #include <DirectXMath.h>
 #include <wrl.h>
@@ -22,7 +23,7 @@ private: // エイリアス
 public:
 	// 定数バッファデータ構造体
 	struct ConstBufferData {
-		DirectX::XMMATRIX mat_; // 3D変換行列
+		Matrix4 mat_; // 3D変換行列
 	};
 
 public:
@@ -32,28 +33,46 @@ public:
 	void Initialize();
 
 	/// <summary>
-	/// 更新
+	/// 定数バッファの生成
 	/// </summary>
-	void Update();
+	void CreateConstBuffer();
 
 	/// <summary>
-	/// 描画
+	/// 定数バッファとのデータリンク
 	/// </summary>
-	void Draw();
+	void Map();
+
+	/// <summary>
+	/// 行列計算
+	/// </summary>
+	void UpdateMatrix();
 
 	/// <summary>
 	/// 度数からラジアンに変換
 	/// </summary>
 	/// <param name="angle">角度</param>
-	float ToRadian(float angle) { return angle * (PI / 180); }
+	float ToRadian(float angle) { return (float)(angle * (PI / 180)); }
+
+	/// <summary>
+	/// 定数バッファデータ構造体の取得
+	/// </summary>
+	/// <returns>定数バッファデータ構造体</returns>
+	ID3D12Resource* GetConstBuffer() { return constBuffer_.Get(); }
+
+	/// <summary>
+	/// ワールド行列の取得
+	/// </summary>
+	/// <returns></returns>
+	Matrix4 GetMatWorld() { return matWorld_; }
 
 private:
-	ComPtr<ID3D12Resource> constBuff_;
+	ComPtr<ID3D12Resource> constBuffer_;
 	ComPtr<ID3D12GraphicsCommandList> cmdList_;
 	ComPtr<ID3D12Device> device_;
 
-	ConstBufferData* constMap = nullptr;
+	ConstBufferData* constMap_ = nullptr;
 
+public:
 	// スケール
 	Vector3 scale_ = { 1.0f,1.0f,1.0f };
 
