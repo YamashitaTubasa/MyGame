@@ -76,10 +76,14 @@ public: // Getter・Setter
 	/// ダメージ
 	/// </summary>
 	/// <param name="damage"></param>
-	void SetDamage(bool damage) { damage_ = damage; }
-	void SetDamage01(bool damage01) { damage01_ = damage01; }
-	void SetDamage02(bool damage02) { damage02_ = damage02; }
-	void SetDamage03(bool damage03) { damage03_ = damage03; }
+	void SetDamage(bool enemyDamage) { enemyDamage_ = enemyDamage; }
+	void SetDamage01(bool enemyDamage01) { enemyDamage01_ = enemyDamage01; }
+	void SetDamage02(bool enemyDamage02) { enemyDamage02_ = enemyDamage02; }
+	void SetDamage03(bool enemyDamage03) { enemyDamage03_ = enemyDamage03; }
+	bool GetDamage() const { return enemyDamage_; }
+	bool GetDamage01() const { return enemyDamage01_; }
+	bool GetDamage02() const { return enemyDamage02_; }
+	bool GetDamage03() const { return enemyDamage03_; }
 
 private:
 	// オブジェクト
@@ -104,9 +108,9 @@ private:
 	int waitTimer_ = 0;
 	// 敵のデスフラグ
 	bool isDead_ = false;
-	bool damage_ = false;
-	bool damage01_ = false;
-	bool damage02_ = false;
-	bool damage03_ = false;
+	bool enemyDamage_ = false;
+	bool enemyDamage01_ = false;
+	bool enemyDamage02_ = false;
+	bool enemyDamage03_ = false;
 };
 

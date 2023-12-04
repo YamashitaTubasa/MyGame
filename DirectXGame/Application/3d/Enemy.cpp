@@ -105,16 +105,16 @@ void Enemy::Update()
 void Enemy::Draw()
 {
 	// 敵の描画
-	if (!damage_) {
+	if (!enemyDamage_) {
 		enemyO3_->Draw();
 	}
-	if (!damage01_) {
+	if (!enemyDamage01_) {
 		enemyO1_->Draw();
 	}
-	if (!damage02_) {
+	if (!enemyDamage02_) {
 		enemyO2_->Draw();
 	}
-	if (!damage03_) {
+	if (!enemyDamage03_) {
 		enemyO4_->Draw();
 	}
 }
