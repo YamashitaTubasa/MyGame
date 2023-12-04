@@ -50,7 +50,7 @@ void GameTitleScene::Initialize()
 	player_->SetPosition(pPos_);
 	player_->SetScale(pScale_);
 	player_->SetRotation(pRot_);
-	player_->SetTarget(player_->GetPosition());
+	player_->SetTarget({pPos_.x,pPos_.y,pPos_.z});
 	player_->SetEye(eye_);
 }
 

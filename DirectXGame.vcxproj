@@ -126,6 +126,7 @@
     <ClCompile Include="DirectXGame\Engin\3d\WorldTransform.cpp" />
     <ClCompile Include="DirectXGame\Engin\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engin\Camera\Camera.cpp" />
+    <ClCompile Include="DirectXGame\Engin\Camera\ViewProjection.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\Collision.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionManager.cpp" />
     <ClCompile Include="DirectXGame\Engin\Collision\CollisionPrimitive.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Engin\2d\SpriteCommon.h" />
     <ClInclude Include="DirectXGame\Engin\3d\WorldTransform.h" />
+    <ClInclude Include="DirectXGame\Engin\Camera\ViewProjection.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\BaseCollider.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionInfo.h" />
     <ClInclude Include="DirectXGame\Engin\Collision\CollisionTypes.h" />

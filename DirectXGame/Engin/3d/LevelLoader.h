@@ -18,11 +18,11 @@ struct LevelData {
 	// オブジェクトデータ
 	struct ObjectData {
 		// 移動
-		DirectX::XMVECTOR translation_;
+		Vector3 translation_;
 		// 回転角
-		DirectX::XMVECTOR rotation_;
+		Vector3 rotation_;
 		// スケール
-		DirectX::XMVECTOR scaling_;
+		Vector3 scaling_;
 		// ファイル名
 		std::string fileName_;
 	};

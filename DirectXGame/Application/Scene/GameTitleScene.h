@@ -163,9 +163,9 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 inBlackPosition_ = { 0,0,0 };
 	DirectX::XMFLOAT2 inBlackScale_ = { 1280,720 };
 
-	DirectX::XMFLOAT3 pPos_ = { 0,-5,-30 };
-	DirectX::XMFLOAT3 pRot_ = { 0,0,0 };
-	DirectX::XMFLOAT3 pScale_ = { 5,5,5 };
+	Vector3 pPos_ = { 0,-5,-30 };
+	Vector3 pRot_ = { 0,0,0 };
+	Vector3 pScale_ = { 5,5,5 };
 	DirectX::XMFLOAT3 eye_ = { 0,0,-50 };
 
 	// タイマー

@@ -84,7 +84,7 @@ public: // ゲッター
 	/// プレイヤーの座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const DirectX::XMFLOAT3& GetPositon() { return pPosition_; }
+	const Vector3& GetPositon() { return pPosition_; }
 
 	/// <summary>
 	/// HPの取得
@@ -156,28 +156,28 @@ private: // メンバ変数
 	uint32_t textureHandle_ = 0u;
 
 	// プレイヤーの移動量
-	DirectX::XMFLOAT3 move_ = { 0,0.25,0 };
+	Vector3 move_ = { 0,0.25,0 };
 	// プレイヤーの座標
-	DirectX::XMFLOAT3 pPosition_ = { 0,-1,-140 };
+	Vector3 pPosition_ = { 0,-1,-140 };
 	// プレイヤーの回転
-	DirectX::XMFLOAT3 pRotation_ = { 0,0,0 };
+	Vector3 pRotation_ = { 0,0,0 };
 	// プレイヤーのサイズ
-	DirectX::XMFLOAT3 pScale_ = { 5,5,5 };
+	Vector3 pScale_ = { 5,5,5 };
 	// プレイヤーの弾の座標
-	DirectX::XMFLOAT3 pBulletP_ = { 0,0,0 };
+	Vector3 pBulletP_ = { 0,0,0 };
 
 	// レティクルの移動量
-	DirectX::XMFLOAT3 rmove_ = { 0,0.25,0 };
-	DirectX::XMFLOAT3 r1move_ = { 0,0.25,0 };
+	Vector3 rmove_ = { 0,0.25,0 };
+	Vector3 r1move_ = { 0,0.25,0 };
 	// レティクルの座標
-	DirectX::XMFLOAT3 rPosition_ = { 0,-2,-45 };
-	DirectX::XMFLOAT3 r1Position_ = { 0,-2.5f,-40 };
+	Vector3 rPosition_ = { 0,-2,-45 };
+	Vector3 r1Position_ = { 0,-2.5f,-40 };
 	// レティクルの回転
-	DirectX::XMFLOAT3 rRotation_ = { 0,90,0 };
-	DirectX::XMFLOAT3 r1Rotation_ = { 0,90,0 };
+	Vector3 rRotation_ = { 0,90,0 };
+	Vector3 r1Rotation_ = { 0,90,0 };
 	// レティクルのサイズ
-	DirectX::XMFLOAT3 rScale_ = { 0.4f, 0.4f, 0.4f };
-	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
+	Vector3 rScale_ = { 0.4f, 0.4f, 0.4f };
+	Vector3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
 
 	// 視点
 	DirectX::XMFLOAT3 eye_ = { 0, 0, -120 };

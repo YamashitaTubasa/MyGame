@@ -50,16 +50,16 @@ void BackGroundObject::Initialize()
 		Object3d* newObject = Object3d::Create();
 		newObject->SetModel(model);
 		// 座標
-		DirectX::XMFLOAT3 pos;
-		DirectX::XMStoreFloat3(&pos, objectData.translation_);
+		Vector3 pos;
+		pos = objectData.translation_;
 		newObject->SetPosition(pos);
 		// 回転
-		DirectX::XMFLOAT3 rot;
-		DirectX::XMStoreFloat3(&rot, objectData.rotation_);
+		Vector3 rot;
+		rot = objectData.rotation_;
 		newObject->SetRotation(rot);
 		// サイズ
-		DirectX::XMFLOAT3 scale;
-		DirectX::XMStoreFloat3(&scale, objectData.scaling_);
+		Vector3 scale;
+		scale = objectData.scaling_;
 		newObject->SetScale(scale);
 
 		// 配列に登録

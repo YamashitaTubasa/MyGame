@@ -48,18 +48,25 @@ void WorldTransform::UpdateMatrix()
 	Matrix4 m, matRotX, matRotY, matRotZ;
 
 	// スケール、回転、平行移動行列の計算
-	matScale = m.Scale(scale_);
+	matScale = Matrix4::Identity();
+	matScale.Scale(scale_);
 	matRot = Matrix4::Identity();
 	matRot *= matRotZ.RotateZ(ToRadian(rotation_.z));
 	matRot *= matRotX.RotateX(ToRadian(rotation_.x));
 	matRot *= matRotY.RotateY(ToRadian(rotation_.y));
-	matTrans = m.Translate(position_);
+	matTrans.Translate(position_);
 
 	// ワールド行列の合成
 	matWorld_ = Matrix4::Identity(); // 変形をリセット
 	matWorld_ *= matScale;           // ワールド行列にスケーリングを反映
 	matWorld_ *= matRot;             // ワールド行列に回転を反映
 	matWorld_ *= matTrans;           // ワールド行列に平行移動を反映
+
+	// 親オブジェクトがあれば
+	if (parent_ != nullptr) {
+		// 親オブジェクトのワールド行列を掛ける
+		matWorld_ *= parent_->matWorld_;
+	}
 
 	// 定数バッファへデータ転送
 	constMap_->mat_ = matWorld_;	 // 行列の合成

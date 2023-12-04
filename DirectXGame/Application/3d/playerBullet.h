@@ -34,7 +34,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const DirectX::XMFLOAT3& position, const DirectX::XMFLOAT3& velocity);
+	void Initialize(const Vector3& position, const DirectX::XMFLOAT3& velocity);
 
 	/// <summary>
 	/// 更新
@@ -51,7 +51,7 @@ public: // ゲッター
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	DirectX::XMFLOAT3 GetPosition() const { return pBulletPos_; }
+	Vector3 GetPosition() const { return pBulletPos_; }
 
 	/// <summary>
 	/// デスフラグの取得
@@ -68,11 +68,11 @@ private:
 	BulletMove bulletMove_;
 
 	// 自キャラの弾の座標
-	DirectX::XMFLOAT3 pBulletPos_ = { 0,0,0 };
+	Vector3 pBulletPos_ = { 0,0,0 };
 	// 自キャラの弾の回転
-	DirectX::XMFLOAT3 pBulletRot_ = { 0,0,0 };
+	Vector3 pBulletRot_ = { 0,0,0 };
 	// 自キャラの弾のサイズ
-	DirectX::XMFLOAT3 pBulletSca_ = { 1,1,1 };
+	Vector3 pBulletSca_ = { 1,1,1 };
 	// 自キャラの弾の速度
 	DirectX::XMFLOAT3 velocity__ = { 0,0,0 };
 	DirectX::XMFLOAT3 eye_[5]{};

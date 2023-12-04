@@ -18,7 +18,7 @@ PlayerBullet::~PlayerBullet()
 	delete bulletM_;
 }
 
-void PlayerBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::XMFLOAT3& velocity)
+void PlayerBullet::Initialize(const Vector3& position, const DirectX::XMFLOAT3& velocity)
 {
 	// 引数で受け取った速度をメンバ変数に代入
 	this->velocity__ = velocity;

@@ -101,7 +101,9 @@ bool Player::Initialize()
 	reticle1O3_->SetRotation(r1Rotation_);
 
 	Object3d::SetEye(eye_);
-	target_ = pPosition_;
+	target_.x = pPosition_.x;
+	target_.y = pPosition_.y;
+	target_.z = pPosition_.z;
 	Object3d::SetTarget(target_);
 
 	// OBJの名前を指定してモデルデータを読み込む
@@ -251,7 +253,9 @@ void Player::Update()
 			rPosition_.z += startSpeed_;
 			r1Position_.z += startSpeed_;
 			eye_.z += startSpeed_;
-			target_ = pPosition_;
+			target_.x = pPosition_.x;
+			target_.y = pPosition_.y;
+			target_.z = pPosition_.z;
 		}
 	}
 
@@ -437,7 +441,9 @@ void Player::Update()
 		pPosition_.z += 2.0f;
 		rPosition_.z += 0.1f;
 		r1Position_.z += 0.1f;
-		target_ = pPosition_;
+		target_.x = pPosition_.x;
+		target_.y = pPosition_.y;
+		target_.z = pPosition_.z;
 	}
 	if (pPosition_.z >= 150) {
 		isEndStaging_ = true;

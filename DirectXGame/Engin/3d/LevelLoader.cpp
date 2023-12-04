@@ -63,20 +63,20 @@ LevelData* LevelLoader::LoadFile(const std::string& fileName)
 			// トランスフォームのパラメータ読み込み
 			nlohmann::json& transform = object["transform"];
 			// 平行移動
-			objectData.translation_.m128_f32[0] = (float)transform["translation"][0];
-			objectData.translation_.m128_f32[1] = (float)transform["translation"][2];
-			objectData.translation_.m128_f32[2] = (float)transform["translation"][1];
-			objectData.translation_.m128_f32[3] = 1.0f;
+			objectData.translation_.x = (float)transform["translation"][0];
+			objectData.translation_.y = (float)transform["translation"][2];
+			objectData.translation_.z = (float)transform["translation"][1];
+			//objectData.translation_.m128_f32[3] = 1.0f;
 			// 回転角
-			objectData.rotation_.m128_f32[0] = -(float)transform["rotation"][0];
-			objectData.rotation_.m128_f32[1] = -(float)transform["rotation"][2];
-			objectData.rotation_.m128_f32[2] = -(float)transform["rotation"][1];
-			objectData.rotation_.m128_f32[3] = 1.0f;
+			objectData.rotation_.x = -(float)transform["rotation"][0];
+			objectData.rotation_.y = -(float)transform["rotation"][2];
+			objectData.rotation_.z = -(float)transform["rotation"][1];
+			//objectData.rotation_.m128_f32[3] = 1.0f;
 			// スケーリング
-			objectData.scaling_.m128_f32[0] = (float)transform["scaling"][1];
-			objectData.scaling_.m128_f32[1] = (float)transform["scaling"][2];
-			objectData.scaling_.m128_f32[2] = (float)transform["scaling"][0];
-			objectData.scaling_.m128_f32[3] = 1.0f;
+			objectData.scaling_.x = (float)transform["scaling"][1];
+			objectData.scaling_.y = (float)transform["scaling"][2];
+			objectData.scaling_.z = (float)transform["scaling"][0];
+			//objectData.scaling_.m128_f32[3] = 1.0f;
 		}
 
 		// オブジェクト走査を再帰関数にまとめる、再帰呼出で枝を走査する
@@ -94,20 +94,20 @@ LevelData* LevelLoader::LoadFile(const std::string& fileName)
 			// トランスフォームのパラメータ読み込み
 			nlohmann::json& transform = object["transform"];
 			// 平行移動
-			objectData.translation_.m128_f32[0] = (float)transform["translation"][0];
-			objectData.translation_.m128_f32[1] = (float)transform["translation"][2];
-			objectData.translation_.m128_f32[2] = (float)transform["translation"][1];
-			objectData.translation_.m128_f32[3] = 1.0f;
+			objectData.translation_.x = (float)transform["translation"][0];
+			objectData.translation_.y = (float)transform["translation"][2];
+			objectData.translation_.z = (float)transform["translation"][1];
+			//objectData.translation_.m128_f32[3] = 1.0f;
 			// 回転角
-			objectData.rotation_.m128_f32[0] = -(float)transform["rotation"][0];
-			objectData.rotation_.m128_f32[1] = -(float)transform["rotation"][2];
-			objectData.rotation_.m128_f32[2] = -(float)transform["rotation"][1];
-			objectData.rotation_.m128_f32[3] = 1.0f;
+			objectData.rotation_.x = -(float)transform["rotation"][0];
+			objectData.rotation_.y = -(float)transform["rotation"][2];
+			objectData.rotation_.z = -(float)transform["rotation"][1];
+			//objectData.rotation_.m128_f32[3] = 1.0f;
 			// スケーリング
-			objectData.scaling_.m128_f32[0] = (float)transform["scaling"][1];
-			objectData.scaling_.m128_f32[1] = (float)transform["scaling"][2];
-			objectData.scaling_.m128_f32[2] = (float)transform["scaling"][0];
-			objectData.scaling_.m128_f32[3] = 1.0f;
+			objectData.scaling_.x = (float)transform["scaling"][1];
+			objectData.scaling_.y = (float)transform["scaling"][2];
+			objectData.scaling_.z = (float)transform["scaling"][0];
+			//objectData.scaling_.m128_f32[3] = 1.0f;
 		}
 	}
 

@@ -58,7 +58,7 @@ public: // Getter・Setter
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	DirectX::XMFLOAT3 GetPosition() const { return position_[0]; }
+	Vector3 GetPosition() const { return position_[0]; }
 
 	/// <summary>
 	/// デスフラグの取得
@@ -92,9 +92,9 @@ private:
 	// 敵発生コマンド
 	std::stringstream enemyPopCommands_;
 
-	DirectX::XMFLOAT3 position_[5]{};
-	DirectX::XMFLOAT3 rotation_[5]{};
-	DirectX::XMFLOAT3 scale_[5]{};
+	Vector3 position_[5]{};
+	Vector3 rotation_[5]{};
+	Vector3 scale_[5]{};
 	DirectX::XMFLOAT3 eye_[5]{};
 	DirectX::XMFLOAT3 target_[5]{};
 

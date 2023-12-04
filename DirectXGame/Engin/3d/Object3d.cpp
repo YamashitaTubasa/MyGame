@@ -101,9 +101,9 @@ Object3d * Object3d::Create()
 	}
 
 	// スケールをセット
-	//float scale_val = 20;
+	float scale_val = 20;
 	//object3d->scale_ = { scale_val,scale_val,scale_val };
-	//object3d->worldTransform_.scale_ = { scale_val,scale_val,scale_val };
+	object3d->worldTransform_.scale_ = { scale_val,scale_val,scale_val };
 
 	return object3d;
 }

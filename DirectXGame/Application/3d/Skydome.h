@@ -47,7 +47,7 @@ private:
 	Model* skydomeModel_ = nullptr;
 
 	// 天球の回転角
-	DirectX::XMFLOAT3 rotate_ = { 0,0,0 };
+	Vector3 rotate_ = { 0,0,0 };
 
 	// フラグ
 	bool isSkydome_ = false;

@@ -207,7 +207,7 @@ public:
 	/// ワールド行列の取得
 	/// </summary>
 	/// <returns>ワールド行列</returns>
-	const XMMATRIX& GetMatWorld() { return matWorld_; }
+	//const XMMATRIX& GetMatWorld() { return matWorld_; }
 
 	/// <summary>
 	/// コライダーのセット
@@ -225,37 +225,37 @@ public:
 	/// オブジェクトの座標取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const XMFLOAT3& GetPosition() const { return position_; }
+	const Vector3& GetPosition() const { return worldTransform_.position_; }
 
 	/// <summary>
 	/// オブジェクトの座標セット
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(const XMFLOAT3& position) { this->position_ = position; }
+	void SetPosition(const Vector3& position) { this->worldTransform_.position_ = position; }
 
 	/// <summary>
 	/// オブジェクトのサイズのセット
 	/// </summary>
 	/// <param name="scale_">サイズ</param>
-	void SetScale(const XMFLOAT3& scale) { this->scale_ = scale; }
+	void SetScale(const Vector3& scale) { this->worldTransform_.scale_ = scale; }
 
 	/// <summary>
 	/// オブジェクトのサイズの取得
 	/// </summary>
 	/// <returns>サイズ</returns>
-	const XMFLOAT3& GetScale() const { return scale_; }
+	const Vector3& GetScale() const { return worldTransform_.scale_; }
 
 	/// <summary>
 	/// オブジェクトの回転のセット
 	/// </summary>
 	/// <param name="rotation">回転</param>
-	void SetRotation(const XMFLOAT3& rotation) { this->rotation_ = rotation; }
+	void SetRotation(const Vector3& rotation) { this->worldTransform_.rotation_ = rotation; }
 
 	/// <summary>
 	/// オブジェクトの回転の取得
 	/// </summary>
 	/// <returns>回転</returns>
-	const XMFLOAT3& GetRotation() const { return rotation_; }
+	const Vector3& GetRotation() const { return worldTransform_.rotation_; }
 
 	/// <summary>
 	/// カメラ
@@ -275,17 +275,17 @@ protected: // メンバ変数
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuffB0_; 
+	//ComPtr<ID3D12Resource> constBuffB0_; 
 	// 色
-	XMFLOAT4 color_ = { 1,1,1,1 };
+	//Vector4 color_ = { 1,1,1,1 };
 	// ローカルスケール
-	XMFLOAT3 scale_ = { 1,1,1 };
+	//Vector3 scale_ = { 1,1,1 };
 	// X,Y,Z軸回りのローカル回転角
-	XMFLOAT3 rotation_ = { 0,0,0 };
+	//Vector3 rotation_ = { 0,0,0 };
 	// ローカル座標
-	XMFLOAT3 position_ = { 0,0,0 };
+	//Vector3 position_ = { 0,0,0 };
 	// ローカルワールド変換行列
-	XMMATRIX matWorld_;
+	//XMMATRIX matWorld_;
 	// 親オブジェクト
 	Object3d* parent_ = nullptr;
 	// クラス名（デバック用）

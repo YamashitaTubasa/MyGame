@@ -72,6 +72,9 @@ private:
 
 	ConstBufferData* constMap_ = nullptr;
 
+	// 親となるワールド行列への変換
+	WorldTransform* parent_ = nullptr;
+
 public:
 	// スケール
 	Vector3 scale_ = { 1.0f,1.0f,1.0f };
