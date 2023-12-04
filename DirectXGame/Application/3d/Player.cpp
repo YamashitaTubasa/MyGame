@@ -510,34 +510,62 @@ void Player::Update()
 	for (PlayerBullet* bullet : pBullets_) {
 		bullet->Update();
 		pBulletP_ = bullet->GetPosition();
-		if (bullet->GetPosition().z >= 10 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 && 
-			bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
+		if (!damage_) {
+			if (bullet->GetPosition().z >= 10 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 &&
+				bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
 
-			damage_ = true;
+				damage_ = true;
+			}
 		}
-		if (bullet->GetPosition().z >= 10 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 &&
-			bullet->GetPosition().x > 6 && bullet->GetPosition().x < 14) {
+		if (!damage01_) {
+			if (bullet->GetPosition().z >= 10 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 &&
+				bullet->GetPosition().x > 6 && bullet->GetPosition().x < 14) {
 
-			damage01_ = true;
+				damage01_ = true;
+			}
 		}
-		if (bullet->GetPosition().z >= 20 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 &&
-			bullet->GetPosition().x > -12 && bullet->GetPosition().x < -4) {
+		if (!damage02_) {
+			if (bullet->GetPosition().z >= 20 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 5 &&
+				bullet->GetPosition().x > -12 && bullet->GetPosition().x < -4) {
 
-			damage02_ = true;
+				damage02_ = true;
+			}
 		}
-		if (bullet->GetPosition().z >= 30 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 4 &&
-			bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
+		if (!damage03_) {
+			if (bullet->GetPosition().z >= 30 && bullet->GetPosition().y > -4 && bullet->GetPosition().y < 4 &&
+				bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
 
-			damage03_ = true;
+				damage03_ = true;
+			}
 		}
 	}
 
-	if (pPosition_.x >= -2 && pPosition_.x <= 2 && pPosition_.y >= -2 && pPosition_.y <= 2 && pPosition_.z <= 9 && pPosition_.z >= 5 ||
-		pPosition_.x <= -5 && pPosition_.x >= -9 && pPosition_.y >= -3 && pPosition_.y <= 1 && pPosition_.z <= 28 && pPosition_.z >= 23 || 
-		pPosition_.x >= 4 && pPosition_.x <= 9 && pPosition_.y >= -1 && pPosition_.y <= 3 && pPosition_.z <= 22 && pPosition_.z >= 17 || 
-		pPosition_.x >= -2 && pPosition_.x <= 2 && pPosition_.y >= -2 && pPosition_.y <= 2 && pPosition_.z <= 37 && pPosition_.z >= 32) {
-		isEffect_ = true;
-		isHp_ = true;
+	if (pPosition_.x >= -2 && pPosition_.x <= 2 && pPosition_.y >= -2 && pPosition_.y <= 2 && pPosition_.z <= 9 && pPosition_.z >= 5) {
+		if (!damage_) {
+			isEffect_ = true;
+			isHp_ = true;
+		}
+	}
+	if (pPosition_.x >= 4 && pPosition_.x <= 9 && pPosition_.y >= -1 && pPosition_.y <= 3 && pPosition_.z <= 22 && pPosition_.z >= 17)
+	{
+		if (!damage01_) {
+			isEffect_ = true;
+			isHp_ = true;
+		}
+	}
+	if (pPosition_.x <= -5 && pPosition_.x >= -9 && pPosition_.y >= -3 && pPosition_.y <= 1 && pPosition_.z <= 28 && pPosition_.z >= 23)
+	{
+		if (!damage02_) {
+			isEffect_ = true;
+			isHp_ = true;
+		}
+	}
+	if (pPosition_.x >= -2 && pPosition_.x <= 2 && pPosition_.y >= -2 && pPosition_.y <= 2 && pPosition_.z <= 37 && pPosition_.z >= 32)
+	{
+		if (!damage03_) {
+			isEffect_ = true;
+			isHp_ = true;
+		}
 	}
 	if (isEffect_) {
 		effectTime_++;

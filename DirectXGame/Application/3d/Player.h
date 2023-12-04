@@ -124,6 +124,10 @@ public: // ゲッター
 	bool GetDamage01() const { return damage01_; }
 	bool GetDamage02() const { return damage02_; }
 	bool GetDamage03() const { return damage03_; }
+	void SetDamage(bool damage) { damage_ = damage; }
+	void SetDamage01(bool damage01) { damage01_ = damage01; }
+	void SetDamage02(bool damage02) { damage02_ = damage02; }
+	void SetDamage03(bool damage03) { damage03_ = damage03; }
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
