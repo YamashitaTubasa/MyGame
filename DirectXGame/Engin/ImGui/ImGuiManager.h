@@ -27,8 +27,8 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="dXCommon"></param>
-	void Initialize(DirectXCommon* dXCommon, WinApp* winApp);
+	/// <param name="dxCommon"></param>
+	void Initialize(DirectXCommon* dxCommon, WinApp* winApp);
 
 	/// <summary>
 	/// 終了
@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// 画面への描画
 	/// </summary>
-	void Draw(DirectXCommon* dXCommon);
+	void Draw(DirectXCommon* dxCommon);
 
 	/// <summary>
 	/// セーブ
@@ -57,7 +57,7 @@ public:
 
 private:
 	WinApp* winApp_ = nullptr;
-	DirectXCommon* dXCommon_ = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
 
 	// SRV用デスクリプタヒープ
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_;

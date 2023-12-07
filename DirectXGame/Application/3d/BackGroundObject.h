@@ -47,9 +47,9 @@ private:
 	std::unique_ptr<Model> treeM_ = nullptr;
 	std::unique_ptr<Model> wheelM_ = nullptr;
 	// モデルデータコンテナ
-	std::map<std::string, Model*> models_;
+	std::map<std::string, std::unique_ptr<Model>> models_;
 	// オブジェクト
-	std::vector<Object3d*> objects_;
+	std::vector<std::unique_ptr<Object3d>> objects_;
 	// レベルデータ
 	LevelData* levelData_ = nullptr;
 

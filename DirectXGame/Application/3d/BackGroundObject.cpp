@@ -35,12 +35,12 @@ void BackGroundObject::Initialize()
 	// レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData_->objects_) {
 		// ファイル名から登録済みモデルを検索
-		std::unique_ptr<Model> model = nullptr; 
+		Model* model = nullptr; 
 		decltype(models_)::iterator it = models_.find(objectData.fileName_);
-		if (it != models_.end()) { model = it->second; }
+		if (it != models_.end()) { model = it->second.get(); }
 		// モデルを指定して3Dオブジェクトを生成
 		std::unique_ptr<Object3d> newObject = Object3d::Create();
-		newObject->SetModel(model.get());
+		newObject->SetModel(model);
 		// 座標
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMStoreFloat3(&pos, objectData.translation_);
@@ -55,7 +55,7 @@ void BackGroundObject::Initialize()
 		newObject->SetScale(scale);
 
 		// 配列に登録
-		objects_.push_back(newObject.get());
+		objects_.push_back(std::move(newObject));
 	}
 
 	modelEye_ = eye_;

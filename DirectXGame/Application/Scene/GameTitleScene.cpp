@@ -90,6 +90,20 @@ void GameTitleScene::Update()
 
 	// シーンの切り替え処理
 	GameTitleScene::SceneChange();
+
+#ifdef _DEBUG
+
+	if (Input::GetInstance()->TriggerKey(DIK_P)) {
+		GameSceneManager::GetInstance()->ChangeScene("PLAY");
+	}
+	if (Input::GetInstance()->TriggerKey(DIK_O)) {
+		GameSceneManager::GetInstance()->ChangeScene("OVER");
+	}
+	if (Input::GetInstance()->TriggerKey(DIK_C)) {
+		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
+	}
+
+#endif
 }
 
 void GameTitleScene::Draw()
@@ -383,6 +397,6 @@ void GameTitleScene::SceneChange()
 		startTimer_ = defaultStartTimer_;
 
 		// ゲームプレイシーン（次シーン）を生成
-		GameSceneManager::GetInstance()->ChangeScene("GAMEPLAY");
+		GameSceneManager::GetInstance()->ChangeScene("PLAY");
 	}
 }

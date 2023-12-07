@@ -55,7 +55,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	/// <param name="dXCommon"></param>
+	/// <param name="dxCommon"></param>
 	void Draw() override;
 
 	/// <summary>

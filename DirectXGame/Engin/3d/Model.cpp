@@ -32,7 +32,6 @@ Model::Model()
 
 Model::~Model()
 {
-	//device->Release();
 }
 
 std::unique_ptr<Model> Model::LoadFromOBJ(const string& modelname)
@@ -181,8 +180,10 @@ void Model::LoadTexture(const std::string& directoryPath, const std::string& fil
 	}
 
 	// シェーダリソースビュー作成
-	cpuDescHandleSRV_ = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeap_->GetCPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
-	gpuDescHandleSRV_ = CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeap_->GetGPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
+	cpuDescHandleSRV_ = CD3DX12_CPU_DESCRIPTOR_HANDLE(
+		descHeap_->GetCPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
+	gpuDescHandleSRV_ = CD3DX12_GPU_DESCRIPTOR_HANDLE(
+		descHeap_->GetGPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{}; // 設定構造体
 	D3D12_RESOURCE_DESC resDesc = texbuff_->GetDesc();
@@ -262,8 +263,10 @@ void Model::LoadTexture(const std::string& filename)
 	}
 
 	// シェーダリソースビュー作成
-	cpuDescHandleSRV_ = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeap_->GetCPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
-	gpuDescHandleSRV_ = CD3DX12_GPU_DESCRIPTOR_HANDLE(descHeap_->GetGPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
+	cpuDescHandleSRV_ = CD3DX12_CPU_DESCRIPTOR_HANDLE(
+		descHeap_->GetCPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
+	gpuDescHandleSRV_ = CD3DX12_GPU_DESCRIPTOR_HANDLE(
+		descHeap_->GetGPUDescriptorHandleForHeapStart(), 0, descriptorHandleIncrementSize_);
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{}; // 設定構造体
 	D3D12_RESOURCE_DESC resDesc = texbuff_->GetDesc();
@@ -309,9 +312,9 @@ void Model::LoadFromOBJInternal(const string& modelname)
 	// ファイルストリーム
 	std::ifstream file;
 	// .objファイルを開く
-	const string filename = modelname + ".obj"; // "triangle_mat.obj"
+	const string filename = modelname + ".obj";                  // "triangle_mat.obj"
 	const string directoryPath = "Resources/" + modelname + "/"; // "Resources/triangle_mat/"
-	file.open(directoryPath + filename); // "Resources/triangle_mat/triangle_mat.obj"
+	file.open(directoryPath + filename);                         // "Resources/triangle_mat/triangle_mat.obj"
 	// ファイルオープン失敗をチェック
 	if (file.fail()) {
 		assert(0);
@@ -417,8 +420,8 @@ void Model::InitializeDescriptorHeap()
 	// デスクリプタヒープを生成	
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダから見えるように
-	descHeapDesc.NumDescriptors = 1; // シェーダーリソースビュー1つ
+	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;                 //シェーダから見えるように
+	descHeapDesc.NumDescriptors = 1;                                                // シェーダーリソースビュー1つ
 	result = device_->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap_));//生成
 	if (FAILED(result)) {
 		assert(0);

@@ -32,7 +32,6 @@ PostEffect::PostEffect()
 
 PostEffect::~PostEffect()
 {
-	//device_->Release();
 }
 
 void PostEffect::Initialize(const wchar_t* filename)

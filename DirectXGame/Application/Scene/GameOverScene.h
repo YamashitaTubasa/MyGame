@@ -48,7 +48,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	/// <param name="dXCommon"></param>
+	/// <param name="dxCommon"></param>
 	void Draw() override;
 
 	/// <summary>
@@ -82,15 +82,15 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 
 	// スプライト
-	Sprite* sprite_ = nullptr;
-	Sprite* over_ = nullptr;
-	Sprite* space_ = nullptr;
-	Sprite* black_ = nullptr;
-	Sprite* fBlack_ = nullptr;
+	std::unique_ptr<Sprite> sprite_;
+	std::unique_ptr<Sprite> over_;
+	std::unique_ptr<Sprite> space_;
+	std::unique_ptr<Sprite> black_;
+	std::unique_ptr<Sprite> fBlack_;
 	SpriteCommon spriteCommon_;
 
 	// 天球
-	Skydome* skydome_ = nullptr;
+	std::unique_ptr<Skydome> skydome_;
 
 	// ゲームオーバーの設定
 	DirectX::XMFLOAT4 overColor_ = { 1,1,1,1 };

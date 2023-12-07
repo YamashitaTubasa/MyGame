@@ -18,10 +18,6 @@ Player::Player()
 
 Player::~Player()
 {
-	delete particle_;
-	delete particleMan_;
-	delete blackSmokeMan_;
-	delete blackSmoke_;
 	// 弾の解放
 	for (PlayerBullet* bullet : pBullets_) {
 		delete bullet;
@@ -29,17 +25,16 @@ Player::~Player()
 	delete enemy_;
 }
 
-Player* Player::Create(Model* model)
+std::unique_ptr<Player> Player::Create(Model* model)
 {
 	// 3Dオブジェクトのインスタンスを生成
-	Player* instance = new Player();
+	std::unique_ptr<Player> instance = std::make_unique<Player>();
 	if (instance == nullptr) {
 		return nullptr;
 	}
 
 	// 初期化
 	if (!instance->Initialize()) {
-		delete instance;
 		assert(0);
 	}
 
@@ -105,8 +100,8 @@ bool Player::Initialize()
 	particleMan_ = ParticleManager::Create();
 	blackSmokeMan_ = ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルを割り当てる
-	particleMan_->SetModel(particle_);
-	blackSmokeMan_->SetModel(blackSmoke_);
+	particleMan_->SetModel(particle_.get());
+	blackSmokeMan_->SetModel(blackSmoke_.get());
 
 	return true;
 }
@@ -145,7 +140,7 @@ void Player::Update()
 	});
 
 	// パーティクルの実行
-	particleMan_->Execution(particle_, particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
+	particleMan_->Execution(particle_.get(), particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
 
 	if (hp_ == -20) {
 

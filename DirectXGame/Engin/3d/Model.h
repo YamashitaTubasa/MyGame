@@ -88,11 +88,11 @@ public: // サブクラス
 	};
 
 private: // 定数
-	static const int division_ = 50; // 分割数
-	static const float radius_; // 底面の半径
-	static const float prizmHeight_; // 柱の高さ
+	static const int division_ = 50;                              // 分割数
+	static const float radius_;                                   // 底面の半径
+	static const float prizmHeight_;                              // 柱の高さ
 	static const int planeCount_ = division_ * 2 + division_ * 2; // 面の数
-	static const int vertexCount_ = planeCount_ * 3; // 頂点数
+	static const int vertexCount_ = planeCount_ * 3;              // 頂点数
 
 public: // 静的メンバ関数
 	

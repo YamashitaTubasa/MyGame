@@ -40,7 +40,7 @@ public: // 静的メンバ関数
 	/// 3Dオブジェクト生成
 	/// </summary>
 	/// <returns>インスタンス</returns>
-	static Player* Create(Model* model = nullptr);
+	static std::unique_ptr<Player> Create(Model* model = nullptr);
 
 public: // メンバ関数
 	/// <summary>
@@ -145,12 +145,12 @@ private: // メンバ変数
 	std::list<std::unique_ptr<Enemy>> enemys_;
 	Enemy* enemy_ = nullptr;
 	// パーティクル
-	Particle* particle_ = nullptr;
-	ParticleManager* particleMan_ = nullptr;
-	Particle* blackSmoke_ = nullptr;
-	ParticleManager* blackSmokeMan_ = nullptr;
-	Particle* circleMan_ = nullptr;
-	ParticleManager* circle_ = nullptr;
+	std::unique_ptr<Particle> particle_ = nullptr;
+	std::unique_ptr<ParticleManager> particleMan_ = nullptr;
+	std::unique_ptr<Particle> blackSmoke_ = nullptr;
+	std::unique_ptr<ParticleManager> blackSmokeMan_ = nullptr;
+	std::unique_ptr<Particle> circleMan_ = nullptr;
+	std::unique_ptr<ParticleManager> circle_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
