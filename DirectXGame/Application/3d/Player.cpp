@@ -107,12 +107,15 @@ bool Player::Initialize()
 	// OBJの名前を指定してモデルデータを読み込む
 	particle_ = Particle::LoadFromOBJ("bombEffect.png");
 	blackSmoke_ = Particle::LoadFromOBJ("bombEffect.png");
+	rotationParticle_ = Particle::LoadFromOBJ("23682202.png");
 	// パーティクルの生成
 	particleMan_ = ParticleManager::Create();
 	blackSmokeMan_ = ParticleManager::Create();
+	rotationParticleMan_ = ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルを割り当てる
 	particleMan_->SetModel(particle_);
 	blackSmokeMan_->SetModel(blackSmoke_);
+	rotationParticleMan_->SetModel(rotationParticle_);
 
 	return true;
 }
@@ -134,6 +137,7 @@ void Player::Update()
 	// パーティクルの更新
 	particleMan_->Update();
 	blackSmokeMan_->Update();
+	rotationParticleMan_->Update();
 
 	// デスフラグの立った敵を削除
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy_) {
@@ -189,6 +193,37 @@ void Player::Update()
 
 			// 追加
 			blackSmoke_->Add(fireParticleLife, pos, vel, acc, fireParticleStartScale_, fireParticleEndScale_);
+		}
+	}
+
+	if (input_->TriggerKey(DIK_U) && !isRotationParticle_) {
+
+		// パーティクルの実行
+		for (int i = 0; i < rotationParticleMax_; i++) {
+			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+			const float md_pos = 1.5f;
+			const float md = 2.0f;
+			DirectX::XMFLOAT3 pos{};
+			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / md;
+			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / md;
+			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / md;
+			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+			const float md_vel_x = 0.1f;
+			const float md_vel_y = 0.1f;
+			const float md_vel_z = 0.1f;
+			DirectX::XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * md_vel_x - md_vel_x / md;
+			vel.y = (float)rand() / RAND_MAX * md_vel_y - md_vel_y / md;
+			vel.z = (float)rand() / RAND_MAX * md_vel_z - md_vel_z / md;
+			// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+			DirectX::XMFLOAT3 acc{};
+			const float md_acc_x = 0.001f;
+			const float md_acc_y = 0.001f;
+			acc.x = (float)rand() / RAND_MAX * md_acc_x;
+			acc.y = (float)rand() / RAND_MAX * md_acc_y;
+
+			// 追加
+			rotationParticle_->Add(rotationParticleLife, pos, vel, acc, rotationParticleStartScale_, rotationParticleEndScale_);
 		}
 	}
 
@@ -579,6 +614,30 @@ void Player::Update()
 		effectTime_ = 0;
 	}
 
+	if (pPosition_.x >= -4 && pPosition_.x <= 4 && pPosition_.y >= -4 && pPosition_.y <= 4 && pPosition_.z <= 11 && pPosition_.z >= 2) {
+		if (input_->PushKey(DIK_U)) {
+			damage_ = true;
+		}
+	}
+	if (pPosition_.x >= 2 && pPosition_.x <= 11 && pPosition_.y >= -3 && pPosition_.y <= 5 && pPosition_.z <= 24 && pPosition_.z >= 14)
+	{
+		if (input_->PushKey(DIK_U)) {
+			damage01_ = true;
+		}
+	}
+	if (pPosition_.x <= -3 && pPosition_.x >= -11 && pPosition_.y >= -5 && pPosition_.y <= 3 && pPosition_.z <= 30 && pPosition_.z >= 20)
+	{
+		if (input_->PushKey(DIK_U)) {
+			damage02_ = true;
+		}
+	}
+	if (pPosition_.x >= -4 && pPosition_.x <= 4 && pPosition_.y >= -4 && pPosition_.y <= 4 && pPosition_.z <= 39 && pPosition_.z >= 29)
+	{
+		if (input_->PushKey(DIK_U)) {
+			damage03_ = true;
+		}
+	}
+
 #ifdef _DEBUG
 
 	if (input_->PushKey(DIK_UP)) {
@@ -663,6 +722,9 @@ void Player::Effect()
 	// パーティクルの描画
 	if (isEffect_) {
 		particleMan_->Draw();
+	}
+	if (damage_ == true || damage01_ == true || damage02_ == true || damage03_ == true) {
+		rotationParticleMan_->Draw();
 	}
 	blackSmokeMan_->Draw();
 
