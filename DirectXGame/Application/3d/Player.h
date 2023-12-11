@@ -155,6 +155,8 @@ private: // メンバ変数
 	ParticleManager* blackSmokeMan_ = nullptr;
 	Particle* circleMan_ = nullptr;
 	ParticleManager* circle_ = nullptr;
+	Particle* rotationParticle_ = nullptr;
+	ParticleManager* rotationParticleMan_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
@@ -253,6 +255,13 @@ private: // メンバ変数
 	const float fireParticleStartScale_ = 0.4f;
 	const float fireParticleEndScale_ = 0.0f;
 	const int fireParticleMax_ = 100;
+
+	// 回転パーティクル
+	const int rotationParticleLife = 20;
+	const float rotationParticleStartScale_ = 0.6f;
+	const float rotationParticleEndScale_ = 0.0f;
+	const int rotationParticleMax_ = 40;
+	bool isRotationParticle_ = false;
 
 	// ダメージ
 	bool damage_ = false;
