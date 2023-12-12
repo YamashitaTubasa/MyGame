@@ -20,16 +20,16 @@ void BackGroundObject::Initialize()
 	levelData_ = LevelLoader::LoadFile("backGroundObject.json");
 
 	// モデルデータを読み込む
-	buildingM_ = Model::LoadFromOBJ("building");
-	asphaltM_ = Model::LoadFromOBJ("asphalt");
-	bridgeM_ = Model::LoadFromOBJ("bridge");
-	treeM_ = Model::LoadFromOBJ("tree");
+	std::unique_ptr<Model> buildingM_ = Model::LoadFromOBJ("building");
+	std::unique_ptr<Model> asphaltM_ = Model::LoadFromOBJ("asphalt");
+	std::unique_ptr<Model> bridgeM_ = Model::LoadFromOBJ("bridge");
+	std::unique_ptr<Model> treeM_ = Model::LoadFromOBJ("tree");
 	//wheelM_ = Model::LoadFromOBJ("wheel");
 
-	models_.insert(std::make_pair("building", buildingM_.get()));
-	models_.insert(std::make_pair("asphalt", asphaltM_.get()));
-	models_.insert(std::make_pair("bridge", bridgeM_.get()));
-	models_.insert(std::make_pair("tree", treeM_.get()));
+	models_.insert(std::make_pair("building", std::move(buildingM_)));
+	models_.insert(std::make_pair("asphalt", std::move(asphaltM_)));
+	models_.insert(std::make_pair("bridge", std::move(bridgeM_)));
+	models_.insert(std::make_pair("tree", std::move(treeM_)));
 	//models_.insert(std::make_pair("wheel", wheelM_));
 
 	// レベルデータからオブジェクトを生成、配置

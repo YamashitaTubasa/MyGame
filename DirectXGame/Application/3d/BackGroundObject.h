@@ -40,12 +40,6 @@ public:
 	void Draw();
 
 private:
-	// モデル
-	std::unique_ptr<Model> buildingM_ = nullptr;
-	std::unique_ptr<Model> asphaltM_ = nullptr;
-	std::unique_ptr<Model> bridgeM_ = nullptr;
-	std::unique_ptr<Model> treeM_ = nullptr;
-	std::unique_ptr<Model> wheelM_ = nullptr;
 	// モデルデータコンテナ
 	std::map<std::string, std::unique_ptr<Model>> models_;
 	// オブジェクト
