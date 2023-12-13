@@ -40,7 +40,7 @@ public: // 静的メンバ関数
 	/// 3Dオブジェクト生成
 	/// </summary>
 	/// <returns>インスタンス</returns>
-	static Player* Create(Model* model = nullptr);
+	static std::unique_ptr<Player> Create(Model* model = nullptr);
 
 public: // メンバ関数
 	/// <summary>
@@ -131,14 +131,17 @@ public: // ゲッター
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
-	// モデル
-	Model* playerM_ = nullptr;
-	Model* reticleM_ = nullptr;
-	Model* reticle1M_ = nullptr;
+
 	// オブジェクト
-	Object3d* playerO3_ = nullptr;
-	Object3d* reticleO3_ = nullptr;
-	Object3d* reticle1O3_ = nullptr;
+	std::unique_ptr<Object3d> playerO3_ = nullptr;
+	std::unique_ptr<Object3d> reticleO3_ = nullptr;
+	std::unique_ptr<Object3d> reticle1O3_ = nullptr;
+
+	// モデル
+	std::unique_ptr<Model> playerM_;
+	std::unique_ptr<Model> reticleM_;
+	std::unique_ptr<Model> reticle1M_;
+
 	// 入力
 	Input* input_ = nullptr;
 	// カメラ
@@ -147,16 +150,16 @@ private: // メンバ変数
 	std::list<PlayerBullet*> pBullets_;
 	// 敵キャラ
 	std::list<std::unique_ptr<Enemy>> enemys_;
-	Enemy* enemy_ = nullptr;
+	std::unique_ptr<Enemy> enemy_;
 	// パーティクル
-	Particle* particle_ = nullptr;
-	ParticleManager* particleMan_ = nullptr;
-	Particle* blackSmoke_ = nullptr;
-	ParticleManager* blackSmokeMan_ = nullptr;
-	Particle* circleMan_ = nullptr;
-	ParticleManager* circle_ = nullptr;
-	Particle* rotationParticle_ = nullptr;
-	ParticleManager* rotationParticleMan_ = nullptr;
+	std::unique_ptr<Particle> particle_ = nullptr;
+	std::unique_ptr<Particle> blackSmoke_ = nullptr;
+	std::unique_ptr<Particle> circleMan_ = nullptr;
+	std::unique_ptr<Particle> rotationParticle_ = nullptr;
+	std::unique_ptr<ParticleManager> particleMan_ = nullptr;
+	std::unique_ptr<ParticleManager> blackSmokeMan_ = nullptr;
+	std::unique_ptr<ParticleManager> circle_ = nullptr;
+	std::unique_ptr<ParticleManager> rotationParticleMan_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;

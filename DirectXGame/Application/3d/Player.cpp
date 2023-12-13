@@ -18,34 +18,22 @@ Player::Player()
 
 Player::~Player()
 {
-	delete playerO3_;
-	delete reticleO3_;
-	delete reticle1O3_;
-	delete playerM_;
-	delete reticleM_;
-	delete reticle1M_;
-	delete particle_;
-	delete particleMan_;
-	delete blackSmokeMan_;
-	delete blackSmoke_;
 	// 弾の解放
 	for (PlayerBullet* bullet : pBullets_) {
 		delete bullet;
 	}
-	delete enemy_;
 }
 
-Player* Player::Create(Model* model)
+std::unique_ptr<Player> Player::Create(Model* model)
 {
 	// 3Dオブジェクトのインスタンスを生成
-	Player* instance = new Player();
+	std::unique_ptr<Player> instance = std::make_unique<Player>();
 	if (instance == nullptr) {
 		return nullptr;
 	}
 
 	// 初期化
 	if (!instance->Initialize()) {
-		delete instance;
 		assert(0);
 	}
 
@@ -65,7 +53,7 @@ bool Player::Initialize()
 		return false;
 	}
 
-	enemy_ = new Enemy();
+	enemy_ = std::make_unique<Enemy>();
 
 	// コライダーの追加
 	float radius = 0.6f;
@@ -84,9 +72,9 @@ bool Player::Initialize()
 	reticleO3_ = Object3d::Create();
 	reticle1O3_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	playerO3_->SetModel(playerM_);
-	reticleO3_->SetModel(reticleM_);
-	reticle1O3_->SetModel(reticle1M_);
+	playerO3_->SetModel(playerM_.get());
+	reticleO3_->SetModel(reticleM_.get());
+	reticle1O3_->SetModel(reticle1M_.get());
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
@@ -113,9 +101,9 @@ bool Player::Initialize()
 	blackSmokeMan_ = ParticleManager::Create();
 	rotationParticleMan_ = ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルを割り当てる
-	particleMan_->SetModel(particle_);
-	blackSmokeMan_->SetModel(blackSmoke_);
-	rotationParticleMan_->SetModel(rotationParticle_);
+	particleMan_->SetModel(particle_.get());
+	blackSmokeMan_->SetModel(blackSmoke_.get());
+	rotationParticleMan_->SetModel(rotationParticle_.get());
 
 	return true;
 }
@@ -155,7 +143,7 @@ void Player::Update()
 	});
 
 	// パーティクルの実行
-	particleMan_->Execution(particle_, particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
+	particleMan_->Execution(particle_.get(), particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
 
 	if (hp_ == -20) {
 

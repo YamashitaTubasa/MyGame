@@ -41,10 +41,10 @@ const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::X
 	return result;
 }
 
-Particle* Particle::LoadFromOBJ(const std::string& filename)
+std::unique_ptr<Particle> Particle::LoadFromOBJ(const std::string& filename)
 {
 	// パーティクルのインスタンス生成
-	Particle* particle = new Particle();
+	std::unique_ptr<Particle> particle = std::make_unique<Particle>();
 
 	// デスクリプタヒープの初期化
 	particle->InitializeDescriptorHeap();

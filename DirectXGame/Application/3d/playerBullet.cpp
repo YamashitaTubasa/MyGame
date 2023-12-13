@@ -12,10 +12,6 @@ PlayerBullet::PlayerBullet()
 
 PlayerBullet::~PlayerBullet() 
 {
-	// 3Dオブジェクト解放
-	delete bulletO3_;
-	// 3Dモデル解放
-	delete bulletM_;
 }
 
 void PlayerBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::XMFLOAT3& velocity)
@@ -28,7 +24,7 @@ void PlayerBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::
 	// 3Dオブジェクト生成
 	bulletO3_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
-	bulletO3_->SetModel(bulletM_);
+	bulletO3_->SetModel(bulletM_.get());
 	// 3Dオブジェクトの位置を指定
 	pBulletPos_ = position;
 	bulletO3_->SetPosition(pBulletPos_);

@@ -86,17 +86,16 @@ void ParticleManager::PostDraw()
 	ParticleManager::cmdList_ = nullptr;
 }
 
-ParticleManager* ParticleManager::Create()
+std::unique_ptr<ParticleManager> ParticleManager::Create()
 {
 	// 3Dオブジェクトのインスタンスを生成
-	ParticleManager* particleManager = new ParticleManager();
+	std::unique_ptr<ParticleManager> particleManager = std::make_unique<ParticleManager>();
 	if (particleManager == nullptr) {
 		return nullptr;
 	}
 
 	// 初期化
 	if (!particleManager->Initialize()) {
-		delete particleManager;
 		assert(0);
 		return nullptr;
 	}

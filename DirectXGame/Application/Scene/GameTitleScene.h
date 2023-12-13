@@ -99,20 +99,21 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	
 	// スプライト
-	Sprite* sprite_ = nullptr;
-	Sprite* title_ = nullptr;
-	Sprite* space_ = nullptr;
-	Sprite* inBlack_ = nullptr;
-	Sprite* outBlack_ = nullptr;
-	Sprite* nowLoading_ = nullptr;
-	Sprite* dot_[5]{};
+	std::unique_ptr<Sprite> sprite_ = nullptr;
+	std::unique_ptr<Sprite> title_ = nullptr;
+	std::unique_ptr<Sprite> space_ = nullptr;
+	std::unique_ptr<Sprite> inBlack_ = nullptr;
+	std::unique_ptr<Sprite> outBlack_ = nullptr;
+	std::unique_ptr<Sprite> nowLoading_ = nullptr;
+	std::unique_ptr<Sprite> dot_[5]{};
 
 	// 天球
-	Skydome* skydome_ = nullptr;
+	std::unique_ptr<Skydome> skydome_ = nullptr;
 
 	// オブジェクト
-	Object3d* player_ = nullptr;
-	Model* playerModel_ = nullptr;
+	std::unique_ptr<Object3d> player_ = nullptr;
+	// モデル
+	std::unique_ptr<Model> playerModel_ = nullptr;
 
 	// タイトルの設定
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
@@ -138,14 +139,14 @@ private: // メンバ変数
 
 	// ロードの設定
 	DirectX::XMFLOAT4 nowLoadingColor_ = { 1,1,1,1 };
-	DirectX::XMFLOAT3 nowLoadingPos_ = { 700, 600, 0 };
+	DirectX::XMFLOAT3 nowLoadingPos_ = { 700, 580, 0 };
 	DirectX::XMFLOAT2 nowLoadingScale_ = { 442.0f * 1.1f, 110 * 1.1f };
 	bool isLoding_ = false;
 	float lodingAlpha_ = 1.0f;
 
 	// 点の設定
 	std::vector<DirectX::XMFLOAT4> dotColor_ { {1, 1, 1, 1}, { 1,1,1,1 }, { 1,1,1,1 } };
-	std::vector<DirectX::XMFLOAT3> dotPos_ = { { 1165, 660, 0 }, { 1190, 660, 0 }, { 1215, 660, 0 } };
+	std::vector<DirectX::XMFLOAT3> dotPos_ = { { 1170, 640, 0 }, { 1190, 640, 0 }, { 1210, 640, 0 } };
 	std::vector<DirectX::XMFLOAT2> dotScale_ = { { 30, 30 },{ 30,30 },{ 30,30 } };
 	std::vector<float> dotAlpha_ = { {1.0f},{1.0f},{1.0f} };
 	bool isDot_[5] = { false, false, false, false, false };

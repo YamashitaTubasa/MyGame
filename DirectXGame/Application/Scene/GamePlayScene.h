@@ -91,35 +91,33 @@ private:
 	Input* input_ = nullptr;
 	
 	// スプライト
-	Sprite* sprite_ = nullptr;
-	Sprite* hp_ = nullptr;
-	Sprite* hpBar_ = nullptr;
-	Sprite* hpBack_ = nullptr;
-	Sprite* enemyHp_ = nullptr;
-	Sprite* enemyHpBar_ = nullptr;
-	Sprite* enemyHpBack_ = nullptr;
-	Sprite* ult_ = nullptr;
-	Sprite* X_ = nullptr;
-	Sprite* damage_ = nullptr;
-	Sprite* white_ = nullptr;
-	Sprite* black_ = nullptr;
-	Sprite* number_[5];
+	std::unique_ptr<Sprite> sprite_ = nullptr;
+	std::unique_ptr<Sprite> hp_ = nullptr;
+	std::unique_ptr<Sprite> hpBar_ = nullptr;
+	std::unique_ptr<Sprite> hpBack_ = nullptr;
+	std::unique_ptr<Sprite> enemyHp_ = nullptr;
+	std::unique_ptr<Sprite> enemyHpBar_ = nullptr;
+	std::unique_ptr<Sprite> enemyHpBack_ = nullptr;
+	std::unique_ptr<Sprite> ult_ = nullptr;
+	std::unique_ptr<Sprite> X_ = nullptr;
+	std::unique_ptr<Sprite> damage_ = nullptr;
+	std::unique_ptr<Sprite> white_ = nullptr;
+	std::unique_ptr<Sprite> black_ = nullptr;
+	std::unique_ptr<Sprite> number_[5];
 	SpriteCommon spriteCommon_;
 
 	// パーティクル
-	ParticleManager* particleMan_ = nullptr;
-	Particle* particle_ = nullptr;
-	ParticleManager* blackSmokeMan_ = nullptr;
-	Particle* blackSmoke_ = nullptr;
+	std::unique_ptr<ParticleManager> particleMan_ = nullptr;
+	std::unique_ptr<ParticleManager> blackSmokeMan_ = nullptr;
+	std::unique_ptr<Particle> particle_ = nullptr;
+	std::unique_ptr<Particle> blackSmoke_ = nullptr;
 
 	ImGuiManager* imGuiManager_ = nullptr;
-	Camera* camera_ = nullptr;
-	FbxModel* fbxModel_ = nullptr;
-	FbxObject3d* fbxObject_ = nullptr;
-	Player* player_ = nullptr;
-	Enemy* enemy_ = nullptr;
-	BackGroundObject* backGroundObj_ = nullptr;
-	Skydome* skydome_ = nullptr;
+	std::unique_ptr<Camera> camera_;
+	std::unique_ptr<Player> player_;
+	std::unique_ptr<Enemy> enemy_;
+	std::unique_ptr<BackGroundObject> backGroundObj_ = nullptr;
+	std::unique_ptr<Skydome> skydome_ = nullptr;
 	// 衝突マネージャ
 	CollisionManager* collisionMan_ = nullptr;
 	// 敵キャラ

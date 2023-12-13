@@ -14,23 +14,20 @@ void MyGame::Initialize()
 	TYFramework::Initialize();
 
 	// ポストエフェクト
-	postEffect_ = new PostEffect();
+	postEffect_ = std::make_unique<PostEffect>();
 	postEffect_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
-	postEffect1_ = new PostEffect();
+	postEffect1_ = std::make_unique<PostEffect>();
 	postEffect1_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
 
 	// シーンファクトリを生成し、マネージャにセット
-	sceneFactory_ = new SceneFactory();
-	sceneManager_->SetSceneFactory(sceneFactory_);
+	sceneFactory_ = std::make_unique<SceneFactory>();
+	sceneManager_->SetSceneFactory(sceneFactory_.get());
 	// シーンマネージャに最初のシーンをセット
 	sceneManager_->ChangeScene("TITLE");
 }
 
 void MyGame::Finalize()
 {
-	delete postEffect_;
-	delete postEffect1_;
-
 	// 基底クラスの終了処理
 	TYFramework::Finalize();
 }

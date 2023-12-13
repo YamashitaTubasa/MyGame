@@ -45,7 +45,7 @@ void TYFramework::Initialize()
 	input_->Initialize(winApp_);
 
 	// ImGuiの初期化
-	imGuiManager_ = new ImGuiManager();
+	imGuiManager_ = std::make_unique<ImGuiManager>();
 	imGuiManager_->Initialize(dxCommon_, winApp_);
 
 	// シーンマネージャの生成
@@ -68,16 +68,11 @@ void TYFramework::Initialize()
 void TYFramework::Finalize()
 {
 	sceneManager_->Destroy();
-	//シーンファクトリの解放
-	delete sceneFactory_;
 
 	FbxLoader::GetInstance()->Finalize();
 
 	// imguiの終了処理
 	imGuiManager_->Finalize();
-	// imguiの解放
-	delete imGuiManager_;
-	imGuiManager_ = nullptr;
 
 	// WindowsAPIの終了処理
 	winApp_->Finalize();

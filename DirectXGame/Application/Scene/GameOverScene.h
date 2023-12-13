@@ -82,15 +82,15 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 
 	// スプライト
-	Sprite* sprite_ = nullptr;
-	Sprite* over_ = nullptr;
-	Sprite* space_ = nullptr;
-	Sprite* black_ = nullptr;
-	Sprite* fBlack_ = nullptr;
+	std::unique_ptr<Sprite> sprite_ = nullptr;
+	std::unique_ptr<Sprite> over_ = nullptr;
+	std::unique_ptr<Sprite> space_ = nullptr;
+	std::unique_ptr<Sprite> black_ = nullptr;
+	std::unique_ptr<Sprite> fBlack_ = nullptr;
 	SpriteCommon spriteCommon_;
 
 	// 天球
-	Skydome* skydome_ = nullptr;
+	std::unique_ptr<Skydome> skydome_ = nullptr;
 
 	// ゲームオーバーの設定
 	DirectX::XMFLOAT4 overColor_ = { 1,1,1,1 };
