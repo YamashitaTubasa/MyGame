@@ -41,11 +41,11 @@ public:
 	void RotateSky();
 
 private:
-	// オブジェクト
-	Object3d* skydomeObj_ = nullptr;
 	// モデル
-	Model* skydomeModel_ = nullptr;
-
+	std::unique_ptr<Model> skydomeModel_ = nullptr;
+	// オブジェクト
+	std::unique_ptr<Object3d> skydomeObj_ = nullptr;
+	
 	// 天球の回転角
 	DirectX::XMFLOAT3 rotate_ = { 0,0,0 };
 

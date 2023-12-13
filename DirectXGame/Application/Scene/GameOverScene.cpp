@@ -14,11 +14,6 @@ GameOverScene::GameOverScene()
 
 GameOverScene::~GameOverScene()
 {
-	delete sprite_;
-	delete over_;
-	delete black_;
-	delete space_;
-	delete skydome_;
 }
 
 void GameOverScene::Initialize()
@@ -29,7 +24,7 @@ void GameOverScene::Initialize()
 	GameOverScene::LoadSprite();
 
 	// 天球の初期化
-	skydome_ = new Skydome();
+	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize();
 }
 
@@ -42,10 +37,10 @@ void GameOverScene::Update()
 	skydome_->Update();
 
 	// スプライトの更新
-	black_->SpriteUpdate(black_, spriteCommon_);
-	over_->SpriteUpdate(over_, spriteCommon_);
-	space_->SpriteUpdate(space_, spriteCommon_);
-	fBlack_->SpriteUpdate(fBlack_, spriteCommon_);
+	black_->SpriteUpdate(black_.get(), spriteCommon_);
+	over_->SpriteUpdate(over_.get(), spriteCommon_);
+	space_->SpriteUpdate(space_.get(), spriteCommon_);
+	fBlack_->SpriteUpdate(fBlack_.get(), spriteCommon_);
 
 	// Press SPACEの点滅処理
 	GameOverScene::FlashSpace();
@@ -172,13 +167,13 @@ void GameOverScene::SceneChange()
 void GameOverScene::LoadSprite()
 {
 	// スプライト
-	sprite_ = new Sprite();
+	sprite_ = std::make_unique<Sprite>();
 	spriteCommon_ = sprite_->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
 	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 
 	//===== 背景黒の描画 =====//
-	black_ = new Sprite();
+	black_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	black_->LoadTexture(spriteCommon_, blackNum, L"Resources/Image/black.png");
 	// スプライトの生成
@@ -188,10 +183,10 @@ void GameOverScene::LoadSprite()
 	black_->SetPosition(blackPos_);
 	black_->SetScale(blackScale_);
 	// スプライトの頂点バッファの転送
-	black_->SpriteTransferVertexBuffer(black_, spriteCommon_, blackNum);
+	black_->SpriteTransferVertexBuffer(black_.get(), spriteCommon_, blackNum);
 
 	//===== ゲームオーバー描画 =====//
-	over_ = new Sprite();
+	over_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	over_->LoadTexture(spriteCommon_, overNum, L"Resources/Image/gameOver.png");
 	// スプライトの生成
@@ -201,10 +196,10 @@ void GameOverScene::LoadSprite()
 	over_->SetPosition(overPos_);
 	over_->SetScale(overScale_);
 	// スプライトの頂点バッファの転送
-	over_->SpriteTransferVertexBuffer(over_, spriteCommon_, overNum);
+	over_->SpriteTransferVertexBuffer(over_.get(), spriteCommon_, overNum);
 
 	//===== SPACEの描画 =====//
-	space_ = new Sprite();
+	space_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	space_->LoadTexture(spriteCommon_, spaceNum, L"Resources/Image/pressSpace2.png");
 	// スプライトの生成
@@ -215,10 +210,10 @@ void GameOverScene::LoadSprite()
 	space_->SetScale(spaceScale_);
 	space_->SetAlpha(sAlpha_);
 	// スプライトの頂点バッファの転送
-	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, spaceNum);
+	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, spaceNum);
 
 	//===== Blackの描画 =====//
-	fBlack_ = new Sprite();
+	fBlack_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	fBlack_->LoadTexture(spriteCommon_, fBlackNum, L"Resources/Image/black.png");
 	// スプライトの生成
@@ -229,5 +224,5 @@ void GameOverScene::LoadSprite()
 	fBlack_->SetScale(fBlackScale_);
 	fBlack_->SetAlpha(fBlackAlpha_);
 	// スプライトの頂点バッファの転送
-	fBlack_->SpriteTransferVertexBuffer(fBlack_, spriteCommon_, fBlackNum);
+	fBlack_->SpriteTransferVertexBuffer(fBlack_.get(), spriteCommon_, fBlackNum);
 }

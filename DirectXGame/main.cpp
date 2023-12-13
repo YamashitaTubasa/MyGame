@@ -9,11 +9,9 @@
 // windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
 {
-	TYFramework* game = new MyGame();
+	std::unique_ptr<TYFramework> game = std::make_unique<MyGame>();
 
 	game->Run();
-
-	delete game;
 
 	//DirectXCommon::ResourceLeakCheck();
 

@@ -100,7 +100,7 @@ public:// 静的メンバ関数
 	/// </summary>
 	/// <param name="filename">ファイル名</param>
 	/// <returns></returns>
-	static Particle* LoadFromOBJ(const std::string& filename);
+	static std::unique_ptr<Particle> LoadFromOBJ(const std::string& filename);
 
 	/// <summary>
 	/// 毎フレーム処理

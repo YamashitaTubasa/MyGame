@@ -26,7 +26,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="model">モデル</param>
 	/// <returns></returns>
-	static Enemy* Create(Model* model = nullptr);
+	static std::unique_ptr<Enemy> Create(Model* model = nullptr);
 
 	/// <summary>
 	/// 初期化
@@ -87,12 +87,14 @@ public: // Getter・Setter
 
 private:
 	// オブジェクト
-	Object3d* enemyO3_ = nullptr;
-	Object3d* enemyO1_ = nullptr;
-	Object3d* enemyO2_ = nullptr;
-	Object3d* enemyO4_ = nullptr;
+	std::unique_ptr<Object3d> enemyO3_ = nullptr;
+	std::unique_ptr<Object3d> enemyO1_ = nullptr;
+	std::unique_ptr<Object3d> enemyO2_ = nullptr;
+	std::unique_ptr<Object3d> enemyO4_ = nullptr;
+
 	// モデル
-	Model* enemyM_ = nullptr;
+	std::unique_ptr<Model> enemyM_;
+
 	// 敵発生コマンド
 	std::stringstream enemyPopCommands_;
 

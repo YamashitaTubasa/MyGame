@@ -67,12 +67,12 @@ protected:
 	DirectXCommon* dxCommon_ = nullptr;
 	WinApp* winApp_ = nullptr;
 	Input* input_ = nullptr;
-	ImGuiManager* imGuiManager_ = nullptr;
+	std::unique_ptr<ImGuiManager> imGuiManager_ = nullptr;
 	Camera* camera_ = nullptr;
 	GameSceneManager* sceneManager_ = nullptr;
-	PostEffect* postEffect_ = nullptr;
-	PostEffect* postEffect1_ = nullptr;
+	std::unique_ptr<PostEffect> postEffect_ = nullptr;
+	std::unique_ptr<PostEffect> postEffect1_ = nullptr;
 	// シーンファクトリー
-	AbstractSceneFactory* sceneFactory_ = nullptr;
+	std::unique_ptr<AbstractSceneFactory> sceneFactory_;
 };
 

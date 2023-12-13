@@ -14,10 +14,6 @@ GameClearScene::GameClearScene()
 
 GameClearScene::~GameClearScene()
 {
-	delete sprite_;
-	delete clear_;
-	delete space_;
-	delete skydome_;
 }
 
 void GameClearScene::Initialize()
@@ -28,7 +24,7 @@ void GameClearScene::Initialize()
 	GameClearScene::LoadSprite();
 
 	// 天球の初期化
-	skydome_ = new Skydome();
+	skydome_ = std::make_unique<Skydome>();
 	skydome_->Initialize();
 }
 
@@ -41,9 +37,9 @@ void GameClearScene::Update()
 	skydome_->Update();
 
 	// スプライトの更新
-	clear_->SpriteUpdate(clear_, spriteCommon_);
-	space_->SpriteUpdate(space_, spriteCommon_);
-	black_->SpriteUpdate(black_, spriteCommon_);
+	clear_->SpriteUpdate(clear_.get(), spriteCommon_);
+	space_->SpriteUpdate(space_.get(), spriteCommon_);
+	black_->SpriteUpdate(black_.get(), spriteCommon_);
 
 	// フェードアウト処理
 	GameClearScene::Fade();
@@ -166,22 +162,22 @@ void GameClearScene::SceneChange()
 void GameClearScene::LoadSprite()
 {
 	// スプライト
-	sprite_ = new Sprite();
+	sprite_ = std::make_unique<Sprite>();
 	spriteCommon_ = sprite_->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
 	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 
 	// タイトル
-	clear_ = new Sprite();
+	clear_ = std::make_unique<Sprite>();
 	clear_->LoadTexture(spriteCommon_, titleNum, L"Resources/Image/gameClear.png");
 	clear_->SpriteCreate(WinApp::window_width, WinApp::window_height, titleNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	clear_->SetColor(clearColor_);
 	clear_->SetPosition(clearPos_);
 	clear_->SetScale(clearScale_);
-	clear_->SpriteTransferVertexBuffer(clear_, spriteCommon_, titleNum);
+	clear_->SpriteTransferVertexBuffer(clear_.get(), spriteCommon_, titleNum);
 
 	//===== SPACEの描画 =====//
-	space_ = new Sprite();
+	space_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	space_->LoadTexture(spriteCommon_, spaceNum, L"Resources/Image/pressSpace1.png");
 	// スプライトの生成
@@ -192,10 +188,10 @@ void GameClearScene::LoadSprite()
 	space_->SetScale(spaceScale_);
 	space_->SetAlpha(sAlpha_);
 	// スプライトの頂点バッファの転送
-	space_->SpriteTransferVertexBuffer(space_, spriteCommon_, spaceNum);
+	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, spaceNum);
 
 	//===== Blackの描画 =====//
-	black_ = new Sprite();
+	black_ = std::make_unique<Sprite>();
 	// テクスチャの読み込み
 	black_->LoadTexture(spriteCommon_, blackNum, L"Resources/Image/white.png");
 	// スプライトの生成
@@ -206,5 +202,5 @@ void GameClearScene::LoadSprite()
 	black_->SetScale(blackScale_);
 	black_->SetAlpha(bAlpha_);
 	// スプライトの頂点バッファの転送
-	black_->SpriteTransferVertexBuffer(black_, spriteCommon_, blackNum);
+	black_->SpriteTransferVertexBuffer(black_.get(), spriteCommon_, blackNum);
 }

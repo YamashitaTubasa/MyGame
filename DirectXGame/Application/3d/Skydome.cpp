@@ -12,8 +12,6 @@ Skydome::Skydome()
 
 Skydome::~Skydome()
 {
-	delete skydomeObj_;
-	delete skydomeModel_;
 }
 
 void Skydome::Initialize()
@@ -23,7 +21,7 @@ void Skydome::Initialize()
 	// 3Dオブジェクトの生成
 	skydomeObj_ = Object3d::Create();
 	// 3Dオブジェクトにモデルをセット
-	skydomeObj_->SetModel(skydomeModel_);
+	skydomeObj_->SetModel(skydomeModel_.get());
 	// オブジェクトの位置の設定
 	skydomeObj_->SetPosition({ 0,30,0 });
 	skydomeObj_->SetScale({ 300,300,300 });

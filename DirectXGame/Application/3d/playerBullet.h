@@ -60,10 +60,12 @@ public: // ゲッター
 	bool IsDead() const { return isDead_; }
 
 private:
-	// モデル
-	Model* bulletM_ = nullptr;
 	// オブジェクト
-	Object3d* bulletO3_ = nullptr;
+	std::unique_ptr<Object3d> bulletO3_ = nullptr;
+
+	// モデル
+	std::unique_ptr<Model> bulletM_;
+
 	// 自キャラの弾の処理
 	BulletMove bulletMove_;
 
