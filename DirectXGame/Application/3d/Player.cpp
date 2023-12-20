@@ -67,14 +67,17 @@ bool Player::Initialize()
 	playerM_ = Model::LoadFromOBJ("fighter");
 	reticleM_ = Model::LoadFromOBJ("reticle");
 	reticle1M_ = Model::LoadFromOBJ("reticle1");
+	bossModel_ = Model::LoadFromOBJ("enemy");
 	// 3Dオブジェクト生成
 	playerO3_ = Object3d::Create();
 	reticleO3_ = Object3d::Create();
 	reticle1O3_ = Object3d::Create();
+	bossObj_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
 	playerO3_->SetModel(playerM_.get());
 	reticleO3_->SetModel(reticleM_.get());
 	reticle1O3_->SetModel(reticle1M_.get());
+	bossObj_->SetModel(bossModel_.get());
 	// カメラセット
 	Object3d::SetCamera(camera_);
 	// 3Dオブジェクトの位置を指定
@@ -87,6 +90,9 @@ bool Player::Initialize()
 	reticle1O3_->SetPosition(r1Position_);
 	reticle1O3_->SetScale(r1Scale_);
 	reticle1O3_->SetRotation(r1Rotation_);
+	bossObj_->SetPosition(bossPos_);
+	bossObj_->SetScale(bossScale_);
+	bossObj_->SetRotation(bossRot_);
 
 	Object3d::SetEye(eye_);
 	target_ = pPosition_;
@@ -105,6 +111,46 @@ bool Player::Initialize()
 	blackSmokeMan_->SetModel(blackSmoke_.get());
 	rotationParticleMan_->SetModel(rotationParticle_.get());
 
+	// スプライト
+	sprite_ = std::make_unique<Sprite>();
+	spriteCommon_ = sprite_->SpriteCommonCreate();
+	// スプライト用パイプライン生成呼び出し
+	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
+
+	// 敵のHP
+	enemyHp_ = std::make_unique<Sprite>();
+	enemyHp_->LoadTexture(spriteCommon_, 7, L"Resources/Image/enemyHp.png");
+	enemyHp_->SpriteCreate(1280, 720, 7, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHp_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHp_->SetPosition(enemyHpPosition_);
+	enemyHp_->SetScale(enemyHpScale_);
+	enemyHp_->SetRotation(0.0f);
+	enemyHp_->SetAlpha(enemyAlpha_);
+	enemyHp_->SpriteTransferVertexBuffer(enemyHp_.get(), spriteCommon_, 7);
+	enemyHp_->SpriteUpdate(enemyHp_.get(), spriteCommon_);
+	// 敵のHPバー
+	enemyHpBar_ = std::make_unique<Sprite>();
+	enemyHpBar_->LoadTexture(spriteCommon_, 8, L"Resources/Image/enemyHpBar.png");
+	enemyHpBar_->SpriteCreate(1280, 720, 8, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHpBar_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHpBar_->SetPosition(enemyHpBarPosition_);
+	enemyHpBar_->SetScale(XMFLOAT2(502 * 1, 22 * 1));
+	enemyHpBar_->SetRotation(0.0f);
+	enemyHpBar_->SetAlpha(enemyAlpha_);
+	enemyHpBar_->SpriteTransferVertexBuffer(enemyHpBar_.get(), spriteCommon_, 8);
+	enemyHpBar_->SpriteUpdate(enemyHpBar_.get(), spriteCommon_);
+	// 敵のHP背景
+	enemyHpBack_ = std::make_unique<Sprite>();
+	enemyHpBack_->LoadTexture(spriteCommon_, 9, L"Resources/Image/enemyHpBack.png");
+	enemyHpBack_->SpriteCreate(1280, 720, 9, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHpBack_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHpBack_->SetPosition(enemyHpBackPosition_);
+	enemyHpBack_->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	enemyHpBack_->SetRotation(0.0f);
+	enemyHpBack_->SetAlpha(enemyAlpha_);
+	enemyHpBack_->SpriteTransferVertexBuffer(enemyHpBack_.get(), spriteCommon_, 9);
+	enemyHpBack_->SpriteUpdate(enemyHpBack_.get(), spriteCommon_);
+
 	return true;
 }
 
@@ -121,6 +167,7 @@ void Player::Update()
 	playerO3_->Update();
 	reticleO3_->Update();
 	reticle1O3_->Update();
+	bossObj_->Update();
 
 	// パーティクルの更新
 	particleMan_->Update();
@@ -300,7 +347,7 @@ void Player::Update()
 			eye_.z += 0.3f;
 	}
 	if (!isStartStaging_) {
-		if (pPosition_.z < 100) {
+		if (pPosition_.z < 300) {
 			pPosition_.z += startSpeed_;
 			rPosition_.z += startSpeed_;
 			r1Position_.z += startSpeed_;
@@ -484,7 +531,7 @@ void Player::Update()
 		}
 	}
 
-	if (pPosition_.z >= 100) {
+	if (isBoss_ == true) {
 		isReticle_ = false;
 		isGameClearStaging_ = true;
 		pPosition_.y += 0.3f;
@@ -493,7 +540,7 @@ void Player::Update()
 		r1Position_.z += 0.1f;
 		target_ = pPosition_;
 	}
-	if (pPosition_.z >= 150) {
+	if (isBoss_ == true) {
 		isEndStaging_ = true;
 	}
 	if (isEndStaging_) {
@@ -538,6 +585,7 @@ void Player::Update()
 				bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
 
 				damage_ = true;
+				bullet->SetIsDead(true);
 			}
 		}
 		if (!damage01_) {
@@ -545,6 +593,7 @@ void Player::Update()
 				bullet->GetPosition().x > 6 && bullet->GetPosition().x < 14) {
 
 				damage01_ = true;
+				bullet->SetIsDead(true);
 			}
 		}
 		if (!damage02_) {
@@ -552,6 +601,7 @@ void Player::Update()
 				bullet->GetPosition().x > -12 && bullet->GetPosition().x < -4) {
 
 				damage02_ = true;
+				bullet->SetIsDead(true);
 			}
 		}
 		if (!damage03_) {
@@ -559,7 +609,28 @@ void Player::Update()
 				bullet->GetPosition().x > -4 && bullet->GetPosition().x < 4) {
 
 				damage03_ = true;
+				bullet->SetIsDead(true);
 			}
+		}
+
+		if (isBossStaging_ == true) {
+			if (bullet->GetPosition().x <= bossPos_.x + 70 && bullet->GetPosition().x >= bossPos_.x - 70 &&
+				bullet->GetPosition().y <= bossPos_.y + 20 && bullet->GetPosition().y >= bossPos_.y - 70 &&
+				bullet->GetPosition().z <= bossPos_.z + 70 && bullet->GetPosition().z >= bossPos_.z - 70) {
+
+
+				isBH_ = true;
+				bullet->SetIsDead(true);
+			}
+		}
+		if (isBH_ == true) {
+			bossTimer_++;
+			isBossHp_ = true;
+		}
+		if (bossTimer_ >= 5) {
+			isBossHp_ = false;
+			bossTimer_ = 0;
+			isBH_ = false;
 		}
 	}
 
@@ -626,6 +697,49 @@ void Player::Update()
 		}
 	}
 
+	if (pPosition_.z >= 100) {
+		isBossStaging_ = true;
+	}
+
+	if (isBossHp_) {
+		if (enemyHpScale_.x >= 0) {
+			enemyHpScale_.x -= enemyHpMove_.x;
+			isBossDamage_ = true;
+		}
+	}
+	enemyHp_->SetScale(enemyHpScale_);
+	enemyHp_->SpriteTransferVertexBuffer(enemyHp_.get(), spriteCommon_, 7);
+	enemyHp_->SpriteUpdate(enemyHp_.get(), spriteCommon_);
+
+	// 敵のHPフェード処理
+	if (isBossStaging_ == true) {
+		if (enemyAlpha_ <= 1.0f) {
+			enemyAlpha_ += 0.05f;
+			enemyHp_->SetAlpha(enemyAlpha_);
+			enemyHpBar_->SetAlpha(enemyAlpha_);
+			enemyHpBack_->SetAlpha(enemyAlpha_);
+		}
+	}
+
+	if (isBossDamage_) {
+		bossDamageTimer_++;
+		if (enemyHpScale_.x >= 0) {
+			if (enemyHpScale_.x > 300 && enemyHpScale_.x <= 500) {
+				enemyHpScale_.x -= 5;
+			}
+			if (enemyHpScale_.x <= 300 && enemyHpScale_.x > 100) {
+				enemyHpScale_.x -= 5;
+			}
+		}
+	}
+	if (bossDamageTimer_ >= 20) {
+		isBossDamage_ = false;
+		bossDamageTimer_ = 0;
+	}
+	if (enemyHpScale_.x <= 0) {
+		isBoss_ = true;
+	}
+
 #ifdef _DEBUG
 
 	if (input_->PushKey(DIK_UP)) {
@@ -656,6 +770,10 @@ void Player::Draw()
 	// プレイヤーのモデルの描画
 	if (isPlayer_) {
 		playerO3_->Draw();
+	}
+
+	if (isBossStaging_ == true && isBoss_ == false) {
+		bossObj_->Draw();
 	}
 
 	/*if (!isStartStaging_) {
@@ -759,4 +877,17 @@ void Player::Shake()
 	
 	Object3d::SetEye(eye_);
 	playerO3_->SetPosition(pPosition_);
+}
+
+void Player::SpriteDraw()
+{
+	Sprite::PreDraw(DirectXCommon::GetInstance()->GetCommandList(), spriteCommon_);
+	// 敵のHP
+	if (isBossStaging_ == true && isBoss_ == false) {
+
+		enemyHpBar_->SpriteDraw(spriteCommon_);
+		enemyHpBack_->SpriteDraw(spriteCommon_);
+		enemyHp_->SpriteDraw(spriteCommon_);
+	}
+	Sprite::PostDraw();
 }
