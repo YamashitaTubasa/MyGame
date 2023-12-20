@@ -24,7 +24,7 @@ void Skydome::Initialize()
 	skydomeObj_->SetModel(skydomeModel_.get());
 	// オブジェクトの位置の設定
 	skydomeObj_->SetPosition({ 0,30,0 });
-	skydomeObj_->SetScale({ 300,300,300 });
+	skydomeObj_->SetScale({ 500,500,500 });
 	skydomeObj_->SetRotation(rotate_);
 }
 

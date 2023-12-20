@@ -95,15 +95,21 @@ private:
 	std::unique_ptr<Sprite> hp_ = nullptr;
 	std::unique_ptr<Sprite> hpBar_ = nullptr;
 	std::unique_ptr<Sprite> hpBack_ = nullptr;
-	std::unique_ptr<Sprite> enemyHp_ = nullptr;
-	std::unique_ptr<Sprite> enemyHpBar_ = nullptr;
-	std::unique_ptr<Sprite> enemyHpBack_ = nullptr;
 	std::unique_ptr<Sprite> ult_ = nullptr;
 	std::unique_ptr<Sprite> X_ = nullptr;
 	std::unique_ptr<Sprite> damage_ = nullptr;
 	std::unique_ptr<Sprite> white_ = nullptr;
 	std::unique_ptr<Sprite> black_ = nullptr;
 	std::unique_ptr<Sprite> number_[5];
+	std::unique_ptr<Sprite> w_;
+	std::unique_ptr<Sprite> a_;
+	std::unique_ptr<Sprite> s_;
+	std::unique_ptr<Sprite> d_;
+	std::unique_ptr<Sprite> move_;
+	std::unique_ptr<Sprite> spin_;
+	std::unique_ptr<Sprite> u_;
+	std::unique_ptr<Sprite> space_;
+	std::unique_ptr<Sprite> attack_;
 	SpriteCommon spriteCommon_;
 
 	// パーティクル
@@ -133,11 +139,6 @@ private:
 	DirectX::XMFLOAT3 hpMove_ = { 10, 0, 0 };
 	DirectX::XMFLOAT3 hpBarPosition_ = { 29,29,0 };
 	DirectX::XMFLOAT3 hpBackPosition_ = { 30,30,0 };
-	DirectX::XMFLOAT3 enemyHpPosition_ = { 1250,30,0 };
-	DirectX::XMFLOAT2 enemyHpScale_ = { 500, 20 };
-	DirectX::XMFLOAT3 enemyHpMove_ = { -1, 0, 0 };
-	DirectX::XMFLOAT3 enemyHpBarPosition_ = { 1251,29,0 };
-	DirectX::XMFLOAT3 enemyHpBackPosition_ = { 1251,30,0 };
 
 	bool isPushD_ = false;
 	bool isPushA_ = false;

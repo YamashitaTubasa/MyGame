@@ -20,6 +20,7 @@
 #include "Enemy.h"
 #include "Particle.h"
 #include "ParticleManager.h"
+#include "Sprite.h"
 
 #include <DirectXMath.h>
 #include <cmath>
@@ -28,6 +29,11 @@
 
 class Player : public Object3d
 {
+private: // エイリアス
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+
 public:
 	// コンストラクタ
 	Player();
@@ -79,6 +85,11 @@ public: // メンバ関数
 	/// </summary>
 	void Shake();
 
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void SpriteDraw();
+
 public: // ゲッター
 	/// <summary>
 	/// プレイヤーの座標の取得
@@ -129,6 +140,13 @@ public: // ゲッター
 	void SetDamage02(bool damage02) { damage02_ = damage02; }
 	void SetDamage03(bool damage03) { damage03_ = damage03; }
 
+	/// <summary>
+	/// ボスフラグの取得
+	/// </summary>
+	bool GetIsBoss() const { return isBoss_; }
+	bool GetIsBossStaging() const { return isBossStaging_; }
+	bool GetIsBossHp() const { return isBossHp_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 
@@ -136,11 +154,19 @@ private: // メンバ変数
 	std::unique_ptr<Object3d> playerO3_ = nullptr;
 	std::unique_ptr<Object3d> reticleO3_ = nullptr;
 	std::unique_ptr<Object3d> reticle1O3_ = nullptr;
+	std::unique_ptr<Object3d> bossObj_;
 
 	// モデル
 	std::unique_ptr<Model> playerM_;
 	std::unique_ptr<Model> reticleM_;
 	std::unique_ptr<Model> reticle1M_;
+	std::unique_ptr<Model> bossModel_;
+
+	std::unique_ptr<Sprite> sprite_ = nullptr;
+	std::unique_ptr<Sprite> enemyHp_ = nullptr;
+	std::unique_ptr<Sprite> enemyHpBar_ = nullptr;
+	std::unique_ptr<Sprite> enemyHpBack_ = nullptr;
+	SpriteCommon spriteCommon_;
 
 	// 入力
 	Input* input_ = nullptr;
@@ -187,6 +213,28 @@ private: // メンバ変数
 	// レティクルのサイズ
 	DirectX::XMFLOAT3 rScale_ = { 0.4f, 0.4f, 0.4f };
 	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
+
+	// ボスの移動量
+	DirectX::XMFLOAT3 bossMove_ = { 0,0.25,0 };
+	// ボスの座標
+	DirectX::XMFLOAT3 bossPos_ = { 0,-1,150 };
+	// ボスの回転
+	DirectX::XMFLOAT3 bossRot_ = { 0,180,0 };
+	// ボスのサイズ
+	DirectX::XMFLOAT3 bossScale_ = { 70,70,70 };
+	bool isBossHp_ = false;
+	int bossHp_ = 0;
+	int bossTimer_ = 0;
+	bool isBH_ = false;
+
+	DirectX::XMFLOAT3 enemyHpPosition_ = { 1250,30,0 };
+	DirectX::XMFLOAT2 enemyHpScale_ = { 500, 20 };
+	DirectX::XMFLOAT3 enemyHpMove_ = { 10, 0, 0 };
+	DirectX::XMFLOAT3 enemyHpBarPosition_ = { 1251,29,0 };
+	DirectX::XMFLOAT3 enemyHpBackPosition_ = { 1251,30,0 };
+	float enemyAlpha_ = 0.0f;
+	bool isBossDamage_ = false;
+	int bossDamageTimer_ = 0;
 
 	// 視点
 	DirectX::XMFLOAT3 eye_ = { 0, 0, -120 };
@@ -244,6 +292,9 @@ private: // メンバ変数
 	bool isGameClearStaging_ = false;
 	// ゲームオーバーの演出
 	const float playerFall_ = 0.05f;
+	// ボスフラグ
+	bool isBoss_ = false;
+	bool isBossStaging_ = false;
 
 	// 爆発パーティクル
 	const float particleBombPosX_ = 0.0f;
