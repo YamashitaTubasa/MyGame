@@ -15,16 +15,15 @@ void WorldTransform::Initialize()
 
 void WorldTransform::CreateConstBuffer()
 {
-	HRESULT result;
-
 	// ヒーププロパティ
-	CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
+	CD3DX12_HEAP_PROPERTIES heapProps = 
+		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	// リソース設定
 	CD3DX12_RESOURCE_DESC resourceDesc =
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff);
 
 	// 定数バッファの生成
-	result = DirectXCommon::GetInstance()->GetDevice()->CreateCommittedResource(
+	HRESULT result = DirectXCommon::GetInstance()->GetDevice()->CreateCommittedResource(
 		&heapProps, // アップロード可能
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
@@ -37,8 +36,7 @@ void WorldTransform::CreateConstBuffer()
 void WorldTransform::Map()
 {
 	// 定数バッファとのデータリンク
-	HRESULT result;
-	result = constBuffer_->Map(0, nullptr, (void**)&constMap_);
+	HRESULT result = constBuffer_->Map(0, nullptr, (void**)&constMap_);
 	assert(SUCCEEDED(result));
 }
 

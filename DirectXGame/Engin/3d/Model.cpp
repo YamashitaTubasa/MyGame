@@ -32,7 +32,6 @@ Model::Model()
 
 Model::~Model()
 {
-	//device->Release();
 }
 
 Model* Model::LoadFromOBJ(const string& modelname)
