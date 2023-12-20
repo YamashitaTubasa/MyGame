@@ -192,7 +192,7 @@ void Player::Update()
 	// パーティクルの実行
 	particleMan_->Execution(particle_.get(), particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
 
-	if (hp_ == -20) {
+	if (hp_ <= -20) {
 
 		isGameOverStaging_ = true;
 	}
@@ -614,9 +614,9 @@ void Player::Update()
 		}
 
 		if (isBossStaging_ == true) {
-			if (bullet->GetPosition().x <= bossPos_.x + 70 && bullet->GetPosition().x >= bossPos_.x - 70 &&
-				bullet->GetPosition().y <= bossPos_.y + 20 && bullet->GetPosition().y >= bossPos_.y - 70 &&
-				bullet->GetPosition().z <= bossPos_.z + 70 && bullet->GetPosition().z >= bossPos_.z - 70) {
+			if (bullet->GetPosition().x <= bossPos_.x + 20 && bullet->GetPosition().x >= bossPos_.x - 20 &&
+				bullet->GetPosition().y <= bossPos_.y + 10 && bullet->GetPosition().y >= bossPos_.y - 10 &&
+				bullet->GetPosition().z <= bossPos_.z + 10 && bullet->GetPosition().z >= bossPos_.z - 10) {
 
 
 				isBH_ = true;
@@ -626,12 +626,21 @@ void Player::Update()
 		if (isBH_ == true) {
 			bossTimer_++;
 			isBossHp_ = true;
+			hp_ -= 1;
 		}
 		if (bossTimer_ >= 5) {
 			isBossHp_ = false;
 			bossTimer_ = 0;
 			isBH_ = false;
 		}
+	}
+
+	if (pPosition_.x <= bossPos_.x + 20 && pPosition_.x >= bossPos_.x - 20 &&
+		pPosition_.y <= bossPos_.y + 10 && pPosition_.y >= bossPos_.y - 10 &&
+		pPosition_.z <= bossPos_.z + 10 && pPosition_.z >= bossPos_.z - 10) {
+
+
+		isBd_ = true;
 	}
 
 	if (pPosition_.x >= -2 && pPosition_.x <= 2 && pPosition_.y >= -2 && pPosition_.y <= 2 && pPosition_.z <= 9 && pPosition_.z >= 5) {
@@ -883,7 +892,7 @@ void Player::SpriteDraw()
 {
 	Sprite::PreDraw(DirectXCommon::GetInstance()->GetCommandList(), spriteCommon_);
 	// 敵のHP
-	if (isBossStaging_ == true && isBoss_ == false) {
+	if (isBossStaging_ == true && isBoss_ == false || isGameOverStaging_ == true) {
 
 		enemyHpBar_->SpriteDraw(spriteCommon_);
 		enemyHpBack_->SpriteDraw(spriteCommon_);

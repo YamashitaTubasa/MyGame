@@ -172,7 +172,7 @@ void GamePlayScene::Update()
 	black_->SetAlpha(bAlpha_);
 
 	// ダメージの処理
-	if (isDamage_) {
+	if (isDamage_ == true || player_->GetIsBd() == true) {
 		damageTime_++;
 		player_->Shake();
 		if (hpScale_.x >= 0) {
@@ -295,7 +295,7 @@ void GamePlayScene::Draw()
 	//number[1]->SpriteDraw(spriteCommon_);
 
 	// ダメージの描画
-	if (isDamage_) {
+	if (isDamage_ == true || player_->GetIsBd() == true) {
 		damage_->SpriteDraw(spriteCommon_);
 	}
 	// 黒
@@ -444,7 +444,7 @@ void GamePlayScene::SpriteInitialize()
 	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w.png");
 	w_->SpriteCreate(1280, 720, 14, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	w_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	w_->SetPosition({ 60,460, 0 });
+	w_->SetPosition({ 65,460, 0 });
 	w_->SetScale(XMFLOAT2(64 * 0.6f, 64 * 0.6f));
 	w_->SetRotation(0.0f);
 	w_->SpriteTransferVertexBuffer(w_.get(), spriteCommon_, 14);
@@ -464,7 +464,7 @@ void GamePlayScene::SpriteInitialize()
 	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s.png");
 	s_->SpriteCreate(1280, 720, 16, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	s_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	s_->SetPosition({ 60,560, 0 });
+	s_->SetPosition({ 65,560, 0 });
 	s_->SetScale(XMFLOAT2(64 * 0.6f, 64 * 0.6f));
 	s_->SetRotation(0.0f);
 	s_->SpriteTransferVertexBuffer(s_.get(), spriteCommon_, 16);
