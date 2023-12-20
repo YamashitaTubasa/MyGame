@@ -439,7 +439,7 @@ void GamePlayScene::SpriteInitialize()
 	black_->SpriteTransferVertexBuffer(black_.get(), spriteCommon_, 13);
 	black_->SpriteUpdate(black_.get(), spriteCommon_);
 
-	// w
+	// W
 	w_ = std::make_unique<Sprite>();
 	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w.png");
 	w_->SpriteCreate(1280, 720, 14, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
