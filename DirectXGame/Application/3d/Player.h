@@ -146,6 +146,7 @@ public: // ゲッター
 	bool GetIsBoss() const { return isBoss_; }
 	bool GetIsBossStaging() const { return isBossStaging_; }
 	bool GetIsBossHp() const { return isBossHp_; }
+	bool GetIsBd() const { return isBd_; }
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -226,6 +227,7 @@ private: // メンバ変数
 	int bossHp_ = 0;
 	int bossTimer_ = 0;
 	bool isBH_ = false;
+	bool isBd_ = false;
 
 	DirectX::XMFLOAT3 enemyHpPosition_ = { 1250,30,0 };
 	DirectX::XMFLOAT2 enemyHpScale_ = { 500, 20 };
