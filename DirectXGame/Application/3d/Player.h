@@ -90,6 +90,11 @@ public: // メンバ関数
 	/// </summary>
 	void SpriteDraw();
 
+	/// <summary>
+	/// 回転
+	/// </summary>
+	void Spin();
+
 public: // ゲッター
 	/// <summary>
 	/// プレイヤーの座標の取得

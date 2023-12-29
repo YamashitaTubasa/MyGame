@@ -347,12 +347,9 @@ void GameTitleScene::Load()
 void GameTitleScene::PlayerRotation()
 {
 	// ブースト時の回転処理
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-		isEaseFlag_ = true;
-		isRot_ = true;
-		eFrame_ = defaultFrame_;
-	}
-
+	isEaseFlag_ = true;
+	isRot_ = true;
+	
 	if (isRot_) {
 		if (isEaseFlag_) {
 			eFrame_++;
