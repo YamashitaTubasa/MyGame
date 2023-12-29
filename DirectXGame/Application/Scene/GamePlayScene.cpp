@@ -262,6 +262,8 @@ void GamePlayScene::Draw()
 
 #pragma region スプライト描画
 
+	player_->SpriteDraw();
+
 	// スプライト描画前処理
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
@@ -308,7 +310,6 @@ void GamePlayScene::Draw()
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
-	player_->SpriteDraw();
 #pragma endregion
 
 	// ImGui描画
