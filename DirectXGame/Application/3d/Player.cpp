@@ -511,25 +511,7 @@ void Player::Update()
 	}
 	
 	// ブースト時の回転処理
-	if (input_->TriggerKey(DIK_U) || pPosition_.z == 100.000114f) {
-		isEaseFlag_ = true;
-		isRot_ = true;
-		eFrame_ = 0;
-	}
-	if (isRot_) {
-		if (isEaseFlag_) {
-			eFrame_++;
-		}
-
-		// 自機の回転
-		pRotation_.z = EasingManager::EaseOutQuintP(eFrame_, 0, 360, 60);
-
-		// 回転最大時の値の初期化
-		if (pRotation_.z == 360.0f) {
-			pRotation_.z = 0.0f;
-			isRot_ = false;
-		}
-	}
+	Player::Spin();
 
 	if (isBoss_ == true) {
 		isReticle_ = false;
@@ -899,4 +881,29 @@ void Player::SpriteDraw()
 		enemyHp_->SpriteDraw(spriteCommon_);
 	}
 	Sprite::PostDraw();
+}
+
+void Player::Spin()
+{
+	// イージングをオンにする
+	if (input_->TriggerKey(DIK_U)) {
+		isEaseFlag_ = true;
+		isRot_ = true;
+		eFrame_ = 0;
+	}
+
+	if (isRot_) {
+		if (isEaseFlag_) {
+			eFrame_++;
+		}
+
+		// 自機の回転
+		pRotation_.z = EasingManager::EaseOutQuintP(eFrame_, 0, 360, 60);
+
+		// 回転最大時の値の初期化
+		if (pRotation_.z == 360.0f) {
+			pRotation_.z = 0.0f;
+			isRot_ = false;
+		}
+	}
 }

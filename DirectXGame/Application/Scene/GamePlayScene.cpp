@@ -267,7 +267,8 @@ void GamePlayScene::Draw()
 	// スプライト描画前処理
 	Sprite::PreDraw(cmdList, spriteCommon_);
 
-	if (player_->GetIsStartStaging() == false && player_->GetIsGameClearStaging() == false && 
+	if (player_->GetIsStartStaging() == false &&
+		player_->GetIsGameClearStaging() == false && 
 		player_->GetIsGameOverStaging() == false) {
 
 		// HPバーの描画
@@ -292,7 +293,6 @@ void GamePlayScene::Draw()
 	//X->SpriteDraw(spriteCommon_);
 	// 0の描画
 	//number[0]->SpriteDraw(spriteCommon_);
-	
 	// 1の描画
 	//number[1]->SpriteDraw(spriteCommon_);
 
