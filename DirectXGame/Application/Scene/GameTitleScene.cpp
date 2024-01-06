@@ -19,7 +19,7 @@ GameTitleScene::~GameTitleScene()
 void GameTitleScene::Initialize()
 {
 	// DirectXCommonのインスタンス取得
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCommon_ = MyEngine::DirectXCommon::GetInstance();
 
 	// 天球の初期化
 	skydome_ = std::make_unique<Skydome>();
@@ -93,13 +93,13 @@ void GameTitleScene::Update()
 
 #ifdef _DEBUG
 
-	if (Input::GetInstance()->TriggerKey(DIK_P)) {
+	if (MyEngine::Input::GetInstance()->TriggerKey(DIK_P)) {
 		GameSceneManager::GetInstance()->ChangeScene("PLAY");
 	}
-	if (Input::GetInstance()->TriggerKey(DIK_O)) {
+	if (MyEngine::Input::GetInstance()->TriggerKey(DIK_O)) {
 		GameSceneManager::GetInstance()->ChangeScene("OVER");
 	}
-	if (Input::GetInstance()->TriggerKey(DIK_C)) {
+	if (MyEngine::Input::GetInstance()->TriggerKey(DIK_C)) {
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
 
@@ -128,7 +128,7 @@ void GameTitleScene::Draw()
 #pragma region スプライトの描画
 
 	// スプライト描画前処理
-	Sprite::PreDraw(cmdList, spriteCommon_);
+	MyEngine::Sprite::PreDraw(cmdList, spriteCommon_);
 
 	//=== スプライトの描画 ===//
 	if (!start_) {
@@ -157,7 +157,7 @@ void GameTitleScene::Draw()
 	}
 
 	// スプライト描画後処理
-	Sprite::PostDraw();
+	MyEngine::Sprite::PostDraw();
 
 #pragma endregion
 }
@@ -169,15 +169,15 @@ void GameTitleScene::Finalize()
 void GameTitleScene::LoadSprite()
 {
 	// スプライトの初期化
-	sprite_ = std::make_unique<Sprite>();
+	sprite_ = std::make_unique<MyEngine::Sprite>();
 	spriteCommon_ = sprite_->SpriteCommonCreate();
 
 	//===== タイトル描画の初期化 =====//
-	title_ = std::make_unique<Sprite>();
+	title_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	title_->LoadTexture(spriteCommon_, titleNum, L"Resources/Image/title.png");
 	// スプライトの生成
-	title_->SpriteCreate(WinApp::window_width, WinApp::window_height, titleNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	title_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, titleNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	title_->SetColor(titleColor_);
 	title_->SetPosition(titlePos_);
@@ -187,11 +187,11 @@ void GameTitleScene::LoadSprite()
 	title_->SpriteTransferVertexBuffer(title_.get(), spriteCommon_, titleNum);
 
 	//===== SPACEの描画 =====//
-	space_ = std::make_unique<Sprite>();
+	space_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	space_->LoadTexture(spriteCommon_, spaceNum, L"Resources/Image/pressSpace1.png");
 	// スプライトの生成
-	space_->SpriteCreate(WinApp::window_width, WinApp::window_height, spaceNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	space_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, spaceNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	space_->SetColor(spaceColor_);
 	space_->SetPosition(spacePos_);
@@ -202,11 +202,11 @@ void GameTitleScene::LoadSprite()
 	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, spaceNum);
 
 	//===== InBlackの描画 =====//
-	inBlack_ = std::make_unique<Sprite>();
+	inBlack_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	inBlack_->LoadTexture(spriteCommon_, inBlackNum, L"Resources/Image/white.png");
 	// スプライトの生成
-	inBlack_->SpriteCreate(WinApp::window_width, WinApp::window_height, inBlackNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	inBlack_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, inBlackNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	inBlack_->SetColor(inBlackColor_);
 	inBlack_->SetPosition(inBlackPosition_);
@@ -216,11 +216,11 @@ void GameTitleScene::LoadSprite()
 	inBlack_->SpriteTransferVertexBuffer(inBlack_.get(), spriteCommon_, inBlackNum);
 
 	//===== ロードの描画 =====//
-	nowLoading_ = std::make_unique<Sprite>();
+	nowLoading_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	nowLoading_->LoadTexture(spriteCommon_, nowLoadingNum, L"Resources/Image/nowLoading.png");
 	// スプライトの生成
-	nowLoading_->SpriteCreate(WinApp::window_width, WinApp::window_height, nowLoadingNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	nowLoading_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, nowLoadingNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	nowLoading_->SetColor(nowLoadingColor_);
 	nowLoading_->SetPosition(nowLoadingPos_);
@@ -230,11 +230,11 @@ void GameTitleScene::LoadSprite()
 	nowLoading_->SpriteTransferVertexBuffer(nowLoading_.get(), spriteCommon_, nowLoadingNum);
 
 	//===== 点の描画 =====//
-	dot_[0] = std::make_unique<Sprite>();
+	dot_[0] = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	dot_[0]->LoadTexture(spriteCommon_, dotZeroNum, L"Resources/Image/dot.png");
 	// スプライトの生成
-	dot_[0]->SpriteCreate(WinApp::window_width, WinApp::window_height, dotZeroNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	dot_[0]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, dotZeroNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	dot_[0]->SetColor(dotColor_[0]);
 	dot_[0]->SetPosition(dotPos_[0]);
@@ -243,11 +243,11 @@ void GameTitleScene::LoadSprite()
 	// スプライトの頂点バッファの転送
 	dot_[0]->SpriteTransferVertexBuffer(dot_[0].get(), spriteCommon_, dotZeroNum);
 
-	dot_[1] = std::make_unique<Sprite>();
+	dot_[1] = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	dot_[1]->LoadTexture(spriteCommon_, dotOneNum, L"Resources/Image/dot.png");
 	// スプライトの生成
-	dot_[1]->SpriteCreate(WinApp::window_width, WinApp::window_height, dotOneNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	dot_[1]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, dotOneNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	dot_[1]->SetColor(dotColor_[1]);
 	dot_[1]->SetPosition(dotPos_[1]);
@@ -256,11 +256,11 @@ void GameTitleScene::LoadSprite()
 	// スプライトの頂点バッファの転送
 	dot_[1]->SpriteTransferVertexBuffer(dot_[1].get(), spriteCommon_, dotOneNum);
 
-	dot_[2] = std::make_unique<Sprite>();
+	dot_[2] = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	dot_[2]->LoadTexture(spriteCommon_, dotTwoNum, L"Resources/Image/dot.png");
 	// スプライトの生成
-	dot_[2]->SpriteCreate(WinApp::window_width, WinApp::window_height, dotTwoNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	dot_[2]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, dotTwoNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	dot_[2]->SetColor(dotColor_[2]);
 	dot_[2]->SetPosition(dotPos_[2]);
@@ -372,7 +372,7 @@ void GameTitleScene::PlayerRotation()
 void GameTitleScene::SceneChange()
 {
 	if (isFadeIn_ == false && isFadeOut_ == false) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+		if (MyEngine::Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 
 			start_ = true;
 		}

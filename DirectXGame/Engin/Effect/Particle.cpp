@@ -26,8 +26,8 @@ using namespace Microsoft::WRL;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-ID3D12Device* Particle::device_ = nullptr;
-const string Particle::baseDirectory_ = "Resources/Image/";
+ID3D12Device* MyEngine::Particle::device_ = nullptr;
+const string MyEngine::Particle::baseDirectory_ = "Resources/Image/";
 
 // XMFLOAT3同士の加算処理
 const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::XMFLOAT3& rhs)
@@ -41,7 +41,7 @@ const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::X
 	return result;
 }
 
-std::unique_ptr<Particle> Particle::LoadFromOBJ(const std::string& filename)
+std::unique_ptr<MyEngine::Particle> MyEngine::Particle::LoadFromOBJ(const std::string& filename)
 {
 	// パーティクルのインスタンス生成
 	std::unique_ptr<Particle> particle = std::make_unique<Particle>();
@@ -58,7 +58,7 @@ std::unique_ptr<Particle> Particle::LoadFromOBJ(const std::string& filename)
 	return particle;
 }
 
-void Particle::Update()
+void MyEngine::Particle::Update()
 {
 	HRESULT result;
 
@@ -105,7 +105,7 @@ void Particle::Update()
 	}
 }
 
-void Particle::Draw(ID3D12GraphicsCommandList* cmdList)
+void MyEngine::Particle::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	// nullptrチェック
 	assert(device_);
@@ -125,7 +125,7 @@ void Particle::Draw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()), 1, 0, 0);
 }
 
-void Particle::LoadTexture(const std::string& filename)
+void MyEngine::Particle::LoadTexture(const std::string& filename)
 {
 	HRESULT result = S_FALSE;
 
@@ -205,7 +205,7 @@ void Particle::LoadTexture(const std::string& filename)
 	);
 }
 
-void Particle::InitializeDescriptorHeap()
+void MyEngine::Particle::InitializeDescriptorHeap()
 {
 	HRESULT result = S_FALSE;
 
@@ -223,7 +223,7 @@ void Particle::InitializeDescriptorHeap()
 	descriptorHandleIncrementSize_ = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
-void Particle::CreateModel()
+void MyEngine::Particle::CreateModel()
 {
 	HRESULT result = S_FALSE;
 
@@ -256,7 +256,7 @@ void Particle::CreateModel()
 	vbView_.StrideInBytes = sizeof(vertices_[0]);
 }
 
-void Particle::Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel,
+void MyEngine::Particle::Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel,
 	float start_scale, float end_scale)
 {
 	// リストに要素を追加

@@ -14,9 +14,9 @@ void MyGame::Initialize()
 	TYFramework::Initialize();
 
 	// ポストエフェクト
-	postEffect_ = std::make_unique<PostEffect>();
+	postEffect_ = std::make_unique<MyEngine::PostEffect>();
 	postEffect_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
-	postEffect1_ = std::make_unique<PostEffect>();
+	postEffect1_ = std::make_unique<MyEngine::PostEffect>();
 	postEffect1_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
 
 	// シーンファクトリを生成し、マネージャにセット

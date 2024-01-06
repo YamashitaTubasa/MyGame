@@ -51,6 +51,6 @@ private: // メンバ変数
 
 protected:
 	// スプライト
-	SpriteCommon spriteCommon_;
+	MyEngine::SpriteCommon spriteCommon_;
 };
 

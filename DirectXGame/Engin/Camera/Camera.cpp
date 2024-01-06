@@ -40,6 +40,6 @@ void Camera::UpdateProjectionMatrix()
 	// 透視投影
 	matProjection_ = XMMatrixPerspectiveFovLH(
 		XMConvertToRadians(60.0f),
-		(float)WinApp::window_width / WinApp::window_height, 0.1f, 1000.0f
+		(float)MyEngine::WinApp::window_width / MyEngine::WinApp::window_height, 0.1f, 1000.0f
 	);
 }

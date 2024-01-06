@@ -23,9 +23,9 @@ GamePlayScene::~GamePlayScene()
 
 void GamePlayScene::Initialize()
 {
-	winApp_ = WinApp::GetInstance();
-	input_ = Input::GetInstance();
-	dxCommon_ = DirectXCommon::GetInstance();
+	winApp_ = MyEngine::WinApp::GetInstance();
+	input_ = MyEngine::Input::GetInstance();
+	dxCommon_ = MyEngine::DirectXCommon::GetInstance();
 	collisionMan_ = CollisionManager::GetInstance();
 
 	// カメラ
@@ -56,11 +56,11 @@ void GamePlayScene::Initialize()
 	skydome_->Initialize();
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle_ = Particle::LoadFromOBJ("bombEffect.png");
-	blackSmoke_ = Particle::LoadFromOBJ("bomb.png");
+	particle_ = MyEngine::Particle::LoadFromOBJ("bombEffect.png");
+	blackSmoke_ = MyEngine::Particle::LoadFromOBJ("bomb.png");
 	// パーティクルの生成
-	particleMan_ = ParticleManager::Create();
-	blackSmokeMan_ = ParticleManager::Create();
+	particleMan_ = MyEngine::ParticleManager::Create();
+	blackSmokeMan_ = MyEngine::ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルセットする
 	particleMan_->SetModel(particle_.get());
 	blackSmokeMan_->SetModel(blackSmoke_.get());
@@ -249,14 +249,14 @@ void GamePlayScene::Draw()
 #pragma region パーティクルの描画
 
 	// パーティクル描画前処理
-	ParticleManager::PreDraw(cmdList);
+	MyEngine::ParticleManager::PreDraw(cmdList);
 
 	// パーティクルの描画
 	blackSmokeMan_->Draw();
 	player_->Effect();
 
 	// パーティクル描画後処理
-	ParticleManager::PostDraw();
+	MyEngine::ParticleManager::PostDraw();
 
 #pragma endregion
 
@@ -265,7 +265,7 @@ void GamePlayScene::Draw()
 	player_->SpriteDraw();
 
 	// スプライト描画前処理
-	Sprite::PreDraw(cmdList, spriteCommon_);
+	MyEngine::Sprite::PreDraw(cmdList, spriteCommon_);
 
 	if (player_->GetIsStartStaging() == false &&
 		player_->GetIsGameClearStaging() == false && 
@@ -309,7 +309,7 @@ void GamePlayScene::Draw()
 	}
 
 	// スプライト描画後処理
-	Sprite::PostDraw();
+	MyEngine::Sprite::PostDraw();
 #pragma endregion
 
 	// ImGui描画
@@ -323,13 +323,13 @@ void GamePlayScene::Finalize()
 void GamePlayScene::SpriteInitialize()
 {
 	// スプライト
-	sprite_ = std::make_unique<Sprite>();
+	sprite_ = std::make_unique<MyEngine::Sprite>();
 	spriteCommon_ = sprite_->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
+	MyEngine::PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 
 	// HP
-	hp_ = std::make_unique<Sprite>();
+	hp_ = std::make_unique<MyEngine::Sprite>();
 	hp_->LoadTexture(spriteCommon_, 1, L"Resources/Image/hp.png");
 	hp_->SpriteCreate(1280, 720, 1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	hp_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -339,7 +339,7 @@ void GamePlayScene::SpriteInitialize()
 	hp_->SpriteTransferVertexBuffer(hp_.get(), spriteCommon_, 1);
 	hp_->SpriteUpdate(hp_.get(), spriteCommon_);
 	// HPバー
-	hpBar_ = std::make_unique<Sprite>();
+	hpBar_ = std::make_unique<MyEngine::Sprite>();
 	hpBar_->LoadTexture(spriteCommon_, 2, L"Resources/Image/hpBar.png");
 	hpBar_->SpriteCreate(1280, 720, 2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	hpBar_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -349,7 +349,7 @@ void GamePlayScene::SpriteInitialize()
 	hpBar_->SpriteTransferVertexBuffer(hpBar_.get(), spriteCommon_, 2);
 	hpBar_->SpriteUpdate(hpBar_.get(), spriteCommon_);
 	// HP背景
-	hpBack_ = std::make_unique<Sprite>();
+	hpBack_ = std::make_unique<MyEngine::Sprite>();
 	hpBack_->LoadTexture(spriteCommon_, 3, L"Resources/Image/hpBack.png");
 	hpBack_->SpriteCreate(1280, 720, 3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	hpBack_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -359,7 +359,7 @@ void GamePlayScene::SpriteInitialize()
 	hpBack_->SpriteTransferVertexBuffer(hpBack_.get(), spriteCommon_, 3);
 	hpBack_->SpriteUpdate(hpBack_.get(), spriteCommon_);
 	// ULT
-	ult_ = std::make_unique<Sprite>();
+	ult_ = std::make_unique<MyEngine::Sprite>();
 	ult_->LoadTexture(spriteCommon_, 4, L"Resources/Image/ult.png");
 	ult_->SpriteCreate(1280, 720, 4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	ult_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -369,7 +369,7 @@ void GamePlayScene::SpriteInitialize()
 	ult_->SpriteTransferVertexBuffer(ult_.get(), spriteCommon_, 4);
 	ult_->SpriteUpdate(ult_.get(), spriteCommon_);
 	// X
-	X_ = std::make_unique<Sprite>();
+	X_ = std::make_unique<MyEngine::Sprite>();
 	X_->LoadTexture(spriteCommon_, 5, L"Resources/Image/x.png");
 	X_->SpriteCreate(1280, 720, 5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	X_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -379,7 +379,7 @@ void GamePlayScene::SpriteInitialize()
 	X_->SpriteTransferVertexBuffer(X_.get(), spriteCommon_, 5);
 	X_->SpriteUpdate(X_.get(), spriteCommon_);
 	// 0
-	number_[0] = std::make_unique<Sprite>();
+	number_[0] = std::make_unique<MyEngine::Sprite>();
 	number_[0]->LoadTexture(spriteCommon_, 10, L"Resources/Image/0.png");
 	number_[0]->SpriteCreate(1280, 720, 10, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[0]->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -389,7 +389,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[0]->SpriteTransferVertexBuffer(number_[0].get(), spriteCommon_, 10);
 	number_[0]->SpriteUpdate(number_[0].get(), spriteCommon_);
 	// 1
-	number_[1] = std::make_unique<Sprite>();
+	number_[1] = std::make_unique<MyEngine::Sprite>();
 	number_[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
 	number_[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -399,7 +399,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[1]->SpriteTransferVertexBuffer(number_[1].get(), spriteCommon_, 6);
 	number_[1]->SpriteUpdate(number_[1].get(), spriteCommon_);
 	// ダメージ
-	damage_ = std::make_unique<Sprite>();
+	damage_ = std::make_unique<MyEngine::Sprite>();
 	damage_->LoadTexture(spriteCommon_, 11, L"Resources/Image/damage.png");
 	damage_->SpriteCreate(1280, 720, 11, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	damage_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -410,7 +410,7 @@ void GamePlayScene::SpriteInitialize()
 	damage_->SpriteUpdate(damage_.get(), spriteCommon_);
 
 	//===== Whiteの描画 =====//
-	white_ = std::make_unique<Sprite>();
+	white_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	white_->LoadTexture(spriteCommon_, 12, L"Resources/Image/white.png");
 	// スプライトの生成
@@ -425,7 +425,7 @@ void GamePlayScene::SpriteInitialize()
 	white_->SpriteTransferVertexBuffer(white_.get(), spriteCommon_, 12);
 
 	//===== Blackの描画 =====//
-	black_ = std::make_unique<Sprite>();
+	black_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	black_->LoadTexture(spriteCommon_, 13, L"Resources/Image/black.png");
 	// スプライトの生成
@@ -441,7 +441,7 @@ void GamePlayScene::SpriteInitialize()
 	black_->SpriteUpdate(black_.get(), spriteCommon_);
 
 	// W
-	w_ = std::make_unique<Sprite>();
+	w_ = std::make_unique<MyEngine::Sprite>();
 	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w.png");
 	w_->SpriteCreate(1280, 720, 14, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	w_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -451,7 +451,7 @@ void GamePlayScene::SpriteInitialize()
 	w_->SpriteTransferVertexBuffer(w_.get(), spriteCommon_, 14);
 	w_->SpriteUpdate(w_.get(), spriteCommon_);
 	// a
-	a_ = std::make_unique<Sprite>();
+	a_ = std::make_unique<MyEngine::Sprite>();
 	a_->LoadTexture(spriteCommon_, 15, L"Resources/Image/a.png");
 	a_->SpriteCreate(1280, 720, 15, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	a_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -461,7 +461,7 @@ void GamePlayScene::SpriteInitialize()
 	a_->SpriteTransferVertexBuffer(a_.get(), spriteCommon_, 15);
 	a_->SpriteUpdate(a_.get(), spriteCommon_);
 	// s
-	s_ = std::make_unique<Sprite>();
+	s_ = std::make_unique<MyEngine::Sprite>();
 	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s.png");
 	s_->SpriteCreate(1280, 720, 16, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	s_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -471,7 +471,7 @@ void GamePlayScene::SpriteInitialize()
 	s_->SpriteTransferVertexBuffer(s_.get(), spriteCommon_, 16);
 	s_->SpriteUpdate(s_.get(), spriteCommon_);
 	// d
-	d_ = std::make_unique<Sprite>();
+	d_ = std::make_unique<MyEngine::Sprite>();
 	d_->LoadTexture(spriteCommon_, 17, L"Resources/Image/d.png");
 	d_->SpriteCreate(1280, 720, 17, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	d_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -481,7 +481,7 @@ void GamePlayScene::SpriteInitialize()
 	d_->SpriteTransferVertexBuffer(d_.get(), spriteCommon_, 17);
 	d_->SpriteUpdate(d_.get(), spriteCommon_);
 	// move
-	move_ = std::make_unique<Sprite>();
+	move_ = std::make_unique<MyEngine::Sprite>();
 	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move.png");
 	move_->SpriteCreate(1280, 720, 18, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	move_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -491,7 +491,7 @@ void GamePlayScene::SpriteInitialize()
 	move_->SpriteTransferVertexBuffer(move_.get(), spriteCommon_, 18);
 	move_->SpriteUpdate(move_.get(), spriteCommon_);
 	// spin
-	spin_ = std::make_unique<Sprite>();
+	spin_ = std::make_unique<MyEngine::Sprite>();
 	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin.png");
 	spin_->SpriteCreate(1280, 720, 19, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	spin_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -501,7 +501,7 @@ void GamePlayScene::SpriteInitialize()
 	spin_->SpriteTransferVertexBuffer(spin_.get(), spriteCommon_, 19);
 	spin_->SpriteUpdate(spin_.get(), spriteCommon_);
 	// u
-	u_ = std::make_unique<Sprite>();
+	u_ = std::make_unique<MyEngine::Sprite>();
 	u_->LoadTexture(spriteCommon_, 20, L"Resources/Image/u.png");
 	u_->SpriteCreate(1280, 720, 20, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	u_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -511,7 +511,7 @@ void GamePlayScene::SpriteInitialize()
 	u_->SpriteTransferVertexBuffer(u_.get(), spriteCommon_, 20);
 	u_->SpriteUpdate(u_.get(), spriteCommon_);
 	// space
-	space_ = std::make_unique<Sprite>();
+	space_ = std::make_unique<MyEngine::Sprite>();
 	space_->LoadTexture(spriteCommon_, 21, L"Resources/Image/space.png");
 	space_->SpriteCreate(1280, 720, 21, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	space_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -521,7 +521,7 @@ void GamePlayScene::SpriteInitialize()
 	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, 21);
 	space_->SpriteUpdate(space_.get(), spriteCommon_);
 	// space
-	attack_ = std::make_unique<Sprite>();
+	attack_ = std::make_unique<MyEngine::Sprite>();
 	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack.png");
 	attack_->SpriteCreate(1280, 720, 22, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	attack_->SetColor(XMFLOAT4(1, 1, 1, 1));

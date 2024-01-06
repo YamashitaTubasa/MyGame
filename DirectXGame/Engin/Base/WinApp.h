@@ -12,55 +12,58 @@
 #include <Windows.h>
 #pragma warning(pop)
 
-class WinApp final
+namespace MyEngine
 {
-public: // 静的メンバ関数
-	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	class WinApp final
+	{
+	public: // 静的メンバ関数
+		static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-public: // メンバ関数
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	void Initialize();
+	public: // メンバ関数
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		void Initialize();
 
-	/// <summary>
-	/// 解放
-	/// </summary>
-	void Finalize();
+		/// <summary>
+		/// 解放
+		/// </summary>
+		void Finalize();
 
-	/// <summary>
-	/// メッセージの処理
-	/// </summary>
-	/// <returns></returns>
-	bool ProcessMessage();
+		/// <summary>
+		/// メッセージの処理
+		/// </summary>
+		/// <returns></returns>
+		bool ProcessMessage();
 
-public: // Getter
-	[[maybe_unused]] HWND GetHwnd() const { return hwnd_; }
-	[[maybe_unused]] HINSTANCE GetHInstance() const { return wc_.hInstance; }
+	public: // Getter
+		[[maybe_unused]] HWND GetHwnd() const { return hwnd_; }
+		[[maybe_unused]] HINSTANCE GetHInstance() const { return wc_.hInstance; }
 
-public:
-	// インスタンスの取得
-	static WinApp* GetInstance();
+	public:
+		// インスタンスの取得
+		static WinApp* GetInstance();
 
-private:
-	// コンストラクタ
-	[[maybe_unused]] WinApp() {};
-	// デストラクタ
-	~WinApp() = default;
-	// コピーコンストラクタの禁止
-	WinApp(const WinApp&) = delete;
-	// 代入演算子の禁止
-	WinApp& operator=(const WinApp&) = delete;
+	private:
+		// コンストラクタ
+		[[maybe_unused]] WinApp() {};
+		// デストラクタ
+		~WinApp() = default;
+		// コピーコンストラクタの禁止
+		WinApp(const WinApp&) = delete;
+		// 代入演算子の禁止
+		WinApp& operator=(const WinApp&) = delete;
 
-public: // 定数
-	// ウィンドウ横幅
-	static const int window_width = 1280;
-	// ウィンドウ縦幅
-	static const int window_height = 720;
+	public: // 定数
+		// ウィンドウ横幅
+		static const int window_width = 1280;
+		// ウィンドウ縦幅
+		static const int window_height = 720;
 
-private:
-	// ウィンドウハンドル
-	HWND hwnd_ = nullptr;
-	// ウィンドウクラスの設定
-	WNDCLASSEX wc_{};
+	private:
+		// ウィンドウハンドル
+		HWND hwnd_ = nullptr;
+		// ウィンドウクラスの設定
+		WNDCLASSEX wc_{};
+	};
 };

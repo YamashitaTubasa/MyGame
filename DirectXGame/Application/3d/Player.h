@@ -154,7 +154,7 @@ public: // ゲッター
 	bool GetIsBd() const { return isBd_; }
 
 private: // メンバ変数
-	DirectXCommon* dxCommon_ = nullptr;
+	MyEngine::DirectXCommon* dxCommon_ = nullptr;
 
 	// オブジェクト
 	std::unique_ptr<Object3d> playerO3_ = nullptr;
@@ -168,14 +168,14 @@ private: // メンバ変数
 	std::unique_ptr<Model> reticle1M_;
 	std::unique_ptr<Model> bossModel_;
 
-	std::unique_ptr<Sprite> sprite_ = nullptr;
-	std::unique_ptr<Sprite> enemyHp_ = nullptr;
-	std::unique_ptr<Sprite> enemyHpBar_ = nullptr;
-	std::unique_ptr<Sprite> enemyHpBack_ = nullptr;
-	SpriteCommon spriteCommon_;
+	std::unique_ptr<MyEngine::Sprite> sprite_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> enemyHp_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> enemyHpBar_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> enemyHpBack_ = nullptr;
+	MyEngine::SpriteCommon spriteCommon_;
 
 	// 入力
-	Input* input_ = nullptr;
+	MyEngine::Input* input_ = nullptr;
 	// カメラ
 	Camera* camera_ = nullptr;
 	// 自キャラ弾
@@ -184,14 +184,14 @@ private: // メンバ変数
 	std::list<std::unique_ptr<Enemy>> enemys_;
 	std::unique_ptr<Enemy> enemy_;
 	// パーティクル
-	std::unique_ptr<Particle> particle_ = nullptr;
-	std::unique_ptr<Particle> blackSmoke_ = nullptr;
-	std::unique_ptr<Particle> circleMan_ = nullptr;
-	std::unique_ptr<Particle> rotationParticle_ = nullptr;
-	std::unique_ptr<ParticleManager> particleMan_ = nullptr;
-	std::unique_ptr<ParticleManager> blackSmokeMan_ = nullptr;
-	std::unique_ptr<ParticleManager> circle_ = nullptr;
-	std::unique_ptr<ParticleManager> rotationParticleMan_ = nullptr;
+	std::unique_ptr<MyEngine::Particle> particle_ = nullptr;
+	std::unique_ptr<MyEngine::Particle> blackSmoke_ = nullptr;
+	std::unique_ptr<MyEngine::Particle> circleMan_ = nullptr;
+	std::unique_ptr<MyEngine::Particle> rotationParticle_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> particleMan_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> blackSmokeMan_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> circle_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> rotationParticleMan_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;

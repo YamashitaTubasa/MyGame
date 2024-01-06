@@ -6,15 +6,15 @@
 
 #include "ImGuiManager.h"
 
-ImGuiManager::ImGuiManager()
+MyEngine::ImGuiManager::ImGuiManager()
 {
 }
 
-ImGuiManager::~ImGuiManager()
+MyEngine::ImGuiManager::~ImGuiManager()
 {
 }
 
-void ImGuiManager::Initialize(DirectXCommon* dXCommon, WinApp* winApp) {
+void MyEngine::ImGuiManager::Initialize(DirectXCommon* dXCommon, WinApp* winApp) {
 
 	HRESULT result;
 
@@ -47,7 +47,7 @@ void ImGuiManager::Initialize(DirectXCommon* dXCommon, WinApp* winApp) {
 	io.Fonts->AddFontDefault();
 }
 
-void ImGuiManager::Finalize()
+void MyEngine::ImGuiManager::Finalize()
 {
 	// 後始末
 	ImGui_ImplDX12_Shutdown();
@@ -58,7 +58,7 @@ void ImGuiManager::Finalize()
 	srvHeap_.Reset();
 }
 
-void ImGuiManager::Begin()
+void MyEngine::ImGuiManager::Begin()
 {
 	// ImGuiフレーム開始
 	ImGui_ImplDX12_NewFrame();
@@ -66,13 +66,13 @@ void ImGuiManager::Begin()
 	ImGui::NewFrame();
 }
 
-void ImGuiManager::End()
+void MyEngine::ImGuiManager::End()
 {
 	// 描画準備
 	ImGui::Render();
 }
 
-void ImGuiManager::Draw(DirectXCommon* dXCommon)
+void MyEngine::ImGuiManager::Draw(DirectXCommon* dXCommon)
 {
 	ID3D12GraphicsCommandList* commandList = dXCommon->GetCommandList();
 
@@ -83,6 +83,6 @@ void ImGuiManager::Draw(DirectXCommon* dXCommon)
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList);
 }
 
-void ImGuiManager::MySaveFunction()
+void MyEngine::ImGuiManager::MySaveFunction()
 {
 }

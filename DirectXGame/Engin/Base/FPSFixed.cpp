@@ -6,12 +6,12 @@
 
 #include "FPSFixed.h"
 
-void FPSFixed::InitializeFixFPS() {
+void MyEngine::FPSFixed::InitializeFixFPS() {
 	// 現在時間を記録する
 	reference_ = std::chrono::steady_clock::now();
 }
 
-void FPSFixed::UpdateFixFPS() {
+void MyEngine::FPSFixed::UpdateFixFPS() {
 	// 1/60秒ぴったりの時間
 	const std::chrono::microseconds kMinTime(uint64_t(1000000.0f / 60.0f));
 	// 1/60秒よりわずかに短い時間

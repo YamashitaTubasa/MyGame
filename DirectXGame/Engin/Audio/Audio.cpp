@@ -6,14 +6,14 @@
 
 #include "Audio.h"
 
-Audio* Audio::GetInstance()
+MyEngine::Audio* MyEngine::Audio::GetInstance()
 {
 	static Audio instance;
 
 	return &instance;
 }
 
-void Audio::Initialize(const std::string& directoryPath)
+void MyEngine::Audio::Initialize(const std::string& directoryPath)
 {	
 	directoryPath_ = directoryPath;
 
@@ -26,7 +26,7 @@ void Audio::Initialize(const std::string& directoryPath)
 	assert(SUCCEEDED(result_));
 }
 
-void Audio::Finalize()
+void MyEngine::Audio::Finalize()
 {
 	// XAudio2解放
 	xAudio2_.Reset();
@@ -39,7 +39,7 @@ void Audio::Finalize()
 	soundDatas_.clear();
 }
 
-void Audio::LoadWave(const std::string& filename)
+void MyEngine::Audio::LoadWave(const std::string& filename)
 {
 	if (soundDatas_.find(filename) != soundDatas_.end()) {
 		// 重複読み込みなので、何もせず抜ける
@@ -114,7 +114,7 @@ void Audio::LoadWave(const std::string& filename)
 	soundDatas_.insert(std::make_pair(filename, soundData));
 }
 
-void Audio::Unload(SoundData* soundData) {
+void MyEngine::Audio::Unload(SoundData* soundData) {
 	// バッファのメモリを解放
 	delete[] soundData->pBuffer_;
 
@@ -123,7 +123,7 @@ void Audio::Unload(SoundData* soundData) {
 	soundData->wfex_ = {};
 }
 
-void Audio::PlayWave(const std::string& filename) {
+void MyEngine::Audio::PlayWave(const std::string& filename) {
 	std::map<std::string, SoundData>::iterator it = soundDatas_.find(filename);
 	// 未読み込みの検出
 	assert(it != soundDatas_.end());
@@ -146,7 +146,7 @@ void Audio::PlayWave(const std::string& filename) {
 	result_ = pSourceVoice->Start();
 }
 
-void Audio::LoopPlayWave(const std::string& filename)
+void MyEngine::Audio::LoopPlayWave(const std::string& filename)
 {
 	std::map<std::string, SoundData>::iterator it = soundDatas_.find(filename);
 	// 未読み込みの検出
@@ -171,7 +171,7 @@ void Audio::LoopPlayWave(const std::string& filename)
 	result_ = sVoice_->Start();
 }
 
-void Audio::StopWave(const std::string& filename)
+void MyEngine::Audio::StopWave(const std::string& filename)
 {
 	std::map<std::string, SoundData>::iterator it = soundDatas_.find(filename);
 	// 未読み込みの検出
@@ -195,7 +195,7 @@ void Audio::StopWave(const std::string& filename)
 	sVoice_->DestroyVoice();
 }
 
-void Audio::SetVolume(const std::string& filename, float volume)
+void MyEngine::Audio::SetVolume(const std::string& filename, float volume)
 {
 	std::map<std::string, SoundData>::iterator it = soundDatas_.find(filename);
 	// 未読み込みの検出

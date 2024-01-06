@@ -47,7 +47,7 @@ std::unique_ptr<Player> Player::Create(Model* model)
 
 bool Player::Initialize()
 {
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCommon_ = MyEngine::DirectXCommon::GetInstance();
 
 	if (!Object3d::Initialize()) {
 		return false;
@@ -99,26 +99,26 @@ bool Player::Initialize()
 	Object3d::SetTarget(target_);
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle_ = Particle::LoadFromOBJ("bombEffect.png");
-	blackSmoke_ = Particle::LoadFromOBJ("bombEffect.png");
-	rotationParticle_ = Particle::LoadFromOBJ("23682202.png");
+	particle_ = MyEngine::Particle::LoadFromOBJ("bombEffect.png");
+	blackSmoke_ = MyEngine::Particle::LoadFromOBJ("bombEffect.png");
+	rotationParticle_ = MyEngine::Particle::LoadFromOBJ("23682202.png");
 	// パーティクルの生成
-	particleMan_ = ParticleManager::Create();
-	blackSmokeMan_ = ParticleManager::Create();
-	rotationParticleMan_ = ParticleManager::Create();
+	particleMan_ = MyEngine::ParticleManager::Create();
+	blackSmokeMan_ = MyEngine::ParticleManager::Create();
+	rotationParticleMan_ = MyEngine::ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルを割り当てる
 	particleMan_->SetModel(particle_.get());
 	blackSmokeMan_->SetModel(blackSmoke_.get());
 	rotationParticleMan_->SetModel(rotationParticle_.get());
 
 	// スプライト
-	sprite_ = std::make_unique<Sprite>();
+	sprite_ = std::make_unique<MyEngine::Sprite>();
 	spriteCommon_ = sprite_->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
+	MyEngine::PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 
 	// 敵のHP
-	enemyHp_ = std::make_unique<Sprite>();
+	enemyHp_ = std::make_unique<MyEngine::Sprite>();
 	enemyHp_->LoadTexture(spriteCommon_, 7, L"Resources/Image/enemyHp.png");
 	enemyHp_->SpriteCreate(1280, 720, 7, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
 	enemyHp_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -129,7 +129,7 @@ bool Player::Initialize()
 	enemyHp_->SpriteTransferVertexBuffer(enemyHp_.get(), spriteCommon_, 7);
 	enemyHp_->SpriteUpdate(enemyHp_.get(), spriteCommon_);
 	// 敵のHPバー
-	enemyHpBar_ = std::make_unique<Sprite>();
+	enemyHpBar_ = std::make_unique<MyEngine::Sprite>();
 	enemyHpBar_->LoadTexture(spriteCommon_, 8, L"Resources/Image/enemyHpBar.png");
 	enemyHpBar_->SpriteCreate(1280, 720, 8, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
 	enemyHpBar_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -140,7 +140,7 @@ bool Player::Initialize()
 	enemyHpBar_->SpriteTransferVertexBuffer(enemyHpBar_.get(), spriteCommon_, 8);
 	enemyHpBar_->SpriteUpdate(enemyHpBar_.get(), spriteCommon_);
 	// 敵のHP背景
-	enemyHpBack_ = std::make_unique<Sprite>();
+	enemyHpBack_ = std::make_unique<MyEngine::Sprite>();
 	enemyHpBack_->LoadTexture(spriteCommon_, 9, L"Resources/Image/enemyHpBack.png");
 	enemyHpBack_->SpriteCreate(1280, 720, 9, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
 	enemyHpBack_->SetColor(XMFLOAT4(1, 1, 1, 1));
@@ -156,7 +156,7 @@ bool Player::Initialize()
 
 void Player::Update()
 {
-	input_ = Input::GetInstance();
+	input_ = MyEngine::Input::GetInstance();
 
 	//if (pPosition_.z >= -40) {
 	//	// ゲームプレイシーン（次シーン）を生成
@@ -872,7 +872,7 @@ void Player::Shake()
 
 void Player::SpriteDraw()
 {
-	Sprite::PreDraw(DirectXCommon::GetInstance()->GetCommandList(), spriteCommon_);
+	MyEngine::Sprite::PreDraw(MyEngine::DirectXCommon::GetInstance()->GetCommandList(), spriteCommon_);
 	// 敵のHP
 	if (isBossStaging_ == true && isBoss_ == false || isGameOverStaging_ == true) {
 
@@ -880,7 +880,7 @@ void Player::SpriteDraw()
 		enemyHpBack_->SpriteDraw(spriteCommon_);
 		enemyHp_->SpriteDraw(spriteCommon_);
 	}
-	Sprite::PostDraw();
+	MyEngine::Sprite::PostDraw();
 }
 
 void Player::Spin()

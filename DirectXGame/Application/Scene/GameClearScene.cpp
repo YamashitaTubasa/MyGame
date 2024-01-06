@@ -18,7 +18,7 @@ GameClearScene::~GameClearScene()
 
 void GameClearScene::Initialize()
 {
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCommon_ = MyEngine::DirectXCommon::GetInstance();
 
 	// スプライトの読み込み
 	GameClearScene::LoadSprite();
@@ -69,7 +69,7 @@ void GameClearScene::Draw()
 #pragma region スプライトの描画
 
 	// スプライト描画前処理
-	Sprite::PreDraw(cmdList, spriteCommon_);
+	MyEngine::Sprite::PreDraw(cmdList, spriteCommon_);
 
 	//=== スプライトの描画 ===//
 	clear_->SpriteDraw(spriteCommon_);
@@ -81,7 +81,7 @@ void GameClearScene::Draw()
 	}
 
 	// スプライト描画後処理
-	Sprite::PostDraw();
+	MyEngine::Sprite::PostDraw();
 
 #pragma endregion
 }
@@ -148,7 +148,7 @@ void GameClearScene::SceneChange()
 
 	// SPACEを押したら
 	if (isFadeIn_ == false && isFadeOut_ == false) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= changeSceneTimer_) {
+		if (MyEngine::Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= changeSceneTimer_) {
 			isFadeIn_ = true;
 		}
 	}
@@ -162,26 +162,26 @@ void GameClearScene::SceneChange()
 void GameClearScene::LoadSprite()
 {
 	// スプライト
-	sprite_ = std::make_unique<Sprite>();
+	sprite_ = std::make_unique<MyEngine::Sprite>();
 	spriteCommon_ = sprite_->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
+	MyEngine::PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 
 	// タイトル
-	clear_ = std::make_unique<Sprite>();
+	clear_ = std::make_unique<MyEngine::Sprite>();
 	clear_->LoadTexture(spriteCommon_, titleNum, L"Resources/Image/gameClear.png");
-	clear_->SpriteCreate(WinApp::window_width, WinApp::window_height, titleNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	clear_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, titleNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	clear_->SetColor(clearColor_);
 	clear_->SetPosition(clearPos_);
 	clear_->SetScale(clearScale_);
 	clear_->SpriteTransferVertexBuffer(clear_.get(), spriteCommon_, titleNum);
 
 	//===== SPACEの描画 =====//
-	space_ = std::make_unique<Sprite>();
+	space_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	space_->LoadTexture(spriteCommon_, spaceNum, L"Resources/Image/pressSpace1.png");
 	// スプライトの生成
-	space_->SpriteCreate(WinApp::window_width, WinApp::window_height, spaceNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	space_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, spaceNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	space_->SetColor(spaceColor_);
 	space_->SetPosition(spacePos_);
@@ -191,11 +191,11 @@ void GameClearScene::LoadSprite()
 	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, spaceNum);
 
 	//===== Blackの描画 =====//
-	black_ = std::make_unique<Sprite>();
+	black_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	black_->LoadTexture(spriteCommon_, blackNum, L"Resources/Image/white.png");
 	// スプライトの生成
-	black_->SpriteCreate(WinApp::window_width, WinApp::window_height, blackNum, spriteCommon_, defaultAnchorpoint_, false, false);
+	black_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, blackNum, spriteCommon_, defaultAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	black_->SetColor(blackColor_);
 	black_->SetPosition(blackPos_);

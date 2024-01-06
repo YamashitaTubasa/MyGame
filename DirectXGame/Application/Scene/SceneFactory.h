@@ -12,7 +12,7 @@
 #include "GameClearScene.h"
 #include "GameOverScene.h"
 
-class SceneFactory : public AbstractSceneFactory
+class SceneFactory : public MyEngine::AbstractSceneFactory
 {
 public:
 	/// <summary>
@@ -22,4 +22,3 @@ public:
 	/// <returns></returns>
 	GameBaseScene* CreateScene(const std::string& sceneName) override;
 };
-

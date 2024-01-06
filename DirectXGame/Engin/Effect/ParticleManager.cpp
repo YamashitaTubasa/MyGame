@@ -22,19 +22,19 @@ using namespace std;
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-const float ParticleManager::radius = 5.0f; // 底面の半径
-const float ParticleManager::prizmHeight = 8.0f; // 柱の高さ
-ID3D12Device* ParticleManager::device_ = nullptr;
-ID3D12GraphicsCommandList* ParticleManager::cmdList_ = nullptr;
-ComPtr<ID3D12RootSignature> ParticleManager::rootsignature_;
-ComPtr<ID3D12PipelineState> ParticleManager::pipelinestate_;
-XMMATRIX ParticleManager::matView_{};
-XMMATRIX ParticleManager::matProjection_{};
-XMFLOAT3 ParticleManager::eye_ = { 0,0,-5.0f };
-XMFLOAT3 ParticleManager::target_ = { 0, 0, 0 };
-XMFLOAT3 ParticleManager::up_ = { 0, 1, 0 };
-XMMATRIX ParticleManager::matBillboard_ = XMMatrixIdentity();
-XMMATRIX ParticleManager::matBillboardY_ = XMMatrixIdentity();
+const float MyEngine::ParticleManager::radius = 5.0f; // 底面の半径
+const float MyEngine::ParticleManager::prizmHeight = 8.0f; // 柱の高さ
+ID3D12Device* MyEngine::ParticleManager::device_ = nullptr;
+ID3D12GraphicsCommandList* MyEngine::ParticleManager::cmdList_ = nullptr;
+ComPtr<ID3D12RootSignature> MyEngine::ParticleManager::rootsignature_;
+ComPtr<ID3D12PipelineState> MyEngine::ParticleManager::pipelinestate_;
+XMMATRIX MyEngine::ParticleManager::matView_{};
+XMMATRIX MyEngine::ParticleManager::matProjection_{};
+XMFLOAT3 MyEngine::ParticleManager::eye_ = { 0,0,-5.0f };
+XMFLOAT3 MyEngine::ParticleManager::target_ = { 0, 0, 0 };
+XMFLOAT3 MyEngine::ParticleManager::up_ = { 0, 1, 0 };
+XMMATRIX MyEngine::ParticleManager::matBillboard_ = XMMatrixIdentity();
+XMMATRIX MyEngine::ParticleManager::matBillboardY_ = XMMatrixIdentity();
 
 // XMFLOAT3同士の加算処理
 //const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::XMFLOAT3& rhs)
@@ -48,7 +48,7 @@ XMMATRIX ParticleManager::matBillboardY_ = XMMatrixIdentity();
 //	return result;
 //}
 
-void ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
+void MyEngine::ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
 {
 	// nullptrチェック
 	assert(device);
@@ -63,7 +63,7 @@ void ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, i
 	InitializeGraphicsPipeline();
 }
 
-void ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
+void MyEngine::ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	// PreDrawとPostDrawがペアで呼ばれていなければエラー
 	assert(ParticleManager::cmdList_ == nullptr);
@@ -80,13 +80,13 @@ void ParticleManager::PreDraw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 }
 
-void ParticleManager::PostDraw()
+void MyEngine::ParticleManager::PostDraw()
 {
 	// コマンドリストを解除
 	ParticleManager::cmdList_ = nullptr;
 }
 
-std::unique_ptr<ParticleManager> ParticleManager::Create()
+std::unique_ptr<MyEngine::ParticleManager> MyEngine::ParticleManager::Create()
 {
 	// 3Dオブジェクトのインスタンスを生成
 	std::unique_ptr<ParticleManager> particleManager = std::make_unique<ParticleManager>();
@@ -103,21 +103,21 @@ std::unique_ptr<ParticleManager> ParticleManager::Create()
 	return particleManager;
 }
 
-void ParticleManager::SetEye(XMFLOAT3 eye)
+void MyEngine::ParticleManager::SetEye(XMFLOAT3 eye)
 {
 	ParticleManager::eye_ = eye;
 
 	UpdateViewMatrix();
 }
 
-void ParticleManager::SetTarget(XMFLOAT3 target)
+void MyEngine::ParticleManager::SetTarget(XMFLOAT3 target)
 {
 	ParticleManager::target_ = target;
 
 	UpdateViewMatrix();
 }
 
-void ParticleManager::CameraMoveVector(XMFLOAT3 move)
+void MyEngine::ParticleManager::CameraMoveVector(XMFLOAT3 move)
 {
 	XMFLOAT3 eye_moved = GetEye();
 	XMFLOAT3 target_moved = GetTarget();
@@ -134,7 +134,7 @@ void ParticleManager::CameraMoveVector(XMFLOAT3 move)
 	SetTarget(target_moved);
 }
 
-void ParticleManager::CameraMoveEyeVector(XMFLOAT3 move)
+void MyEngine::ParticleManager::CameraMoveEyeVector(XMFLOAT3 move)
 {
 	XMFLOAT3 eye_moved = GetEye();
 
@@ -145,7 +145,7 @@ void ParticleManager::CameraMoveEyeVector(XMFLOAT3 move)
 	SetEye(eye_moved);
 }
 
-void ParticleManager::InitializeCamera(int window_width, int window_height)
+void MyEngine::ParticleManager::InitializeCamera(int window_width, int window_height)
 {
 	// ビュー行列の生成
 	/*matView = XMMatrixLookAtLH(
@@ -168,7 +168,7 @@ void ParticleManager::InitializeCamera(int window_width, int window_height)
 	);
 }
 
-void ParticleManager::InitializeGraphicsPipeline()
+void MyEngine::ParticleManager::InitializeGraphicsPipeline()
 {
 	HRESULT result = S_FALSE;
 	ComPtr<ID3DBlob> vsBlob;    // 頂点シェーダオブジェクト
@@ -360,7 +360,7 @@ void ParticleManager::InitializeGraphicsPipeline()
 	pipelinestate_->SetName(L"ParticleMan[pipelinestate]");
 }
 
-void ParticleManager::UpdateViewMatrix()
+void MyEngine::ParticleManager::UpdateViewMatrix()
 {
 	// ビュー行列の更新
 	/*matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));*/
@@ -445,7 +445,7 @@ void ParticleManager::UpdateViewMatrix()
 #pragma endregion
 }
 
-bool ParticleManager::Initialize()
+bool MyEngine::ParticleManager::Initialize()
 {
 	// nullptrチェック
 	assert(device_);
@@ -469,7 +469,7 @@ bool ParticleManager::Initialize()
 	return true;
 }
 
-void ParticleManager::Update()
+void MyEngine::ParticleManager::Update()
 {
 	HRESULT result;
 	XMMATRIX matScale, matRot;
@@ -490,7 +490,7 @@ void ParticleManager::Update()
 	constBuff_->Unmap(0, nullptr);
 }
 
-void ParticleManager::Draw()
+void MyEngine::ParticleManager::Draw()
 {
 	// nullptrチェック
 	assert(device_);
@@ -502,7 +502,7 @@ void ParticleManager::Draw()
 	particle_->Draw(cmdList_);
 }
 
-void ParticleManager::Execution(Particle* particle, float posx, float posy, float posz, int life, float start_scale, float end_scale)
+void MyEngine::ParticleManager::Execution(Particle* particle, float posx, float posy, float posz, int life, float start_scale, float end_scale)
 {
 	for (int i = 0; i < 5; i++) {
 		// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布

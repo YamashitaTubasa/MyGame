@@ -30,143 +30,149 @@
 #include <DirectXTex.h>
 #pragma warning(pop)
 
-class DirectXCommon final
+namespace MyEngine 
 {
-public: // メンバ関数
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	/// <param name="winApp"></param>
-	void Initialize(WinApp* winApp);
+	class DirectXCommon final
+	{
+	private: // エイリアス
+		template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	/// <summary>
-	/// デバイスの初期化
-	/// </summary>
-	void InitializeDevice();
+	public: // メンバ関数
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="winApp"></param>
+		void Initialize(WinApp* winApp);
 
-	/// <summary>
-	/// コマンド関連の初期化
-	/// </summary>
-	void InitializeCommand();
+		/// <summary>
+		/// デバイスの初期化
+		/// </summary>
+		void InitializeDevice();
 
-	/// <summary>
-	/// スワップチェーンの初期化
-	/// </summary>
-	void InitializeSwapchain();
+		/// <summary>
+		/// コマンド関連の初期化
+		/// </summary>
+		void InitializeCommand();
 
-	/// <summary>
-	/// レンダーターゲットビューの初期化
-	/// </summary>
-	void InitializeRenderTargetView();
+		/// <summary>
+		/// スワップチェーンの初期化
+		/// </summary>
+		void InitializeSwapchain();
 
-	/// <summary>
-	/// 深度バッファの初期化
-	/// </summary>
-	void InitializeDepthBuffer();
+		/// <summary>
+		/// レンダーターゲットビューの初期化
+		/// </summary>
+		void InitializeRenderTargetView();
 
-	/// <summary>
-	/// フェンスの初期化
-	/// </summary>
-	void InitializeFence();
+		/// <summary>
+		/// 深度バッファの初期化
+		/// </summary>
+		void InitializeDepthBuffer();
 
-	/// <summary>
-	/// 描画前処理
-	/// </summary>
-	void PreDraw();
+		/// <summary>
+		/// フェンスの初期化
+		/// </summary>
+		void InitializeFence();
 
-	/// <summary>
-	/// 描画後処理
-	/// </summary>
-	void PostDraw();
+		/// <summary>
+		/// 描画前処理
+		/// </summary>
+		void PreDraw();
 
-	/// <summary>
-	/// 終了処理
-	/// </summary>
-	void fpsFixedFinalize();
+		/// <summary>
+		/// 描画後処理
+		/// </summary>
+		void PostDraw();
 
-public:
-	// DirectXCommonのインスタンス
-	static DirectXCommon* instance;
+		/// <summary>
+		/// 終了処理
+		/// </summary>
+		void fpsFixedFinalize();
 
-	/// <summary>
-	/// インスタンスの取得
-	/// </summary>
-	/// <returns></returns>
-	static DirectXCommon* GetInstance();
+	public:
+		// DirectXCommonのインスタンス
+		static DirectXCommon* instance;
 
-	/// <summary>
-	/// インスタンスの解放
-	/// </summary>
-	void DeleteInstance();
+		/// <summary>
+		/// インスタンスの取得
+		/// </summary>
+		/// <returns></returns>
+		static DirectXCommon* GetInstance();
 
-	/// <summary>
-	/// リソースリークチェック
-	/// </summary>
-	static void ResourceLeakCheck();
+		/// <summary>
+		/// インスタンスの解放
+		/// </summary>
+		void DeleteInstance();
 
-private:
-	// コンストラクタ
-	DirectXCommon() = default;
-	// デストラクタ
-	~DirectXCommon() = default;
-	// コピーコンストラクタの禁止
-	DirectXCommon(const DirectXCommon&) = delete;
-	// 代入演算子の禁止
-	DirectXCommon& operator=(const DirectXCommon&) = delete;
+		/// <summary>
+		/// リソースリークチェック
+		/// </summary>
+		static void ResourceLeakCheck();
 
-private: // メンバ関数
-	template <class T>
-	inline void safe_delete(T*& p) {
-		delete p;
-		p = nullptr;
-	}
-	
-public: // Getter
-	/// <summary>
-	/// デバイスの取得
-	/// </summary>
-	/// <returns></returns>
-	[[maybe_unused]] ID3D12Device* GetDevice() const { return device_.Get(); }
+	private:
+		// コンストラクタ
+		DirectXCommon() = default;
+		// デストラクタ
+		~DirectXCommon() = default;
+		// コピーコンストラクタの禁止
+		DirectXCommon(const DirectXCommon&) = delete;
+		// 代入演算子の禁止
+		DirectXCommon& operator=(const DirectXCommon&) = delete;
 
-	/// <summary>
-	/// コマンドリスト取得
-	/// </summary>
-	/// <returns></returns>
-	[[maybe_unused]] ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
+	private: // メンバ関数
+		template <class T>
+		inline void safe_delete(T*& p) {
+			delete p;
+			p = nullptr;
+		}
 
-	/// <summary>
-	/// バックバッファの数を取得
-	/// </summary>
-	/// <returns></returns>
-	[[maybe_unused]] size_t GetBackBufferCount() const { return backBuffers_.size(); }
+	public: // Getter
+		/// <summary>
+		/// デバイスの取得
+		/// </summary>
+		/// <returns></returns>
+		[[maybe_unused]] ID3D12Device* GetDevice() const { return device_.Get(); }
 
-private: 
-	// WindowsAPI
-	WinApp* winApp_ = nullptr;
-	// FPS
-	FPSFixed* fpsFixed_ = nullptr;
+		/// <summary>
+		/// コマンドリスト取得
+		/// </summary>
+		/// <returns></returns>
+		[[maybe_unused]] ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
 
-	// DirectX12デバイス
-	Microsoft::WRL::ComPtr<ID3D12Device> device_;
-	// DXGIファクトリ
-	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory_;
-	// スワップチェイン
-	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_;
-	// コマンドアロケータ
-	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_;
-	// コマンドリスト
-	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
-	// コマンドキュー
-	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_;
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap_;
-	Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff_;
-	//バックバッファ
-	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers_;
-	// フェンスの生成
-	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
+		/// <summary>
+		/// バックバッファの数を取得
+		/// </summary>
+		/// <returns></returns>
+		[[maybe_unused]] size_t GetBackBufferCount() const { return backBuffers_.size(); }
+
+	private:
+		// WindowsAPI
+		WinApp* winApp_ = nullptr;
+		// FPS
+		FPSFixed* fpsFixed_ = nullptr;
+
+		// DirectX12デバイス
+		Microsoft::WRL::ComPtr<ID3D12Device> device_;
+		// DXGIファクトリ
+		Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory_;
+		// スワップチェイン
+		Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_;
+		// コマンドアロケータ
+		Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_;
+		// コマンドリスト
+		Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
+		// コマンドキュー
+		Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_;
+		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
+		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap_;
+		Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff_;
+		//バックバッファ
+		std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers_;
+		// フェンスの生成
+		Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
 
 
-	UINT rtvHD_;
-	UINT64 fenceVal_ = 0;
+		UINT rtvHD_;
+		UINT64 fenceVal_ = 0;
+	};
 };

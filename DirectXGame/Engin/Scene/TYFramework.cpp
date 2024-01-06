@@ -6,7 +6,7 @@
 
 #include "TYFramework.h"
 
-void TYFramework::Run()
+void MyEngine::TYFramework::Run()
 {
 	// ゲームの初期化
 	Initialize();
@@ -30,7 +30,7 @@ void TYFramework::Run()
 	Finalize();
 }
 
-void TYFramework::Initialize()
+void MyEngine::TYFramework::Initialize()
 {
 	// WindowsAPIの初期化
 	winApp_ = WinApp::GetInstance();
@@ -65,7 +65,7 @@ void TYFramework::Initialize()
 	ParticleManager::StaticInitialize(dxCommon_->GetDevice(), WinApp::window_width, WinApp::window_height);
 }
 
-void TYFramework::Finalize()
+void MyEngine::TYFramework::Finalize()
 {
 	sceneManager_->Destroy();
 
@@ -82,7 +82,7 @@ void TYFramework::Finalize()
 	dxCommon_->DeleteInstance();
 }
 
-void TYFramework::Update()
+void MyEngine::TYFramework::Update()
 {
 	// Windowsのメッセージ処理
 	if (winApp_->ProcessMessage()) {
