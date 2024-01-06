@@ -6,23 +6,23 @@
 
 #include "Sprite.h"
 
-using namespace DirectX;
-using namespace Microsoft::WRL;
-using namespace std;
+//using namespace DirectX;
+//using namespace Microsoft::WRL;
+//using namespace std;
 
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-ID3D12GraphicsCommandList* Sprite::cmdList_ = nullptr;
+ID3D12GraphicsCommandList* MyEngine::Sprite::cmdList_ = nullptr;
 
-Sprite::Sprite([[maybe_unused]] UINT texNumber, [[maybe_unused]] XMFLOAT3 pos, [[maybe_unused]] XMFLOAT2 size, [[maybe_unused]] XMFLOAT4 color, [[maybe_unused]] XMFLOAT2 anchorpoint, [[maybe_unused]] bool isFlipX, [[maybe_unused]] bool isFlipY) {
+MyEngine::Sprite::Sprite([[maybe_unused]] UINT texNumber, [[maybe_unused]] XMFLOAT3 pos, [[maybe_unused]] XMFLOAT2 size, [[maybe_unused]] XMFLOAT4 color, [[maybe_unused]] XMFLOAT2 anchorpoint, [[maybe_unused]] bool isFlipX, [[maybe_unused]] bool isFlipY) {
 
 }
 
-Sprite::~Sprite() {
+MyEngine::Sprite::~Sprite() {
 }
 
-PipelineSet Sprite::SpriteCreateGraphicsPipeline() 
+MyEngine::PipelineSet MyEngine::Sprite::SpriteCreateGraphicsPipeline()
 {
 	HRESULT result;
 	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
@@ -213,7 +213,7 @@ PipelineSet Sprite::SpriteCreateGraphicsPipeline()
 	return pipelineSet;
 }
 
-void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumber, 
+void MyEngine::Sprite::SpriteCreate(float window_width, float window_height, UINT texNumber,
 	const SpriteCommon& spriteCommon, XMFLOAT2 anchorpoint, bool isFlipX, bool isFlipY) {
 
 	HRESULT result = S_FALSE;
@@ -303,11 +303,11 @@ void Sprite::SpriteCreate(float window_width, float window_height, UINT texNumbe
 	assert(SUCCEEDED(result));
 
 	//平行投影行列
-	constMap->mat_ = XMMatrixOrthographicOffCenterLH(0.0f, window_width, window_height, 0.0f, 0.0f, 1.0f);
+	constMap->mat_ = DirectX::XMMatrixOrthographicOffCenterLH(0.0f, window_width, window_height, 0.0f, 0.0f, 1.0f);
 	constBuff_->Unmap(0, nullptr);
 }
 
-void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList, const SpriteCommon& spriteCommon) 
+void MyEngine::Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList, const SpriteCommon& spriteCommon)
 {
 	// コマンドリストをセット
 	Sprite::cmdList_ = cmdList;
@@ -326,13 +326,13 @@ void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList, const SpriteCommon& spr
 	cmdList_->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 }
 
-void Sprite::PostDraw()
+void MyEngine::Sprite::PostDraw()
 {
 	// コマンドリストの解除
 	Sprite::cmdList_ = nullptr;
 }
 
-void Sprite::SpriteDraw(const SpriteCommon& spriteCommon) 
+void MyEngine::Sprite::SpriteDraw(const SpriteCommon& spriteCommon)
 {
 	// 非表示フラグがtrueなら
 	if (isInvisible_) {
@@ -357,7 +357,7 @@ void Sprite::SpriteDraw(const SpriteCommon& spriteCommon)
 	cmdList_->DrawInstanced(4, 1, 0, 0);
 }
 
-SpriteCommon Sprite::SpriteCommonCreate() 
+MyEngine::SpriteCommon MyEngine::Sprite::SpriteCommonCreate()
 {
 	HRESULT result = S_FALSE;
 
@@ -372,7 +372,7 @@ SpriteCommon Sprite::SpriteCommonCreate()
 	spriteCommon.pipelineSet_ = SpriteCreateGraphicsPipeline();
 
 	// 平行投影行列生成
-	spriteCommon.matProjection_ = XMMatrixOrthographicOffCenterLH(
+	spriteCommon.matProjection_ = DirectX::XMMatrixOrthographicOffCenterLH(
 		0.0f, WinApp::window_width, WinApp::window_height, 0.0f, 0.0f, 1.0f);
 
 	// デスクリプタヒープを生成
@@ -386,14 +386,14 @@ SpriteCommon Sprite::SpriteCommonCreate()
 	return spriteCommon;
 }
 
-void Sprite::SpriteUpdate(Sprite* sprite, const SpriteCommon& spriteCommon) 
+void MyEngine::Sprite::SpriteUpdate(Sprite* sprite, const SpriteCommon& spriteCommon)
 {
 	// ワールド行列の更新
-	sprite->matWorld_ = XMMatrixIdentity();
+	sprite->matWorld_ = DirectX::XMMatrixIdentity();
 	// Z軸回転
-	sprite->matWorld_ *= XMMatrixRotationZ(XMConvertToRadians(sprite->f_rotation_));
+	sprite->matWorld_ *= DirectX::XMMatrixRotationZ(DirectX::XMConvertToRadians(sprite->f_rotation_));
 	// 平行移動
-	sprite->matWorld_ *= XMMatrixTranslation(sprite->position_.x, sprite->position_.y, 0.0f);
+	sprite->matWorld_ *= DirectX::XMMatrixTranslation(sprite->position_.x, sprite->position_.y, 0.0f);
 
 	HRESULT result;
 	// 定数バッファの転送
@@ -402,7 +402,7 @@ void Sprite::SpriteUpdate(Sprite* sprite, const SpriteCommon& spriteCommon)
 	sprite->constBuff_->Unmap(0, nullptr);
 }
 
-void Sprite::LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar_t* filename) 
+void MyEngine::Sprite::LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar_t* filename)
 {
 	dxCommon_ = DirectXCommon::GetInstance();
 
@@ -415,21 +415,21 @@ void Sprite::LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar
 	ScratchImage scratchImg{};
 
 	// WICテクスチャのロード
-	result = LoadFromWICFile(filename, WIC_FLAGS_NONE, &metadata, scratchImg);
+	result = LoadFromWICFile(filename, DirectX::WIC_FLAGS_NONE, &metadata, scratchImg);
 	assert(SUCCEEDED(result));
 
 	ScratchImage mipChain{};
 	// ミップマップ生成
 	result = GenerateMipMaps(
 		scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain);
+		DirectX::TEX_FILTER_DEFAULT, 0, mipChain);
 	if (SUCCEEDED(result)) {
 		scratchImg = std::move(mipChain);
 		metadata = scratchImg.GetMetadata();
 	}
 
 	// 読み込んだディフューズテクスチャをSRGBとして扱う
-	metadata.format = MakeSRGB(metadata.format);
+	metadata.format = DirectX::MakeSRGB(metadata.format);
 
 	// リソース設定
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
@@ -449,7 +449,7 @@ void Sprite::LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar
 	
 	// テクスチャバッファにデータ転送
 	for (size_t i = 0; i < metadata.mipLevels; i++) {
-		const Image* img = scratchImg.GetImage(i, 0, 0); // 生データ抽出
+		const DirectX::Image* img = scratchImg.GetImage(i, 0, 0); // 生データ抽出
 		result = spriteCommon.texBuff_[texnumber]->WriteToSubresource(
 			(UINT)i,
 			nullptr, // 全領域へコピー
@@ -477,7 +477,7 @@ void Sprite::LoadTexture(SpriteCommon& spriteCommon, UINT texnumber, const wchar
 	);
 }
 
-void Sprite::SpriteTransferVertexBuffer(const Sprite* sprite, [[maybe_unused]] const SpriteCommon& spriteCommon, uint32_t texIndex)
+void MyEngine::Sprite::SpriteTransferVertexBuffer(const Sprite* sprite, [[maybe_unused]] const SpriteCommon& spriteCommon, uint32_t texIndex)
 {
 	HRESULT result = S_FALSE;
 
@@ -543,11 +543,11 @@ void Sprite::SpriteTransferVertexBuffer(const Sprite* sprite, [[maybe_unused]] c
 	sprite->vertBuff_->Unmap(0, nullptr);
 }
 
-void Sprite::Finalize()
+void MyEngine::Sprite::Finalize()
 {
 }
 
-void Sprite::SetAlpha(float alpha)
+void MyEngine::Sprite::SetAlpha(float alpha)
 {
 	// 定数バッファの転送
 	HRESULT result;

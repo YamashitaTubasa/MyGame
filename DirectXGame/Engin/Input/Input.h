@@ -29,70 +29,73 @@
 #pragma comment(lib,"dwrite.lib")
 #pragma comment (lib, "xinput.lib")
 
-class Input final
+namespace MyEngine 
 {
-public:
-	struct CountrolerState
+	class Input final
 	{
-		XINPUT_STATE state_; // コントローラーの状態の取得
-		XINPUT_VIBRATION vibration_;  // バイブレーション
-		//bool Connected;
+	public:
+		struct CountrolerState
+		{
+			XINPUT_STATE state_; // コントローラーの状態の取得
+			XINPUT_VIBRATION vibration_;  // バイブレーション
+			//bool Connected;
+		};
+		CountrolerState GamePad_;
+
+	public:
+		// namespace
+		template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+
+	public: // メンバ関数
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="winApp"></param>
+		void Initialize(WinApp* winApp);
+
+		/// <summary>
+		/// 更新
+		/// </summary>
+		void Update();
+
+		/// <summary>
+		/// キーの押下をチェック
+		/// </summary>
+		/// <param name = "keyNumber">キー番号(DIK_0 等)</param>
+		/// <returns>押されているか</returns>
+		bool PushKey(BYTE keyNumber);
+
+		/// <summary>
+		/// キーのトリガーをチェック
+		/// </summary>
+		/// </param name="keyNumber">キー番号( DIK_0 等)</param>
+		/// <reutrns>トリガーか</params>
+		bool TriggerKey(BYTE keyNumber);
+
+	public:
+		// インスタンスの取得
+		static Input* GetInstance();
+
+	private:
+		// コンストラクタ
+		Input() = default;
+		// デストラクタ
+		~Input() = default;
+		// コピーコンストラクタの禁止
+		Input(const Input&) = delete;
+		// 代入演算子の禁止
+		Input& operator=(const Input&) = delete;
+
+	private: // メンバ変数
+		// キーボードのデバイス
+		ComPtr<IDirectInputDevice8> keyboard_;
+		// DirectInputのインスタンス
+		ComPtr<IDirectInput8> directInput_;
+		// 全キーの状態
+		BYTE key_[256] = {};
+		// 前回の全キーの状態
+		BYTE keyPre_[256] = {};
+		// WindowsAPI
+		WinApp* winApp_ = nullptr;
 	};
-	CountrolerState GamePad_;
-
-public:
-	// namespace
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-
-public: // メンバ関数
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	/// <param name="winApp"></param>
-	void Initialize(WinApp* winApp);
-
-	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update();
-
-	/// <summary>
-	/// キーの押下をチェック
-	/// </summary>
-	/// <param name = "keyNumber">キー番号(DIK_0 等)</param>
-	/// <returns>押されているか</returns>
-	bool PushKey(BYTE keyNumber);
-
-	/// <summary>
-	/// キーのトリガーをチェック
-	/// </summary>
-	/// </param name="keyNumber">キー番号( DIK_0 等)</param>
-	/// <reutrns>トリガーか</params>
-	bool TriggerKey(BYTE keyNumber);
-
-public:
-	// インスタンスの取得
-	static Input* GetInstance();
-
-private:
-	// コンストラクタ
-	Input() = default;
-	// デストラクタ
-	~Input() = default;
-	// コピーコンストラクタの禁止
-	Input(const Input&) = delete;
-	// 代入演算子の禁止
-	Input& operator=(const Input&) = delete;
-
-private: // メンバ変数
-	// キーボードのデバイス
-	ComPtr<IDirectInputDevice8> keyboard_;
-	// DirectInputのインスタンス
-	ComPtr<IDirectInput8> directInput_;
-	// 全キーの状態
-	BYTE key_[256] = {};
-	// 前回の全キーの状態
-	BYTE keyPre_[256] = {};
-	// WindowsAPI
-	WinApp* winApp_ = nullptr;
 };

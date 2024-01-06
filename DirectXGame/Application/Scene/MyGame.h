@@ -8,7 +8,7 @@
 
 #include "TYFramework.h"
 
-class MyGame : public TYFramework
+class MyGame : public MyEngine::TYFramework
 {
 public: // メンバ関数
 	/// <summary>

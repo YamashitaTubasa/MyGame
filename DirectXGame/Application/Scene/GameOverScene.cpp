@@ -18,7 +18,7 @@ GameOverScene::~GameOverScene()
 
 void GameOverScene::Initialize()
 {
-	dxCommon_ = DirectXCommon::GetInstance();
+	dxCommon_ = MyEngine::DirectXCommon::GetInstance();
 
 	// スプライトの読み込み
 	GameOverScene::LoadSprite();
@@ -70,7 +70,7 @@ void GameOverScene::Draw()
 #pragma region スプライトの描画
 
 	// スプライト描画前処理
-	Sprite::PreDraw(cmdList, spriteCommon_);
+	MyEngine::Sprite::PreDraw(cmdList, spriteCommon_);
 
 	// タイトルの描画
 	black_->SpriteDraw(spriteCommon_);
@@ -85,7 +85,7 @@ void GameOverScene::Draw()
 	}
 
 	// スプライト描画後処理
-	Sprite::PostDraw();
+	MyEngine::Sprite::PostDraw();
 
 #pragma endregion
 }
@@ -153,7 +153,7 @@ void GameOverScene::SceneChange()
 
 	// 十字キーの右を押したら
 	if (isFadeIn_ == false && isFadeOut_ == false) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= changeSceneTimer_) {
+		if (MyEngine::Input::GetInstance()->TriggerKey(DIK_SPACE) || timer_ >= changeSceneTimer_) {
 			isFadeIn_ = true;
 		}
 	}
@@ -167,17 +167,17 @@ void GameOverScene::SceneChange()
 void GameOverScene::LoadSprite()
 {
 	// スプライト
-	sprite_ = std::make_unique<Sprite>();
+	sprite_ = std::make_unique<MyEngine::Sprite>();
 	spriteCommon_ = sprite_->SpriteCommonCreate();
 	// スプライト用パイプライン生成呼び出し
-	PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
+	MyEngine::PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
 
 	//===== 背景黒の描画 =====//
-	black_ = std::make_unique<Sprite>();
+	black_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	black_->LoadTexture(spriteCommon_, blackNum, L"Resources/Image/black.png");
 	// スプライトの生成
-	black_->SpriteCreate(WinApp::window_width, WinApp::window_height, blackNum, spriteCommon_, blackAnchorpoint_, false, false);
+	black_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, blackNum, spriteCommon_, blackAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	black_->SetColor(blackColor_);
 	black_->SetPosition(blackPos_);
@@ -186,11 +186,11 @@ void GameOverScene::LoadSprite()
 	black_->SpriteTransferVertexBuffer(black_.get(), spriteCommon_, blackNum);
 
 	//===== ゲームオーバー描画 =====//
-	over_ = std::make_unique<Sprite>();
+	over_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	over_->LoadTexture(spriteCommon_, overNum, L"Resources/Image/gameOver.png");
 	// スプライトの生成
-	over_->SpriteCreate(WinApp::window_width, WinApp::window_height, overNum, spriteCommon_, overAnchorpoint_, false, false);
+	over_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, overNum, spriteCommon_, overAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	over_->SetColor(overColor_);
 	over_->SetPosition(overPos_);
@@ -199,11 +199,11 @@ void GameOverScene::LoadSprite()
 	over_->SpriteTransferVertexBuffer(over_.get(), spriteCommon_, overNum);
 
 	//===== SPACEの描画 =====//
-	space_ = std::make_unique<Sprite>();
+	space_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	space_->LoadTexture(spriteCommon_, spaceNum, L"Resources/Image/pressSpace2.png");
 	// スプライトの生成
-	space_->SpriteCreate(WinApp::window_width, WinApp::window_height, spaceNum, spriteCommon_, spaceAnchorpoint_, false, false);
+	space_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, spaceNum, spriteCommon_, spaceAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	space_->SetColor(spaceColor_);
 	space_->SetPosition(spacePos_);
@@ -213,11 +213,11 @@ void GameOverScene::LoadSprite()
 	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, spaceNum);
 
 	//===== Blackの描画 =====//
-	fBlack_ = std::make_unique<Sprite>();
+	fBlack_ = std::make_unique<MyEngine::Sprite>();
 	// テクスチャの読み込み
 	fBlack_->LoadTexture(spriteCommon_, fBlackNum, L"Resources/Image/black.png");
 	// スプライトの生成
-	fBlack_->SpriteCreate(WinApp::window_width, WinApp::window_width, fBlackNum, spriteCommon_, fBlackAnchorpoint_, false, false);
+	fBlack_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_width, fBlackNum, spriteCommon_, fBlackAnchorpoint_, false, false);
 	// 色、座標、サイズ、回転角の設定
 	fBlack_->SetColor(fBlackColor_);
 	fBlack_->SetPosition(fBlackPos_);

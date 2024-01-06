@@ -54,7 +54,7 @@ public: // メンバ関数
 	/// シーンファクトリーのセット
 	/// </summary>
 	/// <param name="sceneFactory"></param>
-	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { sceneFactory_ = sceneFactory; }
+	void SetSceneFactory(MyEngine::AbstractSceneFactory* sceneFactory) { sceneFactory_ = sceneFactory; }
 
 private: // メンバ変数
 	// 今のシーン(実行中シーン)
@@ -62,6 +62,6 @@ private: // メンバ変数
 	// 次シーン
 	GameBaseScene* nextScene_ = nullptr;
 	// シーンファクトリー（借りてくる）
-	AbstractSceneFactory* sceneFactory_ = nullptr;
+	MyEngine::AbstractSceneFactory* sceneFactory_ = nullptr;
 };
 

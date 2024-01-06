@@ -12,14 +12,14 @@
 
 //using namespace Microsoft::WRL;
 
-Input* Input::GetInstance()
+MyEngine::Input* MyEngine::Input::GetInstance()
 {
 	static Input instance;
 
 	return &instance;
 }
 
-void Input::Initialize(WinApp* winApp)
+void MyEngine::Input::Initialize(WinApp* winApp)
 {
 	// 借りてきたWinAppのインスタンスを記録
 	this->winApp_ = winApp;
@@ -45,7 +45,7 @@ void Input::Initialize(WinApp* winApp)
 	assert(SUCCEEDED(result));
 }
 
-void Input::Update()
+void MyEngine::Input::Update()
 {
 	HRESULT result;
 
@@ -60,7 +60,7 @@ void Input::Update()
 	result = keyboard_->GetDeviceState(sizeof(key_), key_);
 }
 
-bool Input::PushKey(BYTE keyNumber) 
+bool MyEngine::Input::PushKey(BYTE keyNumber) 
 {
 	// 指定キーを押していればtrueを返す
 	if (key_[keyNumber]) {
@@ -70,7 +70,7 @@ bool Input::PushKey(BYTE keyNumber)
 	return false;
 }
 
-bool Input::TriggerKey(BYTE keyNumber)
+bool MyEngine::Input::TriggerKey(BYTE keyNumber)
 {
 	if (key_[keyNumber] && keyPre_[keyNumber] == false) {
 		return true;

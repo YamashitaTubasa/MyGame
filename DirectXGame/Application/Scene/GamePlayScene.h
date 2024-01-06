@@ -85,40 +85,40 @@ public:
 	bool CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1);
 
 private:
-	WinApp* winApp_ = nullptr;
-	DirectXCommon* dxCommon_ = nullptr;
+	MyEngine::WinApp* winApp_ = nullptr;
+	MyEngine::DirectXCommon* dxCommon_ = nullptr;
 	// 入力
-	Input* input_ = nullptr;
+	MyEngine::Input* input_ = nullptr;
 	
 	// スプライト
-	std::unique_ptr<Sprite> sprite_ = nullptr;
-	std::unique_ptr<Sprite> hp_ = nullptr;
-	std::unique_ptr<Sprite> hpBar_ = nullptr;
-	std::unique_ptr<Sprite> hpBack_ = nullptr;
-	std::unique_ptr<Sprite> ult_ = nullptr;
-	std::unique_ptr<Sprite> X_ = nullptr;
-	std::unique_ptr<Sprite> damage_ = nullptr;
-	std::unique_ptr<Sprite> white_ = nullptr;
-	std::unique_ptr<Sprite> black_ = nullptr;
-	std::unique_ptr<Sprite> number_[5];
-	std::unique_ptr<Sprite> w_;
-	std::unique_ptr<Sprite> a_;
-	std::unique_ptr<Sprite> s_;
-	std::unique_ptr<Sprite> d_;
-	std::unique_ptr<Sprite> move_;
-	std::unique_ptr<Sprite> spin_;
-	std::unique_ptr<Sprite> u_;
-	std::unique_ptr<Sprite> space_;
-	std::unique_ptr<Sprite> attack_;
-	SpriteCommon spriteCommon_;
+	std::unique_ptr<MyEngine::Sprite> sprite_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> hp_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> hpBar_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> hpBack_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> ult_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> X_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> damage_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> white_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> black_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> number_[5];
+	std::unique_ptr<MyEngine::Sprite> w_;
+	std::unique_ptr<MyEngine::Sprite> a_;
+	std::unique_ptr<MyEngine::Sprite> s_;
+	std::unique_ptr<MyEngine::Sprite> d_;
+	std::unique_ptr<MyEngine::Sprite> move_;
+	std::unique_ptr<MyEngine::Sprite> spin_;
+	std::unique_ptr<MyEngine::Sprite> u_;
+	std::unique_ptr<MyEngine::Sprite> space_;
+	std::unique_ptr<MyEngine::Sprite> attack_;
+	MyEngine::SpriteCommon spriteCommon_;
 
 	// パーティクル
-	std::unique_ptr<ParticleManager> particleMan_ = nullptr;
-	std::unique_ptr<ParticleManager> blackSmokeMan_ = nullptr;
-	std::unique_ptr<Particle> particle_ = nullptr;
-	std::unique_ptr<Particle> blackSmoke_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> particleMan_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> blackSmokeMan_ = nullptr;
+	std::unique_ptr<MyEngine::Particle> particle_ = nullptr;
+	std::unique_ptr<MyEngine::Particle> blackSmoke_ = nullptr;
 
-	ImGuiManager* imGuiManager_ = nullptr;
+	MyEngine::ImGuiManager* imGuiManager_ = nullptr;
 	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Enemy> enemy_;

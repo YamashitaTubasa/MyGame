@@ -16,9 +16,9 @@ using namespace DirectX;
 // 静的メンバ変数の実体
 //                                        Red  Green Blue  Alpha
 //const float PostEffect::clearColor[4] = { 0.25, 0.5, 0.1f, 0.0f }; // 緑っぽい色
-const float PostEffect::clearColor_[4] = { 0.1f, 0.25f, 0.5f, 0.0f };// 青っぽい色
+const float MyEngine::PostEffect::clearColor_[4] = { 0.1f, 0.25f, 0.5f, 0.0f };// 青っぽい色
 
-PostEffect::PostEffect()
+MyEngine::PostEffect::PostEffect()
 	: Sprite(
 		100, // テクスチャ番号
 		{ 0,0,0 }, // 座標
@@ -30,12 +30,12 @@ PostEffect::PostEffect()
 {
 }
 
-PostEffect::~PostEffect()
+MyEngine::PostEffect::~PostEffect()
 {
 	//device_->Release();
 }
 
-void PostEffect::Initialize(const wchar_t* filename)
+void MyEngine::PostEffect::Initialize(const wchar_t* filename)
 {
 	dxCommon_ = DirectXCommon::GetInstance();
 
@@ -237,7 +237,7 @@ void PostEffect::Initialize(const wchar_t* filename)
 	assert(SUCCEEDED(result));
 }
 
-void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
+void MyEngine::PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	// 非表示フラグがtrueなら
 	if (isInvisible_) {
@@ -271,7 +271,7 @@ void PostEffect::Draw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->DrawInstanced(4, 1, 0, 0);
 }
 
-void PostEffect::PreDraw(ID3D12GraphicsCommandList* cmdList)
+void MyEngine::PostEffect::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	CD3DX12_RESOURCE_BARRIER resourceBarrier =
 		CD3DX12_RESOURCE_BARRIER::Transition(texBuff_.Get(),
@@ -308,7 +308,7 @@ void PostEffect::PreDraw(ID3D12GraphicsCommandList* cmdList)
 		nullptr);
 }
 
-void PostEffect::PostDraw(ID3D12GraphicsCommandList* cmdList)
+void MyEngine::PostEffect::PostDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	CD3DX12_RESOURCE_BARRIER resourceBarriers =
 		CD3DX12_RESOURCE_BARRIER::Transition(texBuff_.Get(),
@@ -317,7 +317,7 @@ void PostEffect::PostDraw(ID3D12GraphicsCommandList* cmdList)
 	cmdList->ResourceBarrier(1, &resourceBarriers);
 }
 
-void PostEffect::CreateGraphicsPipelineState(const wchar_t* filename)
+void MyEngine::PostEffect::CreateGraphicsPipelineState(const wchar_t* filename)
 {
 	HRESULT result = S_FALSE;
 	ComPtr<ID3DBlob> vsBlob; // 頂点シェーダオブジェクト
@@ -460,7 +460,7 @@ void PostEffect::CreateGraphicsPipelineState(const wchar_t* filename)
 	assert(SUCCEEDED(result));
 }
 
-void PostEffect::SetColor(const DirectX::XMFLOAT4& color)
+void MyEngine::PostEffect::SetColor(const DirectX::XMFLOAT4& color)
 {
 	HRESULT result;
 
@@ -470,7 +470,7 @@ void PostEffect::SetColor(const DirectX::XMFLOAT4& color)
 	assert(SUCCEEDED(result));
 }
 
-void PostEffect::SetIsPostE(const bool& isPostE)
+void MyEngine::PostEffect::SetIsPostE(const bool& isPostE)
 {
 	HRESULT result;
 
@@ -480,7 +480,7 @@ void PostEffect::SetIsPostE(const bool& isPostE)
 	assert(SUCCEEDED(result));
 }
 
-void PostEffect::SetAlpha(const float& alpha)
+void MyEngine::PostEffect::SetAlpha(const float& alpha)
 {
 	HRESULT result;
 

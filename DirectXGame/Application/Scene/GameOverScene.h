@@ -78,16 +78,16 @@ private:
 	void LoadSprite();
 
 private: // メンバ変数
-	Input* input_ = nullptr;
-	DirectXCommon* dxCommon_ = nullptr;
+	MyEngine::Input* input_ = nullptr;
+	MyEngine::DirectXCommon* dxCommon_ = nullptr;
 
 	// スプライト
-	std::unique_ptr<Sprite> sprite_ = nullptr;
-	std::unique_ptr<Sprite> over_ = nullptr;
-	std::unique_ptr<Sprite> space_ = nullptr;
-	std::unique_ptr<Sprite> black_ = nullptr;
-	std::unique_ptr<Sprite> fBlack_ = nullptr;
-	SpriteCommon spriteCommon_;
+	std::unique_ptr<MyEngine::Sprite> sprite_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> over_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> space_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> black_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> fBlack_ = nullptr;
+	MyEngine::SpriteCommon spriteCommon_;
 
 	// 天球
 	std::unique_ptr<Skydome> skydome_ = nullptr;

@@ -20,14 +20,12 @@
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 
-using namespace Microsoft::WRL;
-
 /// <summary>
 /// 静的メンバ変数の実体
 /// </summary>
-DirectXCommon* DirectXCommon::instance = nullptr;
+MyEngine::DirectXCommon* MyEngine::DirectXCommon::instance = nullptr;
 
-DirectXCommon* DirectXCommon::GetInstance()
+MyEngine::DirectXCommon* MyEngine::DirectXCommon::GetInstance()
 {
 	if (instance == nullptr) 
 	{
@@ -36,14 +34,14 @@ DirectXCommon* DirectXCommon::GetInstance()
 	return instance;
 }
 
-void DirectXCommon::DeleteInstance()
+void MyEngine::DirectXCommon::DeleteInstance()
 {
 	delete instance;
 
 	instance = nullptr;
 }
 
-void DirectXCommon::Initialize(WinApp* winApp) 
+void MyEngine::DirectXCommon::Initialize(WinApp* winApp)
 {
 	// NULL検出
 	assert(winApp);
@@ -68,7 +66,7 @@ void DirectXCommon::Initialize(WinApp* winApp)
 	InitializeFence();
 }
 
-void DirectXCommon::InitializeDevice()
+void MyEngine::DirectXCommon::InitializeDevice()
 {
 	HRESULT result_;
 #ifdef _DEBUG
@@ -165,7 +163,7 @@ void DirectXCommon::InitializeDevice()
 #endif
 }
 
-void DirectXCommon::InitializeCommand()
+void MyEngine::DirectXCommon::InitializeCommand()
 {
 	HRESULT result_;
 
@@ -190,7 +188,7 @@ void DirectXCommon::InitializeCommand()
 	assert(SUCCEEDED(result_));
 }
 
-void DirectXCommon::InitializeSwapchain()
+void MyEngine::DirectXCommon::InitializeSwapchain()
 {
 	HRESULT result_;
 
@@ -218,7 +216,7 @@ void DirectXCommon::InitializeSwapchain()
 	assert(SUCCEEDED(result_));
 }
 
-void DirectXCommon::InitializeRenderTargetView()
+void MyEngine::DirectXCommon::InitializeRenderTargetView()
 {
 	HRESULT result_;
 
@@ -271,7 +269,7 @@ void DirectXCommon::InitializeRenderTargetView()
 	}
 }
 
-void DirectXCommon::InitializeDepthBuffer()
+void MyEngine::DirectXCommon::InitializeDepthBuffer()
 {
 	HRESULT result_;
 
@@ -318,14 +316,14 @@ void DirectXCommon::InitializeDepthBuffer()
 		dsvHeap_->GetCPUDescriptorHandleForHeapStart());
 }
 
-void DirectXCommon::InitializeFence()
+void MyEngine::DirectXCommon::InitializeFence()
 {
 	HRESULT result_;
 
 	result_ = device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
 }
 
-void DirectXCommon::PreDraw()
+void MyEngine::DirectXCommon::PreDraw()
 {
 	// バックバッファの番号取得(２つなので0番か1番)
 	UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
@@ -381,7 +379,7 @@ void DirectXCommon::PreDraw()
 	//commandList->RSSetScissorRects(1, &CD3DX12_RECT(0, 0, WinApp::window_width, WinApp::window_height));
 }
 
-void DirectXCommon::PostDraw()
+void MyEngine::DirectXCommon::PostDraw()
 {
 	HRESULT result_;
 
@@ -430,11 +428,11 @@ void DirectXCommon::PostDraw()
 	assert(SUCCEEDED(result_));
 }
 
-void DirectXCommon::fpsFixedFinalize(){
+void MyEngine::DirectXCommon::fpsFixedFinalize(){
 	safe_delete(fpsFixed_);
 }
 
-void DirectXCommon::ResourceLeakCheck()
+void MyEngine::DirectXCommon::ResourceLeakCheck()
 {
 #ifdef _DEBUG
 	// リソースリークチェック
