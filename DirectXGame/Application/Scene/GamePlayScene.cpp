@@ -188,6 +188,7 @@ void GamePlayScene::Update()
 	if (hpScale_.x <= 0) {
 
 		overTimer_++;
+		player_->SetIsGameOverStaging(true);
 
 		if (overTimer_ >= 50) {
 
@@ -206,6 +207,25 @@ void GamePlayScene::Update()
 	// 全ての衝突をチェック
 	collisionMan_->CheckAllCollisions();
 
+	int s0 = 0 , s1 = 0, s2 = 0, s3 = 0, sB0 = 0;
+
+	if(player_->GetDamage() == true){
+		s0 = +100;
+	}
+	if (player_->GetDamage01() == true) {
+		s1 = +100;
+	}
+	if (player_->GetDamage02() == true) {
+		s2 = +100;
+	}
+	if (player_->GetDamage03() == true) {
+		s3 = +100;
+	}
+	if(player_->GetIsBossDamage() == true){
+		sB0 = +500;
+	}
+	score_ = s0 + s1 + s2 + s3 + sB0;
+
 #ifdef _DEBUG
 
 	if (input_->TriggerKey(DIK_T)) {
@@ -216,6 +236,11 @@ void GamePlayScene::Update()
 	}
 	if (input_->TriggerKey(DIK_C)) {
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
+	}
+
+	if(input_->TriggerKey(DIK_R)){
+		int a;
+		a = 0;
 	}
 
 #endif
@@ -291,11 +316,28 @@ void GamePlayScene::Draw()
 	//ult->SpriteDraw(spriteCommon_);
 	// Xの描画
 	//X->SpriteDraw(spriteCommon_);
-	// 0の描画
-	//number[0]->SpriteDraw(spriteCommon_);
-	// 1の描画
-	//number[1]->SpriteDraw(spriteCommon_);
-
+	// 数字の描画
+	if (player_->GetIsStartStaging() == false && player_->GetIsGameOverStaging() == false && player_->GetIsBossStaging() == false) {
+		num0_[0]->SpriteDraw(spriteCommon_);
+		num0_[1]->SpriteDraw(spriteCommon_);
+		num0_[3]->SpriteDraw(spriteCommon_);
+		num0_[4]->SpriteDraw(spriteCommon_);
+		if (score_ == 0) {
+			num0_[2]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 100) {
+			number_[1]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 200) {
+			number_[2]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 300) {
+			number_[3]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 400) {
+			number_[4]->SpriteDraw(spriteCommon_);
+		}
+	}
 	// ダメージの描画
 	if (isDamage_ == true || player_->GetIsBd() == true) {
 		damage_->SpriteDraw(spriteCommon_);
@@ -379,25 +421,114 @@ void GamePlayScene::SpriteInitialize()
 	X_->SpriteTransferVertexBuffer(X_.get(), spriteCommon_, 5);
 	X_->SpriteUpdate(X_.get(), spriteCommon_);
 	// 0
-	number_[0] = std::make_unique<MyEngine::Sprite>();
-	number_[0]->LoadTexture(spriteCommon_, 10, L"Resources/Image/0.png");
-	number_[0]->SpriteCreate(1280, 720, 10, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	number_[0]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[0]->SetPosition({ 1200, 620, 0 });
-	number_[0]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
-	number_[0]->SetRotation(0.0f);
-	number_[0]->SpriteTransferVertexBuffer(number_[0].get(), spriteCommon_, 10);
-	number_[0]->SpriteUpdate(number_[0].get(), spriteCommon_);
+	for (int i = 0; i < 5; i++) {
+		num0_[i] = std::make_unique<MyEngine::Sprite>();
+		num0_[i]->LoadTexture(spriteCommon_, 10, L"Resources/Image/0.png");
+		num0_[i]->SpriteCreate(1280, 720, 10, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+		num0_[i]->SetColor(XMFLOAT4(1, 1, 1, 1));
+		num0_[i]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+		num0_[i]->SetRotation(0.0f);
+		num0_[i]->SpriteTransferVertexBuffer(num0_[i].get(), spriteCommon_, 10);
+		num0_[i]->SpriteUpdate(num0_[i].get(), spriteCommon_);
+	}
+	num0_[0]->SetPosition({ 1040, 30, 0 });
+	num0_[1]->SetPosition({ 1080, 30, 0 });
+	num0_[2]->SetPosition({ 1120, 30, 0 });
+	num0_[3]->SetPosition({ 1160, 30, 0 });
+	num0_[4]->SetPosition({ 1200, 30, 0 });
+	for(int i = 0; i < 5; i++){
+		num0_[i]->SpriteUpdate(num0_[i].get(), spriteCommon_);
+	}
 	// 1
 	number_[1] = std::make_unique<MyEngine::Sprite>();
 	number_[1]->LoadTexture(spriteCommon_, 6, L"Resources/Image/1.png");
 	number_[1]->SpriteCreate(1280, 720, 6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[1]->SetPosition({ 1200, 620, 0 });
+	number_[1]->SetPosition({ 1120, 30, 0 });
 	number_[1]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[1]->SetRotation(0.0f);
 	number_[1]->SpriteTransferVertexBuffer(number_[1].get(), spriteCommon_, 6);
 	number_[1]->SpriteUpdate(number_[1].get(), spriteCommon_);
+	// 2
+	number_[2] = std::make_unique<MyEngine::Sprite>();
+	number_[2]->LoadTexture(spriteCommon_, 23, L"Resources/Image/2.png");
+	number_[2]->SpriteCreate(1280, 720, 23, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[2]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[2]->SetPosition({ 1120, 30, 0 });
+	number_[2]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[2]->SetRotation(0.0f);
+	number_[2]->SpriteTransferVertexBuffer(number_[2].get(), spriteCommon_, 23);
+	number_[2]->SpriteUpdate(number_[2].get(), spriteCommon_);
+	// 3
+	number_[3] = std::make_unique<MyEngine::Sprite>();
+	number_[3]->LoadTexture(spriteCommon_, 24, L"Resources/Image/3.png");
+	number_[3]->SpriteCreate(1280, 720, 24, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[3]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[3]->SetPosition({ 1120, 30, 0 });
+	number_[3]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[3]->SetRotation(0.0f);
+	number_[3]->SpriteTransferVertexBuffer(number_[3].get(), spriteCommon_, 24);
+	number_[3]->SpriteUpdate(number_[3].get(), spriteCommon_);
+	// 4
+	number_[4] = std::make_unique<MyEngine::Sprite>();
+	number_[4]->LoadTexture(spriteCommon_, 25, L"Resources/Image/4.png");
+	number_[4]->SpriteCreate(1280, 720, 25, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[4]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[4]->SetPosition({ 1120, 30, 0 });
+	number_[4]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[4]->SetRotation(0.0f);
+	number_[4]->SpriteTransferVertexBuffer(number_[4].get(), spriteCommon_, 25);
+	number_[4]->SpriteUpdate(number_[4].get(), spriteCommon_);
+	// 5
+	number_[5] = std::make_unique<MyEngine::Sprite>();
+	number_[5]->LoadTexture(spriteCommon_, 26, L"Resources/Image/5.png");
+	number_[5]->SpriteCreate(1280, 720, 26, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[5]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[5]->SetPosition({ 1200, 620, 0 });
+	number_[5]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[5]->SetRotation(0.0f);
+	number_[5]->SpriteTransferVertexBuffer(number_[5].get(), spriteCommon_, 26);
+	number_[5]->SpriteUpdate(number_[5].get(), spriteCommon_);
+	// 6
+	number_[6] = std::make_unique<MyEngine::Sprite>();
+	number_[6]->LoadTexture(spriteCommon_, 27, L"Resources/Image/6.png");
+	number_[6]->SpriteCreate(1280, 720, 27, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[6]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[6]->SetPosition({ 1200, 620, 0 });
+	number_[6]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[6]->SetRotation(0.0f);
+	number_[6]->SpriteTransferVertexBuffer(number_[6].get(), spriteCommon_, 27);
+	number_[6]->SpriteUpdate(number_[6].get(), spriteCommon_);
+	// 7
+	number_[7] = std::make_unique<MyEngine::Sprite>();
+	number_[7]->LoadTexture(spriteCommon_, 28, L"Resources/Image/7.png");
+	number_[7]->SpriteCreate(1280, 720, 28, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[7]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[7]->SetPosition({ 1200, 620, 0 });
+	number_[7]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[7]->SetRotation(0.0f);
+	number_[7]->SpriteTransferVertexBuffer(number_[7].get(), spriteCommon_, 28);
+	number_[7]->SpriteUpdate(number_[7].get(), spriteCommon_);
+	// 8
+	number_[8] = std::make_unique<MyEngine::Sprite>();
+	number_[8]->LoadTexture(spriteCommon_, 29, L"Resources/Image/8.png");
+	number_[8]->SpriteCreate(1280, 720, 29, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[8]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[8]->SetPosition({ 1200, 620, 0 });
+	number_[8]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[8]->SetRotation(0.0f);
+	number_[8]->SpriteTransferVertexBuffer(number_[8].get(), spriteCommon_, 29);
+	number_[8]->SpriteUpdate(number_[8].get(), spriteCommon_);
+	// 9
+	number_[9] = std::make_unique<MyEngine::Sprite>();
+	number_[9]->LoadTexture(spriteCommon_, 30, L"Resources/Image/9.png");
+	number_[9]->SpriteCreate(1280, 720, 30, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
+	number_[9]->SetColor(XMFLOAT4(1, 1, 1, 1));
+	number_[9]->SetPosition({ 1120, 30, 0 });
+	number_[9]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
+	number_[9]->SetRotation(0.0f);
+	number_[9]->SpriteTransferVertexBuffer(number_[9].get(), spriteCommon_, 30);
+	number_[9]->SpriteUpdate(number_[9].get(), spriteCommon_);
 	// ダメージ
 	damage_ = std::make_unique<MyEngine::Sprite>();
 	damage_->LoadTexture(spriteCommon_, 11, L"Resources/Image/damage.png");
@@ -485,8 +616,8 @@ void GamePlayScene::SpriteInitialize()
 	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move.png");
 	move_->SpriteCreate(1280, 720, 18, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	move_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	move_->SetPosition({ 155,510, 0 });
-	move_->SetScale(XMFLOAT2(200 * 0.6f, 64 * 0.6f));
+	move_->SetPosition({ 155,515, 0 });
+	move_->SetScale(XMFLOAT2(200 * 0.4f, 64 * 0.4f));
 	move_->SetRotation(0.0f);
 	move_->SpriteTransferVertexBuffer(move_.get(), spriteCommon_, 18);
 	move_->SpriteUpdate(move_.get(), spriteCommon_);
@@ -495,8 +626,8 @@ void GamePlayScene::SpriteInitialize()
 	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin.png");
 	spin_->SpriteCreate(1280, 720, 19, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	spin_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	spin_->SetPosition({ 150,610, 0 });
-	spin_->SetScale(XMFLOAT2(300 * 0.6f, 64 * 0.6f));
+	spin_->SetPosition({ 150,620, 0 });
+	spin_->SetScale(XMFLOAT2(300 * 0.4f, 64 * 0.4f));
 	spin_->SetRotation(0.0f);
 	spin_->SpriteTransferVertexBuffer(spin_.get(), spriteCommon_, 19);
 	spin_->SpriteUpdate(spin_.get(), spriteCommon_);
@@ -520,13 +651,13 @@ void GamePlayScene::SpriteInitialize()
 	space_->SetRotation(0.0f);
 	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, 21);
 	space_->SpriteUpdate(space_.get(), spriteCommon_);
-	// space
+	// attack
 	attack_ = std::make_unique<MyEngine::Sprite>();
 	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack.png");
 	attack_->SpriteCreate(1280, 720, 22, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	attack_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	attack_->SetPosition({ 140,660, 0 });
-	attack_->SetScale(XMFLOAT2(200 * 0.6f, 64 * 0.6f));
+	attack_->SetPosition({ 145,665, 0 });
+	attack_->SetScale(XMFLOAT2(210 * 0.4f, 64 * 0.4f));
 	attack_->SetRotation(0.0f);
 	attack_->SpriteTransferVertexBuffer(attack_.get(), spriteCommon_, 22);
 	attack_->SpriteUpdate(attack_.get(), spriteCommon_);

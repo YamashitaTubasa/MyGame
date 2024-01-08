@@ -84,6 +84,8 @@ public:
 	/// </summary>
 	bool CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1);
 
+
+
 private:
 	MyEngine::WinApp* winApp_ = nullptr;
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
@@ -100,7 +102,8 @@ private:
 	std::unique_ptr<MyEngine::Sprite> damage_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> white_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> black_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> number_[5];
+	std::unique_ptr<MyEngine::Sprite> num0_[5];
+	std::unique_ptr<MyEngine::Sprite> number_[10];
 	std::unique_ptr<MyEngine::Sprite> w_;
 	std::unique_ptr<MyEngine::Sprite> a_;
 	std::unique_ptr<MyEngine::Sprite> s_;
@@ -170,4 +173,9 @@ private:
 	// シーンフラグ
 	bool isClearScene_ = false;
 	bool isOverScene_ = false;
+
+	// スコア
+	bool isScore_ = false;
+	int score_ = 0;
+
 };
