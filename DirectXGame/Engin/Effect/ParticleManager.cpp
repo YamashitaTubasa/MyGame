@@ -483,8 +483,6 @@ void MyEngine::ParticleManager::Update()
 	// 定数バッファへデータ転送
 	ConstBufferData* constMap = nullptr;
 	result = constBuff_->Map(0, nullptr, (void**)&constMap);
-	//constMap->color = color;
-	//constMap->mat = matWorld * matView * matProjection;	// 行列の合成
 	constMap->mat = matView_ * matProjection_; // 行列の合成
 	constMap->matBillboard = matBillboard_;
 	constBuff_->Unmap(0, nullptr);

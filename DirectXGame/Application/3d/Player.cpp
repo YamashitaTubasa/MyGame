@@ -67,7 +67,7 @@ bool Player::Initialize()
 	playerM_ = Model::LoadFromOBJ("fighter");
 	reticleM_ = Model::LoadFromOBJ("reticle");
 	reticle1M_ = Model::LoadFromOBJ("reticle1");
-	bossModel_ = Model::LoadFromOBJ("enemy");
+	bossModel_ = Model::LoadFromOBJ("boss");
 	// 3Dオブジェクト生成
 	playerO3_ = Object3d::Create();
 	reticleO3_ = Object3d::Create();
@@ -191,7 +191,7 @@ void Player::Update()
 
 	// パーティクルの実行
 	particleMan_->Execution(particle_.get(), particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
-
+	
 	if (hp_ <= -20) {
 
 		isGameOverStaging_ = true;
@@ -347,7 +347,7 @@ void Player::Update()
 			eye_.z += 0.3f;
 	}
 	if (!isStartStaging_) {
-		if (pPosition_.z < 300) {
+		if (pPosition_.z < 500) {
 			pPosition_.z += startSpeed_;
 			rPosition_.z += startSpeed_;
 			r1Position_.z += startSpeed_;
@@ -616,11 +616,14 @@ void Player::Update()
 			isBH_ = false;
 		}
 	}
+	if (isBossStaging_ == true && isBoss_ == false) {
+		bossPos_.z += 0.3f;
+	}
+	bossObj_->SetPosition(bossPos_);
 
 	if (pPosition_.x <= bossPos_.x + 20 && pPosition_.x >= bossPos_.x - 20 &&
 		pPosition_.y <= bossPos_.y + 10 && pPosition_.y >= bossPos_.y - 10 &&
-		pPosition_.z <= bossPos_.z + 10 && pPosition_.z >= bossPos_.z - 10) {
-
+		pPosition_.z <= bossPos_.z + 300  && pPosition_.z >= bossPos_.z - 1) {
 
 		isBd_ = true;
 	}

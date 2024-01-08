@@ -131,6 +131,7 @@ public: // ゲッター
 	/// </summary>
 	/// <returns></returns>
 	bool GetIsGameOverStaging() const { return isGameOverStaging_; }
+	void SetIsGameOverStaging(bool isGameOverStaging) { isGameOverStaging_ = isGameOverStaging; }
 
 	/// <summary>
 	/// ダメージ
@@ -152,6 +153,7 @@ public: // ゲッター
 	bool GetIsBossStaging() const { return isBossStaging_; }
 	bool GetIsBossHp() const { return isBossHp_; }
 	bool GetIsBd() const { return isBd_; }
+	bool GetIsBossDamage() const{ return isBossDamage_; }
 
 private: // メンバ変数
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
@@ -227,7 +229,7 @@ private: // メンバ変数
 	// ボスの回転
 	DirectX::XMFLOAT3 bossRot_ = { 0,180,0 };
 	// ボスのサイズ
-	DirectX::XMFLOAT3 bossScale_ = { 70,70,70 };
+	DirectX::XMFLOAT3 bossScale_ = { 25,25,25 };
 	bool isBossHp_ = false;
 	int bossHp_ = 0;
 	int bossTimer_ = 0;
