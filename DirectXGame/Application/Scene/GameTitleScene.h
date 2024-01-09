@@ -10,6 +10,7 @@
 #include "Input.h"
 #include "Sprite.h"
 #include "Skydome.h"
+#include "PostEffect.h"
 #include "GameBaseScene.h"
 #include "GameSceneManager.h"
 #include "GamePlayScene.h"
@@ -94,6 +95,13 @@ private:
 	/// </summary>
 	void SceneChange();
 
+public:
+	/// <summary>
+	/// ブラーの取得
+	/// </summary>
+	/// <returns></returns>
+	bool GetIsBlur() const { return isBlur_; }
+
 private: // メンバ変数
 	MyEngine::Input* input_ = nullptr;
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
@@ -114,6 +122,8 @@ private: // メンバ変数
 	std::unique_ptr<Object3d> player_ = nullptr;
 	// モデル
 	std::unique_ptr<Model> playerModel_ = nullptr;
+
+	std::unique_ptr<MyEngine::PostEffect> postEffect_ = nullptr;
 
 	// タイトルの設定
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
@@ -221,4 +231,7 @@ private: // メンバ変数
 	const float sPlayerPosMoveY_ = 0.25f;
 	const float sPlayerPosMoveZ_ = 1.8f;
 	const float sPlayerEyeMove_ = 0.06f;
+
+	// ポストエフェクト（ブラー）
+	bool isBlur_ = false;
 };
