@@ -53,6 +53,9 @@ void GameClearScene::Draw()
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
 
+	// 描画前処理
+	dxCommon_->PreDraw();
+
 #pragma region オブジェクトの描画
 
 	// オブジェクトの前処理
@@ -84,6 +87,9 @@ void GameClearScene::Draw()
 	MyEngine::Sprite::PostDraw();
 
 #pragma endregion
+
+	// 描画後処理
+	dxCommon_->PostDraw();
 }
 
 void GameClearScene::Finalize()

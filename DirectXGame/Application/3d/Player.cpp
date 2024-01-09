@@ -598,8 +598,7 @@ void Player::Update()
 		if (isBossStaging_ == true) {
 			if (bullet->GetPosition().x <= bossPos_.x + 20 && bullet->GetPosition().x >= bossPos_.x - 20 &&
 				bullet->GetPosition().y <= bossPos_.y + 10 && bullet->GetPosition().y >= bossPos_.y - 10 &&
-				bullet->GetPosition().z <= bossPos_.z + 10 && bullet->GetPosition().z >= bossPos_.z - 10) {
-
+				bullet->GetPosition().z <= bossPos_.z + 300 && bullet->GetPosition().z >= bossPos_.z - 1) {
 
 				isBH_ = true;
 				bullet->SetIsDead(true);
@@ -608,7 +607,7 @@ void Player::Update()
 		if (isBH_ == true) {
 			bossTimer_++;
 			isBossHp_ = true;
-			hp_ -= 1;
+			//hp_ -= 1;
 		}
 		if (bossTimer_ >= 5) {
 			isBossHp_ = false;
@@ -617,15 +616,17 @@ void Player::Update()
 		}
 	}
 	if (isBossStaging_ == true && isBoss_ == false) {
-		bossPos_.z += 0.3f;
+		bossPos_.z += 0.2f;
 	}
 	bossObj_->SetPosition(bossPos_);
 
-	if (pPosition_.x <= bossPos_.x + 20 && pPosition_.x >= bossPos_.x - 20 &&
-		pPosition_.y <= bossPos_.y + 10 && pPosition_.y >= bossPos_.y - 10 &&
-		pPosition_.z <= bossPos_.z + 300  && pPosition_.z >= bossPos_.z - 1) {
+	if (isGameOverStaging_ == false && isGameClearStaging_ == false) {
+		if (pPosition_.x <= bossPos_.x + 20 && pPosition_.x >= bossPos_.x - 20 &&
+			pPosition_.y <= bossPos_.y + 10 && pPosition_.y >= bossPos_.y - 10 &&
+			pPosition_.z <= bossPos_.z + 300 && pPosition_.z >= bossPos_.z - 1) {
 
-		isBd_ = true;
+			isBd_ = true;
+		}
 	}
 
 	if (pPosition_.x >= -2 && pPosition_.x <= 2 && pPosition_.y >= -2 && pPosition_.y <= 2 && pPosition_.z <= 9 && pPosition_.z >= 5) {

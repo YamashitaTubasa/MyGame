@@ -251,6 +251,8 @@ void GamePlayScene::Draw()
 	// コマンドライン取得
 	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
 
+	// 描画前処理
+	dxCommon_->PreDraw();
 #pragma region 3Dオブジェクトの描画
 
 	// 3Dオブジェクト描画前処理
@@ -353,6 +355,8 @@ void GamePlayScene::Draw()
 	// スプライト描画後処理
 	MyEngine::Sprite::PostDraw();
 #pragma endregion
+	// 描画後処理
+	dxCommon_->PostDraw();
 
 	// ImGui描画
 	//imGuiManager->Draw(dXCommon);

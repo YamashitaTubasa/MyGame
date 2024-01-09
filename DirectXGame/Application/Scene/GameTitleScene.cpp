@@ -40,6 +40,10 @@ void GameTitleScene::Initialize()
 	player_->SetRotation(pRot_);
 	player_->SetTarget(player_->GetPosition());
 	player_->SetEye(eye_);
+
+	// ポストエフェクト
+	postEffect_ = std::make_unique<MyEngine::PostEffect>();
+	postEffect_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
 }
 
 void GameTitleScene::Update()
@@ -91,6 +95,13 @@ void GameTitleScene::Update()
 	// シーンの切り替え処理
 	GameTitleScene::SceneChange();
 
+	if (isBlur_ == true) {
+		postEffect_->SetIsPostE(true);
+	}
+	else {
+		postEffect_->SetIsPostE(false);
+	}
+
 #ifdef _DEBUG
 
 	if (MyEngine::Input::GetInstance()->TriggerKey(DIK_P)) {
@@ -110,6 +121,8 @@ void GameTitleScene::Draw()
 {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
+	// レンダーテクスチャの前処理
+	postEffect_->PreDraw(cmdList);
 
 #pragma region オブジェクトの描画
 
@@ -158,6 +171,22 @@ void GameTitleScene::Draw()
 
 	// スプライト描画後処理
 	MyEngine::Sprite::PostDraw();
+
+#pragma endregion
+
+	// レンダーテクスチャの後処理
+	postEffect_->PostDraw(cmdList);
+
+#pragma region ポストエフェクトの描画
+
+	// 描画前処理
+	dxCommon_->PreDraw();
+
+	//=== ポストエフェクト1の描画 ===//
+	postEffect_->Draw(cmdList);
+
+	// 描画後処理
+	dxCommon_->PostDraw();
 
 #pragma endregion
 }
@@ -372,8 +401,9 @@ void GameTitleScene::PlayerRotation()
 void GameTitleScene::SceneChange()
 {
 	if (isFadeIn_ == false && isFadeOut_ == false) {
-		if (MyEngine::Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-
+		if (MyEngine::Input::GetInstance()->TriggerKey(DIK_SPACE)) 
+		{
+			isBlur_ = true;
 			start_ = true;
 		}
 	}
@@ -389,8 +419,11 @@ void GameTitleScene::SceneChange()
 
 		isFadeIn_ = true;
 	}
+	if (startTimer_ >= 100) {
+		isBlur_ = false;
+	}
 	if (startTimer_ >= MaxStartTimer_) {
-		// タイマーを初期値に戻す
+		
 		startTimer_ = defaultStartTimer_;
 
 		// ゲームプレイシーン（次シーン）を生成

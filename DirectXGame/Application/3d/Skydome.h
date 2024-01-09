@@ -8,6 +8,7 @@
 
 #include "Object3d.h"
 #include "Model.h"
+#include "DirectXCommon.h"
 
 class Skydome
 {
