@@ -29,7 +29,17 @@ public:
 	{
 		titleNum = 1,
 		spaceNum,
-		blackNum
+		blackNum,
+		number0,
+		number1,
+		number2,
+		number3,
+		number4,
+		number5,
+		number6,
+		number7,
+		number8,
+		number9
 	};
 
 public: // メンバ関数
@@ -84,6 +94,8 @@ private: // メンバ変数
 	std::unique_ptr<MyEngine::Sprite> clear_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> space_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> black_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> num0_[5];
+	std::unique_ptr<MyEngine::Sprite> number_[10];
 	MyEngine::SpriteCommon spriteCommon_;
 
 	// 天球
@@ -118,7 +130,8 @@ private: // メンバ変数
 
 	// タイマー
 	int timer_ = 0;
-	const int changeSceneTimer_ = 200;
+	const int changeSceneTimer_ = 600;
+	bool isTimer_[11];
 
 	// アルファ値
 	float bAlpha_ = 1.0f;
@@ -135,4 +148,7 @@ private: // メンバ変数
 
 	// アンカーポイント
 	const DirectX::XMFLOAT2 defaultAnchorpoint_ = { 0.0f,0.0f };
+
+	// スプライトの設定
+	const int MaxNum = 2;
 };
