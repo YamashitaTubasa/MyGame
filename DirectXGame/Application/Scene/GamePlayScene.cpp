@@ -314,12 +314,11 @@ void GamePlayScene::Draw()
 		space_->SpriteDraw(spriteCommon_);
 		attack_->SpriteDraw(spriteCommon_);
 	}
-	// ULTの描画
-	//ult->SpriteDraw(spriteCommon_);
-	// Xの描画
-	//X->SpriteDraw(spriteCommon_);
 	// 数字の描画
-	if (player_->GetIsStartStaging() == false && player_->GetIsGameOverStaging() == false && player_->GetIsBossStaging() == false) {
+	if (player_->GetIsStartStaging() == false && 
+		player_->GetIsGameOverStaging() == false 
+		&& player_->GetIsBossStaging() == false) 
+	{
 		num0_[0]->SpriteDraw(spriteCommon_);
 		num0_[1]->SpriteDraw(spriteCommon_);
 		num0_[3]->SpriteDraw(spriteCommon_);
@@ -580,8 +579,8 @@ void GamePlayScene::SpriteInitialize()
 	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w.png");
 	w_->SpriteCreate(1280, 720, 14, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	w_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	w_->SetPosition({ 65,460, 0 });
-	w_->SetScale(XMFLOAT2(64 * 0.6f, 64 * 0.6f));
+	w_->SetPosition({ 70,500, 0 });
+	w_->SetScale(XMFLOAT2(64 * 0.4f, 64 * 0.4f));
 	w_->SetRotation(0.0f);
 	w_->SpriteTransferVertexBuffer(w_.get(), spriteCommon_, 14);
 	w_->SpriteUpdate(w_.get(), spriteCommon_);
@@ -590,8 +589,8 @@ void GamePlayScene::SpriteInitialize()
 	a_->LoadTexture(spriteCommon_, 15, L"Resources/Image/a.png");
 	a_->SpriteCreate(1280, 720, 15, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	a_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	a_->SetPosition({ 20,510, 0 });
-	a_->SetScale(XMFLOAT2(64 * 0.6f, 64 * 0.6f));
+	a_->SetPosition({ 30,550, 0 });
+	a_->SetScale(XMFLOAT2(64 * 0.4f, 64 * 0.4f));
 	a_->SetRotation(0.0f);
 	a_->SpriteTransferVertexBuffer(a_.get(), spriteCommon_, 15);
 	a_->SpriteUpdate(a_.get(), spriteCommon_);
@@ -600,8 +599,8 @@ void GamePlayScene::SpriteInitialize()
 	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s.png");
 	s_->SpriteCreate(1280, 720, 16, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	s_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	s_->SetPosition({ 65,560, 0 });
-	s_->SetScale(XMFLOAT2(64 * 0.6f, 64 * 0.6f));
+	s_->SetPosition({ 70,550, 0 });
+	s_->SetScale(XMFLOAT2(64 * 0.4f, 64 * 0.4f));
 	s_->SetRotation(0.0f);
 	s_->SpriteTransferVertexBuffer(s_.get(), spriteCommon_, 16);
 	s_->SpriteUpdate(s_.get(), spriteCommon_);
@@ -610,8 +609,8 @@ void GamePlayScene::SpriteInitialize()
 	d_->LoadTexture(spriteCommon_, 17, L"Resources/Image/d.png");
 	d_->SpriteCreate(1280, 720, 17, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	d_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	d_->SetPosition({ 110,510, 0 });
-	d_->SetScale(XMFLOAT2(64 * 0.6f, 64 * 0.6f));
+	d_->SetPosition({ 115,550, 0 });
+	d_->SetScale(XMFLOAT2(64 * 0.4f, 64 * 0.4f));
 	d_->SetRotation(0.0f);
 	d_->SpriteTransferVertexBuffer(d_.get(), spriteCommon_, 17);
 	d_->SpriteUpdate(d_.get(), spriteCommon_);
@@ -620,7 +619,7 @@ void GamePlayScene::SpriteInitialize()
 	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move.png");
 	move_->SpriteCreate(1280, 720, 18, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	move_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	move_->SetPosition({ 155,515, 0 });
+	move_->SetPosition({ 150,530, 0 });
 	move_->SetScale(XMFLOAT2(200 * 0.4f, 64 * 0.4f));
 	move_->SetRotation(0.0f);
 	move_->SpriteTransferVertexBuffer(move_.get(), spriteCommon_, 18);
@@ -630,7 +629,7 @@ void GamePlayScene::SpriteInitialize()
 	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin.png");
 	spin_->SpriteCreate(1280, 720, 19, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	spin_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	spin_->SetPosition({ 150,620, 0 });
+	spin_->SetPosition({ 150,600, 0 });
 	spin_->SetScale(XMFLOAT2(300 * 0.4f, 64 * 0.4f));
 	spin_->SetRotation(0.0f);
 	spin_->SpriteTransferVertexBuffer(spin_.get(), spriteCommon_, 19);
@@ -640,8 +639,8 @@ void GamePlayScene::SpriteInitialize()
 	u_->LoadTexture(spriteCommon_, 20, L"Resources/Image/u.png");
 	u_->SpriteCreate(1280, 720, 20, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	u_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	u_->SetPosition({ 60,610, 0 });
-	u_->SetScale(XMFLOAT2(64 * 0.6f, 64 * 0.6f));
+	u_->SetPosition({ 70,600, 0 });
+	u_->SetScale(XMFLOAT2(64 * 0.4f, 64 * 0.4f));
 	u_->SetRotation(0.0f);
 	u_->SpriteTransferVertexBuffer(u_.get(), spriteCommon_, 20);
 	u_->SpriteUpdate(u_.get(), spriteCommon_);
@@ -650,8 +649,8 @@ void GamePlayScene::SpriteInitialize()
 	space_->LoadTexture(spriteCommon_, 21, L"Resources/Image/space.png");
 	space_->SpriteCreate(1280, 720, 21, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	space_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	space_->SetPosition({ 20,660, 0 });
-	space_->SetScale(XMFLOAT2(200 * 0.6f, 64 * 0.6f));
+	space_->SetPosition({ 45,650, 0 });
+	space_->SetScale(XMFLOAT2(200 * 0.4f, 64 * 0.4f));
 	space_->SetRotation(0.0f);
 	space_->SpriteTransferVertexBuffer(space_.get(), spriteCommon_, 21);
 	space_->SpriteUpdate(space_.get(), spriteCommon_);
@@ -660,7 +659,7 @@ void GamePlayScene::SpriteInitialize()
 	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack.png");
 	attack_->SpriteCreate(1280, 720, 22, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	attack_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	attack_->SetPosition({ 145,665, 0 });
+	attack_->SetPosition({ 145,650, 0 });
 	attack_->SetScale(XMFLOAT2(210 * 0.4f, 64 * 0.4f));
 	attack_->SetRotation(0.0f);
 	attack_->SpriteTransferVertexBuffer(attack_.get(), spriteCommon_, 22);
