@@ -98,21 +98,30 @@ private:
 	std::unique_ptr<MyEngine::Sprite> hpBar_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> hpBack_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> ult_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> X_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> cross_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> damage_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> white_ = nullptr;
 	std::unique_ptr<MyEngine::Sprite> black_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> num0_[5];
+	std::unique_ptr<MyEngine::Sprite> num0_[6];
 	std::unique_ptr<MyEngine::Sprite> number_[10];
 	std::unique_ptr<MyEngine::Sprite> w_;
+	std::unique_ptr<MyEngine::Sprite> whiteW_;
 	std::unique_ptr<MyEngine::Sprite> a_;
+	std::unique_ptr<MyEngine::Sprite> whiteA_;
 	std::unique_ptr<MyEngine::Sprite> s_;
+	std::unique_ptr<MyEngine::Sprite> whiteS_;
 	std::unique_ptr<MyEngine::Sprite> d_;
+	std::unique_ptr<MyEngine::Sprite> whiteD_;
+	std::unique_ptr<MyEngine::Sprite> u_;
+	std::unique_ptr<MyEngine::Sprite> whiteU_;
+	std::unique_ptr<MyEngine::Sprite> space_;
+	std::unique_ptr<MyEngine::Sprite> x_;
+	std::unique_ptr<MyEngine::Sprite> whiteX_;
+	std::unique_ptr<MyEngine::Sprite> whiteSpace_;
 	std::unique_ptr<MyEngine::Sprite> move_;
 	std::unique_ptr<MyEngine::Sprite> spin_;
-	std::unique_ptr<MyEngine::Sprite> u_;
-	std::unique_ptr<MyEngine::Sprite> space_;
 	std::unique_ptr<MyEngine::Sprite> attack_;
+	std::unique_ptr<MyEngine::Sprite> dotLine_[4];
 	MyEngine::SpriteCommon spriteCommon_;
 
 	// パーティクル

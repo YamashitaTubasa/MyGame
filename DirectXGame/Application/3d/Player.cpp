@@ -101,7 +101,7 @@ bool Player::Initialize()
 	// OBJの名前を指定してモデルデータを読み込む
 	particle_ = MyEngine::Particle::LoadFromOBJ("bombEffect.png");
 	blackSmoke_ = MyEngine::Particle::LoadFromOBJ("bombEffect.png");
-	rotationParticle_ = MyEngine::Particle::LoadFromOBJ("23682202.png");
+	rotationParticle_ = MyEngine::Particle::LoadFromOBJ("pSpin.png");
 	// パーティクルの生成
 	particleMan_ = MyEngine::ParticleManager::Create();
 	blackSmokeMan_ = MyEngine::ParticleManager::Create();
@@ -399,6 +399,10 @@ void Player::Update()
 			target_.y += playerSpeed_;
 			eye_.y += playerSpeed_;
 			isUpMove_ = true;
+			isPushW_ = true;
+		}
+		else {
+			isPushW_ = false;
 		}
 	}
 	if (!input_->PushKey(DIK_W)) {
@@ -426,6 +430,10 @@ void Player::Update()
 			target_.x -= playerSpeed_;
 			eye_.x -= playerSpeed_;
 			isLeftMove_ = true;
+			isPushA_ = true;
+		}
+		else {
+			isPushA_ = false;
 		}
 	}
 	if (!input_->PushKey(DIK_A)) {
@@ -459,6 +467,10 @@ void Player::Update()
 			target_.y -= playerSpeed_;
 			eye_.y -= playerSpeed_;
 			isDownMove_ = true;
+			isPushS_ = true;
+		}
+		else {
+			isPushS_ = false;
 		}
 	}
 	if (!input_->PushKey(DIK_S)) {
@@ -486,6 +498,10 @@ void Player::Update()
 			target_.x += playerSpeed_;
 			eye_.x += playerSpeed_;
 			isRightMove_ = true;
+			isPushD_ = true;
+		}
+		else {
+			isPushD_ = false;
 		}
 	}
 	if (!input_->PushKey(DIK_D)) {
@@ -801,6 +817,12 @@ void Player::Attack()
 		// 球を登録する
 		pBullets_.push_back(newBullet);
 	}
+	if(input_->PushKey(DIK_SPACE)){
+		isPushSpace_ = true;
+	}
+	else {
+		isPushSpace_ = false;
+	}
 	
 	if (isTime_ == true) {
 		time_++;
@@ -894,6 +916,12 @@ void Player::Spin()
 		isEaseFlag_ = true;
 		isRot_ = true;
 		eFrame_ = 0;
+	}
+	if(input_->PushKey(DIK_U)){
+		isPushU_ = true;
+	}
+	else {
+		isPushU_ = false;
 	}
 
 	if (isRot_) {
