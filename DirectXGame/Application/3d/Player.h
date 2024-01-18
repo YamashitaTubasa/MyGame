@@ -155,6 +155,14 @@ public: // ゲッター
 	bool GetIsBd() const { return isBd_; }
 	bool GetIsBossDamage() const{ return isBossDamage_; }
 
+	// キー入力
+	bool GetIsPushW() const { return isPushW_; }
+	bool GetIsPushA() const { return isPushA_; }
+	bool GetIsPushS() const { return isPushS_; }
+	bool GetIsPushD() const { return isPushD_; }
+	bool GetIsPushU() const { return isPushU_; }
+	bool GetIsPushSpace() const { return isPushSpace_; }
+
 private: // メンバ変数
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
 
@@ -349,4 +357,12 @@ private: // メンバ変数
 	float shakePosY2_ = 0.0f;
 	float shakeDefaultPos_ = 0.0f;
 	float shakeDefaultEye_ = 0.0f;
+
+	// キー入力
+	bool isPushW_ = false;
+	bool isPushA_ = false;
+	bool isPushS_ = false;
+	bool isPushD_ = false;
+	bool isPushU_ = false;
+	bool isPushSpace_ = false;
 };
