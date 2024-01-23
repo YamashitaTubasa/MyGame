@@ -319,7 +319,7 @@ void GameOverScene::LoadSprite()
 	// 0
 	for (int i = 0; i < MaxNum; i++) {
 		num0_[i] = std::make_unique<MyEngine::Sprite>();
-		num0_[i]->LoadTexture(spriteCommon_, number0, L"Resources/Image/red0.png");
+		num0_[i]->LoadTexture(spriteCommon_, number0, L"Resources/Image/whiteRed0.png");
 		num0_[i]->SpriteCreate(1280, 720, number0, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 		num0_[i]->SetColor(XMFLOAT4(1, 1, 1, 1));
 		num0_[i]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
@@ -334,7 +334,7 @@ void GameOverScene::LoadSprite()
 	}
 	// 1
 	number_[1] = std::make_unique<MyEngine::Sprite>();
-	number_[1]->LoadTexture(spriteCommon_, number1, L"Resources/Image/red1.png");
+	number_[1]->LoadTexture(spriteCommon_, number1, L"Resources/Image/whiteRed1.png");
 	number_[1]->SpriteCreate(1280, 720, number1, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[1]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[1]->SetPosition({ 30, 630, 0 });
@@ -344,7 +344,7 @@ void GameOverScene::LoadSprite()
 	number_[1]->SpriteUpdate(number_[1].get(), spriteCommon_);
 	// 2
 	number_[2] = std::make_unique<MyEngine::Sprite>();
-	number_[2]->LoadTexture(spriteCommon_, number2, L"Resources/Image/red2.png");
+	number_[2]->LoadTexture(spriteCommon_, number2, L"Resources/Image/whiteRed2.png");
 	number_[2]->SpriteCreate(1280, 720, number2, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[2]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[2]->SetPosition({ 70, 630, 0 });
@@ -354,7 +354,7 @@ void GameOverScene::LoadSprite()
 	number_[2]->SpriteUpdate(number_[2].get(), spriteCommon_);
 	// 3
 	number_[3] = std::make_unique<MyEngine::Sprite>();
-	number_[3]->LoadTexture(spriteCommon_, number3, L"Resources/Image/red3.png");
+	number_[3]->LoadTexture(spriteCommon_, number3, L"Resources/Image/whiteRed3.png");
 	number_[3]->SpriteCreate(1280, 720, number3, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[3]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[3]->SetPosition({ 70, 630, 0 });
@@ -364,7 +364,7 @@ void GameOverScene::LoadSprite()
 	number_[3]->SpriteUpdate(number_[3].get(), spriteCommon_);
 	// 4
 	number_[4] = std::make_unique<MyEngine::Sprite>();
-	number_[4]->LoadTexture(spriteCommon_, number4, L"Resources/Image/red4.png");
+	number_[4]->LoadTexture(spriteCommon_, number4, L"Resources/Image/whiteRed4.png");
 	number_[4]->SpriteCreate(1280, 720, number4, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[4]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[4]->SetPosition({ 70, 630, 0 });
@@ -374,7 +374,7 @@ void GameOverScene::LoadSprite()
 	number_[4]->SpriteUpdate(number_[4].get(), spriteCommon_);
 	// 5
 	number_[5] = std::make_unique<MyEngine::Sprite>();
-	number_[5]->LoadTexture(spriteCommon_, number5, L"Resources/Image/red5.png");
+	number_[5]->LoadTexture(spriteCommon_, number5, L"Resources/Image/whiteRed5.png");
 	number_[5]->SpriteCreate(1280, 720, number5, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[5]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[5]->SetPosition({ 70, 630, 0 });
@@ -384,7 +384,7 @@ void GameOverScene::LoadSprite()
 	number_[5]->SpriteUpdate(number_[5].get(), spriteCommon_);
 	// 6
 	number_[6] = std::make_unique<MyEngine::Sprite>();
-	number_[6]->LoadTexture(spriteCommon_, number6, L"Resources/Image/red6.png");
+	number_[6]->LoadTexture(spriteCommon_, number6, L"Resources/Image/whiteRed6.png");
 	number_[6]->SpriteCreate(1280, 720, number6, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[6]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[6]->SetPosition({ 70, 630, 0 });
@@ -394,7 +394,7 @@ void GameOverScene::LoadSprite()
 	number_[6]->SpriteUpdate(number_[6].get(), spriteCommon_);
 	// 7
 	number_[7] = std::make_unique<MyEngine::Sprite>();
-	number_[7]->LoadTexture(spriteCommon_, number7, L"Resources/Image/red7.png");
+	number_[7]->LoadTexture(spriteCommon_, number7, L"Resources/Image/whiteRed7.png");
 	number_[7]->SpriteCreate(1280, 720, number7, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[7]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[7]->SetPosition({ 70, 630, 0 });
@@ -404,7 +404,7 @@ void GameOverScene::LoadSprite()
 	number_[7]->SpriteUpdate(number_[7].get(), spriteCommon_);
 	// 8
 	number_[8] = std::make_unique<MyEngine::Sprite>();
-	number_[8]->LoadTexture(spriteCommon_, number8, L"Resources/Image/red8.png");
+	number_[8]->LoadTexture(spriteCommon_, number8, L"Resources/Image/whiteRed8.png");
 	number_[8]->SpriteCreate(1280, 720, number8, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[8]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[8]->SetPosition({ 70, 630, 0 });
@@ -414,7 +414,7 @@ void GameOverScene::LoadSprite()
 	number_[8]->SpriteUpdate(number_[8].get(), spriteCommon_);
 	// 9
 	number_[9] = std::make_unique<MyEngine::Sprite>();
-	number_[9]->LoadTexture(spriteCommon_, number9, L"Resources/Image/red9.png");
+	number_[9]->LoadTexture(spriteCommon_, number9, L"Resources/Image/whiteRed9.png");
 	number_[9]->SpriteCreate(1280, 720, number9, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	number_[9]->SetColor(XMFLOAT4(1, 1, 1, 1));
 	number_[9]->SetPosition({ 70, 630, 0 });
