@@ -283,7 +283,7 @@
     <FxCompile Include="Resources\shaders\PostEffectDepthOfFieldPS.hlsl">
       <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\PostEffectPS.hlsl">
+    <FxCompile Include="Resources\shaders\PostEffectBlurPS.hlsl">
       <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffectVS.hlsl">
@@ -293,6 +293,9 @@
       <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
+      <Filter>シェーダーファイル\shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffectRadialBlurPS.hlsl">
       <Filter>シェーダーファイル\shaders</Filter>
     </FxCompile>
   </ItemGroup>
