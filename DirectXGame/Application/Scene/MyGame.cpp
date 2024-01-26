@@ -15,9 +15,9 @@ void MyGame::Initialize()
 
 	// ポストエフェクト
 	postEffect_ = std::make_unique<MyEngine::PostEffect>();
-	postEffect_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
+	postEffect_->Initialize(L"Resources/shaders/PostEffectBlurPS.hlsl");
 	postEffect1_ = std::make_unique<MyEngine::PostEffect>();
-	postEffect1_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
+	postEffect1_->Initialize(L"Resources/shaders/PostEffectBlurPS.hlsl");
 
 	// シーンファクトリを生成し、マネージャにセット
 	sceneFactory_ = std::make_unique<SceneFactory>();

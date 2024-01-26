@@ -43,7 +43,7 @@ void GameTitleScene::Initialize()
 
 	// ポストエフェクト
 	postEffect_ = std::make_unique<MyEngine::PostEffect>();
-	postEffect_->Initialize(L"Resources/shaders/PostEffectPS.hlsl");
+	postEffect_->Initialize(L"Resources/shaders/PostEffectRadialBlurPS.hlsl");
 }
 
 void GameTitleScene::Update()
