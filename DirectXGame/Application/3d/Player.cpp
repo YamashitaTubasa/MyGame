@@ -18,10 +18,6 @@ Player::Player()
 
 Player::~Player()
 {
-	// 弾の解放
-	for (PlayerBullet* bullet : pBullets_) {
-		delete bullet;
-	}
 }
 
 std::unique_ptr<Player> Player::Create(Model* model)
@@ -180,9 +176,8 @@ void Player::Update()
 	});
 
 	// デスフラグの立った弾を削除
-	pBullets_.remove_if([](PlayerBullet* bullet) {
+	pBullets_.remove_if([](std::unique_ptr<PlayerBullet>& bullet) {
 		if (bullet->IsDead()) {
-			delete bullet;
 
 			return true;
 		}
@@ -344,7 +339,7 @@ void Player::Update()
 		}
 		if (eye_.z <= -45.0f) {
 		}
-			eye_.z += 0.3f;
+			eye_.z += 0.4f;
 	}
 	if (!isStartStaging_) {
 		if (pPosition_.z < 500) {
@@ -575,7 +570,7 @@ void Player::Update()
 	}
 
 	// 弾更新
-	for (PlayerBullet* bullet : pBullets_) {
+	for (std::unique_ptr<PlayerBullet>& bullet : pBullets_) {
 		bullet->Update();
 		pBulletP_ = bullet->GetPosition();
 		if (!damage_) {
@@ -795,7 +790,7 @@ void Player::Draw()
 	}*/
 
 	// 弾描画
-	for (PlayerBullet* bullet : pBullets_) {
+	for (std::unique_ptr<PlayerBullet>& bullet : pBullets_) {
 		bullet->Draw();
 	}
 }
@@ -811,11 +806,11 @@ void Player::Attack()
 		DirectX::XMFLOAT3 velocity(0, 0, bulletSpeed);
 
 		// 弾の生成と、初期化
-		PlayerBullet* newBullet = new PlayerBullet();
+		std::unique_ptr<PlayerBullet> newBullet = std::make_unique<PlayerBullet>();
 		newBullet->Initialize(pPosition_, velocity);
 
 		// 球を登録する
-		pBullets_.push_back(newBullet);
+		pBullets_.push_back(std::move(newBullet));
 	}
 	if(input_->PushKey(DIK_SPACE)){
 		isPushSpace_ = true;

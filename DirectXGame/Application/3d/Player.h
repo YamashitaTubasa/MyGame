@@ -189,7 +189,7 @@ private: // メンバ変数
 	// カメラ
 	Camera* camera_ = nullptr;
 	// 自キャラ弾
-	std::list<PlayerBullet*> pBullets_;
+	std::list<std::unique_ptr<PlayerBullet>> pBullets_;
 	// 敵キャラ
 	std::list<std::unique_ptr<Enemy>> enemys_;
 	std::unique_ptr<Enemy> enemy_;
@@ -293,7 +293,7 @@ private: // メンバ変数
 	bool isStartStaging_ = true;
 	// スタート演出タイム
 	int startCount_ = 0;
-	const float startSpeed_ = 0.4f;
+	const float startSpeed_ = 0.6f;
 	// ゴール時の演出フラグ
 	bool isEndStaging_ = false;
 	// ゴール演出タイム
