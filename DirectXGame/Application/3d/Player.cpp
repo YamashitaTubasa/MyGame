@@ -170,11 +170,6 @@ void Player::Update()
 	blackSmokeMan_->Update();
 	rotationParticleMan_->Update();
 
-	// デスフラグの立った敵を削除
-	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy_) {
-		return enemy_->GetIsDead();
-	});
-
 	// デスフラグの立った弾を削除
 	pBullets_.remove_if([](std::unique_ptr<PlayerBullet>& bullet) {
 		if (bullet->IsDead()) {
@@ -579,6 +574,7 @@ void Player::Update()
 
 				damage_ = true;
 				bullet->SetIsDead(true);
+				isMobEnemyAllive_ = true;
 			}
 		}
 		if (!damage01_) {
@@ -587,6 +583,7 @@ void Player::Update()
 
 				damage01_ = true;
 				bullet->SetIsDead(true);
+				isMobEnemyAllive_ = true;
 			}
 		}
 		if (!damage02_) {
@@ -595,6 +592,7 @@ void Player::Update()
 
 				damage02_ = true;
 				bullet->SetIsDead(true);
+				isMobEnemyAllive_ = true;
 			}
 		}
 		if (!damage03_) {
@@ -603,6 +601,7 @@ void Player::Update()
 
 				damage03_ = true;
 				bullet->SetIsDead(true);
+				isMobEnemyAllive_ = true;
 			}
 		}
 
@@ -631,10 +630,10 @@ void Player::Update()
 	}
 	bossObj_->SetPosition(bossPos_);
 
-	if (isGameOverStaging_ == false && isGameClearStaging_ == false) {
+	if (isGameOverStaging_ == false && isGameClearStaging_ == false && enemyHpScale_.x >= 0) {
 		if (pPosition_.x <= bossPos_.x + 20 && pPosition_.x >= bossPos_.x - 20 &&
 			pPosition_.y <= bossPos_.y + 10 && pPosition_.y >= bossPos_.y - 10 &&
-			pPosition_.z <= bossPos_.z + 300 && pPosition_.z >= bossPos_.z - 1) {
+			pPosition_.z <= bossPos_.z + 0 && pPosition_.z >= bossPos_.z - 1) {
 
 			isBd_ = true;
 		}

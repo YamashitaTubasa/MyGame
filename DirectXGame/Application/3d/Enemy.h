@@ -20,45 +20,41 @@ public:
 	// デストラクタ
 	~Enemy();
 
+public:
+	// 敵の行動フェーズ
+	enum class Phase {
+		Access // 接近する
+	};
+
 public: // メンバ関数
 	/// <summary>
 	/// 3Dオブジェクト生成
 	/// </summary>
 	/// <param name="model">モデル</param>
 	/// <returns></returns>
-	static std::unique_ptr<Enemy> Create(Model* model = nullptr);
+	//static std::unique_ptr<Enemy> Create(Model* model = nullptr);
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	bool Initialize() override;
+	void Initialize(DirectX::XMFLOAT3& position);
 
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update() override;
+	void Update();
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
 
-	/// <summary>
-	/// 敵発生データの読み込み
-	/// </summary>
-	void LoadEnemyPopData();
-
-	/// <summary>
-	/// 敵発生コマンドの更新
-	/// </summary>
-	void UpdateEnemyPopCommands();
-
 public: // Getter・Setter
 	/// <summary>
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	DirectX::XMFLOAT3 GetPosition() const { return position_[0]; }
+	DirectX::XMFLOAT3 GetPosition() const { return position_; }
 
 	/// <summary>
 	/// デスフラグの取得
@@ -76,43 +72,30 @@ public: // Getter・Setter
 	/// ダメージ
 	/// </summary>
 	/// <param name="damage"></param>
-	void SetDamage(bool enemyDamage) { enemyDamage_ = enemyDamage; }
-	void SetDamage01(bool enemyDamage01) { enemyDamage01_ = enemyDamage01; }
-	void SetDamage02(bool enemyDamage02) { enemyDamage02_ = enemyDamage02; }
-	void SetDamage03(bool enemyDamage03) { enemyDamage03_ = enemyDamage03; }
-	bool GetDamage() const { return enemyDamage_; }
-	bool GetDamage01() const { return enemyDamage01_; }
-	bool GetDamage02() const { return enemyDamage02_; }
-	bool GetDamage03() const { return enemyDamage03_; }
+	void SetDamage(bool isDamage) { isDamage_ = isDamage; }
+	bool GetDamage() const { return isDamage_; }
+	bool GetIsMobEnemyAllive() { return isMobEnemyAllive_; }
+	void SetIsMobEnemyAllive(bool isMobEnemyAllive) { isMobEnemyAllive_ = isMobEnemyAllive; }
 
 private:
 	// オブジェクト
-	std::unique_ptr<Object3d> enemyO3_ = nullptr;
-	std::unique_ptr<Object3d> enemyO1_ = nullptr;
-	std::unique_ptr<Object3d> enemyO2_ = nullptr;
-	std::unique_ptr<Object3d> enemyO4_ = nullptr;
-
+	std::unique_ptr<Object3d> enemyObject_ = nullptr;
 	// モデル
-	std::unique_ptr<Model> enemyM_;
+	std::unique_ptr<Model> enemyModel_;
 
-	// 敵発生コマンド
-	std::stringstream enemyPopCommands_;
+	// 座標
+	DirectX::XMFLOAT3 position_ = { 0,0,0 };
+	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
+	DirectX::XMFLOAT3 scale_ = { 5,5,5 };
+	DirectX::XMFLOAT3 eye_;
+	DirectX::XMFLOAT3 target_;
 
-	DirectX::XMFLOAT3 position_[5]{};
-	DirectX::XMFLOAT3 rotation_[5]{};
-	DirectX::XMFLOAT3 scale_[5]{};
-	DirectX::XMFLOAT3 eye_[5]{};
-	DirectX::XMFLOAT3 target_[5]{};
-
-	// 待機フラグ
-	bool isWait_ = false;
-	// 待機タイマー
-	int waitTimer_ = 0;
 	// 敵のデスフラグ
 	bool isDead_ = false;
-	bool enemyDamage_ = false;
-	bool enemyDamage01_ = false;
-	bool enemyDamage02_ = false;
-	bool enemyDamage03_ = false;
+	bool isDamage_ = false;
+	bool isMobEnemyAllive_;
+
+	// フェーズ
+	Phase phase_ = Phase::Access;
 };
 
