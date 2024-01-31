@@ -163,6 +163,9 @@ public: // ゲッター
 	bool GetIsPushU() const { return isPushU_; }
 	bool GetIsPushSpace() const { return isPushSpace_; }
 
+	bool GetIsMobEnemyAllive() const { return isMobEnemyAllive_; }
+	void SetIsMobEnemyAllive(bool isMobEnemyAllive) { isMobEnemyAllive_ = isMobEnemyAllive; }
+
 private: // メンバ変数
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
 
@@ -365,4 +368,6 @@ private: // メンバ変数
 	bool isPushD_ = false;
 	bool isPushU_ = false;
 	bool isPushSpace_ = false;
+
+	bool isMobEnemyAllive_ = false;
 };

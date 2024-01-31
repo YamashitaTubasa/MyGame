@@ -27,6 +27,8 @@
 #include "GameSceneManager.h"
 #include "GameClearScene.h"
 
+#include <sstream>
+
 // 前方宣言
 class PostEffect;
 class CollisionManager;
@@ -84,7 +86,25 @@ public:
 	/// </summary>
 	bool CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1);
 
+	/// <summary>
+	/// 敵発生データの読み込み
+	/// </summary>
+	void LoadEnemyPopData();
 
+	/// <summary>
+	/// 敵発生コマンドの更新
+	/// </summary>
+	void UpdateEnemyPopCommands();
+
+	/// <summary>
+	/// フェード処理
+	/// </summary>
+	void Fade();
+
+	/// <summary>
+	/// ダメージ演出
+	/// </summary>
+	void DamageDirection();
 
 private:
 	MyEngine::WinApp* winApp_ = nullptr;
@@ -93,15 +113,15 @@ private:
 	MyEngine::Input* input_ = nullptr;
 	
 	// スプライト
-	std::unique_ptr<MyEngine::Sprite> sprite_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> hp_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> hpBar_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> hpBack_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> ult_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> cross_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> damage_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> white_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> black_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> sprite_;
+	std::unique_ptr<MyEngine::Sprite> hp_;
+	std::unique_ptr<MyEngine::Sprite> hpBar_;
+	std::unique_ptr<MyEngine::Sprite> hpBack_;
+	std::unique_ptr<MyEngine::Sprite> ult_;
+	std::unique_ptr<MyEngine::Sprite> cross_;
+	std::unique_ptr<MyEngine::Sprite> damage_;
+	std::unique_ptr<MyEngine::Sprite> white_;
+	std::unique_ptr<MyEngine::Sprite> black_;
 	std::unique_ptr<MyEngine::Sprite> num0_[6];
 	std::unique_ptr<MyEngine::Sprite> number_[10];
 	std::unique_ptr<MyEngine::Sprite> w_;
@@ -130,16 +150,25 @@ private:
 	std::unique_ptr<MyEngine::Particle> particle_ = nullptr;
 	std::unique_ptr<MyEngine::Particle> blackSmoke_ = nullptr;
 
+	// ポストエフェクト
+	std::unique_ptr<MyEngine::PostEffect> postEffect_;
+
 	MyEngine::ImGuiManager* imGuiManager_ = nullptr;
 	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<Player> player_;
-	std::unique_ptr<Enemy> enemy_;
 	std::unique_ptr<BackGroundObject> backGroundObj_ = nullptr;
 	std::unique_ptr<Skydome> skydome_ = nullptr;
 	// 衝突マネージャ
 	CollisionManager* collisionMan_ = nullptr;
 	// 敵キャラ
 	std::list<std::unique_ptr<Enemy>> enemys_;
+	// 敵発生コマンド
+	std::stringstream enemyPopCommands_;
+
+	// 待機フラグ
+	bool isWait_ = false;
+	// 待機タイマー
+	int waitTimer_ = 0;
 
 	DirectX::XMFLOAT3 position_[5]{};
 	DirectX::XMFLOAT3 rotation_[5]{};
@@ -187,4 +216,6 @@ private:
 	bool isScore_ = false;
 	int score_ = 0;
 
+	// ポストエフェクト
+	bool isRadialBlur_ = false;
 };

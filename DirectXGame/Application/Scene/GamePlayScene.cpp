@@ -43,9 +43,9 @@ void GamePlayScene::Initialize()
 	player_->SetCollider(new SphereCollider);
 
 	// 敵キャラ生成
-	enemy_ = std::make_unique<Enemy>();
-	enemy_ = Enemy::Create();
-	enemy_->SetCollider(new SphereCollider);
+	//enemy_->SetCollider(new SphereCollider);
+	LoadEnemyPopData();
+	UpdateEnemyPopCommands();
 
 	// 背景のオブジェクトの初期化
 	backGroundObj_ = std::make_unique<BackGroundObject>();
@@ -64,6 +64,10 @@ void GamePlayScene::Initialize()
 	// パーティクルマネージャーにパーティクルセットする
 	particleMan_->SetModel(particle_.get());
 	blackSmokeMan_->SetModel(blackSmoke_.get());
+
+	// ポストエフェクト
+	postEffect_ = std::make_unique<MyEngine::PostEffect>();
+	postEffect_->Initialize(L"Resources/shaders/PostEffectRadialBlurPS.hlsl");
 	
 	// スプライトの初期化
 	GamePlayScene::SpriteInitialize();
@@ -84,11 +88,10 @@ void GamePlayScene::Update()
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
-
-	enemy_->SetDamage(player_->GetDamage());
-	enemy_->SetDamage01(player_->GetDamage01());
-	enemy_->SetDamage02(player_->GetDamage02());
-	enemy_->SetDamage03(player_->GetDamage03());
+	
+	for (std::unique_ptr<Enemy>& enemy : enemys_) {
+		enemy->SetIsMobEnemyAllive(player_->GetIsMobEnemyAllive());
+	}
 
 	// カメラの更新
 	camera_->Update();
@@ -97,10 +100,15 @@ void GamePlayScene::Update()
 	player_->Update();
 
 	// 敵キャラ更新
-	enemy_->Update();
+	for (std::unique_ptr<Enemy>& enemy : enemys_) {
+		enemy->Update();
+	}
 	// デスフラグの立った敵を削除
-	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy_) {
-		return enemy_->GetIsDead();
+	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy) {
+		if (enemy->GetIsMobEnemyAllive()) {
+			return true;
+		};
+		return false;
 	});
 
 	// 背景のオブジェクトの更新
@@ -108,6 +116,16 @@ void GamePlayScene::Update()
 
 	// 天球の更新
 	skydome_->Update();
+
+	if (player_->GetIsGameClearStaging() == true) {
+		isRadialBlur_ = true;
+	}
+	if (isRadialBlur_ == true) {
+		postEffect_->SetIsPostE(true);
+	}
+	else {
+		postEffect_->SetIsPostE(false);
+	}
 
 	/*if (CheckCollision(player->GetpBulletP(), enemy->GetPosition())) {
 		isEnemyDeth = true;
@@ -138,64 +156,12 @@ void GamePlayScene::Update()
 	hp_->SpriteTransferVertexBuffer(hp_.get(), spriteCommon_, 1);
 	hp_->SpriteUpdate(hp_.get(), spriteCommon_);
 
-	// フェードアウト処理
-	if (isFadeOut_) {
-		if (bAlpha_ > 0.0f) {
-			bAlpha_ -= 0.01f;
-		}
-		if (bAlpha_ <= 0.01f) {
-			bAlpha_ = 0.0f;
-			isFadeOut_ = false;
-		}
-	}
-
-	// フェードインの処理
-	if (isOverFadeIn_) {
-		if (bAlpha_ < 1.0f) {
-			bAlpha_ += 0.01f;
-		}
-		if (bAlpha_ > 1.0f) {
-			bAlpha_ = 1.0f;
-			isOverScene_ = true;
-		}
-	}
-	if (isClearFadeIn_) {
-		if (bAlpha_ < 1.0f) {
-			bAlpha_ += 0.01f;
-		}
-		if (bAlpha_ > 1.0f) {
-			bAlpha_ = 1.0f;
-			isClearScene_ = true;
-		}
-	}
-	white_->SetAlpha(bAlpha_);
-	black_->SetAlpha(bAlpha_);
+	// フェード処理
+	GamePlayScene::Fade();
 
 	// ダメージの処理
-	if (isDamage_ == true || player_->GetIsBd() == true) {
-		damageTime_++;
-		player_->Shake();
-		if (hpScale_.x >= 0) {
-			hpScale_.x -= 5;
-		}
-	}
-	if (damageTime_ >= 20) {
-		isDamage_ = false;
-		damageTime_ = 0;
-	}
+	GamePlayScene::DamageDirection();
 
-
-	if (hpScale_.x <= 0) {
-
-		overTimer_++;
-		player_->SetIsGameOverStaging(true);
-
-		if (overTimer_ >= 50) {
-
-			isOverFadeIn_ = true;
-			overTimer_ = 0;
-		}
-	}
 	if (isOverScene_) {
 		// ゲームオーバー（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("OVER");
@@ -252,7 +218,7 @@ void GamePlayScene::Draw()
 	ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
 
 	// 描画前処理
-	dxCommon_->PreDraw();
+	postEffect_->PreDraw(cmdList);
 #pragma region 3Dオブジェクトの描画
 
 	// 3Dオブジェクト描画前処理
@@ -262,7 +228,9 @@ void GamePlayScene::Draw()
 	skydome_->Draw();
 	player_->Draw();
 	if (!isEnemyDeth_) {
-		enemy_->Draw();
+		for (std::unique_ptr<Enemy>& enemy : enemys_) {
+			enemy->Draw();
+		}
 	}
 
 	// 背景のオブジェクトの描画
@@ -381,6 +349,15 @@ void GamePlayScene::Draw()
 	// スプライト描画後処理
 	MyEngine::Sprite::PostDraw();
 #pragma endregion
+	// 描画後処理
+	postEffect_->PostDraw(cmdList);
+
+	// 描画前処理
+	dxCommon_->PreDraw();
+
+	// ポストエフェクト描画
+	postEffect_->Draw(cmdList);
+
 	// 描画後処理
 	dxCommon_->PostDraw();
 
@@ -795,4 +772,154 @@ bool GamePlayScene::CheckCollision(const DirectX::XMFLOAT3& object, const Direct
 	}
 
 	return true;
+}
+
+void GamePlayScene::LoadEnemyPopData()
+{
+	// ファイルを開く
+	std::ifstream file;
+	file.open("Resources/csv/enemyPop.csv");
+	assert(file.is_open());
+
+	// ファイルの内容を文字列ストリームにコピー
+	enemyPopCommands_ << file.rdbuf();
+
+	// ファイルを閉じる
+	file.close();
+}
+
+void GamePlayScene::UpdateEnemyPopCommands()
+{
+	// 待機処理
+	if (isWait_) {
+		waitTimer_--;
+		if (waitTimer_ <= 0) {
+			// 待機完了
+			isWait_ = false;
+		}
+		return;
+	}
+
+	// 1行分の文字列を入れる変数
+	std::string line;
+
+	// コマンド実行ループ
+	while (getline(enemyPopCommands_, line)) {
+		// 1行分の文字列をストリームに変換して解析しやすくする
+		std::istringstream line_stream(line);
+
+		std::string word;
+		// ,区切りで行の先頭文字列を取得
+		getline(line_stream, word, ',');
+
+		// "//"から始まる行はコメント
+		if (word.find("//") == 0) {
+			// コメント行を飛ばす
+			continue;
+		}
+
+		DirectX::XMFLOAT3 pos;
+		// POPコマンド
+		if (word.find("POP") == 0) {
+			// x座標
+			getline(line_stream, word, ',');
+			float x = (float)std::atof(word.c_str());
+
+			// y座標
+			getline(line_stream, word, ',');
+			float y = (float)std::atof(word.c_str());
+
+			// z座標
+			getline(line_stream, word, ',');
+			float z = (float)std::atof(word.c_str());
+
+			pos.x = x;
+			pos.y = y;
+			pos.z = z;
+
+			// 敵を発生させる
+			std::unique_ptr<Enemy> newEnemys = std::make_unique<Enemy>();
+			newEnemys->Initialize(pos);
+			enemys_.push_back(std::move(newEnemys));
+
+		}
+
+		// WAITコマンド
+		else if (word.find("WAIT") == 0) {
+			getline(line_stream, word, ',');
+
+			// 待ち時間
+			int32_t waitTime = atoi(word.c_str());
+
+			// 待機開始
+			isWait_ = true;
+			waitTimer_ = waitTime;
+
+			// コマンドループを抜ける
+			break;
+		}
+	}
+}
+
+void GamePlayScene::Fade()
+{
+	// フェードアウト処理
+	if (isFadeOut_) {
+		if (bAlpha_ > 0.0f) {
+			bAlpha_ -= 0.01f;
+		}
+		if (bAlpha_ <= 0.01f) {
+			bAlpha_ = 0.0f;
+			isFadeOut_ = false;
+		}
+	}
+
+	// フェードインの処理
+	if (isOverFadeIn_) {
+		if (bAlpha_ < 1.0f) {
+			bAlpha_ += 0.01f;
+		}
+		if (bAlpha_ > 1.0f) {
+			bAlpha_ = 1.0f;
+			isOverScene_ = true;
+		}
+	}
+	if (isClearFadeIn_) {
+		if (bAlpha_ < 1.0f) {
+			bAlpha_ += 0.01f;
+		}
+		if (bAlpha_ > 1.0f) {
+			bAlpha_ = 1.0f;
+			isClearScene_ = true;
+		}
+	}
+	white_->SetAlpha(bAlpha_);
+	black_->SetAlpha(bAlpha_);
+}
+
+void GamePlayScene::DamageDirection()
+{
+	if (isDamage_ == true || player_->GetIsBd() == true) {
+		damageTime_++;
+		player_->Shake();
+		if (hpScale_.x >= 0) {
+			hpScale_.x -= 5;
+		}
+	}
+	if (damageTime_ >= 20) {
+		isDamage_ = false;
+		damageTime_ = 0;
+	}
+
+	if (hpScale_.x <= 0) {
+
+		overTimer_++;
+		player_->SetIsGameOverStaging(true);
+
+		if (overTimer_ >= 50) {
+
+			isOverFadeIn_ = true;
+			overTimer_ = 0;
+		}
+	}
 }
