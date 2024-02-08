@@ -20,6 +20,7 @@
 #include "FbxObject3d.h"
 #include "PostEffect.h"
 #include "Enemy.h"
+#include "EnemyBullet.h"
 #include "PlayerBullet.h"
 #include "Skydome.h"
 #include "BackGroundObject.h"
@@ -28,6 +29,7 @@
 #include "GameClearScene.h"
 
 #include <sstream>
+#include <list>
 
 // 前方宣言
 class PostEffect;
@@ -106,6 +108,11 @@ public:
 	/// </summary>
 	void DamageDirection();
 
+	/// <summary>
+	/// 敵の弾の追加
+	/// </summary>
+	void AddEnemyBullet(std::unique_ptr<EnemyBullet> enemyBullets);
+
 private:
 	MyEngine::WinApp* winApp_ = nullptr;
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
@@ -164,6 +171,8 @@ private:
 	std::list<std::unique_ptr<Enemy>> enemys_;
 	// 敵発生コマンド
 	std::stringstream enemyPopCommands_;
+	// 敵の弾
+	std::list<std::unique_ptr<EnemyBullet>> enemyBullets_;
 
 	// 待機フラグ
 	bool isWait_ = false;

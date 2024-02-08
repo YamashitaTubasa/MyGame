@@ -107,6 +107,7 @@
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\3d\BackGroundObject.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Enemy.cpp" />
+    <ClCompile Include="DirectXGame\Application\3d\EnemyBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\PlayerBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\3d\Skydome.cpp" />
@@ -237,6 +238,7 @@
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\3d\BackGroundObject.h" />
     <ClInclude Include="DirectXGame\Application\3d\Enemy.h" />
+    <ClInclude Include="DirectXGame\Application\3d\EnemyBullet.h" />
     <ClInclude Include="DirectXGame\Application\3d\Player.h" />
     <ClInclude Include="DirectXGame\Application\3d\PlayerBullet.h" />
     <ClInclude Include="DirectXGame\Application\3d\Skydome.h" />

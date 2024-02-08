@@ -44,8 +44,8 @@ void GamePlayScene::Initialize()
 
 	// 敵キャラ生成
 	//enemy_->SetCollider(new SphereCollider);
+	// 敵発生データの読み込み
 	LoadEnemyPopData();
-	UpdateEnemyPopCommands();
 
 	// 背景のオブジェクトの初期化
 	backGroundObj_ = std::make_unique<BackGroundObject>();
@@ -88,10 +88,6 @@ void GamePlayScene::Update()
 		// ゲームプレイシーン（次シーン）を生成
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
-	
-	for (std::unique_ptr<Enemy>& enemy : enemys_) {
-		enemy->SetIsMobEnemyAllive(player_->GetIsMobEnemyAllive());
-	}
 
 	// カメラの更新
 	camera_->Update();
@@ -101,13 +97,29 @@ void GamePlayScene::Update()
 
 	// 敵キャラ更新
 	for (std::unique_ptr<Enemy>& enemy : enemys_) {
+		//enemy->Fire();
+		enemy->SetIsMobEnemyAllive(player_->GetIsMobEnemyAllive());
 		enemy->Update();
 	}
+	// 敵発生コマンドの更新
+	UpdateEnemyPopCommands();
+
 	// デスフラグの立った敵を削除
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy) {
 		if (enemy->GetIsMobEnemyAllive()) {
 			return true;
 		};
+		return false;
+	});
+	// 敵の弾の更新
+	for (std::unique_ptr<EnemyBullet>& enemyBullets : enemyBullets_) {
+		enemyBullets->Update();
+	}
+	// デスフラグの立った弾を削除
+	enemyBullets_.remove_if([](std::unique_ptr<EnemyBullet>& enemyBullets) {
+		if (enemyBullets->GetIsDead()) {
+			return true;
+		}
 		return false;
 	});
 
@@ -126,10 +138,6 @@ void GamePlayScene::Update()
 	else {
 		postEffect_->SetIsPostE(false);
 	}
-
-	/*if (CheckCollision(player->GetpBulletP(), enemy->GetPosition())) {
-		isEnemyDeth = true;
-	}*/
 
 	if (input_->PushKey(DIK_RIGHT)) {
 		eye_[0].x += 0.5;
@@ -157,10 +165,10 @@ void GamePlayScene::Update()
 	hp_->SpriteUpdate(hp_.get(), spriteCommon_);
 
 	// フェード処理
-	GamePlayScene::Fade();
+	Fade();
 
 	// ダメージの処理
-	GamePlayScene::DamageDirection();
+	DamageDirection();
 
 	if (isOverScene_) {
 		// ゲームオーバー（次シーン）を生成
@@ -227,10 +235,11 @@ void GamePlayScene::Draw()
 	// 3Dオブジェクトの描画
 	skydome_->Draw();
 	player_->Draw();
-	if (!isEnemyDeth_) {
-		for (std::unique_ptr<Enemy>& enemy : enemys_) {
-			enemy->Draw();
-		}
+	for (std::unique_ptr<Enemy>& enemy : enemys_) {
+		enemy->Draw();
+	}
+	for (std::unique_ptr<EnemyBullet>& enemyBullets : enemyBullets_) {
+		enemyBullets->Draw();
 	}
 
 	// 背景のオブジェクトの描画
@@ -840,8 +849,8 @@ void GamePlayScene::UpdateEnemyPopCommands()
 			// 敵を発生させる
 			std::unique_ptr<Enemy> newEnemys = std::make_unique<Enemy>();
 			newEnemys->Initialize(pos);
+			newEnemys->SetGamePlayScene(this);
 			enemys_.push_back(std::move(newEnemys));
-
 		}
 
 		// WAITコマンド
@@ -922,4 +931,10 @@ void GamePlayScene::DamageDirection()
 			overTimer_ = 0;
 		}
 	}
+}
+
+void GamePlayScene::AddEnemyBullet(std::unique_ptr<EnemyBullet> enemyBullets)
+{
+	// 敵の弾の登録
+	enemyBullets_.push_back(std::move(enemyBullets));
 }

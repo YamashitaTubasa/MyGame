@@ -9,6 +9,7 @@
 #include "CollisionManager.h"
 #include "SphereCollider.h"
 #include "Input.h"
+#include "GamePlayScene.h"
 
 #include <fstream>
 
@@ -41,7 +42,7 @@ Enemy::~Enemy()
 //	return instance;
 //}
 
-void Enemy::Initialize(DirectX::XMFLOAT3& position)
+void Enemy::Initialize(const DirectX::XMFLOAT3& position)
 {
 	/*if (!Object3d::Initialize()) 
 	{
@@ -80,4 +81,18 @@ void Enemy::Draw()
 {
 	// 敵の描画
 	enemyObject_->Draw();
+}
+
+void Enemy::Fire()
+{
+	// 敵の攻撃処理
+	const float bulletSpeed = 1.0f;
+	DirectX::XMFLOAT3 velocity(0, 0, bulletSpeed);
+
+	// 弾の生成と、初期化
+	std::unique_ptr<EnemyBullet> newEnemyBullets = std::make_unique<EnemyBullet>();
+	newEnemyBullets->Initialize(position_, velocity);
+
+	// 球を登録する
+	gamePlayScene_->AddEnemyBullet(std::move(newEnemyBullets));
 }

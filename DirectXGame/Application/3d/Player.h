@@ -17,7 +17,6 @@
 #include "Camera.h"
 #include "EasingManager.h"
 #include "Input.h"
-#include "Enemy.h"
 #include "Particle.h"
 #include "ParticleManager.h"
 #include "Sprite.h"
@@ -193,9 +192,6 @@ private: // メンバ変数
 	Camera* camera_ = nullptr;
 	// 自キャラ弾
 	std::list<std::unique_ptr<PlayerBullet>> pBullets_;
-	// 敵キャラ
-	std::list<std::unique_ptr<Enemy>> enemys_;
-	std::unique_ptr<Enemy> enemy_;
 	// パーティクル
 	std::unique_ptr<MyEngine::Particle> particle_ = nullptr;
 	std::unique_ptr<MyEngine::Particle> blackSmoke_ = nullptr;
