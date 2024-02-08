@@ -9,7 +9,10 @@
 #include "Object3d.h"
 #include "Model.h"
 
+
 #include <sstream>
+
+class GamePlayScene;
 
 class Enemy : public Object3d
 {
@@ -23,7 +26,8 @@ public:
 public:
 	// 敵の行動フェーズ
 	enum class Phase {
-		Access // 接近する
+		Access, // 接近する
+		Fire    // 弾の発射
 	};
 
 public: // メンバ関数
@@ -37,7 +41,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(DirectX::XMFLOAT3& position);
+	void Initialize(const DirectX::XMFLOAT3& position);
 
 	/// <summary>
 	/// 更新
@@ -48,6 +52,12 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+
+public:
+	/// <summary>
+	/// 弾の発射
+	/// </summary>
+	void Fire();
 
 public: // Getter・Setter
 	/// <summary>
@@ -77,11 +87,19 @@ public: // Getter・Setter
 	bool GetIsMobEnemyAllive() { return isMobEnemyAllive_; }
 	void SetIsMobEnemyAllive(bool isMobEnemyAllive) { isMobEnemyAllive_ = isMobEnemyAllive; }
 
+	/// <summary>
+	/// ゲームプレイシーンのセット
+	/// </summary>
+	/// <param name="gamePlayScene"></param>
+	void SetGamePlayScene(GamePlayScene* gamePlayScene) { gamePlayScene_ = gamePlayScene; }
+
 private:
 	// オブジェクト
 	std::unique_ptr<Object3d> enemyObject_ = nullptr;
 	// モデル
 	std::unique_ptr<Model> enemyModel_;
+	// ゲームシーン
+	GamePlayScene* gamePlayScene_ = nullptr;
 
 	// 座標
 	DirectX::XMFLOAT3 position_ = { 0,0,0 };

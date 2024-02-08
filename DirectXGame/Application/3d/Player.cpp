@@ -49,8 +49,6 @@ bool Player::Initialize()
 		return false;
 	}
 
-	enemy_ = std::make_unique<Enemy>();
-
 	// コライダーの追加
 	float radius = 0.6f;
 	// 半径分だけ足元から浮いた座標を球の中心にする
