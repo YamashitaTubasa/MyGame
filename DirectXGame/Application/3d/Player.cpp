@@ -387,10 +387,6 @@ void Player::Update()
 			target_.y += playerSpeed_;
 			eye_.y += playerSpeed_;
 			isUpMove_ = true;
-			isPushW_ = true;
-		}
-		else {
-			isPushW_ = false;
 		}
 	}
 	if (!input_->PushKey(DIK_W)) {
@@ -418,10 +414,6 @@ void Player::Update()
 			target_.x -= playerSpeed_;
 			eye_.x -= playerSpeed_;
 			isLeftMove_ = true;
-			isPushA_ = true;
-		}
-		else {
-			isPushA_ = false;
 		}
 	}
 	if (!input_->PushKey(DIK_A)) {
@@ -455,10 +447,6 @@ void Player::Update()
 			target_.y -= playerSpeed_;
 			eye_.y -= playerSpeed_;
 			isDownMove_ = true;
-			isPushS_ = true;
-		}
-		else {
-			isPushS_ = false;
 		}
 	}
 	if (!input_->PushKey(DIK_S)) {
@@ -486,10 +474,6 @@ void Player::Update()
 			target_.x += playerSpeed_;
 			eye_.x += playerSpeed_;
 			isRightMove_ = true;
-			isPushD_ = true;
-		}
-		else {
-			isPushD_ = false;
 		}
 	}
 	if (!input_->PushKey(DIK_D)) {
@@ -677,25 +661,25 @@ void Player::Update()
 	}
 
 	if (pPosition_.x >= -4 && pPosition_.x <= 4 && pPosition_.y >= -4 && pPosition_.y <= 4 && pPosition_.z <= 11 && pPosition_.z >= 2) {
-		if (input_->PushKey(DIK_U)) {
+		if (input_->PushKey(DIK_X)) {
 			damage_ = true;
 		}
 	}
 	if (pPosition_.x >= 2 && pPosition_.x <= 11 && pPosition_.y >= -3 && pPosition_.y <= 5 && pPosition_.z <= 24 && pPosition_.z >= 14)
 	{
-		if (input_->PushKey(DIK_U)) {
+		if (input_->PushKey(DIK_X)) {
 			damage01_ = true;
 		}
 	}
 	if (pPosition_.x <= -3 && pPosition_.x >= -11 && pPosition_.y >= -5 && pPosition_.y <= 3 && pPosition_.z <= 30 && pPosition_.z >= 20)
 	{
-		if (input_->PushKey(DIK_U)) {
+		if (input_->PushKey(DIK_X)) {
 			damage02_ = true;
 		}
 	}
 	if (pPosition_.x >= -4 && pPosition_.x <= 4 && pPosition_.y >= -4 && pPosition_.y <= 4 && pPosition_.z <= 39 && pPosition_.z >= 29)
 	{
-		if (input_->PushKey(DIK_U)) {
+		if (input_->PushKey(DIK_X)) {
 			damage03_ = true;
 		}
 	}
@@ -809,12 +793,6 @@ void Player::Attack()
 		// 球を登録する
 		pBullets_.push_back(std::move(newBullet));
 	}
-	if(input_->PushKey(DIK_SPACE)){
-		isPushSpace_ = true;
-	}
-	else {
-		isPushSpace_ = false;
-	}
 	
 	if (isTime_ == true) {
 		time_++;
@@ -908,12 +886,6 @@ void Player::Spin()
 		isEaseFlag_ = true;
 		isRot_ = true;
 		eFrame_ = 0;
-	}
-	if(input_->PushKey(DIK_U)){
-		isPushU_ = true;
-	}
-	else {
-		isPushU_ = false;
 	}
 
 	if (isRot_) {

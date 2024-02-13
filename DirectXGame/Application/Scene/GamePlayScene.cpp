@@ -288,7 +288,7 @@ void GamePlayScene::Draw()
 		d_->SpriteDraw(spriteCommon_);
 		move_->SpriteDraw(spriteCommon_);
 		spin_->SpriteDraw(spriteCommon_);
-		u_->SpriteDraw(spriteCommon_);
+		x_->SpriteDraw(spriteCommon_);
 		space_->SpriteDraw(spriteCommon_);
 		attack_->SpriteDraw(spriteCommon_);
 		// ULTの描画
@@ -591,7 +591,7 @@ void GamePlayScene::SpriteInitialize()
 
 	// W
 	w_ = std::make_unique<MyEngine::Sprite>();
-	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w.png");
+	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w1.png");
 	w_->SpriteCreate(1280, 720, 14, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	w_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	w_->SetPosition({ 70,510, 0 });
@@ -601,7 +601,7 @@ void GamePlayScene::SpriteInitialize()
 	w_->SpriteUpdate(w_.get(), spriteCommon_);
 	// a
 	a_ = std::make_unique<MyEngine::Sprite>();
-	a_->LoadTexture(spriteCommon_, 15, L"Resources/Image/a.png");
+	a_->LoadTexture(spriteCommon_, 15, L"Resources/Image/a1.png");
 	a_->SpriteCreate(1280, 720, 15, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	a_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	a_->SetPosition({ 30,560, 0 });
@@ -611,7 +611,7 @@ void GamePlayScene::SpriteInitialize()
 	a_->SpriteUpdate(a_.get(), spriteCommon_);
 	// s
 	s_ = std::make_unique<MyEngine::Sprite>();
-	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s.png");
+	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s1.png");
 	s_->SpriteCreate(1280, 720, 16, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	s_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	s_->SetPosition({ 70,560, 0 });
@@ -621,7 +621,7 @@ void GamePlayScene::SpriteInitialize()
 	s_->SpriteUpdate(s_.get(), spriteCommon_);
 	// d
 	d_ = std::make_unique<MyEngine::Sprite>();
-	d_->LoadTexture(spriteCommon_, 17, L"Resources/Image/d.png");
+	d_->LoadTexture(spriteCommon_, 17, L"Resources/Image/d1.png");
 	d_->SpriteCreate(1280, 720, 17, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	d_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	d_->SetPosition({ 115,560, 0 });
@@ -631,7 +631,7 @@ void GamePlayScene::SpriteInitialize()
 	d_->SpriteUpdate(d_.get(), spriteCommon_);
 	// move
 	move_ = std::make_unique<MyEngine::Sprite>();
-	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move.png");
+	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move1.png");
 	move_->SpriteCreate(1280, 720, 18, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	move_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	move_->SetPosition({ 155,540, 0 });
@@ -641,7 +641,7 @@ void GamePlayScene::SpriteInitialize()
 	move_->SpriteUpdate(move_.get(), spriteCommon_);
 	// spin
 	spin_ = std::make_unique<MyEngine::Sprite>();
-	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin.png");
+	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin1.png");
 	spin_->SpriteCreate(1280, 720, 19, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	spin_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	spin_->SetPosition({ 150,610, 0 });
@@ -661,7 +661,7 @@ void GamePlayScene::SpriteInitialize()
 	u_->SpriteUpdate(u_.get(), spriteCommon_);
 	// space
 	space_ = std::make_unique<MyEngine::Sprite>();
-	space_->LoadTexture(spriteCommon_, 21, L"Resources/Image/space.png");
+	space_->LoadTexture(spriteCommon_, 21, L"Resources/Image/space1.png");
 	space_->SpriteCreate(1280, 720, 21, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	space_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	space_->SetPosition({ 40,660, 0 });
@@ -671,7 +671,7 @@ void GamePlayScene::SpriteInitialize()
 	space_->SpriteUpdate(space_.get(), spriteCommon_);
 	// attack
 	attack_ = std::make_unique<MyEngine::Sprite>();
-	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack.png");
+	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack1.png");
 	attack_->SpriteCreate(1280, 720, 22, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	attack_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	attack_->SetPosition({ 145,660, 0 });
@@ -682,7 +682,7 @@ void GamePlayScene::SpriteInitialize()
 	// 点線
 	for (int i = 0; i < 2; i++) {
 		dotLine_[i] = std::make_unique<MyEngine::Sprite>();
-		dotLine_[i]->LoadTexture(spriteCommon_, 31, L"Resources/Image/circleDot.png");
+		dotLine_[i]->LoadTexture(spriteCommon_, 31, L"Resources/Image/circleDot1.png");
 		dotLine_[i]->SpriteCreate(1280, 720, 31, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 		dotLine_[i]->SetColor(XMFLOAT4(1, 1, 1, 1));
 		dotLine_[i]->SetScale(XMFLOAT2(64 * 4.0f, 10 * 1.0f));
@@ -757,11 +757,11 @@ void GamePlayScene::SpriteInitialize()
 	whiteSpace_->SpriteUpdate(whiteSpace_.get(), spriteCommon_);
 	// X
 	x_ = std::make_unique<MyEngine::Sprite>();
-	x_->LoadTexture(spriteCommon_, 38, L"Resources/Image/x.png");
+	x_->LoadTexture(spriteCommon_, 38, L"Resources/Image/x1.png");
 	x_->SpriteCreate(1280, 720, 38, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
 	x_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	x_->SetPosition({ 70,610, 0 });
-	x_->SetScale({ 64.0f * 0.6f, 64.0f * 0.6f });
+	x_->SetScale({ 64.0f * 0.45f, 64.0f * 0.45f });
 	x_->SetRotation(0.0f);
 	x_->SpriteTransferVertexBuffer(x_.get(), spriteCommon_, 38);
 	x_->SpriteUpdate(x_.get(), spriteCommon_);

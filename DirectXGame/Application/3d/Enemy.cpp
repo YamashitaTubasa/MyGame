@@ -50,7 +50,7 @@ void Enemy::Initialize(const DirectX::XMFLOAT3& position)
 	}*/
 
 	// OBJからモデルデータを読み込む
-	enemyModel_ = Model::LoadFromOBJ("enemy");
+	enemyModel_ = Model::LoadFromOBJ("mobEnemy");
 	// 3Dオブジェクト生成
 	enemyObject_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
