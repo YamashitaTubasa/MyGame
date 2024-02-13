@@ -15,10 +15,12 @@
 
 Enemy::Enemy()
 {
+	state_ = new EnemyStateAccess();
 }
 
 Enemy::~Enemy()
 {
+	delete state_;
 }
 
 //std::unique_ptr<Enemy> Enemy::Create(Model* model)
@@ -65,16 +67,17 @@ void Enemy::Initialize(const DirectX::XMFLOAT3& position)
 
 void Enemy::Update()
 {
-	// 敵の行動
-	switch (phase_) {
-	default:
-	case Phase::Access:
+	//// 敵の行動
+	//switch (phase_) {
+	//default:
+	//case Phase::Access:
 
-		break;
-	}
+	//	break;
+	//}
 
-	// 敵の更新
-	enemyObject_->Update();
+	//// 敵の更新
+	//enemyObject_->Update();
+	state_->Update(this);
 }
 
 void Enemy::Draw()
@@ -95,4 +98,30 @@ void Enemy::Fire()
 
 	// 球を登録する
 	gamePlayScene_->AddEnemyBullet(std::move(newEnemyBullets));
+}
+
+void Enemy::ChangeState(BaseEnemyState* newState)
+{
+	delete state_;
+	state_ = newState;
+}
+
+void EnemyStateAccess::Update(Enemy* enemy)
+{
+	enemy->GetPosition();
+
+	position_.x += 0.1f;
+	enemy->SetPosition(position_);
+
+	enemy->ChangeState(new EnemyStateAccess());
+}
+
+void EnemyStateFire::Update(Enemy* enemy)
+{
+	enemy->GetPosition();
+
+	position_.x -= 0.1f;
+	enemy->SetPosition(position_);
+
+	enemy->ChangeState(new EnemyStateAccess());
 }

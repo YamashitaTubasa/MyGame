@@ -9,10 +9,43 @@
 #include "Object3d.h"
 #include "Model.h"
 
-
 #include <sstream>
 
 class GamePlayScene;
+class Enemy;
+
+class BaseEnemyState
+{
+public:
+	/// <summary>
+	/// 更新
+	/// </summary>
+	virtual void Update(Enemy* enemy) = 0;
+};
+
+class EnemyStateAccess : public BaseEnemyState
+{
+public:
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update(Enemy* enemy) override;
+
+private:
+	DirectX::XMFLOAT3 position_;
+};
+
+class EnemyStateFire : public BaseEnemyState
+{
+public:
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update(Enemy* enemy) override;
+
+private:
+	DirectX::XMFLOAT3 position_;
+};
 
 class Enemy : public Object3d
 {
@@ -53,11 +86,16 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-public:
 	/// <summary>
 	/// 弾の発射
 	/// </summary>
 	void Fire();
+
+	/// <summary>
+	/// 切り替え処理
+	/// </summary>
+	/// <param name="newState"></param>
+	void ChangeState(BaseEnemyState* newState);
 
 public: // Getter・Setter
 	/// <summary>
@@ -100,6 +138,8 @@ private:
 	std::unique_ptr<Model> enemyModel_;
 	// ゲームシーン
 	GamePlayScene* gamePlayScene_ = nullptr;
+	
+	BaseEnemyState* state_;
 
 	// 座標
 	DirectX::XMFLOAT3 position_ = { 0,0,0 };
@@ -116,4 +156,3 @@ private:
 	// フェーズ
 	Phase phase_ = Phase::Access;
 };
-
