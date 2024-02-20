@@ -64,7 +64,7 @@ public: // Getter・Setter
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	DirectX::XMFLOAT3 GetPosition() const { return position_; }
+	const DirectX::XMFLOAT3& GetPosition() const { return position_; }
 
 	/// <summary>
 	/// デスフラグの取得

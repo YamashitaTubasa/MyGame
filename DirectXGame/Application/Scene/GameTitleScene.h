@@ -103,27 +103,27 @@ public:
 	bool GetIsBlur() const { return isBlur_; }
 
 private: // メンバ変数
-	MyEngine::Input* input_ = nullptr;
-	MyEngine::DirectXCommon* dxCommon_ = nullptr;
+	MyEngine::Input* input_;
+	MyEngine::DirectXCommon* dxCommon_;
 	
 	// スプライト
-	std::unique_ptr<MyEngine::Sprite> sprite_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> title_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> space_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> inBlack_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> outBlack_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> nowLoading_ = nullptr;
+	std::unique_ptr<MyEngine::Sprite> sprite_;
+	std::unique_ptr<MyEngine::Sprite> title_;
+	std::unique_ptr<MyEngine::Sprite> space_;
+	std::unique_ptr<MyEngine::Sprite> inBlack_;
+	std::unique_ptr<MyEngine::Sprite> outBlack_;
+	std::unique_ptr<MyEngine::Sprite> nowLoading_;
 	std::unique_ptr<MyEngine::Sprite> dot_[5]{};
 
 	// 天球
-	std::unique_ptr<Skydome> skydome_ = nullptr;
+	std::unique_ptr<Skydome> skydome_;
 
 	// オブジェクト
-	std::unique_ptr<Object3d> player_ = nullptr;
+	std::unique_ptr<Object3d> player_;
 	// モデル
-	std::unique_ptr<Model> playerModel_ = nullptr;
+	std::unique_ptr<Model> playerModel_;
 
-	std::unique_ptr<MyEngine::PostEffect> postEffect_ = nullptr;
+	std::unique_ptr<MyEngine::PostEffect> postEffect_;
 
 	// タイトルの設定
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };

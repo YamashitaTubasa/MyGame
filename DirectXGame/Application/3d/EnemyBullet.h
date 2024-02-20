@@ -9,7 +9,8 @@
 
 #pragma once
 
-class EnemyBullet {
+class EnemyBullet 
+{
 private:
 	static const int32_t lifeTime_ = 60 * 5;
 

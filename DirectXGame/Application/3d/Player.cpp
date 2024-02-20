@@ -882,7 +882,7 @@ void Player::SpriteDraw()
 void Player::Spin()
 {
 	// イージングをオンにする
-	if (input_->TriggerKey(DIK_U)) {
+	if (input_->TriggerKey(DIK_X)) {
 		isEaseFlag_ = true;
 		isRot_ = true;
 		eFrame_ = 0;

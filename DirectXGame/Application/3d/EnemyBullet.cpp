@@ -6,12 +6,11 @@ void EnemyBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::X
 
 	// モデルの生成
 	bulletModel_ = Model::LoadFromOBJ("bullet");
-	// オブジェクト生成
 	bulletObject_ = Object3d::Create();
-	// モデルをセット
 	bulletObject_->SetModel(bulletModel_.get());
 	// 座標の設定
-	bulletObject_->SetPosition(position);
+	position_ = position;
+	bulletObject_->SetPosition(position_);
 	bulletObject_->SetScale(scale_);
 	bulletObject_->SetRotation(rotate_);
 }

@@ -99,7 +99,7 @@ public: // ゲッター
 	/// プレイヤーの座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const DirectX::XMFLOAT3& GetPositon() { return pPosition_; }
+	const DirectX::XMFLOAT3& GetPositon() const { return pPosition_; }
 
 	/// <summary>
 	/// HPの取得
