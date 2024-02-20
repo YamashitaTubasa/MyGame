@@ -114,10 +114,9 @@ public:
 	void AddEnemyBullet(std::unique_ptr<EnemyBullet> enemyBullets);
 
 private:
-	MyEngine::WinApp* winApp_ = nullptr;
-	MyEngine::DirectXCommon* dxCommon_ = nullptr;
-	// 入力
-	MyEngine::Input* input_ = nullptr;
+	MyEngine::WinApp* winApp_;
+	MyEngine::DirectXCommon* dxCommon_;
+	MyEngine::Input* input_;
 	
 	// スプライト
 	std::unique_ptr<MyEngine::Sprite> sprite_;
@@ -152,10 +151,10 @@ private:
 	MyEngine::SpriteCommon spriteCommon_;
 
 	// パーティクル
-	std::unique_ptr<MyEngine::ParticleManager> particleMan_ = nullptr;
-	std::unique_ptr<MyEngine::ParticleManager> blackSmokeMan_ = nullptr;
-	std::unique_ptr<MyEngine::Particle> particle_ = nullptr;
-	std::unique_ptr<MyEngine::Particle> blackSmoke_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> particleMan_;
+	std::unique_ptr<MyEngine::ParticleManager> blackSmokeMan_;
+	std::unique_ptr<MyEngine::Particle> particle_;
+	std::unique_ptr<MyEngine::Particle> blackSmoke_;
 
 	// ポストエフェクト
 	std::unique_ptr<MyEngine::PostEffect> postEffect_;
@@ -163,8 +162,8 @@ private:
 	MyEngine::ImGuiManager* imGuiManager_ = nullptr;
 	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<Player> player_;
-	std::unique_ptr<BackGroundObject> backGroundObj_ = nullptr;
-	std::unique_ptr<Skydome> skydome_ = nullptr;
+	std::unique_ptr<BackGroundObject> backGroundObj_;
+	std::unique_ptr<Skydome> skydome_;
 	// 衝突マネージャ
 	CollisionManager* collisionMan_ = nullptr;
 	// 敵キャラ
@@ -173,6 +172,9 @@ private:
 	std::stringstream enemyPopCommands_;
 	// 敵の弾
 	std::list<std::unique_ptr<EnemyBullet>> enemyBullets_;
+
+	std::unique_ptr<Object3d> middleBossEnemy_;
+	std::unique_ptr<Model> middleBossEnemyModel_;
 
 	// 待機フラグ
 	bool isWait_ = false;
@@ -203,8 +205,6 @@ private:
 	bool particl_ = false;
 	bool isEnemyDeth_ = false;
 
-	int count_ = 0;
-
 	// ダメージ
 	bool isDamage_ = false;
 	int damageTime_ = 0;
@@ -227,4 +227,11 @@ private:
 
 	// ポストエフェクト
 	bool isRadialBlur_ = false;
+
+	// 発射タイマー・間隔
+	static const int fireInterval_ = 60;
+	int fireTime_ = fireInterval_;
+
+	DirectX::XMFLOAT3 po_ = { 0,0,0 };
+	float pos_ = 0.0f;
 };

@@ -68,15 +68,20 @@ void GamePlayScene::Initialize()
 	// ポストエフェクト
 	postEffect_ = std::make_unique<MyEngine::PostEffect>();
 	postEffect_->Initialize(L"Resources/shaders/PostEffectRadialBlurPS.hlsl");
+
+	middleBossEnemy_ = Object3d::Create();
+	middleBossEnemyModel_ = Model::LoadFromOBJ("middleBossEnemy");
+	middleBossEnemy_->SetModel(middleBossEnemyModel_.get());
+	middleBossEnemy_->SetPosition({ 0,0,50 });
+	middleBossEnemy_->SetScale({ 6,6,6 });
+	middleBossEnemy_->SetRotation({ 0,180,0 });
 	
 	// スプライトの初期化
-	GamePlayScene::SpriteInitialize();
+	SpriteInitialize();
 }
 
 void GamePlayScene::Update()
 {
-	count_++;
-
 	// シーン切り替え
 	if (player_->GetIsBoss() == true) {
 		isClearFadeIn_ = true;
@@ -95,18 +100,22 @@ void GamePlayScene::Update()
 	// 自キャラの更新
 	player_->Update();
 
-	// 敵キャラ更新
-	for (std::unique_ptr<Enemy>& enemy : enemys_) {
-		//enemy->Fire();
-		enemy->SetIsMobEnemyAllive(player_->GetIsMobEnemyAllive());
-		enemy->Update();
-	}
 	// 敵発生コマンドの更新
 	UpdateEnemyPopCommands();
 
+	// 敵キャラ更新
+	for (std::unique_ptr<Enemy>& enemys : enemys_) {
+		// 弾の発射
+		if (--fireTime_ <= 0) {
+			enemys->Fire();
+			fireTime_ = fireInterval_;
+		}
+		//enemys->SetIsMobEnemyAllive(player_->GetIsMobEnemyAllive());
+		enemys->Update();
+	}
 	// デスフラグの立った敵を削除
-	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy) {
-		if (enemy->GetIsMobEnemyAllive()) {
+	enemys_.remove_if([](std::unique_ptr<Enemy>& enemys) {
+		if (enemys->GetIsMobEnemyAllive()) {
 			return true;
 		};
 		return false;
@@ -128,6 +137,8 @@ void GamePlayScene::Update()
 
 	// 天球の更新
 	skydome_->Update();
+
+	middleBossEnemy_->Update();
 
 	if (player_->GetIsGameClearStaging() == true) {
 		isRadialBlur_ = true;
@@ -235,8 +246,8 @@ void GamePlayScene::Draw()
 	// 3Dオブジェクトの描画
 	skydome_->Draw();
 	player_->Draw();
-	for (std::unique_ptr<Enemy>& enemy : enemys_) {
-		enemy->Draw();
+	for (std::unique_ptr<Enemy>& enemys : enemys_) {
+		enemys->Draw();
 	}
 	for (std::unique_ptr<EnemyBullet>& enemyBullets : enemyBullets_) {
 		enemyBullets->Draw();
@@ -244,6 +255,8 @@ void GamePlayScene::Draw()
 
 	// 背景のオブジェクトの描画
 	backGroundObj_->Draw();
+
+	middleBossEnemy_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
@@ -295,25 +308,6 @@ void GamePlayScene::Draw()
 		ult_->SpriteDraw(spriteCommon_);
 		cross_->SpriteDraw(spriteCommon_);
 		num0_[5]->SpriteDraw(spriteCommon_);
-		// 操作方法点滅時の描画
-		if (player_->GetIsPushW() == true) {
-			whiteW_->SpriteDraw(spriteCommon_);
-		}
-		if (player_->GetIsPushA() == true) {
-			whiteA_->SpriteDraw(spriteCommon_);
-		}
-		if (player_->GetIsPushS() == true) {
-			whiteS_->SpriteDraw(spriteCommon_);
-		}
-		if (player_->GetIsPushD() == true) {
-			whiteD_->SpriteDraw(spriteCommon_);
-		}
-		if (player_->GetIsPushU() == true) {
-			whiteU_->SpriteDraw(spriteCommon_);
-		}
-		if (player_->GetIsPushSpace() == true) {
-			whiteSpace_->SpriteDraw(spriteCommon_);
-		}
 		for (int i = 0; i < 2; i++) {
 			dotLine_[i]->SpriteDraw(spriteCommon_);
 		}
@@ -695,66 +689,6 @@ void GamePlayScene::SpriteInitialize()
 		dotLine_[i]->SpriteTransferVertexBuffer(dotLine_[i].get(), spriteCommon_, 31);
 		dotLine_[i]->SpriteUpdate(dotLine_[i].get(), spriteCommon_);
 	}
-	// White W・A・S・D・U・SPACE
-	whiteW_ = std::make_unique<MyEngine::Sprite>();
-	whiteW_->LoadTexture(spriteCommon_, 32, L"Resources/Image/whiteW.png");
-	whiteW_->SpriteCreate(1280, 720, 32, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	whiteW_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	whiteW_->SetPosition({ 70,510, 0 });
-	whiteW_->SetScale(XMFLOAT2(64 * 0.45f, 64 * 0.45f));
-	whiteW_->SetRotation(0.0f);
-	whiteW_->SpriteTransferVertexBuffer(whiteW_.get(), spriteCommon_, 32);
-	whiteW_->SpriteUpdate(whiteW_.get(), spriteCommon_);
-	// A
-	whiteA_ = std::make_unique<MyEngine::Sprite>();
-	whiteA_->LoadTexture(spriteCommon_, 33, L"Resources/Image/whiteA.png");
-	whiteA_->SpriteCreate(1280, 720, 33, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	whiteA_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	whiteA_->SetPosition({ 30,560, 0 });
-	whiteA_->SetScale(XMFLOAT2(64 * 0.45f, 64 * 0.45f));
-	whiteA_->SetRotation(0.0f);
-	whiteA_->SpriteTransferVertexBuffer(whiteA_.get(), spriteCommon_, 33);
-	whiteA_->SpriteUpdate(whiteA_.get(), spriteCommon_);
-	// s
-	whiteS_ = std::make_unique<MyEngine::Sprite>();
-	whiteS_->LoadTexture(spriteCommon_, 34, L"Resources/Image/whiteS.png");
-	whiteS_->SpriteCreate(1280, 720, 34, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	whiteS_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	whiteS_->SetPosition({ 70,560, 0 });
-	whiteS_->SetScale(XMFLOAT2(64 * 0.45f, 64 * 0.45f));
-	whiteS_->SetRotation(0.0f);
-	whiteS_->SpriteTransferVertexBuffer(whiteS_.get(), spriteCommon_, 34);
-	whiteS_->SpriteUpdate(whiteS_.get(), spriteCommon_);
-	// d
-	whiteD_ = std::make_unique<MyEngine::Sprite>();
-	whiteD_->LoadTexture(spriteCommon_, 35, L"Resources/Image/whiteD.png");
-	whiteD_->SpriteCreate(1280, 720, 35, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	whiteD_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	whiteD_->SetPosition({ 115,560, 0 });
-	whiteD_->SetScale(XMFLOAT2(64 * 0.45f, 64 * 0.45f));
-	whiteD_->SetRotation(0.0f);
-	whiteD_->SpriteTransferVertexBuffer(whiteD_.get(), spriteCommon_, 35);
-	whiteD_->SpriteUpdate(whiteD_.get(), spriteCommon_);
-	// move
-	whiteU_ = std::make_unique<MyEngine::Sprite>();
-	whiteU_->LoadTexture(spriteCommon_, 36, L"Resources/Image/whiteU.png");
-	whiteU_->SpriteCreate(1280, 720, 36, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	whiteU_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	whiteU_->SetPosition({ 70,610, 0 });
-	whiteU_->SetScale(XMFLOAT2(64 * 0.45f, 64 * 0.45f));
-	whiteU_->SetRotation(0.0f);
-	whiteU_->SpriteTransferVertexBuffer(whiteU_.get(), spriteCommon_, 36);
-	whiteU_->SpriteUpdate(whiteU_.get(), spriteCommon_);
-	// spin
-	whiteSpace_ = std::make_unique<MyEngine::Sprite>();
-	whiteSpace_->LoadTexture(spriteCommon_, 37, L"Resources/Image/whiteSpace.png");
-	whiteSpace_->SpriteCreate(1280, 720, 37, spriteCommon_, XMFLOAT2(0.0f, 0.0f), false, false);
-	whiteSpace_->SetColor(XMFLOAT4(1, 1, 1, 1));
-	whiteSpace_->SetPosition({ 42,660, 0 });
-	whiteSpace_->SetScale(XMFLOAT2(200 * 0.45f, 64 * 0.45f));
-	whiteSpace_->SetRotation(0.0f);
-	whiteSpace_->SpriteTransferVertexBuffer(whiteSpace_.get(), spriteCommon_, 37);
-	whiteSpace_->SpriteUpdate(whiteSpace_.get(), spriteCommon_);
 	// X
 	x_ = std::make_unique<MyEngine::Sprite>();
 	x_->LoadTexture(spriteCommon_, 38, L"Resources/Image/x1.png");
@@ -827,7 +761,6 @@ void GamePlayScene::UpdateEnemyPopCommands()
 			continue;
 		}
 
-		DirectX::XMFLOAT3 pos;
 		// POPコマンド
 		if (word.find("POP") == 0) {
 			// x座標
@@ -842,13 +775,9 @@ void GamePlayScene::UpdateEnemyPopCommands()
 			getline(line_stream, word, ',');
 			float z = (float)std::atof(word.c_str());
 
-			pos.x = x;
-			pos.y = y;
-			pos.z = z;
-
 			// 敵を発生させる
 			std::unique_ptr<Enemy> newEnemys = std::make_unique<Enemy>();
-			newEnemys->Initialize(pos);
+			newEnemys->Initialize({x,y,z});
 			newEnemys->SetGamePlayScene(this);
 			enemys_.push_back(std::move(newEnemys));
 		}

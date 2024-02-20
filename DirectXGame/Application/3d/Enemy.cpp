@@ -66,12 +66,12 @@ void Enemy::Initialize(const DirectX::XMFLOAT3& position)
 void Enemy::Update()
 {
 	// 敵の行動
-	switch (phase_) {
+	/*switch (phase_) {
 	default:
 	case Phase::Access:
 
 		break;
-	}
+	}*/
 
 	// 敵の更新
 	enemyObject_->Update();

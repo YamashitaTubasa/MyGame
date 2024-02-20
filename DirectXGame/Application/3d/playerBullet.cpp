@@ -28,8 +28,8 @@ void PlayerBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::
 	// 3Dオブジェクトの位置を指定
 	pBulletPos_ = position;
 	bulletO3_->SetPosition(pBulletPos_);
-	bulletO3_->SetScale({ 3,3,3 });
-	bulletO3_->SetRotation({ 0, 180, 0 });
+	bulletO3_->SetScale(pBulletScale_);
+	bulletO3_->SetRotation(pBulletRot_);
 }
 
 void PlayerBullet::Update()
