@@ -90,6 +90,13 @@ namespace MyEngine
 		/// <returns>色</returns>
 		DirectX::XMFLOAT4 GetColor() const { return color_; }
 
+		/// <summary>
+		/// 非表示フラグの取得
+		/// </summary>
+		/// <returns></returns>
+		bool GetIsInvisible() const { return isInvisible_; }
+		void SetIsInvisible(bool isInvisible) { isInvisible_ = isInvisible; }
+
 	private:
 		// テクスチャバッファ
 		ComPtr<ID3D12Resource> texBuff_;
@@ -120,5 +127,7 @@ namespace MyEngine
 		bool isPostE_ = false;
 		// アルファ値
 		float alpha_ = 1.0f;
+		// 非表示
+		bool isInvisible_ = false;
 	};
 };

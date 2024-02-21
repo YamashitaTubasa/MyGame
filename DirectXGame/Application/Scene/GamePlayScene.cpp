@@ -1,4 +1,4 @@
-/**
+/** 
  * @file GamePlayerScene.cpp
  * @brief ゲームプレイシーンのクラス
  * @author Yamashita Tubasa
@@ -69,12 +69,12 @@ void GamePlayScene::Initialize()
 	postEffect_ = std::make_unique<MyEngine::PostEffect>();
 	postEffect_->Initialize(L"Resources/shaders/PostEffectRadialBlurPS.hlsl");
 
-	middleBossEnemy_ = Object3d::Create();
-	middleBossEnemyModel_ = Model::LoadFromOBJ("middleBossEnemy");
-	middleBossEnemy_->SetModel(middleBossEnemyModel_.get());
-	middleBossEnemy_->SetPosition({ 0,0,50 });
-	middleBossEnemy_->SetScale({ 6,6,6 });
-	middleBossEnemy_->SetRotation({ 0,180,0 });
+	//middleBossEnemy_ = Object3d::Create();
+	//middleBossEnemyModel_ = Model::LoadFromOBJ("middleBossEnemy");
+	//middleBossEnemy_->SetModel(middleBossEnemyModel_.get());
+	//middleBossEnemy_->SetPosition({ 0,0,50 });
+	//middleBossEnemy_->SetScale({ 6,6,6 });
+	//middleBossEnemy_->SetRotation({ 0,180,0 });
 	
 	// スプライトの初期化
 	SpriteInitialize();
@@ -105,10 +105,8 @@ void GamePlayScene::Update()
 
 	// 敵キャラ更新
 	for (std::unique_ptr<Enemy>& enemys : enemys_) {
-		// 弾の発射
-		if (--fireTime_ <= 0) {
+		if ((enemys->GetPosition().z - player_->GetPositon().z) <= fireDistance_) {
 			enemys->Fire();
-			fireTime_ = fireInterval_;
 		}
 		//enemys->SetIsMobEnemyAllive(player_->GetIsMobEnemyAllive());
 		enemys->Update();
@@ -138,7 +136,7 @@ void GamePlayScene::Update()
 	// 天球の更新
 	skydome_->Update();
 
-	middleBossEnemy_->Update();
+	//middleBossEnemy_->Update();
 
 	if (player_->GetIsGameClearStaging() == true) {
 		isRadialBlur_ = true;
@@ -192,25 +190,6 @@ void GamePlayScene::Update()
 	// 全ての衝突をチェック
 	collisionMan_->CheckAllCollisions();
 
-	int s0 = 0 , s1 = 0, s2 = 0, s3 = 0, sB0 = 0;
-
-	if(player_->GetDamage() == true){
-		s0 = +100;
-	}
-	if (player_->GetDamage01() == true) {
-		s1 = +100;
-	}
-	if (player_->GetDamage02() == true) {
-		s2 = +100;
-	}
-	if (player_->GetDamage03() == true) {
-		s3 = +100;
-	}
-	if(player_->GetIsBossDamage() == true){
-		sB0 = +500;
-	}
-	score_ = s0 + s1 + s2 + s3 + sB0;
-
 #ifdef _DEBUG
 
 	if (input_->TriggerKey(DIK_T)) {
@@ -221,11 +200,6 @@ void GamePlayScene::Update()
 	}
 	if (input_->TriggerKey(DIK_C)) {
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
-	}
-
-	if(input_->TriggerKey(DIK_R)){
-		int a;
-		a = 0;
 	}
 
 #endif
@@ -256,7 +230,7 @@ void GamePlayScene::Draw()
 	// 背景のオブジェクトの描画
 	backGroundObj_->Draw();
 
-	middleBossEnemy_->Draw();
+	//middleBossEnemy_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();

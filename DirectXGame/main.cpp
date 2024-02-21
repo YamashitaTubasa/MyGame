@@ -13,7 +13,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	game->Run();
 
-	MyEngine::DirectXCommon::ResourceLeakCheck();
+	//MyEngine::DirectXCommon::ResourceLeakCheck();
 
 	return 0;
 }

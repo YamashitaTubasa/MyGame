@@ -137,13 +137,7 @@ public: // ゲッター
 	/// </summary>
 	/// <returns></returns>
 	bool GetDamage() const { return damage_; }
-	bool GetDamage01() const { return damage01_; }
-	bool GetDamage02() const { return damage02_; }
-	bool GetDamage03() const { return damage03_; }
 	void SetDamage(bool damage) { damage_ = damage; }
-	void SetDamage01(bool damage01) { damage01_ = damage01; }
-	void SetDamage02(bool damage02) { damage02_ = damage02; }
-	void SetDamage03(bool damage03) { damage03_ = damage03; }
 
 	/// <summary>
 	/// ボスフラグの取得
@@ -153,14 +147,6 @@ public: // ゲッター
 	bool GetIsBossHp() const { return isBossHp_; }
 	bool GetIsBd() const { return isBd_; }
 	bool GetIsBossDamage() const{ return isBossDamage_; }
-
-	// キー入力
-	bool GetIsPushW() const { return isPushW_; }
-	bool GetIsPushA() const { return isPushA_; }
-	bool GetIsPushS() const { return isPushS_; }
-	bool GetIsPushD() const { return isPushD_; }
-	bool GetIsPushU() const { return isPushU_; }
-	bool GetIsPushSpace() const { return isPushSpace_; }
 
 	bool GetIsMobEnemyAllive() const { return isMobEnemyAllive_; }
 	void SetIsMobEnemyAllive(bool isMobEnemyAllive) { isMobEnemyAllive_ = isMobEnemyAllive; }
@@ -356,14 +342,6 @@ private: // メンバ変数
 	float shakePosY2_ = 0.0f;
 	float shakeDefaultPos_ = 0.0f;
 	float shakeDefaultEye_ = 0.0f;
-
-	// キー入力
-	bool isPushW_ = false;
-	bool isPushA_ = false;
-	bool isPushS_ = false;
-	bool isPushD_ = false;
-	bool isPushU_ = false;
-	bool isPushSpace_ = false;
 
 	bool isMobEnemyAllive_ = false;
 };

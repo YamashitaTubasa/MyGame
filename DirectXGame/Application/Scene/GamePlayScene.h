@@ -228,9 +228,8 @@ private:
 	// ポストエフェクト
 	bool isRadialBlur_ = false;
 
-	// 発射タイマー・間隔
-	static const int fireInterval_ = 60;
-	int fireTime_ = fireInterval_;
+	// 敵弾が発射する距離
+	static const int fireDistance_ = 100;
 
 	DirectX::XMFLOAT3 po_ = { 0,0,0 };
 	float pos_ = 0.0f;

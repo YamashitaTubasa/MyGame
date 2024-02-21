@@ -5,7 +5,7 @@ void EnemyBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::X
 	this->velocity_ = velocity;
 
 	// モデルの生成
-	bulletModel_ = Model::LoadFromOBJ("bullet");
+	bulletModel_ = Model::LoadFromOBJ("mobEnemyBullet");
 	bulletObject_ = Object3d::Create();
 	bulletObject_->SetModel(bulletModel_.get());
 	// 座標の設定

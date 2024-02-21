@@ -115,5 +115,11 @@ private:
 
 	// フェーズ
 	Phase phase_ = Phase::Access;
+
+	// 弾の発射間隔
+	static const int bulletInterval_ = 50;
+	static const int fireInterval_ = 100;
+	int bulletTime_ = bulletInterval_;
+	int fireTime_ = fireInterval_;
 };
 
