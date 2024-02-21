@@ -12,7 +12,7 @@
 class EnemyBullet 
 {
 private:
-	static const int32_t lifeTime_ = 60 * 5;
+	static const int32_t lifeTime_ = 20 * 5;
 
 public:
 	/// <summary>
@@ -45,7 +45,7 @@ private:
 
 	// 座標
 	DirectX::XMFLOAT3 position_ = { 0,0,0 };
-	DirectX::XMFLOAT3 scale_ = { 1,1,1 };
+	DirectX::XMFLOAT3 scale_ = { 0.5f, 0.5f, 0.5f };
 	DirectX::XMFLOAT3 rotate_ = { 0,0,0 };
 	DirectX::XMFLOAT3 velocity_ = { 0,0,0 };
 

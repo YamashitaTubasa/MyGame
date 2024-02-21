@@ -51,7 +51,7 @@ public: // ゲッター
 	/// 座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const DirectX::XMFLOAT3& GetPosition() const { return pBulletPos_; }
+	const DirectX::XMFLOAT3& GetPosition() const { return position_; }
 
 	/// <summary>
 	/// デスフラグの取得
@@ -71,11 +71,11 @@ private:
 	BulletMove bulletMove_;
 
 	// 自キャラの弾の座標
-	DirectX::XMFLOAT3 pBulletPos_ = { 0,0,0 };
+	DirectX::XMFLOAT3 position_ = { 0,0,0 };
 	// 自キャラの弾の回転
-	DirectX::XMFLOAT3 pBulletRot_ = { 0,180,0 };
+	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
 	// 自キャラの弾のサイズ
-	DirectX::XMFLOAT3 pBulletScale_ = { 2,2,2 };
+	DirectX::XMFLOAT3 scale_ = { 0.5f,0.5f,0.5f };
 	// 自キャラの弾の速度
 	DirectX::XMFLOAT3 velocity__ = { 0,0,0 };
 	DirectX::XMFLOAT3 eye_[5]{};
