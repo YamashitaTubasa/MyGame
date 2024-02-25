@@ -46,6 +46,9 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void OnCollision();
+
 public: // ゲッター
 	/// <summary>
 	/// 座標の取得
@@ -57,7 +60,7 @@ public: // ゲッター
 	/// デスフラグの取得
 	/// </summary>
 	/// <returns>デスフラグ</returns>
-	bool IsDead() const { return isDead_; }
+	bool GetIsDead() const { return isDead_; }
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
 
 private:

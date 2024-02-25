@@ -54,3 +54,8 @@ void PlayerBullet::Draw()
 	// 弾の描画
 	bulletO3_->Draw();
 }
+
+void PlayerBullet::OnCollision()
+{
+	isDead_ = true;
+}

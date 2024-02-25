@@ -170,7 +170,7 @@ void Player::Update()
 
 	// デスフラグの立った弾を削除
 	pBullets_.remove_if([](std::unique_ptr<PlayerBullet>& bullet) {
-		if (bullet->IsDead()) {
+		if (bullet->GetIsDead()) {
 
 			return true;
 		}
@@ -838,4 +838,8 @@ void Player::Spin()
 			isRot_ = false;
 		}
 	}
+}
+
+void Player::OnCollision()
+{
 }

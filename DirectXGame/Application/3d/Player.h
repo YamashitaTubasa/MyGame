@@ -94,12 +94,15 @@ public: // メンバ関数
 	/// </summary>
 	void Spin();
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void OnCollision();
+
 public: // ゲッター
 	/// <summary>
 	/// プレイヤーの座標の取得
 	/// </summary>
 	/// <returns>座標</returns>
-	const DirectX::XMFLOAT3& GetPositon() const { return pPosition_; }
+	const DirectX::XMFLOAT3& GetPosition() const { return pPosition_; }
 
 	/// <summary>
 	/// HPの取得
@@ -151,6 +154,9 @@ public: // ゲッター
 	bool GetIsMobEnemyAllive() const { return isMobEnemyAllive_; }
 	void SetIsMobEnemyAllive(bool isMobEnemyAllive) { isMobEnemyAllive_ = isMobEnemyAllive; }
 
+	// 自キャラ弾リストを取得
+	const std::list<std::unique_ptr<PlayerBullet>>& GetBullets() const { return pBullets_; }
+
 private: // メンバ変数
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
 
@@ -176,7 +182,7 @@ private: // メンバ変数
 	MyEngine::Input* input_ = nullptr;
 	// カメラ
 	Camera* camera_ = nullptr;
-	// 自キャラ弾
+	// 自キャラ弾リスト
 	std::list<std::unique_ptr<PlayerBullet>> pBullets_;
 	// パーティクル
 	std::unique_ptr<MyEngine::Particle> particle_ = nullptr;

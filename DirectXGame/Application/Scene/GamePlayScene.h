@@ -113,6 +113,11 @@ public:
 	/// </summary>
 	void AddEnemyBullet(std::unique_ptr<EnemyBullet> enemyBullets);
 
+	/// <summary>
+	/// 衝突判定と応答
+	/// </summary>
+	void CheckAllCollisions();
+
 private:
 	MyEngine::WinApp* winApp_;
 	MyEngine::DirectXCommon* dxCommon_;

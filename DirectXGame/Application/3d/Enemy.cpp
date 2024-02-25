@@ -106,3 +106,8 @@ void Enemy::Fire()
 		fireTime_ = fireInterval_;
 	}
 }
+
+void Enemy::OnCollision()
+{
+	isDead_ = true;
+}

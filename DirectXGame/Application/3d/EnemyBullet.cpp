@@ -35,3 +35,8 @@ void EnemyBullet::Draw()
 	// 敵の弾の描画
 	bulletObject_->Draw();
 }
+
+void EnemyBullet::OnCollision()
+{
+	isDead_ = true;
+}
