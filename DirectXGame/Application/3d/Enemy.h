@@ -53,11 +53,13 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-public:
 	/// <summary>
 	/// 弾の発射
 	/// </summary>
 	void Fire();
+
+	// 衝突を検出したら呼び出されるコールバック関数
+	void OnCollision();
 
 public: // Getter・Setter
 	/// <summary>
@@ -66,16 +68,8 @@ public: // Getter・Setter
 	/// <returns>座標</returns>
 	const DirectX::XMFLOAT3& GetPosition() const { return position_; }
 
-	/// <summary>
-	/// デスフラグの取得
-	/// </summary>
-	/// <returns>デスフラグ</returns>
+	// デスフラグの取得
 	bool GetIsDead() const { return isDead_; }
-
-	/// <summary>
-	/// デスフラグのセット
-	/// </summary>
-	/// <param name="isDead_">デスフラグ</param>
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
 
 	/// <summary>

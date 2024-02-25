@@ -10,6 +10,8 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 
+#include <cmath>
+
 using namespace DirectX;
 using namespace std;
 
@@ -105,7 +107,7 @@ void GamePlayScene::Update()
 
 	// 敵キャラ更新
 	for (std::unique_ptr<Enemy>& enemys : enemys_) {
-		if ((enemys->GetPosition().z - player_->GetPositon().z) <= fireDistance_) {
+		if ((enemys->GetPosition().z - player_->GetPosition().z) <= fireDistance_) {
 			enemys->Fire();
 		}
 		//enemys->SetIsMobEnemyAllive(player_->GetIsMobEnemyAllive());
@@ -113,7 +115,7 @@ void GamePlayScene::Update()
 	}
 	// デスフラグの立った敵を削除
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemys) {
-		if (enemys->GetIsMobEnemyAllive()) {
+		if (enemys->GetIsDead()) {
 			return true;
 		};
 		return false;
@@ -135,6 +137,9 @@ void GamePlayScene::Update()
 
 	// 天球の更新
 	skydome_->Update();
+
+	// 当たり判定
+	CheckAllCollisions();
 
 	//middleBossEnemy_->Update();
 
@@ -840,4 +845,122 @@ void GamePlayScene::AddEnemyBullet(std::unique_ptr<EnemyBullet> enemyBullets)
 {
 	// 敵の弾の登録
 	enemyBullets_.push_back(std::move(enemyBullets));
+}
+
+void GamePlayScene::CheckAllCollisions()
+{
+	// 判定対象AとBの座標
+	Vector3 posA, posB;
+
+	// 自キャラ弾リストの取得
+	const std::list<std::unique_ptr<PlayerBullet>>& playerBullets_ = player_->GetBullets();
+
+#pragma region 自キャラと敵キャラの当たり判定
+
+	// 自キャラの座標
+	posA.x = player_->GetPosition().x;
+	posA.y = player_->GetPosition().y;
+	posA.z = player_->GetPosition().z;
+
+	// 自キャラと敵キャラ全ての当たり判定
+	for (std::unique_ptr<Enemy>& enemy : enemys_) {
+		// 敵キャラ弾の座標
+		posB.x = enemy->GetPosition().x;
+		posB.y = enemy->GetPosition().y;
+		posB.z = enemy->GetPosition().z;
+
+		// 座標AとBの距離を求める
+		Vector3 direction = posA - posB;
+		const float radius = 1.0f;
+
+		// 球と球の交差判定
+		if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
+		}
+	}
+
+#pragma endregion
+
+#pragma region 自キャラと敵キャラ弾の当たり判定
+
+	// 自キャラの座標
+	posA.x = player_->GetPosition().x;
+	posA.y = player_->GetPosition().y;
+	posA.z = player_->GetPosition().z;
+
+	// 自キャラと敵キャラ弾全ての当たり判定
+	for (std::unique_ptr<EnemyBullet>& bullet : enemyBullets_) {
+		// 敵キャラ弾の座標
+		posB.x = bullet->GetPosition().x;
+		posB.y = bullet->GetPosition().y;
+		posB.z = bullet->GetPosition().z;
+
+		// 座標AとBの距離を求める
+		Vector3 direction = posA - posB;
+		const float radius = 1.0f;
+
+		// 球と球の交差判定
+		if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
+			bullet->OnCollision();
+		}
+	}
+
+#pragma endregion
+
+#pragma region 自キャラ弾と敵キャラの当たり判定
+
+	// 自キャラ弾の座標
+	for (const std::unique_ptr<PlayerBullet>& playerBullet : playerBullets_) {
+		posA.x = playerBullet->GetPosition().x;
+		posA.y = playerBullet->GetPosition().y;
+		posA.z = playerBullet->GetPosition().z;
+
+		// 自キャラ弾と敵キャラ全ての当たり判定
+		for (std::unique_ptr<Enemy>& enemy : enemys_) {
+			// 敵キャラ弾の座標
+			posB.x = enemy->GetPosition().x;
+			posB.y = enemy->GetPosition().y;
+			posB.z = enemy->GetPosition().z;
+
+			// 座標AとBの距離を求める
+			Vector3 direction = posA - posB;
+			const float radius = 1.0f;
+
+			// 球と球の交差判定
+			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
+				playerBullet->OnCollision();
+				enemy->OnCollision();
+			}
+		}
+	}
+
+#pragma endregion
+
+#pragma region 自キャラ弾と敵キャラ弾の当たり判定
+
+	// 自キャラ弾の座標
+	for (const std::unique_ptr<PlayerBullet>& playerBullet : playerBullets_) {
+		posA.x = playerBullet->GetPosition().x;
+		posA.y = playerBullet->GetPosition().y;
+		posA.z = playerBullet->GetPosition().z;
+		
+		// 自キャラ弾と敵キャラ弾全ての当たり判定
+		for (std::unique_ptr<EnemyBullet>& bullet : enemyBullets_) {
+			// 敵キャラ弾の座標
+			posB.x = bullet->GetPosition().x;
+			posB.y = bullet->GetPosition().y;
+			posB.z = bullet->GetPosition().z;
+
+			// 座標AとBの距離を求める
+			Vector3 direction = posA - posB;
+			const float radius = 1.0f;
+
+			// 球と球の交差判定
+			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
+				playerBullet->OnCollision();
+ 				bullet->OnCollision();
+			}
+		}
+	}
+
+#pragma endregion
 }
