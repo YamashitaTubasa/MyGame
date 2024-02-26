@@ -6,10 +6,11 @@
 
 #include "Object3d.h"
 #include "Model.h"
+#include "Collider.h"
 
 #pragma once
 
-class EnemyBullet 
+class EnemyBullet
 {
 private:
 	static const int32_t lifeTime_ = 20 * 5;

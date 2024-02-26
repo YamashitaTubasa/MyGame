@@ -207,7 +207,7 @@ private:
 
 	// パーティクル
 	float particleTime_ = 0;
-	bool particl_ = false;
+	bool isParticle_ = false;
 	bool isEnemyDeth_ = false;
 
 	// ダメージ
@@ -229,13 +229,20 @@ private:
 	// スコア
 	bool isScore_ = false;
 	int score_ = 0;
+	static const int mobEnemyScore_ = 100;
 
 	// ポストエフェクト
 	bool isRadialBlur_ = false;
 
 	// 敵弾が発射する距離
 	static const int fireDistance_ = 100;
+	// 敵が消滅する距離
+	static const int deadDistance_ = -10;
 
 	DirectX::XMFLOAT3 po_ = { 0,0,0 };
 	float pos_ = 0.0f;
+
+	const int life_ = 20;
+	const float start_scale_ = 0.6f;
+	const float end_scale_ = 0.0f;
 };
