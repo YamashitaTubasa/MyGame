@@ -27,6 +27,7 @@
 #include "GameBaseScene.h"
 #include "GameSceneManager.h"
 #include "GameClearScene.h"
+#include "BossEnemy.h"
 
 #include <sstream>
 #include <list>
@@ -153,6 +154,9 @@ private:
 	std::unique_ptr<MyEngine::Sprite> spin_;
 	std::unique_ptr<MyEngine::Sprite> attack_;
 	std::unique_ptr<MyEngine::Sprite> dotLine_[4];
+	std::unique_ptr<MyEngine::Sprite> enemyHp_;
+	std::unique_ptr<MyEngine::Sprite> enemyHpBar_;
+	std::unique_ptr<MyEngine::Sprite> enemyHpBack_;
 	MyEngine::SpriteCommon spriteCommon_;
 
 	// パーティクル
@@ -181,6 +185,8 @@ private:
 	std::unique_ptr<Object3d> middleBossEnemy_;
 	std::unique_ptr<Model> middleBossEnemyModel_;
 
+	std::list<std::unique_ptr<BossEnemy>> bossEnemy_;
+
 	// 待機フラグ
 	bool isWait_ = false;
 	// 待機タイマー
@@ -196,6 +202,14 @@ private:
 	DirectX::XMFLOAT3 hpMove_ = { 10, 0, 0 };
 	DirectX::XMFLOAT3 hpBarPosition_ = { 29,29,0 };
 	DirectX::XMFLOAT3 hpBackPosition_ = { 30,30,0 };
+	DirectX::XMFLOAT3 enemyHpPosition_ = { 1250,30,0 };
+	DirectX::XMFLOAT2 enemyHpScale_ = { 500, 20 };
+	DirectX::XMFLOAT3 enemyHpMove_ = { 10, 0, 0 };
+	DirectX::XMFLOAT3 enemyHpBarPosition_ = { 1251,29,0 };
+	DirectX::XMFLOAT3 enemyHpBackPosition_ = { 1251,30,0 };
+	float enemyAlpha_ = 0.0f;
+	bool isBossDamage_ = false;
+	int bossDamageTimer_ = 0;
 
 	bool isPushD_ = false;
 	bool isPushA_ = false;
@@ -237,7 +251,7 @@ private:
 	// 敵弾が発射する距離
 	static const int fireDistance_ = 100;
 	// 敵が消滅する距離
-	static const int deadDistance_ = -10;
+	static const int deadDistance_ = -20;
 
 	DirectX::XMFLOAT3 po_ = { 0,0,0 };
 	float pos_ = 0.0f;
