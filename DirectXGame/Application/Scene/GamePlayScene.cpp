@@ -69,6 +69,11 @@ void GamePlayScene::Initialize()
 	postEffect_ = std::make_unique<MyEngine::PostEffect>();
 	postEffect_->Initialize(L"Resources/shaders/PostEffectRadialBlurPS.hlsl");
 
+	// ボス敵
+	std::unique_ptr<BossEnemy> bossEnemy = std::make_unique<BossEnemy>();
+	bossEnemy->Initialize();
+	bossEnemy_.push_back(std::move(bossEnemy));
+
 	// スプライトの初期化
 	SpriteInitialize();
 }
@@ -93,6 +98,22 @@ void GamePlayScene::Update()
 	// 自キャラの更新
 	player_->Update();
 
+	// ボス敵の更新
+	for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
+		if (enemyHpScale_.x <= 0) {
+			bossEnemy->SetIsDead(true);
+			player_->SetIsBoss(true);
+		}
+		bossEnemy->Update();
+	}
+	// デスフラグが立ったボス敵の削除
+	bossEnemy_.remove_if([](std::unique_ptr<BossEnemy>& bossEnemy) {
+		if (bossEnemy->GetIsDead()) {
+			return true;
+		}
+		return false;
+	});
+
 	// 敵発生コマンドの更新
 	UpdateEnemyPopCommands();
 
@@ -112,7 +133,7 @@ void GamePlayScene::Update()
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemys) {
 		if (enemys->GetIsDead()) {
 			return true;
-		};
+		}
 		return false;
 	});
 	// 敵の弾の更新
@@ -171,6 +192,16 @@ void GamePlayScene::Update()
 	hp_->SpriteTransferVertexBuffer(hp_.get(), spriteCommon_, 1);
 	hp_->SpriteUpdate(hp_.get(), spriteCommon_);
 
+	// 敵のHPフェード処理
+	if (player_->GetIsBossStaging() == true) {
+		if (enemyAlpha_ <= 1.0f) {
+			enemyAlpha_ += 0.05f;
+			enemyHp_->SetAlpha(enemyAlpha_);
+			enemyHpBar_->SetAlpha(enemyAlpha_);
+			enemyHpBack_->SetAlpha(enemyAlpha_);
+		}
+	}
+
 	// フェード処理
 	Fade();
 
@@ -219,6 +250,11 @@ void GamePlayScene::Draw()
 	// 3Dオブジェクトの描画
 	skydome_->Draw();
 	player_->Draw();
+	if (player_->GetIsBossStaging() == true) {
+		for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
+			bossEnemy->Draw();
+		}
+	}
 	for (std::unique_ptr<Enemy>& enemys : enemys_) {
 		enemys->Draw();
 	}
@@ -266,6 +302,12 @@ void GamePlayScene::Draw()
 		hpBack_->SpriteDraw(spriteCommon_);
 		// HPの描画
 		hp_->SpriteDraw(spriteCommon_);
+		// 敵のHP
+		if (player_->GetIsBossStaging() == true) {
+			enemyHpBar_->SpriteDraw(spriteCommon_);
+			enemyHpBack_->SpriteDraw(spriteCommon_);
+			enemyHp_->SpriteDraw(spriteCommon_);
+		}
 		// 操作方法の描画
 		w_->SpriteDraw(spriteCommon_);
 		a_->SpriteDraw(spriteCommon_);
@@ -310,7 +352,7 @@ void GamePlayScene::Draw()
 		}
 	}
 	// ダメージの描画
-	if (isDamage_ == true || player_->GetIsBd() == true) {
+	if (isDamage_ == true) {
 		damage_->SpriteDraw(spriteCommon_);
 	}
 	// 黒
@@ -671,6 +713,39 @@ void GamePlayScene::SpriteInitialize()
 	x_->SetRotation(0.0f);
 	x_->SpriteTransferVertexBuffer(x_.get(), spriteCommon_, 38);
 	x_->SpriteUpdate(x_.get(), spriteCommon_);
+	// 敵のHP
+	enemyHp_ = std::make_unique<MyEngine::Sprite>();
+	enemyHp_->LoadTexture(spriteCommon_, 39, L"Resources/Image/enemyHp.png");
+	enemyHp_->SpriteCreate(1280, 720, 39, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHp_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHp_->SetPosition(enemyHpPosition_);
+	enemyHp_->SetScale(enemyHpScale_);
+	enemyHp_->SetRotation(0.0f);
+	enemyHp_->SetAlpha(enemyAlpha_);
+	enemyHp_->SpriteTransferVertexBuffer(enemyHp_.get(), spriteCommon_, 39);
+	enemyHp_->SpriteUpdate(enemyHp_.get(), spriteCommon_);
+	// 敵のHPバー
+	enemyHpBar_ = std::make_unique<MyEngine::Sprite>();
+	enemyHpBar_->LoadTexture(spriteCommon_, 40, L"Resources/Image/enemyHpBar.png");
+	enemyHpBar_->SpriteCreate(1280, 720, 40, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHpBar_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHpBar_->SetPosition(enemyHpBarPosition_);
+	enemyHpBar_->SetScale(XMFLOAT2(502 * 1, 22 * 1));
+	enemyHpBar_->SetRotation(0.0f);
+	enemyHpBar_->SetAlpha(enemyAlpha_);
+	enemyHpBar_->SpriteTransferVertexBuffer(enemyHpBar_.get(), spriteCommon_, 40);
+	enemyHpBar_->SpriteUpdate(enemyHpBar_.get(), spriteCommon_);
+	// 敵のHP背景
+	enemyHpBack_ = std::make_unique<MyEngine::Sprite>();
+	enemyHpBack_->LoadTexture(spriteCommon_, 41, L"Resources/Image/enemyHpBack.png");
+	enemyHpBack_->SpriteCreate(1280, 720, 41, spriteCommon_, XMFLOAT2(1.0f, 0.0f), false, false);
+	enemyHpBack_->SetColor(XMFLOAT4(1, 1, 1, 1));
+	enemyHpBack_->SetPosition(enemyHpBackPosition_);
+	enemyHpBack_->SetScale(XMFLOAT2(500 * 1, 20 * 1));
+	enemyHpBack_->SetRotation(0.0f);
+	enemyHpBack_->SetAlpha(enemyAlpha_);
+	enemyHpBack_->SpriteTransferVertexBuffer(enemyHpBack_.get(), spriteCommon_, 41);
+	enemyHpBack_->SpriteUpdate(enemyHpBack_.get(), spriteCommon_);
 }
 
 void GamePlayScene::GameReset()
@@ -809,11 +884,12 @@ void GamePlayScene::Fade()
 
 void GamePlayScene::DamageDirection()
 {
-	if (isDamage_ == true || player_->GetIsBd() == true) {
+	if (isDamage_ == true) {
 		damageTime_++;
 		player_->Shake();
+
 		if (hpScale_.x >= 0) {
-			hpScale_.x -= 5;
+			hpScale_.x -= 10;
 		}
 	}
 	if (damageTime_ >= 20) {
@@ -822,7 +898,6 @@ void GamePlayScene::DamageDirection()
 	}
 
 	if (hpScale_.x <= 0) {
-
 		overTimer_++;
 		player_->SetIsGameOverStaging(true);
 
@@ -868,6 +943,11 @@ void GamePlayScene::CheckAllCollisions()
 
 		// 球と球の交差判定
 		if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
+			if (input_->PushKey(DIK_X)) {
+				player_->SetIsSpinEffect(true);
+			}
+			player_->SetIsDamageEffect(true);
+			isDamage_ = true;
 		}
 	}
 
@@ -894,6 +974,8 @@ void GamePlayScene::CheckAllCollisions()
 		// 球と球の交差判定
 		if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 			bullet->OnCollision();
+			player_->SetIsDamageEffect(true);
+			isDamage_ = true;
 		}
 	}
 
@@ -974,6 +1056,74 @@ void GamePlayScene::CheckAllCollisions()
 			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 				playerBullet->OnCollision();
  				bullet->OnCollision();
+			}
+		}
+	}
+
+#pragma endregion
+
+#pragma region 自キャラ弾とボス敵キャラの当たり判定
+
+	// 自キャラ弾の座標
+	for (const std::unique_ptr<PlayerBullet>& playerBullet : playerBullets_) {
+		posA.x = playerBullet->GetPosition().x;
+		posA.y = playerBullet->GetPosition().y;
+		posA.z = playerBullet->GetPosition().z;
+
+		// 自キャラ弾とボス敵キャラ全ての当たり判定
+		for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
+			// ボス敵キャラ弾の座標
+			posB.x = bossEnemy->GetPosition().x;
+			posB.y = bossEnemy->GetPosition().y;
+			posB.z = bossEnemy->GetPosition().z;
+
+			// 座標AとBの距離を求める
+			Vector3 direction = posA - posB;
+			const float radius = 10.0f;
+
+			// 球と球の交差判定
+			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
+				playerBullet->OnCollision();
+				if (player_->GetIsBossStaging() == true) {
+					enemyHpScale_.x -= 100;
+					enemyHp_->SetScale(enemyHpScale_);
+					enemyHp_->SpriteTransferVertexBuffer(enemyHp_.get(), spriteCommon_, 39);
+					enemyHp_->SpriteUpdate(enemyHp_.get(), spriteCommon_);
+				}
+			}
+		}
+	}
+
+#pragma endregion
+
+#pragma region 自キャラとボス敵キャラの当たり判定
+
+	// 自キャラの座標
+	posA.x = player_->GetPosition().x;
+	posA.y = player_->GetPosition().y;
+	posA.z = player_->GetPosition().z;
+
+	// 自キャラと敵キャラ全ての当たり判定
+	for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
+		// 敵キャラ弾の座標
+		posB.x = bossEnemy->GetPosition().x;
+		posB.y = bossEnemy->GetPosition().y;
+		posB.z = bossEnemy->GetPosition().z;
+
+		// 座標AとBの距離を求める
+		Vector3 direction = posA - posB;
+		const float radius = 5.0f;
+
+		// 球と球の交差判定
+		if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
+			if (player_->GetIsGameClearStaging() == false &&
+				player_->GetIsGameOverStaging() == false &&
+				enemyHpScale_.x >= 0) {
+				isDamage_ = true;
+				hpScale_.x -= 500;
+				hp_->SetScale(hpScale_);
+				hp_->SpriteTransferVertexBuffer(hp_.get(), spriteCommon_, 1);
+				hp_->SpriteUpdate(hp_.get(), spriteCommon_);
 			}
 		}
 	}

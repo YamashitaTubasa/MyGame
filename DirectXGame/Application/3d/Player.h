@@ -99,57 +99,34 @@ public: // メンバ関数
 	void OnCollision();
 
 public: // ゲッター
-	/// <summary>
-	/// プレイヤーの座標の取得
-	/// </summary>
-	/// <returns>座標</returns>
+	// プレイヤーの座標の取得
 	const DirectX::XMFLOAT3& GetPosition() const { return pPosition_; }
 
-	/// <summary>
-	/// HPの取得
-	/// </summary>
-	/// <returns>HP</returns>
+	// HPの取得
 	int GetHp() const { return hp_; }
-
-	/// <summary>
-	/// HPフラグの取得
-	/// </summary>
-	/// <returns>HPフラグ</returns>
+	void SetHp(int hp) { hp_ = hp; }
 	bool GetIsHp()const { return isHp_; }
 
-	/// <summary>
-	/// スタート演出フラグ
-	/// </summary>
-	/// <returns></returns>
+	// スタート演出フラグ
 	bool GetIsStartStaging() const{ return isStartStaging_; }
 
-	/// <summary>
-	/// クリア演出フラグ
-	/// </summary>
-	/// <returns></returns>
+	// クリア演出フラグ
 	bool GetIsGameClearStaging() const { return isGameClearStaging_; }
 
-	/// <summary>
-	/// ゲームオーバー演出フラグ
-	/// </summary>
-	/// <returns></returns>
+	// ゲームオーバー演出フラグ
 	bool GetIsGameOverStaging() const { return isGameOverStaging_; }
 	void SetIsGameOverStaging(bool isGameOverStaging) { isGameOverStaging_ = isGameOverStaging; }
 
-	/// <summary>
-	/// ダメージ
-	/// </summary>
-	/// <returns></returns>
-	bool GetDamage() const { return damage_; }
-	void SetDamage(bool damage) { damage_ = damage; }
+	// ダメージ
+	bool GetIsDamageEffect() const { return isDamageEffect_; }
+	void SetIsDamageEffect(bool isDamageEffect) { isDamageEffect_ = isDamageEffect; }
 
-	/// <summary>
-	/// ボスフラグの取得
-	/// </summary>
+	// ボスフラグの取得
 	bool GetIsBoss() const { return isBoss_; }
+	void SetIsBoss(bool isBossDead) { isBoss_ = isBossDead; }
 	bool GetIsBossStaging() const { return isBossStaging_; }
-	bool GetIsBossHp() const { return isBossHp_; }
-	bool GetIsBd() const { return isBd_; }
+	/*bool GetIsBossHp() const { return isBossHp_; }
+	bool GetIsBd() const { return isBd_; }*/
 	bool GetIsBossDamage() const{ return isBossDamage_; }
 
 	bool GetIsMobEnemyAllive() const { return isMobEnemyAllive_; }
@@ -158,6 +135,9 @@ public: // ゲッター
 	// 自キャラ弾リストを取得
 	const std::list<std::unique_ptr<PlayerBullet>>& GetBullets() const { return pBullets_; }
 
+	bool GetIsSpinEffect() const { return isSpinEffect_; }
+	void SetIsSpinEffect(bool isSpinEffect) { isSpinEffect_ = isSpinEffect; }
+
 private: // メンバ変数
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
 
@@ -165,18 +145,13 @@ private: // メンバ変数
 	std::unique_ptr<Object3d> playerO3_ = nullptr;
 	std::unique_ptr<Object3d> reticleO3_ = nullptr;
 	std::unique_ptr<Object3d> reticle1O3_ = nullptr;
-	std::unique_ptr<Object3d> bossObj_;
 
 	// モデル
 	std::unique_ptr<Model> playerM_;
 	std::unique_ptr<Model> reticleM_;
 	std::unique_ptr<Model> reticle1M_;
-	std::unique_ptr<Model> bossModel_;
 
 	std::unique_ptr<MyEngine::Sprite> sprite_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> enemyHp_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> enemyHpBar_ = nullptr;
-	std::unique_ptr<MyEngine::Sprite> enemyHpBack_ = nullptr;
 	MyEngine::SpriteCommon spriteCommon_;
 
 	// 入力
@@ -213,28 +188,14 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 rmove_ = { 0,0.25,0 };
 	DirectX::XMFLOAT3 r1move_ = { 0,0.25,0 };
 	// レティクルの座標
-	DirectX::XMFLOAT3 rPosition_ = { 0,-2,-45 };
-	DirectX::XMFLOAT3 r1Position_ = { 0,-2.5f,-40 };
+	DirectX::XMFLOAT3 rPosition_ = { 0,-2,-25 };
+	DirectX::XMFLOAT3 r1Position_ = { 0,-2.5f,-20 };
 	// レティクルの回転
 	DirectX::XMFLOAT3 rRotation_ = { 0,90,0 };
 	DirectX::XMFLOAT3 r1Rotation_ = { 0,90,0 };
 	// レティクルのサイズ
 	DirectX::XMFLOAT3 rScale_ = { 0.4f, 0.4f, 0.4f };
 	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
-
-	// ボスの移動量
-	DirectX::XMFLOAT3 bossMove_ = { 0,0.25,0 };
-	// ボスの座標
-	DirectX::XMFLOAT3 bossPos_ = { 0,-1,150 };
-	// ボスの回転
-	DirectX::XMFLOAT3 bossRot_ = { 0,180,0 };
-	// ボスのサイズ
-	DirectX::XMFLOAT3 bossScale_ = { 25,25,25 };
-	bool isBossHp_ = false;
-	int bossHp_ = 0;
-	int bossTimer_ = 0;
-	bool isBH_ = false;
-	bool isBd_ = false;
 
 	DirectX::XMFLOAT3 enemyHpPosition_ = { 1250,30,0 };
 	DirectX::XMFLOAT2 enemyHpScale_ = { 500, 20 };
@@ -294,8 +255,8 @@ private: // メンバ変数
 	// 自機のフラグ
 	bool isPlayer_ = true;
 	int isBullet_ = 1;
-	bool isEffect_ = false;
-	int effectTime_ = 0;
+	bool isDamageEffect_ = false;
+	int effectTime_ = 10;
 	bool isHp_ = false;
 	bool isGameOverStaging_ = false;
 	bool isGameClearStaging_ = false;
@@ -327,10 +288,7 @@ private: // メンバ変数
 	bool isRotationParticle_ = false;
 
 	// ダメージ
-	bool damage_ = false;
-	bool damage01_ = false;
-	bool damage02_ = false;
-	bool damage03_ = false;
+	bool isSpinEffect_ = false;
 
 	// シェイク
 	const int shakeMin_ = -1;
