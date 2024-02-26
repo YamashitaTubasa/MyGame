@@ -8,7 +8,7 @@
 
 #include "Object3d.h"
 #include "Model.h"
-
+#include "Collider.h"
 
 #include <sstream>
 

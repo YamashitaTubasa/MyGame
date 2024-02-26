@@ -20,6 +20,7 @@
 #include "Particle.h"
 #include "ParticleManager.h"
 #include "Sprite.h"
+#include "Collider.h"
 
 #include <DirectXMath.h>
 #include <cmath>

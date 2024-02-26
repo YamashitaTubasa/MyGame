@@ -44,8 +44,6 @@ void GamePlayScene::Initialize()
 	player_ = Player::Create();
 	player_->SetCollider(new SphereCollider);
 
-	// 敵キャラ生成
-	//enemy_->SetCollider(new SphereCollider);
 	// 敵発生データの読み込み
 	LoadEnemyPopData();
 
@@ -71,13 +69,6 @@ void GamePlayScene::Initialize()
 	postEffect_ = std::make_unique<MyEngine::PostEffect>();
 	postEffect_->Initialize(L"Resources/shaders/PostEffectRadialBlurPS.hlsl");
 
-	//middleBossEnemy_ = Object3d::Create();
-	//middleBossEnemyModel_ = Model::LoadFromOBJ("middleBossEnemy");
-	//middleBossEnemy_->SetModel(middleBossEnemyModel_.get());
-	//middleBossEnemy_->SetPosition({ 0,0,50 });
-	//middleBossEnemy_->SetScale({ 6,6,6 });
-	//middleBossEnemy_->SetRotation({ 0,180,0 });
-	
 	// スプライトの初期化
 	SpriteInitialize();
 }
@@ -107,10 +98,14 @@ void GamePlayScene::Update()
 
 	// 敵キャラ更新
 	for (std::unique_ptr<Enemy>& enemys : enemys_) {
+		// 自機と敵が一定の距離になったら敵の弾を発射する
 		if ((enemys->GetPosition().z - player_->GetPosition().z) <= fireDistance_) {
 			enemys->Fire();
 		}
-		//enemys->SetIsMobEnemyAllive(player_->GetIsMobEnemyAllive());
+		// 自機と敵が一定の距離になったら敵を消滅させる
+		if ((enemys->GetPosition().z - player_->GetPosition().z) <= deadDistance_) {
+			enemys->SetIsDead(true);
+		}
 		enemys->Update();
 	}
 	// デスフラグの立った敵を削除
@@ -140,8 +135,6 @@ void GamePlayScene::Update()
 
 	// 当たり判定
 	CheckAllCollisions();
-
-	//middleBossEnemy_->Update();
 
 	if (player_->GetIsGameClearStaging() == true) {
 		isRadialBlur_ = true;
@@ -191,6 +184,7 @@ void GamePlayScene::Update()
 
 	// パーティクルの更新
 	blackSmokeMan_->Update();
+	particleMan_->Update();
 
 	// 全ての衝突をチェック
 	collisionMan_->CheckAllCollisions();
@@ -235,8 +229,6 @@ void GamePlayScene::Draw()
 	// 背景のオブジェクトの描画
 	backGroundObj_->Draw();
 
-	//middleBossEnemy_->Draw();
-
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
 
@@ -248,6 +240,7 @@ void GamePlayScene::Draw()
 	MyEngine::ParticleManager::PreDraw(cmdList);
 
 	// パーティクルの描画
+	particleMan_->Draw();
 	blackSmokeMan_->Draw();
 	player_->Effect();
 
@@ -929,6 +922,29 @@ void GamePlayScene::CheckAllCollisions()
 			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 				playerBullet->OnCollision();
 				enemy->OnCollision();
+				score_ += mobEnemyScore_;
+				
+				for (int i = 0; i < 50; i++) {
+					// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+					const float md_pos = 0.5f;
+					XMFLOAT3 pos{};
+					pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().x;
+					pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().y;
+					pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().z;
+					// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+					const float md_vel = 0.1f;
+					XMFLOAT3 vel{};
+					vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+					XMFLOAT3 acc{};
+					const float md_acc = 0.001f;
+					acc.y = (float)rand() / RAND_MAX * md_acc;
+
+					// 追加
+					particle_->Add(life_, pos, vel, acc, start_scale_, end_scale_);
+				}
 			}
 		}
 	}

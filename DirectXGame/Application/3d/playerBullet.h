@@ -12,6 +12,7 @@
 #include "Matrix4.h"
 #include "Model.h"
 #include "Object3d.h"
+#include "Collider.h"
 
 struct BulletMove {
 	DirectX::XMFLOAT3 transform_ = { 0,0,0 };
