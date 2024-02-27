@@ -87,7 +87,7 @@ bool Player::Initialize()
 	Object3d::SetTarget(target_);
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle_ = MyEngine::Particle::LoadFromOBJ("bombEffect.png");
+	particle_ = MyEngine::Particle::LoadFromOBJ("bomb.png");
 	blackSmoke_ = MyEngine::Particle::LoadFromOBJ("bombEffect.png");
 	rotationParticle_ = MyEngine::Particle::LoadFromOBJ("pSpin.png");
 	// パーティクルの生成
@@ -132,8 +132,30 @@ void Player::Update()
 	});
 
 	// パーティクルの実行
-	particleMan_->Execution(particle_.get(), particleBombPosX_, particleBombPosY_, particleBombPosZ_, particleLife, particleStartScale_, particleEndScale_);
-	
+	if (isDamageEffect_) {
+		for (int i = 0; i < 5; i++) {
+			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+			const float md_pos = 0.7f;
+			XMFLOAT3 pos{};
+			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + position_.x;
+			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + position_.y;
+			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + position_.z;
+			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+			const float md_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+			XMFLOAT3 acc{};
+			const float md_acc = 0.001f;
+			acc.y = (float)rand() / RAND_MAX * md_acc;
+
+			// 追加
+			particle_->Add(particleLife, pos, vel, acc, particleStartScale_, particleEndScale_);
+		}
+	}
+
 	if (hp_ <= -20) {
 
 		isGameOverStaging_ = true;
@@ -529,9 +551,7 @@ void Player::Effect()
 #pragma region パーティクルの描画
 
 	// パーティクルの描画
-	if (isDamageEffect_) {
-		particleMan_->Draw();
-	}
+	particleMan_->Draw();
 	if (isSpinEffect_ == true) {
 		rotationParticleMan_->Draw();
 	}

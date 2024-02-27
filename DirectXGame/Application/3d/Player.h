@@ -271,7 +271,7 @@ private: // メンバ変数
 	const float particleBombPosY_ = 0.0f;
 	const float particleBombPosZ_ = 0.0f;
 	const int particleLife = 20;
-	const float particleStartScale_ = 0.6f;
+	const float particleStartScale_ = 0.5f;
 	const float particleEndScale_ = 0.0f;
 
 	// 炎パーティクル
