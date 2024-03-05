@@ -99,12 +99,6 @@ bool Player::Initialize()
 	blackSmokeMan_->SetModel(blackSmoke_.get());
 	rotationParticleMan_->SetModel(rotationParticle_.get());
 
-	// スプライト
-	sprite_ = std::make_unique<MyEngine::Sprite>();
-	spriteCommon_ = sprite_->SpriteCommonCreate();
-	// スプライト用パイプライン生成呼び出し
-	MyEngine::PipelineSet spritePipelineSet = sprite_->SpriteCreateGraphicsPipeline();
-
 	return true;
 }
 
@@ -125,7 +119,6 @@ void Player::Update()
 	// デスフラグの立った弾を削除
 	pBullets_.remove_if([](std::unique_ptr<PlayerBullet>& bullet) {
 		if (bullet->GetIsDead()) {
-
 			return true;
 		}
 		return false;
@@ -154,11 +147,6 @@ void Player::Update()
 			// 追加
 			particle_->Add(particleLife, pos, vel, acc, particleStartScale_, particleEndScale_);
 		}
-	}
-
-	if (hp_ <= -20) {
-
-		isGameOverStaging_ = true;
 	}
 
 	if (isGameOverStaging_) {
@@ -247,7 +235,7 @@ void Player::Update()
 		}
 		if (eye_.z <= -45.0f) {
 		}
-			eye_.z += 0.4f;
+		eye_.z += 0.4f;
 	}
 	if (!isStartStaging_) {
 		if (pPosition_.z < 500) {
@@ -305,9 +293,9 @@ void Player::Update()
 		}
 	}
 	if (!input_->PushKey(DIK_W)) {
-			isUpMove_ = false;
+		isUpMove_ = false;
 	}
-	
+
 	// 上へ行くときの傾き処理
 	if (isUpMove_) {
 		if (pRotation_.x >= playerSlopeMax_) {
@@ -332,9 +320,9 @@ void Player::Update()
 		}
 	}
 	if (!input_->PushKey(DIK_A)) {
-			isLeftMove_ = false;
+		isLeftMove_ = false;
 	}
-	
+
 	// 左へ行くときの機体の傾き処理
 	if (isLeftMove_) {
 		if (pRotation_.z <= playerSlopeMaxPlus_) {
@@ -365,9 +353,9 @@ void Player::Update()
 		}
 	}
 	if (!input_->PushKey(DIK_S)) {
-			isDownMove_ = false;
+		isDownMove_ = false;
 	}
-	
+
 	// 下へ行く時の傾き処理
 	if (isDownMove_) {
 		if (pRotation_.x <= playerSlopeMaxPlus_) {
@@ -392,9 +380,9 @@ void Player::Update()
 		}
 	}
 	if (!input_->PushKey(DIK_D)) {
-			isRightMove_ = false;
+		isRightMove_ = false;
 	}
-	
+
 	// 右へ行くときの傾き処理
 	if (isRightMove_) {
 		if (pRotation_.z >= playerSlopeMax_) {
@@ -412,7 +400,7 @@ void Player::Update()
 			pRotation_.y -= playerRotSpeed_;
 		}
 	}
-	
+
 	// ブースト時の回転処理
 	Player::Spin();
 
@@ -427,9 +415,6 @@ void Player::Update()
 	}
 	if (isBoss_ == true) {
 		isEndStaging_ = true;
-	}
-	if (isEndStaging_) {
-		isPostE_ = true;
 	}
 
 	playerO3_->SetPosition(pPosition_);
@@ -465,10 +450,13 @@ void Player::Update()
 	for (std::unique_ptr<PlayerBullet>& bullet : pBullets_) {
 		bullet->Update();
 	}
+	if (isHit_) {
+		isDamageEffect_ = true;
+	}
 	if (isDamageEffect_) {
 		if (--effectTime_ <= 0) {
 			isDamageEffect_ = false;
-			effectTime_ = 15;
+			effectTime_ = 10;
 		}
 	}
 
@@ -499,9 +487,7 @@ void Player::Update()
 void Player::Draw()
 {
 	// プレイヤーのモデルの描画
-	if (isPlayer_) {
-		playerO3_->Draw();
-	}
+	playerO3_->Draw();
 
 	if (isReticle_ == true) {
 		//reticleO3_->Draw();
@@ -543,7 +529,6 @@ void Player::Attack()
 
 void Player::OnCollision([[maybe_unused]] const CollisionInfo& info)
 {
-	isPlayer_ = false;
 }
 
 void Player::Effect()
@@ -600,13 +585,6 @@ void Player::Shake()
 	
 	Object3d::SetEye(eye_);
 	playerO3_->SetPosition(pPosition_);
-}
-
-void Player::SpriteDraw()
-{
-	MyEngine::Sprite::PreDraw(MyEngine::DirectXCommon::GetInstance()->GetCommandList(), spriteCommon_);
-	
-	MyEngine::Sprite::PostDraw();
 }
 
 void Player::Spin()

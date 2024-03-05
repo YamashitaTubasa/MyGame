@@ -86,11 +86,6 @@ public: // メンバ関数
 	void Shake();
 
 	/// <summary>
-	/// 描画
-	/// </summary>
-	void SpriteDraw();
-
-	/// <summary>
 	/// 回転
 	/// </summary>
 	void Spin();
@@ -98,14 +93,13 @@ public: // メンバ関数
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
 
-public: // ゲッター
+public:
 	// プレイヤーの座標の取得
 	const DirectX::XMFLOAT3& GetPosition() const { return pPosition_; }
 
-	// HPの取得
-	int GetHp() const { return hp_; }
-	void SetHp(int hp) { hp_ = hp; }
-	bool GetIsHp()const { return isHp_; }
+	// 当たった時
+	bool GetIsHit()const { return isHit_; }
+	void SetIsHit(bool isHit) { isHit_ = isHit; }
 
 	// スタート演出フラグ
 	bool GetIsStartStaging() const{ return isStartStaging_; }
@@ -117,17 +111,10 @@ public: // ゲッター
 	bool GetIsGameOverStaging() const { return isGameOverStaging_; }
 	void SetIsGameOverStaging(bool isGameOverStaging) { isGameOverStaging_ = isGameOverStaging; }
 
-	// ダメージ
-	bool GetIsDamageEffect() const { return isDamageEffect_; }
-	void SetIsDamageEffect(bool isDamageEffect) { isDamageEffect_ = isDamageEffect; }
-
 	// ボスフラグの取得
 	bool GetIsBoss() const { return isBoss_; }
 	void SetIsBoss(bool isBossDead) { isBoss_ = isBossDead; }
 	bool GetIsBossStaging() const { return isBossStaging_; }
-	/*bool GetIsBossHp() const { return isBossHp_; }
-	bool GetIsBd() const { return isBd_; }*/
-	bool GetIsBossDamage() const{ return isBossDamage_; }
 
 	bool GetIsMobEnemyAllive() const { return isMobEnemyAllive_; }
 	void SetIsMobEnemyAllive(bool isMobEnemyAllive) { isMobEnemyAllive_ = isMobEnemyAllive; }
@@ -150,9 +137,6 @@ private: // メンバ変数
 	std::unique_ptr<Model> playerM_;
 	std::unique_ptr<Model> reticleM_;
 	std::unique_ptr<Model> reticle1M_;
-
-	std::unique_ptr<MyEngine::Sprite> sprite_ = nullptr;
-	MyEngine::SpriteCommon spriteCommon_;
 
 	// 入力
 	MyEngine::Input* input_ = nullptr;
@@ -197,15 +181,6 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 rScale_ = { 0.4f, 0.4f, 0.4f };
 	DirectX::XMFLOAT3 r1Scale_ = { 0.2f, 0.2f, 0.2f };
 
-	DirectX::XMFLOAT3 enemyHpPosition_ = { 1250,30,0 };
-	DirectX::XMFLOAT2 enemyHpScale_ = { 500, 20 };
-	DirectX::XMFLOAT3 enemyHpMove_ = { 10, 0, 0 };
-	DirectX::XMFLOAT3 enemyHpBarPosition_ = { 1251,29,0 };
-	DirectX::XMFLOAT3 enemyHpBackPosition_ = { 1251,30,0 };
-	float enemyAlpha_ = 0.0f;
-	bool isBossDamage_ = false;
-	int bossDamageTimer_ = 0;
-
 	// 視点
 	DirectX::XMFLOAT3 eye_ = { 0, 0, -120 };
 	// 注視点
@@ -219,13 +194,10 @@ private: // メンバ変数
 	const float playerSlopeMaxY_ = -10.0f;
 	const float playerSlopeMin_ = 0.0f;
 
-	// 右への移動フラグ
+	// 移動フラグ
 	bool isRightMove_ = false;
-	// 左への移動フラグ
 	bool isLeftMove_ = false;
-	// 上への移動フラグ
 	bool isUpMove_ = false;
-	// 下への移動フラグ
 	bool isDownMove_ = false;
 	// イージング変数
 	bool isEaseFlag_ = false;
@@ -236,28 +208,24 @@ private: // メンバ変数
 	const float eEnd_ = 360.0f;
 	// 回転のフラグ
 	bool isRot_ = false;
-	// HP
-	int hp_ = 10;
+	// 攻撃タイマー
 	int time_ = 0;
 	bool isTime_ = false;
 	// レティクルフラグ
 	bool isReticle_ = false;
-	// スタート時の演出フラグ
+	// スタート時の演出
 	bool isStartStaging_ = true;
-	// スタート演出タイム
 	int startCount_ = 0;
 	const float startSpeed_ = 0.6f;
 	// ゴール時の演出フラグ
 	bool isEndStaging_ = false;
 	// ゴール演出タイム
 	const int endCount_ = 0;
-	bool isPostE_ = false;
 	// 自機のフラグ
-	bool isPlayer_ = true;
 	int isBullet_ = 1;
 	bool isDamageEffect_ = false;
 	int effectTime_ = 10;
-	bool isHp_ = false;
+	bool isHit_ = false;
 	bool isGameOverStaging_ = false;
 	bool isGameClearStaging_ = false;
 	// ゲームオーバーの演出

@@ -134,8 +134,8 @@ private:
 	std::unique_ptr<MyEngine::Sprite> damage_;
 	std::unique_ptr<MyEngine::Sprite> white_;
 	std::unique_ptr<MyEngine::Sprite> black_;
-	std::unique_ptr<MyEngine::Sprite> num0_[6];
-	std::unique_ptr<MyEngine::Sprite> number_[10];
+	std::array<std::unique_ptr<MyEngine::Sprite>, 6> num0_;
+	std::array<std::unique_ptr<MyEngine::Sprite>, 10> number_;
 	std::unique_ptr<MyEngine::Sprite> w_;
 	std::unique_ptr<MyEngine::Sprite> whiteW_;
 	std::unique_ptr<MyEngine::Sprite> a_;
@@ -153,7 +153,7 @@ private:
 	std::unique_ptr<MyEngine::Sprite> move_;
 	std::unique_ptr<MyEngine::Sprite> spin_;
 	std::unique_ptr<MyEngine::Sprite> attack_;
-	std::unique_ptr<MyEngine::Sprite> dotLine_[4];
+	std::array<std::unique_ptr<MyEngine::Sprite>, 2> dotLine_;
 	std::unique_ptr<MyEngine::Sprite> enemyHp_;
 	std::unique_ptr<MyEngine::Sprite> enemyHpBar_;
 	std::unique_ptr<MyEngine::Sprite> enemyHpBack_;
