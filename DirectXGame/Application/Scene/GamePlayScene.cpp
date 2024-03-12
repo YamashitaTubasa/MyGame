@@ -81,7 +81,7 @@ void GamePlayScene::Initialize()
 void GamePlayScene::Update()
 {
 	// シーン切り替え
-	if (player_->GetIsBoss() == true) {
+	if (player_->GetIsBossDead() == true) {
 		isClearFadeIn_ = true;
 	}
 	if (player_->GetIsGameOverStaging()) {
@@ -102,7 +102,7 @@ void GamePlayScene::Update()
 	for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
 		if (enemyHpScale_.x <= 0) {
 			bossEnemy->SetIsDead(true);
-			player_->SetIsBoss(true);
+			player_->SetIsBossDead(true);
 		}
 		bossEnemy->Update();
 	}
@@ -873,16 +873,12 @@ void GamePlayScene::CheckAllCollisions()
 #pragma region 自キャラと敵キャラの当たり判定
 
 	// 自キャラの座標
-	posA.x = player_->GetPosition().x;
-	posA.y = player_->GetPosition().y;
-	posA.z = player_->GetPosition().z;
+	posA = { player_->GetPosition().x, player_->GetPosition().y, player_->GetPosition().z };
 
 	// 自キャラと敵キャラ全ての当たり判定
 	for (std::unique_ptr<Enemy>& enemy : enemys_) {
 		// 敵キャラ弾の座標
-		posB.x = enemy->GetPosition().x;
-		posB.y = enemy->GetPosition().y;
-		posB.z = enemy->GetPosition().z;
+		posB = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z };
 
 		// 座標AとBの距離を求める
 		Vector3 direction = posA - posB;
@@ -902,16 +898,12 @@ void GamePlayScene::CheckAllCollisions()
 #pragma region 自キャラと敵キャラ弾の当たり判定
 
 	// 自キャラの座標
-	posA.x = player_->GetPosition().x;
-	posA.y = player_->GetPosition().y;
-	posA.z = player_->GetPosition().z;
+	posA = { player_->GetPosition().x, player_->GetPosition().y, player_->GetPosition().z };
 
 	// 自キャラと敵キャラ弾全ての当たり判定
 	for (std::unique_ptr<EnemyBullet>& bullet : enemyBullets_) {
 		// 敵キャラ弾の座標
-		posB.x = bullet->GetPosition().x;
-		posB.y = bullet->GetPosition().y;
-		posB.z = bullet->GetPosition().z;
+		posB = { bullet->GetPosition().x, bullet->GetPosition().y, bullet->GetPosition().z };
 
 		// 座標AとBの距離を求める
 		Vector3 direction = posA - posB;
@@ -920,7 +912,7 @@ void GamePlayScene::CheckAllCollisions()
 		// 球と球の交差判定
 		if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 			bullet->OnCollision();
-			player_->SetIsHit(true);
+			//player_->SetIsHit(true);
 		}
 	}
 
@@ -930,16 +922,12 @@ void GamePlayScene::CheckAllCollisions()
 
 	// 自キャラ弾の座標
 	for (const std::unique_ptr<PlayerBullet>& playerBullet : playerBullets_) {
-		posA.x = playerBullet->GetPosition().x;
-		posA.y = playerBullet->GetPosition().y;
-		posA.z = playerBullet->GetPosition().z;
+		posA = { playerBullet->GetPosition().x, playerBullet->GetPosition().y, playerBullet->GetPosition().z };
 
 		// 自キャラ弾と敵キャラ全ての当たり判定
 		for (std::unique_ptr<Enemy>& enemy : enemys_) {
 			// 敵キャラ弾の座標
-			posB.x = enemy->GetPosition().x;
-			posB.y = enemy->GetPosition().y;
-			posB.z = enemy->GetPosition().z;
+			posB = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z };
 
 			// 座標AとBの距離を求める
 			Vector3 direction = posA - posB;
@@ -982,16 +970,12 @@ void GamePlayScene::CheckAllCollisions()
 
 	// 自キャラ弾の座標
 	for (const std::unique_ptr<PlayerBullet>& playerBullet : playerBullets_) {
-		posA.x = playerBullet->GetPosition().x;
-		posA.y = playerBullet->GetPosition().y;
-		posA.z = playerBullet->GetPosition().z;
+		posA = { playerBullet->GetPosition().x, playerBullet->GetPosition().y, playerBullet->GetPosition().z };
 		
 		// 自キャラ弾と敵キャラ弾全ての当たり判定
 		for (std::unique_ptr<EnemyBullet>& bullet : enemyBullets_) {
 			// 敵キャラ弾の座標
-			posB.x = bullet->GetPosition().x;
-			posB.y = bullet->GetPosition().y;
-			posB.z = bullet->GetPosition().z;
+			posB = { bullet->GetPosition().x, bullet->GetPosition().y, bullet->GetPosition().z };
 
 			// 座標AとBの距離を求める
 			Vector3 direction = posA - posB;
@@ -1011,16 +995,12 @@ void GamePlayScene::CheckAllCollisions()
 
 	// 自キャラ弾の座標
 	for (const std::unique_ptr<PlayerBullet>& playerBullet : playerBullets_) {
-		posA.x = playerBullet->GetPosition().x;
-		posA.y = playerBullet->GetPosition().y;
-		posA.z = playerBullet->GetPosition().z;
+		posA = { playerBullet->GetPosition().x, playerBullet->GetPosition().y, playerBullet->GetPosition().z };
 
 		// 自キャラ弾とボス敵キャラ全ての当たり判定
 		for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
-			// ボス敵キャラ弾の座標
-			posB.x = bossEnemy->GetPosition().x;
-			posB.y = bossEnemy->GetPosition().y;
-			posB.z = bossEnemy->GetPosition().z;
+			// ボス敵キャラの座標
+			posB = { bossEnemy->GetPosition().x, bossEnemy->GetPosition().y, bossEnemy->GetPosition().z };
 
 			// 座標AとBの距離を求める
 			Vector3 direction = posA - posB;
@@ -1044,16 +1024,12 @@ void GamePlayScene::CheckAllCollisions()
 #pragma region 自キャラとボス敵キャラの当たり判定
 
 	// 自キャラの座標
-	posA.x = player_->GetPosition().x;
-	posA.y = player_->GetPosition().y;
-	posA.z = player_->GetPosition().z;
+	posA = { player_->GetPosition().x, player_->GetPosition().y, player_->GetPosition().z };
 
 	// 自キャラとボス敵キャラ全ての当たり判定
 	for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
-		// 敵キャラ弾の座標
-		posB.x = bossEnemy->GetPosition().x;
-		posB.y = bossEnemy->GetPosition().y;
-		posB.z = bossEnemy->GetPosition().z;
+		// ボス敵キャラの座標
+		posB = { bossEnemy->GetPosition().x, bossEnemy->GetPosition().y, bossEnemy->GetPosition().z };
 
 		// 座標AとBの距離を求める
 		Vector3 direction = posA - posB;
@@ -1072,6 +1048,26 @@ void GamePlayScene::CheckAllCollisions()
 			}
 		}
 	}
+
+#pragma endregion
+
+#pragma region 自キャラとサークルの当たり判定
+
+	// 自キャラの座標
+	posA = { player_->GetPosition().x, player_->GetPosition().y, player_->GetPosition().z };
+
+	// 自キャラとサークル全ての当たり判定
+	posB = { backGroundObj_->GetWheelPosition().x, backGroundObj_->GetWheelPosition().y, backGroundObj_->GetWheelPosition().z };
+
+	// 座標AとBの距離を求める
+	Vector3 direction = posA - posB;
+	const float radius = 5.0f;
+
+	// 球と球の交差判定
+	if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
+		player_->SetIsRot(true);
+	}
+	player_->Spin();
 
 #pragma endregion
 }

@@ -39,6 +39,9 @@ public:
 	/// </summary>
 	void Draw();
 
+	// サークルの座標取得
+	const DirectX::XMFLOAT3& GetWheelPosition() const { return wheelPosition_; }
+
 private:
 	// モデルデータコンテナ
 	std::map<std::string, std::unique_ptr<Model>> models_;
@@ -52,5 +55,7 @@ private:
 	XMFLOAT3 modelTarget_ = { 0,0,0 };
 
 	const XMFLOAT3 eye_ = { 0.0f,0.0f,-3.0f };
+
+	XMFLOAT3 wheelPosition_{};
 };
 
