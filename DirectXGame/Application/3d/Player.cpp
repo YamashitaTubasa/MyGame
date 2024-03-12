@@ -249,7 +249,7 @@ void Player::Update()
 
 	//===== プレイヤーの移動範囲の制限 =====//
 	// 左右への移動範囲制限
-	if (isEndStaging_ == false && isGameOverStaging_ == false) {
+	if (isGameClearStaging_ == false && isGameOverStaging_ == false) {
 		if (pPosition_.x <= -8) {
 			pPosition_.x += playerSpeed_;
 			rPosition_.x += playerSpeed_;
@@ -282,7 +282,7 @@ void Player::Update()
 	}
 	//===== プレイヤーの移動処理 =====//
 	// 上への移動処理
-	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
+	if (!isStartStaging_ && !isGameClearStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_W)) {
 			pPosition_.y += playerSpeed_;
 			rPosition_.y += playerSpeed_;
@@ -309,7 +309,7 @@ void Player::Update()
 	}
 
 	// 左への移動処理
-	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
+	if (!isStartStaging_ && !isGameClearStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_A)) {
 			pPosition_.x -= playerSpeed_;
 			rPosition_.x -= playerSpeed_;
@@ -342,7 +342,7 @@ void Player::Update()
 	}
 
 	// 下への移動処理
-	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
+	if (!isStartStaging_ && !isGameClearStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_S)) {
 			pPosition_.y -= playerSpeed_;
 			rPosition_.y -= playerSpeed_;
@@ -369,7 +369,7 @@ void Player::Update()
 	}
 
 	// 右への移動処理
-	if (!isStartStaging_ && !isEndStaging_ && !isGameOverStaging_) {
+	if (!isStartStaging_ && !isGameClearStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_D)) {
 			pPosition_.x += playerSpeed_;
 			rPosition_.x += playerSpeed_;
@@ -400,11 +400,8 @@ void Player::Update()
 			pRotation_.y -= playerRotSpeed_;
 		}
 	}
-
-	// ブースト時の回転処理
-	Player::Spin();
-
-	if (isBoss_ == true) {
+	
+	if (isBossDead_ == true) {
 		isReticle_ = false;
 		isGameClearStaging_ = true;
 		pPosition_.y += 0.3f;
@@ -412,9 +409,6 @@ void Player::Update()
 		rPosition_.z += 0.1f;
 		r1Position_.z += 0.1f;
 		target_ = pPosition_;
-	}
-	if (isBoss_ == true) {
-		isEndStaging_ = true;
 	}
 
 	playerO3_->SetPosition(pPosition_);
@@ -442,7 +436,7 @@ void Player::Update()
 	}
 
 	// 自キャラの攻撃処理
-	if (!isStartStaging_ && !isEndStaging_) {
+	if (!isStartStaging_ && !isGameClearStaging_) {
 		Attack();
 	}
 
@@ -590,16 +584,9 @@ void Player::Shake()
 void Player::Spin()
 {
 	// イージングをオンにする
-	if (input_->TriggerKey(DIK_X)) {
-		isEaseFlag_ = true;
-		isRot_ = true;
-		eFrame_ = 0;
-	}
-
 	if (isRot_) {
-		if (isEaseFlag_) {
-			eFrame_++;
-		}
+		
+		eFrame_++;
 
 		// 自機の回転
 		pRotation_.z = EasingManager::EaseOutQuintP(eFrame_, 0, 360, 60);
@@ -608,6 +595,7 @@ void Player::Spin()
 		if (pRotation_.z == 360.0f) {
 			pRotation_.z = 0.0f;
 			isRot_ = false;
+			eFrame_ = 0;
 		}
 	}
 }

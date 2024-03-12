@@ -112,8 +112,8 @@ public:
 	void SetIsGameOverStaging(bool isGameOverStaging) { isGameOverStaging_ = isGameOverStaging; }
 
 	// ボスフラグの取得
-	bool GetIsBoss() const { return isBoss_; }
-	void SetIsBoss(bool isBossDead) { isBoss_ = isBossDead; }
+	bool GetIsBossDead() const { return isBossDead_; }
+	void SetIsBossDead(bool isBossDead) { isBossDead_ = isBossDead; }
 	bool GetIsBossStaging() const { return isBossStaging_; }
 
 	bool GetIsMobEnemyAllive() const { return isMobEnemyAllive_; }
@@ -124,6 +124,8 @@ public:
 
 	bool GetIsSpinEffect() const { return isSpinEffect_; }
 	void SetIsSpinEffect(bool isSpinEffect) { isSpinEffect_ = isSpinEffect; }
+
+	void SetIsRot(bool isRot) { isRot_ = isRot; }
 
 private: // メンバ変数
 	MyEngine::DirectXCommon* dxCommon_ = nullptr;
@@ -217,8 +219,6 @@ private: // メンバ変数
 	bool isStartStaging_ = true;
 	int startCount_ = 0;
 	const float startSpeed_ = 0.6f;
-	// ゴール時の演出フラグ
-	bool isEndStaging_ = false;
 	// ゴール演出タイム
 	const int endCount_ = 0;
 	// 自機のフラグ
@@ -231,7 +231,7 @@ private: // メンバ変数
 	// ゲームオーバーの演出
 	const float playerFall_ = 0.05f;
 	// ボスフラグ
-	bool isBoss_ = false;
+	bool isBossDead_ = false;
 	bool isBossStaging_ = false;
 
 	// 爆発パーティクル
