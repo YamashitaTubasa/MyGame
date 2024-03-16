@@ -41,7 +41,6 @@ void main(
 		element.svpos = input[0].pos + offset;
 		// ビュープロジェクション変換
 		element.svpos = mul(mat, element.svpos);
-		//element.uv = float2(0.5f, 0.5f);
 		element.uv = uv_array[i];
 		output.Append(element);
 	}

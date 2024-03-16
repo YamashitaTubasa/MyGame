@@ -74,12 +74,18 @@ void GamePlayScene::Initialize()
 	bossEnemy->Initialize();
 	bossEnemy_.push_back(std::move(bossEnemy));
 
+	middleBossEnemyModel_ = Model::LoadFromOBJ("ocean");
+	middleBossEnemy_ = Object3d::Create();
+	middleBossEnemy_->SetModel(middleBossEnemyModel_.get());
+	middleBossEnemy_->SetPosition({ 0,-12,-5 });
+
 	// スプライトの初期化
 	SpriteInitialize();
 }
 
 void GamePlayScene::Update()
 {
+	middleBossEnemy_->Update();
 	// シーン切り替え
 	if (player_->GetIsBossDead() == true) {
 		isClearFadeIn_ = true;
@@ -254,6 +260,7 @@ void GamePlayScene::Draw()
 
 	// 背景のオブジェクトの描画
 	backGroundObj_->Draw();
+	middleBossEnemy_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
@@ -912,7 +919,7 @@ void GamePlayScene::CheckAllCollisions()
 		// 球と球の交差判定
 		if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 			bullet->OnCollision();
-			//player_->SetIsHit(true);
+			player_->SetIsHit(true);
 		}
 	}
 
@@ -939,27 +946,27 @@ void GamePlayScene::CheckAllCollisions()
 				enemy->OnCollision();
 				score_ += mobEnemyScore_;
 				
-				//for (int i = 0; i < 50; i++) {
-				//	// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-				//	const float md_pos = 0.5f;
-				//	XMFLOAT3 pos{};
-				//	pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().x;
-				//	pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().y;
-				//	pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().z;
-				//	// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
-				//	const float md_vel = 0.1f;
-				//	XMFLOAT3 vel{};
-				//	vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-				//	vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-				//	vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-				//	// 重力に見立ててYのみ[-0.001f,0]でランダム分布
-				//	XMFLOAT3 acc{};
-				//	const float md_acc = 0.001f;
-				//	acc.y = (float)rand() / RAND_MAX * md_acc;
+				for (int i = 0; i < 50; i++) {
+					// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+					const float md_pos = 0.5f;
+					XMFLOAT3 pos{};
+					pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().x;
+					pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().y;
+					pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().z;
+					// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+					const float md_vel = 0.1f;
+					XMFLOAT3 vel{};
+					vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+					XMFLOAT3 acc{};
+					const float md_acc = 0.001f;
+					acc.y = (float)rand() / RAND_MAX * md_acc;
 
-				//	// 追加
-				//	particle_->Add(life_, pos, vel, acc, start_scale_, end_scale_);
-				//}
+					// 追加
+					particle_->Add(life_, pos, vel, acc, start_scale_, end_scale_);
+				}
 			}
 		}
 	}

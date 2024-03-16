@@ -196,11 +196,11 @@ void MyEngine::Particle::LoadTexture(const std::string& filename)
 
 	srvDesc.Format = resDesc.Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D; // 2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = 1;
 
-	device_->CreateShaderResourceView(texbuff_.Get(), //ビューと関連付けるバッファ
-		&srvDesc, //テクスチャ設定情報
+	device_->CreateShaderResourceView(texbuff_.Get(), // ビューと関連付けるバッファ
+		&srvDesc, // テクスチャ設定情報
 		cpuDescHandleSRV_
 	);
 }
@@ -212,9 +212,9 @@ void MyEngine::Particle::InitializeDescriptorHeap()
 	// デスクリプタヒープを生成	
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダから見えるように
-	descHeapDesc.NumDescriptors = 1; // シェーダーリソースビュー1つ
-	result = device_->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap_));//生成
+	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;                 // シェーダから見えるように
+	descHeapDesc.NumDescriptors = 1;                                                // シェーダーリソースビュー1つ
+	result = device_->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap_));// 生成
 	if (FAILED(result)) {
 		assert(0);
 	}
@@ -242,7 +242,6 @@ void MyEngine::Particle::CreateModel()
 	vertBuff_->SetName(L"Particle[vertBuff]");
 
 	// 頂点バッファへのデータ転送
-	//VertexPosNormalUv* vertMap = nullptr;
 	VertexPos* vertMap = nullptr;
 	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	if (SUCCEEDED(result)) {
@@ -256,7 +255,7 @@ void MyEngine::Particle::CreateModel()
 	vbView_.StrideInBytes = sizeof(vertices_[0]);
 }
 
-void MyEngine::Particle::Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel,
+void MyEngine::Particle::Add(int life, const XMFLOAT3& position, XMFLOAT3 velocity, XMFLOAT3 accel,
 	float start_scale, float end_scale)
 {
 	// リストに要素を追加
