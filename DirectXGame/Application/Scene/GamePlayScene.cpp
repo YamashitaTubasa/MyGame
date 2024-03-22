@@ -74,10 +74,11 @@ void GamePlayScene::Initialize()
 	bossEnemy->Initialize();
 	bossEnemy_.push_back(std::move(bossEnemy));
 
-	middleBossEnemyModel_ = Model::LoadFromOBJ("ocean");
+	middleBossEnemyModel_ = Model::LoadFromOBJ("floor");
 	middleBossEnemy_ = Object3d::Create();
 	middleBossEnemy_->SetModel(middleBossEnemyModel_.get());
-	middleBossEnemy_->SetPosition({ 0,-12,-5 });
+	middleBossEnemy_->SetPosition({ 10,-15,-5 });
+	middleBossEnemy_->SetScale({ 100,100,100 });
 
 	// スプライトの初期化
 	SpriteInitialize();
