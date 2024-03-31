@@ -74,19 +74,12 @@ void GamePlayScene::Initialize()
 	bossEnemy->Initialize();
 	bossEnemy_.push_back(std::move(bossEnemy));
 
-	middleBossEnemyModel_ = Model::LoadFromOBJ("floor");
-	middleBossEnemy_ = Object3d::Create();
-	middleBossEnemy_->SetModel(middleBossEnemyModel_.get());
-	middleBossEnemy_->SetPosition({ 10,-15,-5 });
-	middleBossEnemy_->SetScale({ 100,100,100 });
-
 	// スプライトの初期化
 	SpriteInitialize();
 }
 
 void GamePlayScene::Update()
 {
-	middleBossEnemy_->Update();
 	// シーン切り替え
 	if (player_->GetIsBossDead() == true) {
 		isClearFadeIn_ = true;
@@ -110,6 +103,9 @@ void GamePlayScene::Update()
 		if (enemyHpScale_.x <= 0) {
 			bossEnemy->SetIsDead(true);
 			player_->SetIsBossDead(true);
+		}
+		if (player_->GetIsBossStaging() == true) {
+			bossEnemy->Move();
 		}
 		bossEnemy->Update();
 	}
@@ -261,7 +257,6 @@ void GamePlayScene::Draw()
 
 	// 背景のオブジェクトの描画
 	backGroundObj_->Draw();
-	middleBossEnemy_->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
@@ -310,14 +305,14 @@ void GamePlayScene::Draw()
 		s_->SpriteDraw(spriteCommon_);
 		d_->SpriteDraw(spriteCommon_);
 		move_->SpriteDraw(spriteCommon_);
-		spin_->SpriteDraw(spriteCommon_);
-		x_->SpriteDraw(spriteCommon_);
+		//spin_->SpriteDraw(spriteCommon_);
+		//x_->SpriteDraw(spriteCommon_);
 		space_->SpriteDraw(spriteCommon_);
 		attack_->SpriteDraw(spriteCommon_);
 		// ULTの描画
-		ult_->SpriteDraw(spriteCommon_);
+		//ult_->SpriteDraw(spriteCommon_);
 		cross_->SpriteDraw(spriteCommon_);
-		num0_[5]->SpriteDraw(spriteCommon_);
+		//num0_[5]->SpriteDraw(spriteCommon_);
 		for (int i = 0; i < dotLine_.size(); i++) {
 			dotLine_[i]->SpriteDraw(spriteCommon_);
 		}
@@ -345,6 +340,21 @@ void GamePlayScene::Draw()
 		}
 		if (score_ == 400) {
 			number_[4]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 500) {
+			number_[5]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 600) {
+			number_[6]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 700) {
+			number_[7]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 800) {
+			number_[8]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 900) {
+			number_[9]->SpriteDraw(spriteCommon_);
 		}
 	}
 	// ダメージの描画
@@ -493,7 +503,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[5]->LoadTexture(spriteCommon_, 26, L"Resources/Image/5.png");
 	number_[5]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 26, spriteCommon_, defaultAnchorpoint_, false, false);
 	number_[5]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[5]->SetPosition({ 1200, 620, 0 });
+	number_[5]->SetPosition({ 1120, 30, 0 });
 	number_[5]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[5]->SpriteTransferVertexBuffer(number_[5].get(), spriteCommon_, 26);
 	number_[5]->SpriteUpdate(number_[5].get(), spriteCommon_);
@@ -502,7 +512,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[6]->LoadTexture(spriteCommon_, 27, L"Resources/Image/6.png");
 	number_[6]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 27, spriteCommon_, defaultAnchorpoint_, false, false);
 	number_[6]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[6]->SetPosition({ 1200, 620, 0 });
+	number_[6]->SetPosition({ 1120, 30, 0 });
 	number_[6]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[6]->SpriteTransferVertexBuffer(number_[6].get(), spriteCommon_, 27);
 	number_[6]->SpriteUpdate(number_[6].get(), spriteCommon_);
@@ -511,7 +521,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[7]->LoadTexture(spriteCommon_, 28, L"Resources/Image/7.png");
 	number_[7]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 28, spriteCommon_, defaultAnchorpoint_, false, false);
 	number_[7]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[7]->SetPosition({ 1200, 620, 0 });
+	number_[7]->SetPosition({ 1120, 30, 0 });
 	number_[7]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[7]->SpriteTransferVertexBuffer(number_[7].get(), spriteCommon_, 28);
 	number_[7]->SpriteUpdate(number_[7].get(), spriteCommon_);
@@ -520,7 +530,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[8]->LoadTexture(spriteCommon_, 29, L"Resources/Image/8.png");
 	number_[8]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 29, spriteCommon_, defaultAnchorpoint_, false, false);
 	number_[8]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[8]->SetPosition({ 1200, 620, 0 });
+	number_[8]->SetPosition({ 1120, 30, 0 });
 	number_[8]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[8]->SpriteTransferVertexBuffer(number_[8].get(), spriteCommon_, 29);
 	number_[8]->SpriteUpdate(number_[8].get(), spriteCommon_);
@@ -1073,7 +1083,7 @@ void GamePlayScene::CheckAllCollisions()
 
 	// 球と球の交差判定
 	if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
-		player_->SetIsRot(true);
+		//player_->SetIsRot(true);
 	}
 	player_->Spin();
 

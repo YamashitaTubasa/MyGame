@@ -250,14 +250,14 @@ void Player::Update()
 	//===== プレイヤーの移動範囲の制限 =====//
 	// 左右への移動範囲制限
 	if (isGameClearStaging_ == false && isGameOverStaging_ == false) {
-		if (pPosition_.x <= -8) {
+		if (pPosition_.x <= -10) {
 			pPosition_.x += playerSpeed_;
 			rPosition_.x += playerSpeed_;
 			r1Position_.x += playerSpeed_;
 			target_.x += playerSpeed_;
 			eye_.x += playerSpeed_;
 		}
-		if (pPosition_.x >= 8) {
+		if (pPosition_.x >= 10) {
 			pPosition_.x -= playerSpeed_;
 			rPosition_.x -= playerSpeed_;
 			r1Position_.x -= playerSpeed_;
@@ -265,14 +265,14 @@ void Player::Update()
 			eye_.x -= playerSpeed_;
 		}
 		// 上下への移動範囲制限
-		if (pPosition_.y <= -6) {
+		if (pPosition_.y <= -8) {
 			pPosition_.y += playerSpeed_;
 			rPosition_.y += playerSpeed_;
 			r1Position_.y += playerSpeed_;
 			target_.y += playerSpeed_;
 			eye_.y += playerSpeed_;
 		}
-		if (pPosition_.y >= 6) {
+		if (pPosition_.y >= 8) {
 			pPosition_.y -= playerSpeed_;
 			rPosition_.y -= playerSpeed_;
 			r1Position_.y -= playerSpeed_;
@@ -454,7 +454,7 @@ void Player::Update()
 		}
 	}
 
-	if (pPosition_.z >= 100) {
+	if (pPosition_.z >= 230) {
 		isBossStaging_ = true;
 	}
 
@@ -462,15 +462,35 @@ void Player::Update()
 
 	if (input_->PushKey(DIK_UP)) {
 		eye_.y -= 1;
+		
 	}
 	if (input_->PushKey(DIK_DOWN)) {
 		eye_.y += 1;
+		
 	}
 	if (input_->PushKey(DIK_RIGHT)) {
 		eye_.x += 1;
+		
 	}
 	if (input_->PushKey(DIK_LEFT)) {
 		eye_.x -= 1;
+		
+	}
+	if (input_->PushKey(DIK_I)) {
+		
+		target_.y -= 1;
+	}
+	if (input_->PushKey(DIK_K)) {
+		
+		target_.y += 1;
+	}
+	if (input_->PushKey(DIK_L)) {
+		
+		target_.x += 1;
+	}
+	if (input_->PushKey(DIK_J)) {
+		
+		target_.x -= 1;
 	}
 
 	Object3d::SetEye(eye_);

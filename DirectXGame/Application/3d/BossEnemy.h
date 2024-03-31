@@ -30,6 +30,11 @@ public:
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
 
+	/// <summary>
+	/// 移動
+	/// </summary>
+	void Move();
+
 	// ボスフラグの取得
 	bool GetIsBoss() const { return isBoss_; }
 	bool GetIsBossStaging() const { return isBossStaging_; }
@@ -51,7 +56,7 @@ private:
 	// ボスの移動量
 	DirectX::XMFLOAT3 move_ = { 0,0.25,0 };
 	// ボスの座標
-	DirectX::XMFLOAT3 position_ = { 0,-1,150 };
+	DirectX::XMFLOAT3 position_ = { 0,-1,250 };
 	// ボスの回転
 	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
 	// ボスのサイズ

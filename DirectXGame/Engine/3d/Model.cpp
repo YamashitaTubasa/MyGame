@@ -363,12 +363,19 @@ void Model::LoadFromOBJInternal(const string& modelname)
 				index_stream >> indexNormal;
 				// 頂点データの追加
 				VertexPosNormalUv vertex{};
-				vertex.pos_ = positions[(unsigned int)indexPosition - 1];
+				//positions[(unsigned int)indexPosition - 1].x *= -1.0f;
+				//normals[(unsigned int)indexNormal - 1].x *= -1.0f;
 				vertex.normal_ = normals[(unsigned int)indexNormal - 1];
 				vertex.uv_ = texcoords[(unsigned int)indexTexcoord - 1];
+				vertex.pos_ = positions[(unsigned int)indexPosition - 1];
+				//for (int32_t faseVertex = 0; faseVertex < 3; ++faseVertex) {
+					//vertex[faseVertex] = { positions[(unsigned int)indexPosition - 1]  ,normals[(unsigned int)indexNormal - 1] ,texcoords[(unsigned int)indexTexcoord - 1] };
+				//}
+				//vertices_.push_back(vertex[2]);
+				//vertices_.push_back(vertex[1]);
+				//vertices_.push_back(vertex[0]);
 				vertices_.emplace_back(vertex);
 				// 頂点インデックスに追加
-				//indices.emplace_back(indexPosition - 1);
 				indices_.emplace_back((unsigned short)indices_.size());
 			}
 		}

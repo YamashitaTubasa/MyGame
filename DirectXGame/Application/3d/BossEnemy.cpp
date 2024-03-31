@@ -36,3 +36,9 @@ void BossEnemy::OnCollision()
 {
 	isDead_ = true;
 }
+
+void BossEnemy::Move()
+{
+	position_.z += 0.6f;
+	bossObject_->SetPosition(position_);
+}
