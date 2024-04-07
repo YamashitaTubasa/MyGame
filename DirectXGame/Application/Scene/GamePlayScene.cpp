@@ -553,7 +553,7 @@ void GamePlayScene::SpriteInitialize()
 	damage_->SpriteTransferVertexBuffer(damage_.get(), spriteCommon_, 11);
 	damage_->SpriteUpdate(damage_.get(), spriteCommon_);
 
-	//===== Whiteの描画 =====//
+	// Whiteの描画
 	white_ = std::make_unique<MyEngine::Sprite>();
 	white_->LoadTexture(spriteCommon_, 12, L"Resources/Image/white.png");
 	white_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 12, spriteCommon_, defaultAnchorpoint_, false, false);
@@ -563,7 +563,7 @@ void GamePlayScene::SpriteInitialize()
 	white_->SetAlpha(bAlpha_);
 	white_->SpriteTransferVertexBuffer(white_.get(), spriteCommon_, 12);
 
-	//===== Blackの描画 =====//
+	// Blackの描画
 	black_ = std::make_unique<MyEngine::Sprite>();
 	black_->LoadTexture(spriteCommon_, 13, L"Resources/Image/black.png");
 	black_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 13, spriteCommon_, defaultAnchorpoint_, false, false);
@@ -707,22 +707,6 @@ void GamePlayScene::SpriteInitialize()
 	enemyHpBack_->SetAlpha(enemyAlpha_);
 	enemyHpBack_->SpriteTransferVertexBuffer(enemyHpBack_.get(), spriteCommon_, 41);
 	enemyHpBack_->SpriteUpdate(enemyHpBack_.get(), spriteCommon_);
-}
-
-void GamePlayScene::GameReset()
-{
-	playerHp_ = 3;
-	time_ = 0;
-}
-
-bool GamePlayScene::CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1)
-{
-	if(std::pow((object1.x - object.x),2.0f) + std::pow((object1.y - object.y),2.0f) + 
-		std::pow((object1.z - object.z), 2.0f) <= std::pow((1 + 1), 2.0f)){
-		return true;
-	}
-
-	return true;
 }
 
 void GamePlayScene::LoadEnemyPopData()
@@ -1028,7 +1012,7 @@ void GamePlayScene::CheckAllCollisions()
 			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 				playerBullet->OnCollision();
 				if (player_->GetIsBossStaging() == true) {
-					enemyHpScale_.x -= 100;
+					enemyHpScale_.x -= 50;
 					enemyHp_->SetScale(enemyHpScale_);
 					enemyHp_->SpriteTransferVertexBuffer(enemyHp_.get(), spriteCommon_, 39);
 					enemyHp_->SpriteUpdate(enemyHp_.get(), spriteCommon_);

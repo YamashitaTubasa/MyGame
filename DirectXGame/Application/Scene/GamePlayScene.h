@@ -80,16 +80,6 @@ public:
 	void SpriteInitialize();
 
 	/// <summary>
-	/// ゲームのリセット
-	/// </summary>
-	void GameReset();
-
-	/// <summary>
-	/// 当たり判定
-	/// </summary>
-	bool CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1);
-
-	/// <summary>
 	/// 敵発生データの読み込み
 	/// </summary>
 	void LoadEnemyPopData();

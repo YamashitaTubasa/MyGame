@@ -12,6 +12,14 @@
 class BossEnemy
 {
 public:
+	enum Move {
+		RightMove,              // 右移動
+		LeftMove,               // 左移動
+		MoveInitializeTime = 0, // 初期時間
+		MoveMaxTime = 50        // 最大時間
+	};
+
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -61,6 +69,11 @@ private:
 	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
 	// ボスのサイズ
 	DirectX::XMFLOAT3 scale_ = { 25,25,25 };
+	float speed_ = 0.6f; // ボスの速さ
+	float xSpeed_ = 0.2f;
+	float screenMax_ = 10.0f;
+	int isMove_ = RightMove;
+	int isMoveTime_ = 0;
 	bool isBossHp_ = false;
 	int bossHp_ = 0;
 	int bossTimer_ = 0;

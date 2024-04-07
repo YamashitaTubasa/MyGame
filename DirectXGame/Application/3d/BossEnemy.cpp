@@ -39,6 +39,28 @@ void BossEnemy::OnCollision()
 
 void BossEnemy::Move()
 {
-	position_.z += 0.6f;
+	position_.z += speed_;
+	if (isMove_ == Move::RightMove) {
+		position_.x += xSpeed_;
+	}
+	if (position_.x >= screenMax_) {
+		position_.x = screenMax_;
+		isMoveTime_++;
+		if (isMoveTime_ >= Move::MoveMaxTime) {
+			isMove_ = Move::LeftMove;
+			isMoveTime_ = Move::MoveInitializeTime;
+		}
+	}
+	if (isMove_ == Move::LeftMove) {
+		position_.x -= xSpeed_;
+	}
+	if (position_.x <= -screenMax_) {
+		position_.x = -screenMax_;
+		isMoveTime_++;
+		if (isMoveTime_ >= Move::MoveMaxTime) {
+			isMove_ = Move::RightMove;
+			isMoveTime_ = Move::MoveInitializeTime;
+		}
+	}
 	bossObject_->SetPosition(position_);
 }

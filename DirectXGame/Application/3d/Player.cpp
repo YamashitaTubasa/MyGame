@@ -250,14 +250,14 @@ void Player::Update()
 	//===== プレイヤーの移動範囲の制限 =====//
 	// 左右への移動範囲制限
 	if (isGameClearStaging_ == false && isGameOverStaging_ == false) {
-		if (pPosition_.x <= -10) {
+		if (pPosition_.x <= -15) {
 			pPosition_.x += playerSpeed_;
 			rPosition_.x += playerSpeed_;
 			r1Position_.x += playerSpeed_;
 			target_.x += playerSpeed_;
 			eye_.x += playerSpeed_;
 		}
-		if (pPosition_.x >= 10) {
+		if (pPosition_.x >= 15) {
 			pPosition_.x -= playerSpeed_;
 			rPosition_.x -= playerSpeed_;
 			r1Position_.x -= playerSpeed_;
@@ -265,14 +265,14 @@ void Player::Update()
 			eye_.x -= playerSpeed_;
 		}
 		// 上下への移動範囲制限
-		if (pPosition_.y <= -8) {
+		if (pPosition_.y <= -10) {
 			pPosition_.y += playerSpeed_;
 			rPosition_.y += playerSpeed_;
 			r1Position_.y += playerSpeed_;
 			target_.y += playerSpeed_;
 			eye_.y += playerSpeed_;
 		}
-		if (pPosition_.y >= 8) {
+		if (pPosition_.y >= 10) {
 			pPosition_.y -= playerSpeed_;
 			rPosition_.y -= playerSpeed_;
 			r1Position_.y -= playerSpeed_;
@@ -521,7 +521,7 @@ void Player::Attack()
 		isTime_ = true;
 
 		// 弾の速度
-		const float bulletSpeed = 1.0f;
+		const float bulletSpeed = 4.0f;
 		DirectX::XMFLOAT3 velocity(0, 0, bulletSpeed);
 
 		// 弾の生成と、初期化
@@ -533,11 +533,11 @@ void Player::Attack()
 	}
 	
 	if (isTime_ == true) {
-		time_++;
-	}
-	if (time_ >= 10) {
-		time_ = 0;
-		isTime_ = false;
+		const float bulletTime = 10.0f;
+		if (++time_ >= bulletTime) {
+			time_ = 0;
+			isTime_ = false;
+		}
 	}
 }
 
