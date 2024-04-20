@@ -311,7 +311,7 @@ void GamePlayScene::Draw()
 		attack_->SpriteDraw(spriteCommon_);
 		// ULTの描画
 		//ult_->SpriteDraw(spriteCommon_);
-		cross_->SpriteDraw(spriteCommon_);
+		//cross_->SpriteDraw(spriteCommon_);
 		//num0_[5]->SpriteDraw(spriteCommon_);
 		for (int i = 0; i < dotLine_.size(); i++) {
 			dotLine_[i]->SpriteDraw(spriteCommon_);
@@ -842,7 +842,7 @@ void GamePlayScene::DamageDirection()
 		damageTime_ = 0;
 	}
 
-	if (hpScale_.x <= 0) {
+	if (hpScale_.x <= 0 || player_->GetPosition().z >= 750) {
 		overTimer_++;
 		player_->SetIsGameOverStaging(true);
 

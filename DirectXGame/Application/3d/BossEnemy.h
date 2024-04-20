@@ -69,7 +69,7 @@ private:
 	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
 	// ボスのサイズ
 	DirectX::XMFLOAT3 scale_ = { 25,25,25 };
-	float speed_ = 0.6f; // ボスの速さ
+	float speed_ = 0.8f; // ボスの速さ
 	float xSpeed_ = 0.2f;
 	float screenMax_ = 10.0f;
 	int isMove_ = RightMove;

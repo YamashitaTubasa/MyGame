@@ -238,11 +238,11 @@ void Player::Update()
 		eye_.z += 0.4f;
 	}
 	if (!isStartStaging_) {
-		if (pPosition_.z < 500) {
-			pPosition_.z += startSpeed_;
+		if (pPosition_.z < 850) {
+			pPosition_.z += 0.8f;
 			rPosition_.z += startSpeed_;
 			r1Position_.z += startSpeed_;
-			eye_.z += startSpeed_;
+			eye_.z += 0.8f;
 			target_ = pPosition_;
 		}
 	}

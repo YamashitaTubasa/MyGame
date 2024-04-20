@@ -189,7 +189,7 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 target_ = { 0,0,0 };
 
 	// プレイヤー
-	const float playerSpeed_ = 0.4f;
+	const float playerSpeed_ = 0.5f;
 	const float playerRotSpeed_ = 1.0f;
 	const float playerSlopeMax_ = -20.0f;
 	const float playerSlopeMaxPlus_ = 20.0f;
