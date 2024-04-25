@@ -278,13 +278,23 @@ void GamePlayScene::Draw()
 
 #pragma endregion
 
+
+	// 描画後処理
+	postEffect_->PostDraw(cmdList);
+
+	// 描画前処理
+	dxCommon_->PreDraw();
+
+	// ポストエフェクト描画
+	postEffect_->Draw(cmdList);
+
 #pragma region スプライト描画
 
 	// スプライト描画前処理
 	MyEngine::Sprite::PreDraw(cmdList, spriteCommon_);
 
 	if (player_->GetIsStartStaging() == false &&
-		player_->GetIsGameClearStaging() == false && 
+		player_->GetIsGameClearStaging() == false &&
 		player_->GetIsGameOverStaging() == false) {
 
 		// HPバーの描画
@@ -318,9 +328,9 @@ void GamePlayScene::Draw()
 		}
 	}
 	// 数字の描画
-	if (player_->GetIsStartStaging() == false && 
-		player_->GetIsGameOverStaging() == false 
-		&& player_->GetIsBossStaging() == false) 
+	if (player_->GetIsStartStaging() == false &&
+		player_->GetIsGameOverStaging() == false
+		&& player_->GetIsBossStaging() == false)
 	{
 		num0_[0]->SpriteDraw(spriteCommon_);
 		num0_[1]->SpriteDraw(spriteCommon_);
@@ -372,14 +382,6 @@ void GamePlayScene::Draw()
 	// スプライト描画後処理
 	MyEngine::Sprite::PostDraw();
 #pragma endregion
-	// 描画後処理
-	postEffect_->PostDraw(cmdList);
-
-	// 描画前処理
-	dxCommon_->PreDraw();
-
-	// ポストエフェクト描画
-	postEffect_->Draw(cmdList);
 
 	// 描画後処理
 	dxCommon_->PostDraw();
@@ -576,7 +578,7 @@ void GamePlayScene::SpriteInitialize()
 
 	// W
 	w_ = std::make_unique<MyEngine::Sprite>();
-	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w1.png");
+	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w.png");
 	w_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 14, spriteCommon_, defaultAnchorpoint_, false, false);
 	w_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	w_->SetPosition({ 70,510, 0 });
@@ -585,7 +587,7 @@ void GamePlayScene::SpriteInitialize()
 	w_->SpriteUpdate(w_.get(), spriteCommon_);
 	// a
 	a_ = std::make_unique<MyEngine::Sprite>();
-	a_->LoadTexture(spriteCommon_, 15, L"Resources/Image/a1.png");
+	a_->LoadTexture(spriteCommon_, 15, L"Resources/Image/a.png");
 	a_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 15, spriteCommon_, defaultAnchorpoint_, false, false);
 	a_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	a_->SetPosition({ 30,560, 0 });
@@ -594,7 +596,7 @@ void GamePlayScene::SpriteInitialize()
 	a_->SpriteUpdate(a_.get(), spriteCommon_);
 	// s
 	s_ = std::make_unique<MyEngine::Sprite>();
-	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s1.png");
+	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s.png");
 	s_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 16, spriteCommon_, defaultAnchorpoint_, false, false);
 	s_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	s_->SetPosition({ 70,560, 0 });
@@ -603,7 +605,7 @@ void GamePlayScene::SpriteInitialize()
 	s_->SpriteUpdate(s_.get(), spriteCommon_);
 	// d
 	d_ = std::make_unique<MyEngine::Sprite>();
-	d_->LoadTexture(spriteCommon_, 17, L"Resources/Image/d1.png");
+	d_->LoadTexture(spriteCommon_, 17, L"Resources/Image/d.png");
 	d_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 17, spriteCommon_, defaultAnchorpoint_, false, false);
 	d_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	d_->SetPosition({ 115,560, 0 });
@@ -612,7 +614,7 @@ void GamePlayScene::SpriteInitialize()
 	d_->SpriteUpdate(d_.get(), spriteCommon_);
 	// move
 	move_ = std::make_unique<MyEngine::Sprite>();
-	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move1.png");
+	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move.png");
 	move_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 18, spriteCommon_, defaultAnchorpoint_, false, false);
 	move_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	move_->SetPosition({ 155,540, 0 });
@@ -621,7 +623,7 @@ void GamePlayScene::SpriteInitialize()
 	move_->SpriteUpdate(move_.get(), spriteCommon_);
 	// spin
 	spin_ = std::make_unique<MyEngine::Sprite>();
-	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin1.png");
+	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin.png");
 	spin_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 19, spriteCommon_, defaultAnchorpoint_, false, false);
 	spin_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	spin_->SetPosition({ 150,610, 0 });
@@ -639,7 +641,7 @@ void GamePlayScene::SpriteInitialize()
 	u_->SpriteUpdate(u_.get(), spriteCommon_);
 	// space
 	space_ = std::make_unique<MyEngine::Sprite>();
-	space_->LoadTexture(spriteCommon_, 21, L"Resources/Image/space1.png");
+	space_->LoadTexture(spriteCommon_, 21, L"Resources/Image/space.png");
 	space_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 21, spriteCommon_, defaultAnchorpoint_, false, false);
 	space_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	space_->SetPosition({ 40,660, 0 });
@@ -648,7 +650,7 @@ void GamePlayScene::SpriteInitialize()
 	space_->SpriteUpdate(space_.get(), spriteCommon_);
 	// attack
 	attack_ = std::make_unique<MyEngine::Sprite>();
-	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack1.png");
+	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack.png");
 	attack_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 22, spriteCommon_, defaultAnchorpoint_, false, false);
 	attack_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	attack_->SetPosition({ 145,660, 0 });
@@ -659,7 +661,7 @@ void GamePlayScene::SpriteInitialize()
 	for (int i = 0; i < dotLine_.size(); i++) {
 		const float dotLineInterval_ = 50.0f;
 		dotLine_[i] = std::make_unique<MyEngine::Sprite>();
-		dotLine_[i]->LoadTexture(spriteCommon_, 31, L"Resources/Image/circleDot1.png");
+		dotLine_[i]->LoadTexture(spriteCommon_, 31, L"Resources/Image/circleDot.png");
 		dotLine_[i]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 31, spriteCommon_, defaultAnchorpoint_, false, false);
 		dotLine_[i]->SetColor(XMFLOAT4(1, 1, 1, 1));
 		dotLine_[i]->SetPosition({ 20, 595 + (i * dotLineInterval_), 0 });

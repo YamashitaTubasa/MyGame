@@ -64,12 +64,12 @@ private:
 	// ボスの移動量
 	DirectX::XMFLOAT3 move_ = { 0,0.25,0 };
 	// ボスの座標
-	DirectX::XMFLOAT3 position_ = { 0,-1,250 };
+	DirectX::XMFLOAT3 position_ = { 0,-1,290 };
 	// ボスの回転
 	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
 	// ボスのサイズ
 	DirectX::XMFLOAT3 scale_ = { 25,25,25 };
-	float speed_ = 0.8f; // ボスの速さ
+	float speed_ = 1.0f; // ボスの速さ
 	float xSpeed_ = 0.2f;
 	float screenMax_ = 10.0f;
 	int isMove_ = RightMove;

@@ -236,7 +236,7 @@ private:
 	static const int mobEnemyScore_ = 100;
 
 	// ポストエフェクト
-	bool isRadialBlur_ = false;
+	bool isRadialBlur_ = true;
 
 	// 敵弾が発射する距離
 	static const int fireDistance_ = 100;
