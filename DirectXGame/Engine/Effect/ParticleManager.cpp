@@ -36,18 +36,6 @@ XMFLOAT3 MyEngine::ParticleManager::up_ = { 0, 1, 0 };
 XMMATRIX MyEngine::ParticleManager::matBillboard_ = XMMatrixIdentity();
 XMMATRIX MyEngine::ParticleManager::matBillboardY_ = XMMatrixIdentity();
 
-// XMFLOAT3同士の加算処理
-//const DirectX::XMFLOAT3 operator+(const DirectX::XMFLOAT3& lhs, const DirectX::XMFLOAT3& rhs)
-//{
-//	XMFLOAT3 result;
-//
-//	result.x = lhs.x + rhs.x;
-//	result.y = lhs.y + rhs.y;
-//	result.z = lhs.z + rhs.z;
-//
-//	return result;
-//}
-
 void MyEngine::ParticleManager::StaticInitialize(ID3D12Device* device, int window_width, int window_height)
 {
 	// nullptrチェック

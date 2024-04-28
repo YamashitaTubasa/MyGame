@@ -315,14 +315,8 @@ void GamePlayScene::Draw()
 		s_->SpriteDraw(spriteCommon_);
 		d_->SpriteDraw(spriteCommon_);
 		move_->SpriteDraw(spriteCommon_);
-		//spin_->SpriteDraw(spriteCommon_);
-		//x_->SpriteDraw(spriteCommon_);
 		space_->SpriteDraw(spriteCommon_);
 		attack_->SpriteDraw(spriteCommon_);
-		// ULTの描画
-		//ult_->SpriteDraw(spriteCommon_);
-		//cross_->SpriteDraw(spriteCommon_);
-		//num0_[5]->SpriteDraw(spriteCommon_);
 		for (int i = 0; i < dotLine_.size(); i++) {
 			dotLine_[i]->SpriteDraw(spriteCommon_);
 		}

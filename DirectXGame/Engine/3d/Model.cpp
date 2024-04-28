@@ -212,7 +212,6 @@ void Model::LoadTexture(const std::string& filename)
 
 	// ユニコード文字列に変換する
 	wchar_t wfilepath[128];
-	//int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
 
 	result = LoadFromWICFile(
 		wfilepath, WIC_FLAGS_NONE,
@@ -342,10 +341,6 @@ void Model::LoadFromOBJInternal(const string& modelname)
 			line_stream >> position.z;
 			// 座標データに追加
 			positions.emplace_back(position);
-			// 頂点データに追加
-			/*VertexPosNormalUv vertex{};
-			vertex.pos = position;
-			vertices.emplace_back(vertex);*/
 		}
 
 		// 先頭文字列がｆならポリゴン（三角形）
@@ -363,17 +358,9 @@ void Model::LoadFromOBJInternal(const string& modelname)
 				index_stream >> indexNormal;
 				// 頂点データの追加
 				VertexPosNormalUv vertex{};
-				//positions[(unsigned int)indexPosition - 1].x *= -1.0f;
-				//normals[(unsigned int)indexNormal - 1].x *= -1.0f;
 				vertex.normal_ = normals[(unsigned int)indexNormal - 1];
 				vertex.uv_ = texcoords[(unsigned int)indexTexcoord - 1];
 				vertex.pos_ = positions[(unsigned int)indexPosition - 1];
-				//for (int32_t faseVertex = 0; faseVertex < 3; ++faseVertex) {
-					//vertex[faseVertex] = { positions[(unsigned int)indexPosition - 1]  ,normals[(unsigned int)indexNormal - 1] ,texcoords[(unsigned int)indexTexcoord - 1] };
-				//}
-				//vertices_.push_back(vertex[2]);
-				//vertices_.push_back(vertex[1]);
-				//vertices_.push_back(vertex[0]);
 				vertices_.emplace_back(vertex);
 				// 頂点インデックスに追加
 				indices_.emplace_back((unsigned short)indices_.size());
@@ -445,7 +432,6 @@ void Model::CreateBuffers()
 
 	std::vector<VertexPosNormalUv> realVertices;
 
-	/*UINT sizeVB = static_cast<UINT>(sizeof(vertices));*/
 	UINT sizeVB = static_cast<UINT>(sizeof(VertexPosNormalUv) * vertices_.size());
 
 	// ヒーププロパティ
@@ -470,11 +456,9 @@ void Model::CreateBuffers()
 
 	// 頂点バッファビューの作成
 	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
-	/*vbView.SizeInBytes = sizeof(vertices);*/
 	vbView_.SizeInBytes = sizeVB;
 	vbView_.StrideInBytes = sizeof(vertices_[0]);
 
-	/*UINT sizeIB = static_cast<UINT>(sizeof(indices));*/
 	UINT sizeIB = static_cast<UINT>(sizeof(unsigned short) * indices_.size());
 	// リソース設定
 	resourceDesc.Width = sizeIB;
@@ -488,12 +472,6 @@ void Model::CreateBuffers()
 	unsigned short* indexMap = nullptr;
 	result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
 	if (SUCCEEDED(result)) {
-
-		// 全インデックスに対して
-		//for (int i = 0; i < _countof(indices); i++)
-		//{
-		//	indexMap[i] = indices[i];	// インデックスをコピー
-		//}
 
 		std::copy(indices_.begin(), indices_.end(), indexMap);
 
@@ -511,8 +489,6 @@ void Model::CreateBuffers()
 
 	// ヒーププロパティ
 	CD3DX12_HEAP_PROPERTIES heapProps1 = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
-
-	//HRESULT result;
 
 	resourceDesc =
 		CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB1) + 0xff) & ~0xff);

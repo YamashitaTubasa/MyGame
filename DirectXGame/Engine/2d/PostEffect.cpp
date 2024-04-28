@@ -14,25 +14,23 @@
 using namespace DirectX;
 
 // 静的メンバ変数の実体
-//                                        Red  Green Blue  Alpha
-//const float PostEffect::clearColor[4] = { 0.25, 0.5, 0.1f, 0.0f }; // 緑っぽい色
+//                                                   Red   Green  Blue  Alpha
 const float MyEngine::PostEffect::clearColor_[4] = { 0.1f, 0.25f, 0.5f, 0.0f };// 青っぽい色
 
 MyEngine::PostEffect::PostEffect()
 	: Sprite(
-		100, // テクスチャ番号
-		{ 0,0,0 }, // 座標
+		100,               // テクスチャ番号
+		{ 0,0,0 },         // 座標
 		{ 500.0f,500.0f }, // サイズ
-		{ 1,1,1,1 }, // 色
-		{ 0.0f,0.0f }, // アンカーポイント
-		false, // 左右反転フラグ
-		false) // 上下反転フラグ
+		{ 1,1,1,1 },       // 色
+		{ 0.0f,0.0f },     // アンカーポイント
+		false,             // 左右反転フラグ
+		false)             // 上下反転フラグ
 {
 }
 
 MyEngine::PostEffect::~PostEffect()
 {
-	//device_->Release();
 }
 
 void MyEngine::PostEffect::Initialize(const wchar_t* filename)

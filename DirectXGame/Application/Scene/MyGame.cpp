@@ -40,45 +40,10 @@ void MyGame::Update()
 
 void MyGame::Draw()
 {
-	// コマンドリストの取得
-	//ID3D12GraphicsCommandList* cmdList = dxCommon_->GetCommandList();
-
 #pragma region ゲームシーン描画
 
-//	// レンダーテクスチャの前処理
-//	postEffect_->PreDraw(cmdList);
-//
-//	//=== シーンマネージャの描画 ===//
+	//=== シーンマネージャの描画 ===//
 	sceneManager_->Draw();
-//
-//	// レンダーテクスチャの後処理
-//	postEffect_->PostDraw(cmdList);
-//
-//#pragma endregion
-//
-//#pragma region ポストエフェクトの描画
-//
-//	// レンダーテクスチャ1の前処理
-//	postEffect1_->PreDraw(cmdList);
-//
-//	//=== ポストエフェクトの描画 ===//
-//	postEffect_->Draw(cmdList);
-//
-//	// レンダーテクスチャ1の後処理
-//	postEffect1_->PostDraw(cmdList);
-
-#pragma endregion
-
-#pragma region ポストエフェクト1の描画
-
-	//// 描画前処理
-	//dxCommon_->PreDraw();
-
-	////=== ポストエフェクト1の描画 ===//
-	//postEffect1_->Draw(cmdList);
-
-	//// 描画後処理
-	//dxCommon_->PostDraw();
 
 #pragma endregion
 }
