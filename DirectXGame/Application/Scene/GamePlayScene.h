@@ -172,8 +172,12 @@ private:
 	// 敵の弾
 	std::list<std::unique_ptr<EnemyBullet>> enemyBullets_;
 
-	std::unique_ptr<Object3d> middleBossEnemy_;
-	std::unique_ptr<Model> middleBossEnemyModel_;
+	std::unique_ptr<Object3d> enemyEffect_;
+	std::unique_ptr<Object3d> enemyEffectOne_;
+	std::unique_ptr<Object3d> enemyEffectTwo_;
+	std::unique_ptr<Object3d> enemyEffectThree_;
+	std::unique_ptr<Object3d> enemyEffectFour_;
+	std::unique_ptr<Model> enemyEffectModel_;
 
 	std::list<std::unique_ptr<BossEnemy>> bossEnemy_;
 
@@ -200,6 +204,18 @@ private:
 	float enemyAlpha_ = 0.0f;
 	bool isBossDamage_ = false;
 	int bossDamageTimer_ = 0;
+	DirectX::XMFLOAT3 enemyEffectPosition_ = { 0,0,0 };
+	DirectX::XMFLOAT3 enemyEffectOnePosition_ = { 0,0,0 };
+	DirectX::XMFLOAT3 enemyEffectTwoPosition_ = { 0,0,0 };
+	DirectX::XMFLOAT3 enemyEffectThreePosition_ = { 0,0,0 };
+	DirectX::XMFLOAT3 enemyEffectFourPosition_ = { 0,0,0 };
+	DirectX::XMFLOAT3 enemyEffectScale_ = { 0.5f,0.5f,0.5f };
+	DirectX::XMFLOAT3 enemyEffectOneScale_ = { 0.5f,0.5f,0.5f };
+	DirectX::XMFLOAT3 enemyEffectTwoScale_ = { 0.5f,0.5f,0.5f };
+	DirectX::XMFLOAT3 enemyEffectThreeScale_ = { 0.5f,0.5f,0.5f };
+	DirectX::XMFLOAT3 enemyEffectFourScale_ = { 0.5f,0.5f,0.5f };
+	bool isEnemyEffect_ = false;
+	int enemyEffectTime_ = 0;
 
 	bool isPushD_ = false;
 	bool isPushA_ = false;

@@ -74,6 +74,38 @@ void GamePlayScene::Initialize()
 	bossEnemy->Initialize();
 	bossEnemy_.push_back(std::move(bossEnemy));
 
+	// OBJからモデルデータを読み込む
+	enemyEffectModel_ = Model::LoadFromOBJ("enemyEffect");
+	// 3Dオブジェクト生成
+	enemyEffect_ = Object3d::Create();
+	enemyEffectOne_ = Object3d::Create();
+	enemyEffectTwo_ = Object3d::Create();
+	enemyEffectThree_ = Object3d::Create();
+	enemyEffectFour_ = Object3d::Create();
+	// オブジェクトにモデルをひも付ける
+	enemyEffect_->SetModel(enemyEffectModel_.get());
+	enemyEffectOne_->SetModel(enemyEffectModel_.get());
+	enemyEffectTwo_->SetModel(enemyEffectModel_.get());
+	enemyEffectThree_->SetModel(enemyEffectModel_.get());
+	enemyEffectFour_->SetModel(enemyEffectModel_.get());
+	enemyEffect_->SetCollider(new SphereCollider);
+	// 3Dオブジェクトの位置を指定
+	enemyEffect_->SetPosition(enemyEffectPosition_);
+	enemyEffect_->SetScale(enemyEffectScale_);
+	enemyEffect_->SetRotation({0,0,0});
+	enemyEffectOne_->SetPosition(enemyEffectOnePosition_);
+	enemyEffectOne_->SetScale(enemyEffectOneScale_);
+	enemyEffectOne_->SetRotation({ 0,0,0 });
+	enemyEffectTwo_->SetPosition(enemyEffectTwoPosition_);
+	enemyEffectTwo_->SetScale(enemyEffectTwoScale_);
+	enemyEffectTwo_->SetRotation({ 0,0,0 });
+	enemyEffectThree_->SetPosition(enemyEffectThreePosition_);
+	enemyEffectThree_->SetScale(enemyEffectThreeScale_);
+	enemyEffectThree_->SetRotation({ 0,0,0 });
+	enemyEffectFour_->SetPosition(enemyEffectFourPosition_);
+	enemyEffectFour_->SetScale(enemyEffectFourScale_);
+	enemyEffectFour_->SetRotation({ 0,0,0 });
+
 	// スプライトの初期化
 	SpriteInitialize();
 }
@@ -97,6 +129,12 @@ void GamePlayScene::Update()
 
 	// 自キャラの更新
 	player_->Update();
+	
+	enemyEffect_->Update();
+	enemyEffectOne_->Update();
+	enemyEffectTwo_->Update();
+	enemyEffectThree_->Update();
+	enemyEffectFour_->Update();
 
 	// ボス敵の更新
 	for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
@@ -243,6 +281,13 @@ void GamePlayScene::Draw()
 	// 3Dオブジェクトの描画
 	skydome_->Draw();
 	player_->Draw();
+	if (isEnemyEffect_) {
+		enemyEffect_->Draw();
+		enemyEffectOne_->Draw();
+		enemyEffectTwo_->Draw();
+		enemyEffectThree_->Draw();
+		enemyEffectFour_->Draw();
+	}
 	if (player_->GetIsBossStaging() == true) {
 		for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
 			bossEnemy->Draw();
@@ -936,6 +981,18 @@ void GamePlayScene::CheckAllCollisions()
 				playerBullet->OnCollision();
 				enemy->OnCollision();
 				score_ += mobEnemyScore_;
+
+				isEnemyEffect_ = true;
+				enemyEffectPosition_ = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z };
+				enemyEffectOnePosition_ = { enemy->GetPosition().x + 2, enemy->GetPosition().y, enemy->GetPosition().z };
+				enemyEffectTwoPosition_ = { enemy->GetPosition().x, enemy->GetPosition().y + 2, enemy->GetPosition().z };
+				enemyEffectThreePosition_ = { enemy->GetPosition().x, enemy->GetPosition().y - 2, enemy->GetPosition().z };
+				enemyEffectFourPosition_ = { enemy->GetPosition().x - 2, enemy->GetPosition().y, enemy->GetPosition().z };
+				enemyEffect_->SetPosition(enemyEffectPosition_);
+				enemyEffectOne_->SetPosition(enemyEffectOnePosition_);
+				enemyEffectTwo_->SetPosition(enemyEffectTwoPosition_);
+				enemyEffectThree_->SetPosition(enemyEffectThreePosition_);
+				enemyEffectFour_->SetPosition(enemyEffectFourPosition_);
 				
 				for (int i = 0; i < 50; i++) {
 					// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
@@ -958,6 +1015,14 @@ void GamePlayScene::CheckAllCollisions()
 					// 追加
 					particle_->Add(life_, pos, vel, acc, start_scale_, end_scale_);
 				}
+			}
+
+			if (isEnemyEffect_) {
+				enemyEffectTime_++;
+			}
+			if (enemyEffectTime_ >= 15) {
+				isEnemyEffect_ = false;
+				enemyEffectTime_ = 0;
 			}
 		}
 	}
