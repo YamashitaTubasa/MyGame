@@ -12,6 +12,14 @@
 class BossEnemy
 {
 public:
+	enum Move {
+		RightMove,              // 右移動
+		LeftMove,               // 左移動
+		MoveInitializeTime = 0, // 初期時間
+		MoveMaxTime = 50        // 最大時間
+	};
+
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -29,6 +37,11 @@ public:
 
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
+
+	/// <summary>
+	/// 移動
+	/// </summary>
+	void Move();
 
 	// ボスフラグの取得
 	bool GetIsBoss() const { return isBoss_; }
@@ -51,11 +64,16 @@ private:
 	// ボスの移動量
 	DirectX::XMFLOAT3 move_ = { 0,0.25,0 };
 	// ボスの座標
-	DirectX::XMFLOAT3 position_ = { 0,-1,150 };
+	DirectX::XMFLOAT3 position_ = { 0,-1,290 };
 	// ボスの回転
 	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
 	// ボスのサイズ
 	DirectX::XMFLOAT3 scale_ = { 25,25,25 };
+	float speed_ = 1.0f; // ボスの速さ
+	float xSpeed_ = 0.2f;
+	float screenMax_ = 10.0f;
+	int isMove_ = RightMove;
+	int isMoveTime_ = 0;
 	bool isBossHp_ = false;
 	int bossHp_ = 0;
 	int bossTimer_ = 0;

@@ -418,6 +418,7 @@ void MyEngine::DirectXCommon::PostDraw()
 
 	// FPS固定
 	fpsFixed_->UpdateFixFPS();
+	fpsFixed_->CountFPS();
 
 	// キューをクリア
 	result_ = commandAllocator_->Reset();

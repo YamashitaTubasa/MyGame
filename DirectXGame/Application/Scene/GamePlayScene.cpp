@@ -74,6 +74,38 @@ void GamePlayScene::Initialize()
 	bossEnemy->Initialize();
 	bossEnemy_.push_back(std::move(bossEnemy));
 
+	// OBJからモデルデータを読み込む
+	enemyEffectModel_ = Model::LoadFromOBJ("enemyEffect");
+	// 3Dオブジェクト生成
+	enemyEffect_ = Object3d::Create();
+	enemyEffectOne_ = Object3d::Create();
+	enemyEffectTwo_ = Object3d::Create();
+	enemyEffectThree_ = Object3d::Create();
+	enemyEffectFour_ = Object3d::Create();
+	// オブジェクトにモデルをひも付ける
+	enemyEffect_->SetModel(enemyEffectModel_.get());
+	enemyEffectOne_->SetModel(enemyEffectModel_.get());
+	enemyEffectTwo_->SetModel(enemyEffectModel_.get());
+	enemyEffectThree_->SetModel(enemyEffectModel_.get());
+	enemyEffectFour_->SetModel(enemyEffectModel_.get());
+	enemyEffect_->SetCollider(new SphereCollider);
+	// 3Dオブジェクトの位置を指定
+	enemyEffect_->SetPosition(enemyEffectPosition_);
+	enemyEffect_->SetScale(enemyEffectScale_);
+	enemyEffect_->SetRotation({0,0,0});
+	enemyEffectOne_->SetPosition(enemyEffectOnePosition_);
+	enemyEffectOne_->SetScale(enemyEffectOneScale_);
+	enemyEffectOne_->SetRotation({ 0,0,0 });
+	enemyEffectTwo_->SetPosition(enemyEffectTwoPosition_);
+	enemyEffectTwo_->SetScale(enemyEffectTwoScale_);
+	enemyEffectTwo_->SetRotation({ 0,0,0 });
+	enemyEffectThree_->SetPosition(enemyEffectThreePosition_);
+	enemyEffectThree_->SetScale(enemyEffectThreeScale_);
+	enemyEffectThree_->SetRotation({ 0,0,0 });
+	enemyEffectFour_->SetPosition(enemyEffectFourPosition_);
+	enemyEffectFour_->SetScale(enemyEffectFourScale_);
+	enemyEffectFour_->SetRotation({ 0,0,0 });
+
 	// スプライトの初期化
 	SpriteInitialize();
 }
@@ -97,12 +129,21 @@ void GamePlayScene::Update()
 
 	// 自キャラの更新
 	player_->Update();
+	
+	enemyEffect_->Update();
+	enemyEffectOne_->Update();
+	enemyEffectTwo_->Update();
+	enemyEffectThree_->Update();
+	enemyEffectFour_->Update();
 
 	// ボス敵の更新
 	for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
 		if (enemyHpScale_.x <= 0) {
 			bossEnemy->SetIsDead(true);
 			player_->SetIsBossDead(true);
+		}
+		if (player_->GetIsBossStaging() == true) {
+			bossEnemy->Move();
 		}
 		bossEnemy->Update();
 	}
@@ -240,6 +281,13 @@ void GamePlayScene::Draw()
 	// 3Dオブジェクトの描画
 	skydome_->Draw();
 	player_->Draw();
+	if (isEnemyEffect_) {
+		enemyEffect_->Draw();
+		enemyEffectOne_->Draw();
+		enemyEffectTwo_->Draw();
+		enemyEffectThree_->Draw();
+		enemyEffectFour_->Draw();
+	}
 	if (player_->GetIsBossStaging() == true) {
 		for (std::unique_ptr<BossEnemy>& bossEnemy : bossEnemy_) {
 			bossEnemy->Draw();
@@ -275,13 +323,23 @@ void GamePlayScene::Draw()
 
 #pragma endregion
 
+
+	// 描画後処理
+	postEffect_->PostDraw(cmdList);
+
+	// 描画前処理
+	dxCommon_->PreDraw();
+
+	// ポストエフェクト描画
+	postEffect_->Draw(cmdList);
+
 #pragma region スプライト描画
 
 	// スプライト描画前処理
 	MyEngine::Sprite::PreDraw(cmdList, spriteCommon_);
 
 	if (player_->GetIsStartStaging() == false &&
-		player_->GetIsGameClearStaging() == false && 
+		player_->GetIsGameClearStaging() == false &&
 		player_->GetIsGameOverStaging() == false) {
 
 		// HPバーの描画
@@ -302,22 +360,16 @@ void GamePlayScene::Draw()
 		s_->SpriteDraw(spriteCommon_);
 		d_->SpriteDraw(spriteCommon_);
 		move_->SpriteDraw(spriteCommon_);
-		spin_->SpriteDraw(spriteCommon_);
-		x_->SpriteDraw(spriteCommon_);
 		space_->SpriteDraw(spriteCommon_);
 		attack_->SpriteDraw(spriteCommon_);
-		// ULTの描画
-		ult_->SpriteDraw(spriteCommon_);
-		cross_->SpriteDraw(spriteCommon_);
-		num0_[5]->SpriteDraw(spriteCommon_);
 		for (int i = 0; i < dotLine_.size(); i++) {
 			dotLine_[i]->SpriteDraw(spriteCommon_);
 		}
 	}
 	// 数字の描画
-	if (player_->GetIsStartStaging() == false && 
-		player_->GetIsGameOverStaging() == false 
-		&& player_->GetIsBossStaging() == false) 
+	if (player_->GetIsStartStaging() == false &&
+		player_->GetIsGameOverStaging() == false
+		&& player_->GetIsBossStaging() == false)
 	{
 		num0_[0]->SpriteDraw(spriteCommon_);
 		num0_[1]->SpriteDraw(spriteCommon_);
@@ -338,6 +390,21 @@ void GamePlayScene::Draw()
 		if (score_ == 400) {
 			number_[4]->SpriteDraw(spriteCommon_);
 		}
+		if (score_ == 500) {
+			number_[5]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 600) {
+			number_[6]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 700) {
+			number_[7]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 800) {
+			number_[8]->SpriteDraw(spriteCommon_);
+		}
+		if (score_ == 900) {
+			number_[9]->SpriteDraw(spriteCommon_);
+		}
 	}
 	// ダメージの描画
 	if (player_->GetIsHit() == true) {
@@ -354,14 +421,6 @@ void GamePlayScene::Draw()
 	// スプライト描画後処理
 	MyEngine::Sprite::PostDraw();
 #pragma endregion
-	// 描画後処理
-	postEffect_->PostDraw(cmdList);
-
-	// 描画前処理
-	dxCommon_->PreDraw();
-
-	// ポストエフェクト描画
-	postEffect_->Draw(cmdList);
 
 	// 描画後処理
 	dxCommon_->PostDraw();
@@ -485,7 +544,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[5]->LoadTexture(spriteCommon_, 26, L"Resources/Image/5.png");
 	number_[5]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 26, spriteCommon_, defaultAnchorpoint_, false, false);
 	number_[5]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[5]->SetPosition({ 1200, 620, 0 });
+	number_[5]->SetPosition({ 1120, 30, 0 });
 	number_[5]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[5]->SpriteTransferVertexBuffer(number_[5].get(), spriteCommon_, 26);
 	number_[5]->SpriteUpdate(number_[5].get(), spriteCommon_);
@@ -494,7 +553,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[6]->LoadTexture(spriteCommon_, 27, L"Resources/Image/6.png");
 	number_[6]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 27, spriteCommon_, defaultAnchorpoint_, false, false);
 	number_[6]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[6]->SetPosition({ 1200, 620, 0 });
+	number_[6]->SetPosition({ 1120, 30, 0 });
 	number_[6]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[6]->SpriteTransferVertexBuffer(number_[6].get(), spriteCommon_, 27);
 	number_[6]->SpriteUpdate(number_[6].get(), spriteCommon_);
@@ -503,7 +562,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[7]->LoadTexture(spriteCommon_, 28, L"Resources/Image/7.png");
 	number_[7]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 28, spriteCommon_, defaultAnchorpoint_, false, false);
 	number_[7]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[7]->SetPosition({ 1200, 620, 0 });
+	number_[7]->SetPosition({ 1120, 30, 0 });
 	number_[7]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[7]->SpriteTransferVertexBuffer(number_[7].get(), spriteCommon_, 28);
 	number_[7]->SpriteUpdate(number_[7].get(), spriteCommon_);
@@ -512,7 +571,7 @@ void GamePlayScene::SpriteInitialize()
 	number_[8]->LoadTexture(spriteCommon_, 29, L"Resources/Image/8.png");
 	number_[8]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 29, spriteCommon_, defaultAnchorpoint_, false, false);
 	number_[8]->SetColor(XMFLOAT4(1, 1, 1, 1));
-	number_[8]->SetPosition({ 1200, 620, 0 });
+	number_[8]->SetPosition({ 1120, 30, 0 });
 	number_[8]->SetScale({ 64.0f * 0.9f, 64.0f * 0.9f });
 	number_[8]->SpriteTransferVertexBuffer(number_[8].get(), spriteCommon_, 29);
 	number_[8]->SpriteUpdate(number_[8].get(), spriteCommon_);
@@ -535,7 +594,7 @@ void GamePlayScene::SpriteInitialize()
 	damage_->SpriteTransferVertexBuffer(damage_.get(), spriteCommon_, 11);
 	damage_->SpriteUpdate(damage_.get(), spriteCommon_);
 
-	//===== Whiteの描画 =====//
+	// Whiteの描画
 	white_ = std::make_unique<MyEngine::Sprite>();
 	white_->LoadTexture(spriteCommon_, 12, L"Resources/Image/white.png");
 	white_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 12, spriteCommon_, defaultAnchorpoint_, false, false);
@@ -545,7 +604,7 @@ void GamePlayScene::SpriteInitialize()
 	white_->SetAlpha(bAlpha_);
 	white_->SpriteTransferVertexBuffer(white_.get(), spriteCommon_, 12);
 
-	//===== Blackの描画 =====//
+	// Blackの描画
 	black_ = std::make_unique<MyEngine::Sprite>();
 	black_->LoadTexture(spriteCommon_, 13, L"Resources/Image/black.png");
 	black_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 13, spriteCommon_, defaultAnchorpoint_, false, false);
@@ -558,7 +617,7 @@ void GamePlayScene::SpriteInitialize()
 
 	// W
 	w_ = std::make_unique<MyEngine::Sprite>();
-	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w1.png");
+	w_->LoadTexture(spriteCommon_, 14, L"Resources/Image/w.png");
 	w_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 14, spriteCommon_, defaultAnchorpoint_, false, false);
 	w_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	w_->SetPosition({ 70,510, 0 });
@@ -567,7 +626,7 @@ void GamePlayScene::SpriteInitialize()
 	w_->SpriteUpdate(w_.get(), spriteCommon_);
 	// a
 	a_ = std::make_unique<MyEngine::Sprite>();
-	a_->LoadTexture(spriteCommon_, 15, L"Resources/Image/a1.png");
+	a_->LoadTexture(spriteCommon_, 15, L"Resources/Image/a.png");
 	a_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 15, spriteCommon_, defaultAnchorpoint_, false, false);
 	a_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	a_->SetPosition({ 30,560, 0 });
@@ -576,7 +635,7 @@ void GamePlayScene::SpriteInitialize()
 	a_->SpriteUpdate(a_.get(), spriteCommon_);
 	// s
 	s_ = std::make_unique<MyEngine::Sprite>();
-	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s1.png");
+	s_->LoadTexture(spriteCommon_, 16, L"Resources/Image/s.png");
 	s_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 16, spriteCommon_, defaultAnchorpoint_, false, false);
 	s_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	s_->SetPosition({ 70,560, 0 });
@@ -585,7 +644,7 @@ void GamePlayScene::SpriteInitialize()
 	s_->SpriteUpdate(s_.get(), spriteCommon_);
 	// d
 	d_ = std::make_unique<MyEngine::Sprite>();
-	d_->LoadTexture(spriteCommon_, 17, L"Resources/Image/d1.png");
+	d_->LoadTexture(spriteCommon_, 17, L"Resources/Image/d.png");
 	d_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 17, spriteCommon_, defaultAnchorpoint_, false, false);
 	d_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	d_->SetPosition({ 115,560, 0 });
@@ -594,7 +653,7 @@ void GamePlayScene::SpriteInitialize()
 	d_->SpriteUpdate(d_.get(), spriteCommon_);
 	// move
 	move_ = std::make_unique<MyEngine::Sprite>();
-	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move1.png");
+	move_->LoadTexture(spriteCommon_, 18, L"Resources/Image/move.png");
 	move_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 18, spriteCommon_, defaultAnchorpoint_, false, false);
 	move_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	move_->SetPosition({ 155,540, 0 });
@@ -603,7 +662,7 @@ void GamePlayScene::SpriteInitialize()
 	move_->SpriteUpdate(move_.get(), spriteCommon_);
 	// spin
 	spin_ = std::make_unique<MyEngine::Sprite>();
-	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin1.png");
+	spin_->LoadTexture(spriteCommon_, 19, L"Resources/Image/spin.png");
 	spin_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 19, spriteCommon_, defaultAnchorpoint_, false, false);
 	spin_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	spin_->SetPosition({ 150,610, 0 });
@@ -621,7 +680,7 @@ void GamePlayScene::SpriteInitialize()
 	u_->SpriteUpdate(u_.get(), spriteCommon_);
 	// space
 	space_ = std::make_unique<MyEngine::Sprite>();
-	space_->LoadTexture(spriteCommon_, 21, L"Resources/Image/space1.png");
+	space_->LoadTexture(spriteCommon_, 21, L"Resources/Image/space.png");
 	space_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 21, spriteCommon_, defaultAnchorpoint_, false, false);
 	space_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	space_->SetPosition({ 40,660, 0 });
@@ -630,7 +689,7 @@ void GamePlayScene::SpriteInitialize()
 	space_->SpriteUpdate(space_.get(), spriteCommon_);
 	// attack
 	attack_ = std::make_unique<MyEngine::Sprite>();
-	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack1.png");
+	attack_->LoadTexture(spriteCommon_, 22, L"Resources/Image/attack.png");
 	attack_->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 22, spriteCommon_, defaultAnchorpoint_, false, false);
 	attack_->SetColor(XMFLOAT4(1, 1, 1, 1));
 	attack_->SetPosition({ 145,660, 0 });
@@ -641,7 +700,7 @@ void GamePlayScene::SpriteInitialize()
 	for (int i = 0; i < dotLine_.size(); i++) {
 		const float dotLineInterval_ = 50.0f;
 		dotLine_[i] = std::make_unique<MyEngine::Sprite>();
-		dotLine_[i]->LoadTexture(spriteCommon_, 31, L"Resources/Image/circleDot1.png");
+		dotLine_[i]->LoadTexture(spriteCommon_, 31, L"Resources/Image/circleDot.png");
 		dotLine_[i]->SpriteCreate(MyEngine::WinApp::window_width, MyEngine::WinApp::window_height, 31, spriteCommon_, defaultAnchorpoint_, false, false);
 		dotLine_[i]->SetColor(XMFLOAT4(1, 1, 1, 1));
 		dotLine_[i]->SetPosition({ 20, 595 + (i * dotLineInterval_), 0 });
@@ -689,22 +748,6 @@ void GamePlayScene::SpriteInitialize()
 	enemyHpBack_->SetAlpha(enemyAlpha_);
 	enemyHpBack_->SpriteTransferVertexBuffer(enemyHpBack_.get(), spriteCommon_, 41);
 	enemyHpBack_->SpriteUpdate(enemyHpBack_.get(), spriteCommon_);
-}
-
-void GamePlayScene::GameReset()
-{
-	playerHp_ = 3;
-	time_ = 0;
-}
-
-bool GamePlayScene::CheckCollision(const DirectX::XMFLOAT3& object, const DirectX::XMFLOAT3& object1)
-{
-	if(std::pow((object1.x - object.x),2.0f) + std::pow((object1.y - object.y),2.0f) + 
-		std::pow((object1.z - object.z), 2.0f) <= std::pow((1 + 1), 2.0f)){
-		return true;
-	}
-
-	return true;
 }
 
 void GamePlayScene::LoadEnemyPopData()
@@ -840,7 +883,7 @@ void GamePlayScene::DamageDirection()
 		damageTime_ = 0;
 	}
 
-	if (hpScale_.x <= 0) {
+	if (hpScale_.x <= 0 || player_->GetPosition().z >= 750) {
 		overTimer_++;
 		player_->SetIsGameOverStaging(true);
 
@@ -912,7 +955,7 @@ void GamePlayScene::CheckAllCollisions()
 		// 球と球の交差判定
 		if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 			bullet->OnCollision();
-			//player_->SetIsHit(true);
+			player_->SetIsHit(true);
 		}
 	}
 
@@ -938,28 +981,48 @@ void GamePlayScene::CheckAllCollisions()
 				playerBullet->OnCollision();
 				enemy->OnCollision();
 				score_ += mobEnemyScore_;
-				
-				//for (int i = 0; i < 50; i++) {
-				//	// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
-				//	const float md_pos = 0.5f;
-				//	XMFLOAT3 pos{};
-				//	pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().x;
-				//	pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().y;
-				//	pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().z;
-				//	// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
-				//	const float md_vel = 0.1f;
-				//	XMFLOAT3 vel{};
-				//	vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-				//	vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-				//	vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
-				//	// 重力に見立ててYのみ[-0.001f,0]でランダム分布
-				//	XMFLOAT3 acc{};
-				//	const float md_acc = 0.001f;
-				//	acc.y = (float)rand() / RAND_MAX * md_acc;
 
-				//	// 追加
-				//	particle_->Add(life_, pos, vel, acc, start_scale_, end_scale_);
-				//}
+				isEnemyEffect_ = true;
+				enemyEffectPosition_ = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z };
+				enemyEffectOnePosition_ = { enemy->GetPosition().x + 2, enemy->GetPosition().y, enemy->GetPosition().z };
+				enemyEffectTwoPosition_ = { enemy->GetPosition().x, enemy->GetPosition().y + 2, enemy->GetPosition().z };
+				enemyEffectThreePosition_ = { enemy->GetPosition().x, enemy->GetPosition().y - 2, enemy->GetPosition().z };
+				enemyEffectFourPosition_ = { enemy->GetPosition().x - 2, enemy->GetPosition().y, enemy->GetPosition().z };
+				enemyEffect_->SetPosition(enemyEffectPosition_);
+				enemyEffectOne_->SetPosition(enemyEffectOnePosition_);
+				enemyEffectTwo_->SetPosition(enemyEffectTwoPosition_);
+				enemyEffectThree_->SetPosition(enemyEffectThreePosition_);
+				enemyEffectFour_->SetPosition(enemyEffectFourPosition_);
+				
+				for (int i = 0; i < 50; i++) {
+					// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+					const float md_pos = 0.5f;
+					XMFLOAT3 pos{};
+					pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().x;
+					pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().y;
+					pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + enemy->GetPosition().z;
+					// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+					const float md_vel = 0.1f;
+					XMFLOAT3 vel{};
+					vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+					// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+					XMFLOAT3 acc{};
+					const float md_acc = 0.001f;
+					acc.y = (float)rand() / RAND_MAX * md_acc;
+
+					// 追加
+					particle_->Add(life_, pos, vel, acc, start_scale_, end_scale_);
+				}
+			}
+
+			if (isEnemyEffect_) {
+				enemyEffectTime_++;
+			}
+			if (enemyEffectTime_ >= 15) {
+				isEnemyEffect_ = false;
+				enemyEffectTime_ = 0;
 			}
 		}
 	}
@@ -1010,7 +1073,7 @@ void GamePlayScene::CheckAllCollisions()
 			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 				playerBullet->OnCollision();
 				if (player_->GetIsBossStaging() == true) {
-					enemyHpScale_.x -= 100;
+					enemyHpScale_.x -= 50;
 					enemyHp_->SetScale(enemyHpScale_);
 					enemyHp_->SpriteTransferVertexBuffer(enemyHp_.get(), spriteCommon_, 39);
 					enemyHp_->SpriteUpdate(enemyHp_.get(), spriteCommon_);
@@ -1065,7 +1128,7 @@ void GamePlayScene::CheckAllCollisions()
 
 	// 球と球の交差判定
 	if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
-		player_->SetIsRot(true);
+		//player_->SetIsRot(true);
 	}
 	player_->Spin();
 

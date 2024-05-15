@@ -6,6 +6,9 @@
 
 #include "FPSFixed.h"
 
+#include <windows.h>
+#include "WinApp.h"
+
 void MyEngine::FPSFixed::InitializeFixFPS() {
 	// 現在時間を記録する
 	reference_ = std::chrono::steady_clock::now();
@@ -33,4 +36,19 @@ void MyEngine::FPSFixed::UpdateFixFPS() {
 	}
 	// 現在の時間を記録する
 	reference_ = std::chrono::steady_clock::now();
+}
+
+void MyEngine::FPSFixed::CountFPS()
+{
+	static DWORD p_t = timeGetTime(); // 前回の時間
+	static int frame_count = 0;       // フレームカウント
+	DWORD now_time = timeGetTime();   // 今回のフレームの時間
+
+	frame_count++; // フレーム数をカウントする
+
+	// 経過時間が１秒を超えたらカウントと時間をリセット
+	if (now_time - p_t >= 1000) {
+		p_t = now_time;
+		frame_count = 0;
+	}
 }

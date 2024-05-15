@@ -53,6 +53,6 @@ private:
 	// フラグ
 	bool isSkydome_ = false;
 	// 天球の回転速度
-	float skySpeed_ = 0.05f;
+	float skySpeed_ = 0.025f;
 };
 

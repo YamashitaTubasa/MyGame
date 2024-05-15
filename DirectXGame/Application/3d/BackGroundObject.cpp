@@ -25,12 +25,16 @@ void BackGroundObject::Initialize()
 	std::unique_ptr<Model> bridgeM_ = Model::LoadFromOBJ("bridge");
 	std::unique_ptr<Model> treeM_ = Model::LoadFromOBJ("tree");
 	std::unique_ptr<Model> wheelM_ = Model::LoadFromOBJ("wheel");
+	std::unique_ptr<Model> floorM_ = Model::LoadFromOBJ("floor");
+	std::unique_ptr<Model> enemyM_ = Model::LoadFromOBJ("enemy");
 
 	models_.insert(std::make_pair("building", std::move(buildingM_)));
 	models_.insert(std::make_pair("asphalt", std::move(asphaltM_)));
 	models_.insert(std::make_pair("bridge", std::move(bridgeM_)));
 	models_.insert(std::make_pair("tree", std::move(treeM_)));
 	models_.insert(std::make_pair("wheel", std::move(wheelM_)));
+	models_.insert(std::make_pair("floor", std::move(floorM_)));
+	models_.insert(std::make_pair("enemy", std::move(enemyM_)));
 
 	// レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData_->objects_) {
@@ -44,9 +48,9 @@ void BackGroundObject::Initialize()
 		// 座標
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMStoreFloat3(&pos, objectData.translation_);
-		if (objectData.fileName_ == "wheel") {
+		/*if (objectData.fileName_ == "wheel") {
 			wheelPosition_ = { objectData.translation_.m128_f32[0], objectData.translation_.m128_f32[1], objectData.translation_.m128_f32[2] };
-		}
+		}*/
 		newObject->SetPosition(pos);
 		// 回転
 		DirectX::XMFLOAT3 rot;

@@ -413,6 +413,7 @@ void GameTitleScene::SceneChange()
 		pPos_.z += sPlayerPosMoveZ_;
 		pPos_.y += sPlayerPosMoveY_;
 		eye_.y -= sPlayerEyeMove_;
+		eye_.z -= sPlayerEyeMove_;
 
 		player_->SetPosition(pPos_);
 		player_->SetEye(eye_);

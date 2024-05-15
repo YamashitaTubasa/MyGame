@@ -42,7 +42,7 @@ namespace MyEngine
 		struct VertexPos
 		{
 			XMFLOAT3 pos; // xyz座標
-			float scale; // スケール
+			float scale;  // スケール
 		};
 
 		// パーティクル1粒
@@ -136,7 +136,7 @@ namespace MyEngine
 		/// <param name = "position">初期座標</param>
 		/// <param name = "velocity">速度</param>
 		/// <param name = "accel">加速度</param>
-		void Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
+		void Add(int life, const XMFLOAT3& position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
 
 	public:
 		/// <summary>

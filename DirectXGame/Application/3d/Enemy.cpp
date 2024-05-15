@@ -21,27 +21,6 @@ Enemy::~Enemy()
 {
 }
 
-//std::unique_ptr<Enemy> Enemy::Create(Model* model)
-//{
-//	// 3Dオブジェクトのインスタンス生成
-//	std::unique_ptr<Enemy> instance = std::make_unique<Enemy>();
-//	if (instance == nullptr) {
-//		return nullptr;
-//	}
-//
-//	// 初期化
-//	if (!instance->Initialize()) {
-//		assert(0);
-//	}
-//
-//	// モデルをセット
-//	if (model) {
-//		instance->SetModel(model);
-//	}
-//
-//	return instance;
-//}
-
 void Enemy::Initialize(const DirectX::XMFLOAT3& position)
 {
 	/*if (!Object3d::Initialize()) 

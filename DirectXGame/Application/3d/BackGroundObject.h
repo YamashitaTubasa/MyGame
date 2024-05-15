@@ -56,6 +56,6 @@ private:
 
 	const XMFLOAT3 eye_ = { 0.0f,0.0f,-3.0f };
 
-	XMFLOAT3 wheelPosition_{};
+	XMFLOAT3 wheelPosition_ = { 0,0,0 };
 };
 
