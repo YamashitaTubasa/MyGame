@@ -43,6 +43,13 @@ void Skydome::Draw()
 void Skydome::RotateSky()
 {
 	// 天球の回転
-	rotate_.y += skySpeed_;
+	rotate_.y += skyRotSpeed_;
 	skydomeObj_->SetRotation(rotate_);
+}
+
+void Skydome::Move()
+{
+	// 天球の移動
+	move_.z += skySpeed_;
+	skydomeObj_->SetPosition(move_);
 }

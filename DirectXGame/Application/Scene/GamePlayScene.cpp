@@ -199,6 +199,12 @@ void GamePlayScene::Update()
 	// 当たり判定
 	CheckAllCollisions();
 
+	if (player_->GetIsStartStaging() == false &&
+		player_->GetIsGameClearStaging() == false &&
+		player_->GetIsGameOverStaging() == false) {
+		skydome_->Move();
+	}
+
 	if (player_->GetIsGameClearStaging() == true) {
 		isRadialBlur_ = true;
 	}

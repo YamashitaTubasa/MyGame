@@ -240,8 +240,8 @@ void Player::Update()
 	if (!isStartStaging_) {
 		if (pPosition_.z < 850) {
 			pPosition_.z += 1.0f;
-			rPosition_.z += startSpeed_;
-			r1Position_.z += startSpeed_;
+			rPosition_.z += 1.0f;
+			r1Position_.z += 1.0f;
 			eye_.z += 1.0f;
 			target_ = pPosition_;
 		}
@@ -503,9 +503,9 @@ void Player::Draw()
 	// プレイヤーのモデルの描画
 	playerO3_->Draw();
 
-	if (isReticle_ == true) {
-		//reticleO3_->Draw();
-		//reticle1O3_->Draw();
+	if (isReticle_ == true && isGameOverStaging_ == false) {
+		reticleO3_->Draw();
+		reticle1O3_->Draw();
 	}
 
 	// 弾描画
@@ -581,24 +581,36 @@ void Player::Shake()
 
 	if (shakeTimer_ >= defaultShakeTimer_) {
 		pPosition_.x -= shakePosX_;
+		rPosition_.x -= shakePosX_;
+		r1Position_.x -= shakePosX_;
 		eye_.x -= shakePosX_;
 		pPosition_.y -= shakePosY_;
+		rPosition_.y -= shakePosY_;
+		r1Position_.y -= shakePosY_;
 		eye_.y -= shakePosY_;
 	}
 	if (shakeTimer_ >= shakeTimer10_) {
 		pPosition_.x -= shakePosX2_;
+		rPosition_.x -= shakePosX2_;
+		r1Position_.x -= shakePosX2_;
 		eye_.x -= shakePosX2_;
 		pPosition_.y -= shakePosY2_;
+		rPosition_.y -= shakePosY2_;
+		r1Position_.y -= shakePosY2_;
 		eye_.y -= shakePosY2_;
 	}
 	if (shakeTimer_ >= shakeTimer20_) {
 		pPosition_.x = shakeDefaultPos_;
+		rPosition_.x = shakeDefaultPos_;
+		r1Position_.x = shakeDefaultPos_;
 		eye_.x = shakeDefaultEye_;
 		shakeTimer_ = defaultShakeTimer_;
 	}
 	
 	Object3d::SetEye(eye_);
 	playerO3_->SetPosition(pPosition_);
+	reticleO3_->SetPosition(rPosition_);
+	reticle1O3_->SetPosition(r1Position_);
 }
 
 void Player::Spin()

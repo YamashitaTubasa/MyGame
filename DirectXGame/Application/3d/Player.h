@@ -174,8 +174,8 @@ private: // メンバ変数
 	DirectX::XMFLOAT3 rmove_ = { 0,0.25,0 };
 	DirectX::XMFLOAT3 r1move_ = { 0,0.25,0 };
 	// レティクルの座標
-	DirectX::XMFLOAT3 rPosition_ = { 0,-2,-25 };
-	DirectX::XMFLOAT3 r1Position_ = { 0,-2.5f,-20 };
+	DirectX::XMFLOAT3 rPosition_ = { 0,-1,-125 };
+	DirectX::XMFLOAT3 r1Position_ = { 0,-1.5f,-120 };
 	// レティクルの回転
 	DirectX::XMFLOAT3 rRotation_ = { 0,90,0 };
 	DirectX::XMFLOAT3 r1Rotation_ = { 0,90,0 };
