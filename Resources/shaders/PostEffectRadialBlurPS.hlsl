@@ -7,7 +7,7 @@ float4 main(VSOutput input) : SV_TARGET
 {
     float count_ = 10;
     float luminance = 1.0;
-    float strength_ = 0.5;
+    float strength_ = 1.0;
 
     float4 col = tex.Sample(smp, input.uv) * color;
 

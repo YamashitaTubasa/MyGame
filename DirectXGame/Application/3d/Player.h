@@ -218,7 +218,7 @@ private: // メンバ変数
 	// スタート時の演出
 	bool isStartStaging_ = true;
 	int startCount_ = 0;
-	const float startSpeed_ = 0.6f;
+	const float startSpeed_ = 0.7f;
 	// ゴール演出タイム
 	const int endCount_ = 0;
 	// 自機のフラグ

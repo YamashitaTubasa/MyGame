@@ -113,7 +113,7 @@ private:
 	MyEngine::WinApp* winApp_;
 	MyEngine::DirectXCommon* dxCommon_;
 	MyEngine::Input* input_;
-	
+
 	// スプライト
 	std::unique_ptr<MyEngine::Sprite> sprite_;
 	std::unique_ptr<MyEngine::Sprite> hp_;
@@ -172,11 +172,7 @@ private:
 	// 敵の弾
 	std::list<std::unique_ptr<EnemyBullet>> enemyBullets_;
 
-	std::unique_ptr<Object3d> enemyEffect_;
-	std::unique_ptr<Object3d> enemyEffectOne_;
-	std::unique_ptr<Object3d> enemyEffectTwo_;
-	std::unique_ptr<Object3d> enemyEffectThree_;
-	std::unique_ptr<Object3d> enemyEffectFour_;
+	std::vector<std::unique_ptr<Object3d>> enemyEffect_;
 	std::unique_ptr<Model> enemyEffectModel_;
 
 	std::list<std::unique_ptr<BossEnemy>> bossEnemy_;
@@ -204,16 +200,9 @@ private:
 	float enemyAlpha_ = 0.0f;
 	bool isBossDamage_ = false;
 	int bossDamageTimer_ = 0;
-	DirectX::XMFLOAT3 enemyEffectPosition_ = { 0,0,0 };
-	DirectX::XMFLOAT3 enemyEffectOnePosition_ = { 0,0,0 };
-	DirectX::XMFLOAT3 enemyEffectTwoPosition_ = { 0,0,0 };
-	DirectX::XMFLOAT3 enemyEffectThreePosition_ = { 0,0,0 };
-	DirectX::XMFLOAT3 enemyEffectFourPosition_ = { 0,0,0 };
-	DirectX::XMFLOAT3 enemyEffectScale_ = { 0.5f,0.5f,0.5f };
-	DirectX::XMFLOAT3 enemyEffectOneScale_ = { 0.5f,0.5f,0.5f };
-	DirectX::XMFLOAT3 enemyEffectTwoScale_ = { 0.5f,0.5f,0.5f };
-	DirectX::XMFLOAT3 enemyEffectThreeScale_ = { 0.5f,0.5f,0.5f };
-	DirectX::XMFLOAT3 enemyEffectFourScale_ = { 0.5f,0.5f,0.5f };
+	std::vector<DirectX::XMFLOAT3> enemyEffectPosition_ = { { 0.0f,0.0f,0.0f } };
+	std::vector<DirectX::XMFLOAT3> enemyEffectScale_ = { { 0.5f,0.5f,0.5f } };
+	std::vector<DirectX::XMFLOAT3> enemyEffectRotation_ = { { 0.0f,0.0f,0.0f } };
 	bool isEnemyEffect_ = false;
 	int enemyEffectTime_ = 0;
 

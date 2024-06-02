@@ -64,7 +64,7 @@ private:
 	// ボスの移動量
 	DirectX::XMFLOAT3 move_ = { 0,0.25,0 };
 	// ボスの座標
-	DirectX::XMFLOAT3 position_ = { 0,-1,290 };
+	DirectX::XMFLOAT3 position_ = { 0,-1,400 };
 	// ボスの回転
 	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
 	// ボスのサイズ

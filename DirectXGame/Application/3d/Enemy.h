@@ -97,6 +97,7 @@ private:
 
 	// 座標
 	DirectX::XMFLOAT3 position_ = { 0,0,0 };
+	DirectX::XMFLOAT3 oldPosition_ = { 0,0,0 };
 	DirectX::XMFLOAT3 rotation_ = { 0,180,0 };
 	DirectX::XMFLOAT3 scale_ = { 5,5,5 };
 	DirectX::XMFLOAT3 eye_;
@@ -106,6 +107,8 @@ private:
 	bool isDead_ = false;
 	bool isDamage_ = false;
 	bool isMobEnemyAllive_;
+	bool isMove_ = false;
+	int moveTime_ = 0;
 
 	// フェーズ
 	Phase phase_ = Phase::Access;
