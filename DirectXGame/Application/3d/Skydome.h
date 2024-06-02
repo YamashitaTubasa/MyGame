@@ -9,6 +9,7 @@
 #include "Object3d.h"
 #include "Model.h"
 #include "DirectXCommon.h"
+#include "Input.h"
 
 class Skydome
 {
@@ -41,6 +42,11 @@ public:
 	/// </summary>
 	void RotateSky();
 
+	/// <summary>
+	/// 移動
+	/// </summary>
+	void Move();
+	
 private:
 	// モデル
 	std::unique_ptr<Model> skydomeModel_ = nullptr;
@@ -49,10 +55,14 @@ private:
 	
 	// 天球の回転角
 	DirectX::XMFLOAT3 rotate_ = { 0,0,0 };
+	// 天球の移動
+	DirectX::XMFLOAT3 move_ = { 0,0,0 };
 
 	// フラグ
 	bool isSkydome_ = false;
 	// 天球の回転速度
-	float skySpeed_ = 0.025f;
+	float skyRotSpeed_ = 0.025f;
+	// 天球の移動速度
+	float skySpeed_ = 1.0f;
 };
 

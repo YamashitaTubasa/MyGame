@@ -23,11 +23,6 @@ Enemy::~Enemy()
 
 void Enemy::Initialize(const DirectX::XMFLOAT3& position)
 {
-	/*if (!Object3d::Initialize()) 
-	{
-		return false;
-	}*/
-
 	// OBJからモデルデータを読み込む
 	enemyModel_ = Model::LoadFromOBJ("mobEnemy");
 	// 3Dオブジェクト生成
@@ -45,12 +40,28 @@ void Enemy::Initialize(const DirectX::XMFLOAT3& position)
 void Enemy::Update()
 {
 	// 敵の行動
-	/*switch (phase_) {
+	switch (phase_) {
 	default:
 	case Phase::Access:
 
+		moveTime_++;
+		if (isMove_ == false) {
+			position_.x += 0.15f;
+		}
+		if (moveTime_ >= 50 && moveTime_ < 100) {
+			isMove_ = true;
+		}
+		if (isMove_ == true) {
+			position_.x -= 0.15f;
+		}
+		if (moveTime_ >= 100) {
+			isMove_ = false;
+			moveTime_ = 0;
+		}
+		enemyObject_->SetPosition(position_);
+
 		break;
-	}*/
+	}
 
 	// 敵の更新
 	enemyObject_->Update();

@@ -12,13 +12,9 @@
 using namespace std;
 using namespace DirectX;
 
-Player::Player()
-{
-}
+Player::Player(){}
 
-Player::~Player()
-{
-}
+Player::~Player(){}
 
 std::unique_ptr<Player> Player::Create(Model* model)
 {
@@ -44,6 +40,7 @@ std::unique_ptr<Player> Player::Create(Model* model)
 bool Player::Initialize()
 {
 	dxCommon_ = MyEngine::DirectXCommon::GetInstance();
+	input_ = MyEngine::Input::GetInstance();
 
 	if (!Object3d::Initialize()) {
 		return false;
@@ -104,8 +101,6 @@ bool Player::Initialize()
 
 void Player::Update()
 {
-	input_ = MyEngine::Input::GetInstance();
-
 	// 3Dオブジェクト更新
 	playerO3_->Update();
 	reticleO3_->Update();
@@ -215,38 +210,24 @@ void Player::Update()
 	}
 
 	startCount_++;
-	if (pPosition_.z >= -60) {
-		isStartStaging_ = false;
-	}
-	if (!isStartStaging_) {
-		startCount_ = 0;
-		isReticle_ = true;
-	}
 	if (isStartStaging_) {
-		if (pPosition_.z <= -100) {
-			pPosition_.z += startSpeed_;
-			rPosition_.z += startSpeed_;
-			r1Position_.z += startSpeed_;
-		}
-		if (pPosition_.z >= -100) {
-			pPosition_.z += 1.0f;
-			rPosition_.z += 1.0f;
-			r1Position_.z += 1.0f;
-		}
-		if (eye_.z <= -45.0f) {
-		}
+		pPosition_.z += startSpeed_;
+		rPosition_.z += startSpeed_;
+		r1Position_.z += startSpeed_;
 		eye_.z += 0.4f;
+		if (pPosition_.z >= -50) {
+			isStartStaging_ = false;
+		}
 	}
 	if (!isStartStaging_) {
-		if (pPosition_.z < 850) {
-			pPosition_.z += 1.0f;
-			rPosition_.z += startSpeed_;
-			r1Position_.z += startSpeed_;
-			eye_.z += 1.0f;
-			target_ = pPosition_;
-		}
+		isReticle_ = true;
+		pPosition_.z += 1.0f;
+		rPosition_.z += 1.0f;
+		r1Position_.z += 1.0f;
+		eye_.z += 1.0f;
+		target_ = pPosition_;
 	}
-
+	
 	//===== プレイヤーの移動範囲の制限 =====//
 	// 左右への移動範囲制限
 	if (isGameClearStaging_ == false && isGameOverStaging_ == false) {
@@ -281,6 +262,7 @@ void Player::Update()
 		}
 	}
 	//===== プレイヤーの移動処理 =====//
+
 	// 上への移動処理
 	if (!isStartStaging_ && !isGameClearStaging_ && !isGameOverStaging_) {
 		if (input_->PushKey(DIK_W)) {
@@ -454,7 +436,7 @@ void Player::Update()
 		}
 	}
 
-	if (pPosition_.z >= 230) {
+	if (pPosition_.z >= 340) {
 		isBossStaging_ = true;
 	}
 
@@ -503,9 +485,9 @@ void Player::Draw()
 	// プレイヤーのモデルの描画
 	playerO3_->Draw();
 
-	if (isReticle_ == true) {
-		//reticleO3_->Draw();
-		//reticle1O3_->Draw();
+	if (isReticle_ == true && isGameOverStaging_ == false) {
+		reticleO3_->Draw();
+		reticle1O3_->Draw();
 	}
 
 	// 弾描画
@@ -581,24 +563,36 @@ void Player::Shake()
 
 	if (shakeTimer_ >= defaultShakeTimer_) {
 		pPosition_.x -= shakePosX_;
+		rPosition_.x -= shakePosX_;
+		r1Position_.x -= shakePosX_;
 		eye_.x -= shakePosX_;
 		pPosition_.y -= shakePosY_;
+		rPosition_.y -= shakePosY_;
+		r1Position_.y -= shakePosY_;
 		eye_.y -= shakePosY_;
 	}
 	if (shakeTimer_ >= shakeTimer10_) {
 		pPosition_.x -= shakePosX2_;
+		rPosition_.x -= shakePosX2_;
+		r1Position_.x -= shakePosX2_;
 		eye_.x -= shakePosX2_;
 		pPosition_.y -= shakePosY2_;
+		rPosition_.y -= shakePosY2_;
+		r1Position_.y -= shakePosY2_;
 		eye_.y -= shakePosY2_;
 	}
 	if (shakeTimer_ >= shakeTimer20_) {
 		pPosition_.x = shakeDefaultPos_;
+		rPosition_.x = shakeDefaultPos_;
+		r1Position_.x = shakeDefaultPos_;
 		eye_.x = shakeDefaultEye_;
 		shakeTimer_ = defaultShakeTimer_;
 	}
 	
 	Object3d::SetEye(eye_);
 	playerO3_->SetPosition(pPosition_);
+	reticleO3_->SetPosition(rPosition_);
+	reticle1O3_->SetPosition(r1Position_);
 }
 
 void Player::Spin()
