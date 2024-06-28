@@ -436,7 +436,7 @@ void Player::Update()
 		}
 	}
 
-	if (pPosition_.z >= 340) {
+	if (pPosition_.z >= 930) {
 		isBossStaging_ = true;
 	}
 

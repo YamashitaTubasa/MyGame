@@ -8,13 +8,9 @@
 
 using namespace DirectX;
 
-GameOverScene::GameOverScene()
-{
-}
+GameOverScene::GameOverScene(){}
 
-GameOverScene::~GameOverScene()
-{
-}
+GameOverScene::~GameOverScene(){}
 
 void GameOverScene::Initialize()
 {

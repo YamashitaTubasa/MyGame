@@ -15,13 +15,9 @@
 using namespace DirectX;
 using namespace std;
 
-GamePlayScene::GamePlayScene()
-{
-}
+GamePlayScene::GamePlayScene(){}
 
-GamePlayScene::~GamePlayScene()
-{
-}
+GamePlayScene::~GamePlayScene(){}
 
 void GamePlayScene::Initialize()
 {
@@ -77,10 +73,10 @@ void GamePlayScene::Initialize()
 	// OBJからモデルデータを読み込む
 	enemyEffectModel_ = Model::LoadFromOBJ("enemyEffect");
 	// 3Dオブジェクト生成
-	enemyEffect_.resize(5);
-	enemyEffectPosition_.resize(5);
-	enemyEffectScale_.resize(5);
-	enemyEffectRotation_.resize(5);
+	enemyEffect_.resize(4);
+	enemyEffectPosition_.resize(4);
+	enemyEffectScale_.resize(4);
+	enemyEffectRotation_.resize(4);
 	for (int i = 0; i < enemyEffect_.size(); i++) {
 		enemyEffect_[i] = Object3d::Create();
 		enemyEffect_[i]->SetModel(enemyEffectModel_.get());
@@ -102,6 +98,7 @@ void GamePlayScene::Update()
 		isClearFadeIn_ = true;
 	}
 	if (player_->GetIsGameOverStaging()) {
+		isEnemyEffect_ = false;
 		isOverFadeIn_ = true;
 	}
 	if (isClearScene_) {
@@ -190,6 +187,7 @@ void GamePlayScene::Update()
 
 	if (player_->GetIsGameClearStaging() == true) {
 		isRadialBlur_ = true;
+		isEnemyEffect_ = false;
 	}
 	if (isRadialBlur_ == true) {
 		postEffect_->SetIsPostE(true);
@@ -252,6 +250,11 @@ void GamePlayScene::Update()
 		GameSceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
 
+	if (input_->TriggerKey(DIK_R)) {
+		int a;
+		a = 0;
+	}
+	
 #endif
 }
 
@@ -309,7 +312,6 @@ void GamePlayScene::Draw()
 	MyEngine::ParticleManager::PostDraw();
 
 #pragma endregion
-
 
 	// 描画後処理
 	postEffect_->PostDraw(cmdList);
@@ -970,11 +972,11 @@ void GamePlayScene::CheckAllCollisions()
 				score_ += mobEnemyScore_;
 
 				isEnemyEffect_ = true;
-				enemyEffectPosition_[0] = { enemy->GetPosition().x, enemy->GetPosition().y, enemy->GetPosition().z };
-				enemyEffectPosition_[1] = { enemy->GetPosition().x + 2, enemy->GetPosition().y, enemy->GetPosition().z };
-				enemyEffectPosition_[2] = { enemy->GetPosition().x, enemy->GetPosition().y + 2, enemy->GetPosition().z };
-				enemyEffectPosition_[3] = { enemy->GetPosition().x, enemy->GetPosition().y - 2, enemy->GetPosition().z };
-				enemyEffectPosition_[4] = { enemy->GetPosition().x - 2, enemy->GetPosition().y, enemy->GetPosition().z };
+
+				enemyEffectPosition_[0] = { enemy->GetPosition().x + 2, enemy->GetPosition().y, enemy->GetPosition().z };
+				enemyEffectPosition_[1] = { enemy->GetPosition().x, enemy->GetPosition().y + 2, enemy->GetPosition().z };
+				enemyEffectPosition_[2] = { enemy->GetPosition().x, enemy->GetPosition().y - 2, enemy->GetPosition().z };
+				enemyEffectPosition_[3] = { enemy->GetPosition().x - 2, enemy->GetPosition().y, enemy->GetPosition().z };
 				
 				for (int i = 0; i < 50; i++) {
 					// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
@@ -997,22 +999,6 @@ void GamePlayScene::CheckAllCollisions()
 					// 追加
 					particle_->Add(life_, pos, vel, acc, start_scale_, end_scale_);
 				}
-			}
-
-			if (isEnemyEffect_) {
-				enemyEffectTime_++;
-				enemyEffectPosition_[1].x += 0.5f;
-				enemyEffectPosition_[2].y += 0.5f;
-				enemyEffectPosition_[3].y -= 0.5f;
-				enemyEffectPosition_[4].x -= 0.5f;
-
-				if (enemyEffectTime_ >= 10) {
-					isEnemyEffect_ = false;
-					enemyEffectTime_ = 0;
-				}
-			}
-			for (int i = 0; i < enemyEffect_.size(); i++) {
-				enemyEffect_[i]->SetPosition(enemyEffectPosition_[i]);
 			}
 		}
 	}
@@ -1057,7 +1043,7 @@ void GamePlayScene::CheckAllCollisions()
 
 			// 座標AとBの距離を求める
 			Vector3 direction = posA - posB;
-			const float radius = 10.0f;
+			const float radius = 3.0f;
 
 			// 球と球の交差判定
 			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
@@ -1067,9 +1053,31 @@ void GamePlayScene::CheckAllCollisions()
 					enemyHp_->SetScale(enemyHpScale_);
 					enemyHp_->SpriteTransferVertexBuffer(enemyHp_.get(), spriteCommon_, 39);
 					enemyHp_->SpriteUpdate(enemyHp_.get(), spriteCommon_);
+
+					isEnemyEffect_ = true;
+
+					enemyEffectPosition_[0] = { bossEnemy->GetPosition().x + 2, bossEnemy->GetPosition().y, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[1] = { bossEnemy->GetPosition().x, bossEnemy->GetPosition().y + 2, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[2] = { bossEnemy->GetPosition().x, bossEnemy->GetPosition().y - 2, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[3] = { bossEnemy->GetPosition().x - 2, bossEnemy->GetPosition().y, bossEnemy->GetPosition().z };
 				}
 			}
+
 		}
+	}
+	if (isEnemyEffect_ == true) {
+		enemyEffectTime_++;
+		enemyEffectPosition_[0].x += 0.3f;
+		enemyEffectPosition_[1].y += 0.3f;
+		enemyEffectPosition_[2].y -= 0.3f;
+		enemyEffectPosition_[3].x -= 0.3f;
+	}
+	for (int i = 0; i < enemyEffect_.size(); i++) {
+		enemyEffect_[i]->SetPosition(enemyEffectPosition_[i]);
+	}
+	if (enemyEffectTime_ >= 10) {
+		isEnemyEffect_ = false;
+		enemyEffectTime_ = 0;
 	}
 
 #pragma endregion

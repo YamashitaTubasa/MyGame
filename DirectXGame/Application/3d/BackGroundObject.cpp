@@ -6,13 +6,9 @@
 
 #include "BackGroundObject.h"
 
-BackGroundObject::BackGroundObject()
-{
-}
+BackGroundObject::BackGroundObject(){}
 
-BackGroundObject::~BackGroundObject()
-{
-}
+BackGroundObject::~BackGroundObject(){}
 
 void BackGroundObject::Initialize()
 {

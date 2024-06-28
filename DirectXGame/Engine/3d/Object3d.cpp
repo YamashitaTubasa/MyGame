@@ -42,8 +42,6 @@ Object3d::~Object3d()
 		CollisionManager::GetInstance()->RemoveCollider(collider_);
 		delete collider_;
 	}
-
-	//device_->Release();
 }
 
 void Object3d::StaticInitialize(ID3D12Device * device, int window_width, int window_height, [[maybe_unused]] Camera* camera)

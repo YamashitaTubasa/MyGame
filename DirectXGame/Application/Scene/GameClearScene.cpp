@@ -8,13 +8,9 @@
 
 using namespace DirectX;
 
-GameClearScene::GameClearScene()
-{
-}
+GameClearScene::GameClearScene(){}
 
-GameClearScene::~GameClearScene()
-{
-}
+GameClearScene::~GameClearScene(){}
 
 void GameClearScene::Initialize()
 {

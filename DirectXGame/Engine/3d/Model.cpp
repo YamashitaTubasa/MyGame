@@ -26,13 +26,9 @@ using namespace std;
 // 静的メンバ変数の実体
 ID3D12Device* Model::device_ = nullptr;
 
-Model::Model()
-{
-}
+Model::Model(){}
 
-Model::~Model()
-{
-}
+Model::~Model(){}
 
 std::unique_ptr<Model> Model::LoadFromOBJ(const string& modelname)
 {
