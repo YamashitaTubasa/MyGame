@@ -8,13 +8,9 @@
 
 #include "EasingManager.h"
 
-GameTitleScene::GameTitleScene()
-{
-}
+GameTitleScene::GameTitleScene(){}
 
-GameTitleScene::~GameTitleScene()
-{
-}
+GameTitleScene::~GameTitleScene(){}
 
 void GameTitleScene::Initialize()
 {

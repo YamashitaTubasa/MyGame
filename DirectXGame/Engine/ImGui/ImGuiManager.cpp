@@ -6,13 +6,9 @@
 
 #include "ImGuiManager.h"
 
-MyEngine::ImGuiManager::ImGuiManager()
-{
-}
+MyEngine::ImGuiManager::ImGuiManager(){}
 
-MyEngine::ImGuiManager::~ImGuiManager()
-{
-}
+MyEngine::ImGuiManager::~ImGuiManager(){}
 
 void MyEngine::ImGuiManager::Initialize(DirectXCommon* dXCommon, WinApp* winApp) {
 

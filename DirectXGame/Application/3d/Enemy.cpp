@@ -13,13 +13,9 @@
 
 #include <fstream>
 
-Enemy::Enemy()
-{
-}
+Enemy::Enemy(){}
 
-Enemy::~Enemy()
-{
-}
+Enemy::~Enemy(){}
 
 void Enemy::Initialize(const DirectX::XMFLOAT3& position)
 {

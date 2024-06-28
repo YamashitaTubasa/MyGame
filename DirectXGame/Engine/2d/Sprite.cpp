@@ -19,8 +19,7 @@ MyEngine::Sprite::Sprite([[maybe_unused]] UINT texNumber, [[maybe_unused]] XMFLO
 
 }
 
-MyEngine::Sprite::~Sprite() {
-}
+MyEngine::Sprite::~Sprite() {}
 
 MyEngine::PipelineSet MyEngine::Sprite::SpriteCreateGraphicsPipeline()
 {

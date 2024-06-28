@@ -29,9 +29,7 @@ MyEngine::PostEffect::PostEffect()
 {
 }
 
-MyEngine::PostEffect::~PostEffect()
-{
-}
+MyEngine::PostEffect::~PostEffect(){}
 
 void MyEngine::PostEffect::Initialize(const wchar_t* filename)
 {

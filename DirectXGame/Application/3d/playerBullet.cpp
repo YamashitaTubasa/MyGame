@@ -6,13 +6,9 @@
 
 #include "PlayerBullet.h"
 
-PlayerBullet::PlayerBullet() 
-{
-}
+PlayerBullet::PlayerBullet() {}
 
-PlayerBullet::~PlayerBullet() 
-{
-}
+PlayerBullet::~PlayerBullet() {}
 
 void PlayerBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::XMFLOAT3& velocity)
 {

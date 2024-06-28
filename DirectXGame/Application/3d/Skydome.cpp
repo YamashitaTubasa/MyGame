@@ -6,13 +6,9 @@
 
 #include "Skydome.h"
 
-Skydome::Skydome()
-{
-}
+Skydome::Skydome(){}
 
-Skydome::~Skydome()
-{
-}
+Skydome::~Skydome(){}
 
 void Skydome::Initialize()
 {

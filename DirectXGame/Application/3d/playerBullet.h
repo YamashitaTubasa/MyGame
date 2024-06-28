@@ -29,7 +29,7 @@ public:
 
 private: // 定数
 	// 寿命
-	static const int32_t kLifeTime_ = 60 * 5;
+	static const int32_t kLifeTime_ = 50;
 
 public: // メンバ関数
 	/// <summary>
