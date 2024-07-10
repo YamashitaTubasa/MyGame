@@ -73,15 +73,15 @@ void GamePlayScene::Initialize()
 	// OBJからモデルデータを読み込む
 	enemyEffectModel_ = Model::LoadFromOBJ("enemyEffect");
 	// 3Dオブジェクト生成
-	enemyEffect_.resize(4);
-	enemyEffectPosition_.resize(4);
-	enemyEffectScale_.resize(4);
-	enemyEffectRotation_.resize(4);
+	enemyEffect_.resize(9);
+	enemyEffectPosition_.resize(9);
+	enemyEffectScale_.resize(9);
+	enemyEffectRotation_.resize(9);
 	for (int i = 0; i < enemyEffect_.size(); i++) {
 		enemyEffect_[i] = Object3d::Create();
 		enemyEffect_[i]->SetModel(enemyEffectModel_.get());
 		enemyEffectScale_[i] = { 0.5f,0.5f,0.5f };
-		enemyEffectRotation_[i] = { 0,0,0 };
+		enemyEffectRotation_[i] = { 0.0f,0.0f,45.0f };
 		enemyEffect_[i]->SetPosition(enemyEffectPosition_[i]);
 		enemyEffect_[i]->SetScale(enemyEffectScale_[i]);
 		enemyEffect_[i]->SetRotation(enemyEffectRotation_[i]);
@@ -973,10 +973,18 @@ void GamePlayScene::CheckAllCollisions()
 
 				isEnemyEffect_ = true;
 
-				enemyEffectPosition_[0] = { enemy->GetPosition().x + 2, enemy->GetPosition().y, enemy->GetPosition().z };
-				enemyEffectPosition_[1] = { enemy->GetPosition().x, enemy->GetPosition().y + 2, enemy->GetPosition().z };
-				enemyEffectPosition_[2] = { enemy->GetPosition().x, enemy->GetPosition().y - 2, enemy->GetPosition().z };
-				enemyEffectPosition_[3] = { enemy->GetPosition().x - 2, enemy->GetPosition().y, enemy->GetPosition().z };
+				enemyEffectPosition_[0] = { enemy->GetPosition().x + 2.0f, enemy->GetPosition().y,        enemy->GetPosition().z };
+				enemyEffectPosition_[1] = { enemy->GetPosition().x,        enemy->GetPosition().y + 2.0f, enemy->GetPosition().z };
+				enemyEffectPosition_[2] = { enemy->GetPosition().x,        enemy->GetPosition().y - 2.0f, enemy->GetPosition().z };
+				enemyEffectPosition_[3] = { enemy->GetPosition().x - 2.0f, enemy->GetPosition().y,        enemy->GetPosition().z };
+				enemyEffectPosition_[4] = { enemy->GetPosition().x + 1.5f, enemy->GetPosition().y + 1.5f, enemy->GetPosition().z };
+				enemyEffectPosition_[5] = { enemy->GetPosition().x + 1.5f, enemy->GetPosition().y - 1.5f, enemy->GetPosition().z };
+				enemyEffectPosition_[6] = { enemy->GetPosition().x - 1.5f, enemy->GetPosition().y - 1.5f, enemy->GetPosition().z };
+				enemyEffectPosition_[7] = { enemy->GetPosition().x - 1.5f, enemy->GetPosition().y + 1.5f, enemy->GetPosition().z };
+
+				for (int i = 0; i < enemyEffect_.size(); i++) {
+					enemyEffectScale_[i] = { 0.5f,0.5f,0.5f };
+				}
 				
 				for (int i = 0; i < 50; i++) {
 					// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
@@ -1024,6 +1032,21 @@ void GamePlayScene::CheckAllCollisions()
 			if ((std::pow((posA.x - posB.x), 2.0f) + std::pow((posA.y - posB.y), 2.0f) + std::pow((posA.z - posB.z), 2.0f)) <= std::pow((radius + radius), 2.0f)) {
 				playerBullet->OnCollision();
  				bullet->OnCollision();
+
+				isEnemyEffect_ = true;
+
+				enemyEffectPosition_[0] = { playerBullet->GetPosition().x + 2.0f, playerBullet->GetPosition().y,        playerBullet->GetPosition().z };
+				enemyEffectPosition_[1] = { playerBullet->GetPosition().x,        playerBullet->GetPosition().y + 2.0f, playerBullet->GetPosition().z };
+				enemyEffectPosition_[2] = { playerBullet->GetPosition().x,        playerBullet->GetPosition().y - 2.0f, playerBullet->GetPosition().z };
+				enemyEffectPosition_[3] = { playerBullet->GetPosition().x - 2.0f, playerBullet->GetPosition().y,        playerBullet->GetPosition().z };
+				enemyEffectPosition_[4] = { playerBullet->GetPosition().x + 1.5f, playerBullet->GetPosition().y + 1.5f, playerBullet->GetPosition().z };
+				enemyEffectPosition_[5] = { playerBullet->GetPosition().x + 1.5f, playerBullet->GetPosition().y - 1.5f, playerBullet->GetPosition().z };
+				enemyEffectPosition_[6] = { playerBullet->GetPosition().x - 1.5f, playerBullet->GetPosition().y - 1.5f, playerBullet->GetPosition().z };
+				enemyEffectPosition_[7] = { playerBullet->GetPosition().x - 1.5f, playerBullet->GetPosition().y + 1.5f, playerBullet->GetPosition().z };
+
+				for (int i = 0; i < enemyEffect_.size(); i++) {
+					enemyEffectScale_[i] = { 0.5f,0.5f,0.5f };
+				}
 			}
 		}
 	}
@@ -1056,24 +1079,40 @@ void GamePlayScene::CheckAllCollisions()
 
 					isEnemyEffect_ = true;
 
-					enemyEffectPosition_[0] = { bossEnemy->GetPosition().x + 2, bossEnemy->GetPosition().y, bossEnemy->GetPosition().z };
-					enemyEffectPosition_[1] = { bossEnemy->GetPosition().x, bossEnemy->GetPosition().y + 2, bossEnemy->GetPosition().z };
-					enemyEffectPosition_[2] = { bossEnemy->GetPosition().x, bossEnemy->GetPosition().y - 2, bossEnemy->GetPosition().z };
-					enemyEffectPosition_[3] = { bossEnemy->GetPosition().x - 2, bossEnemy->GetPosition().y, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[0] = { bossEnemy->GetPosition().x + 2.0f, bossEnemy->GetPosition().y,        bossEnemy->GetPosition().z };
+					enemyEffectPosition_[1] = { bossEnemy->GetPosition().x,        bossEnemy->GetPosition().y + 2.0f, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[2] = { bossEnemy->GetPosition().x,        bossEnemy->GetPosition().y - 2.0f, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[3] = { bossEnemy->GetPosition().x - 2.0f, bossEnemy->GetPosition().y,        bossEnemy->GetPosition().z };
+					enemyEffectPosition_[4] = { bossEnemy->GetPosition().x + 1.5f, bossEnemy->GetPosition().y + 1.5f, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[5] = { bossEnemy->GetPosition().x + 1.5f, bossEnemy->GetPosition().y - 1.5f, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[6] = { bossEnemy->GetPosition().x - 1.5f, bossEnemy->GetPosition().y - 1.5f, bossEnemy->GetPosition().z };
+					enemyEffectPosition_[7] = { bossEnemy->GetPosition().x - 1.5f, bossEnemy->GetPosition().y + 1.5f, bossEnemy->GetPosition().z };
+
+					for (int i = 0; i < enemyEffect_.size(); i++) {
+						enemyEffectScale_[i] = { 0.5f,0.5f,0.5f };
+					}
 				}
 			}
-
 		}
 	}
 	if (isEnemyEffect_ == true) {
 		enemyEffectTime_++;
-		enemyEffectPosition_[0].x += 0.3f;
-		enemyEffectPosition_[1].y += 0.3f;
-		enemyEffectPosition_[2].y -= 0.3f;
-		enemyEffectPosition_[3].x -= 0.3f;
+		enemyEffectPosition_[0].x += 0.5f;
+		enemyEffectPosition_[1].y += 0.5f;
+		enemyEffectPosition_[2].y -= 0.5f;
+		enemyEffectPosition_[3].x -= 0.5f;
+		enemyEffectPosition_[4].x += 0.3f;
+		enemyEffectPosition_[4].y += 0.3f;
+		enemyEffectPosition_[5].y -= 0.3f;
+		enemyEffectPosition_[5].x += 0.3f;
+		enemyEffectPosition_[6].y -= 0.3f;
+		enemyEffectPosition_[6].x -= 0.3f;
+		enemyEffectPosition_[7].x -= 0.3f;
+		enemyEffectPosition_[7].y += 0.3f;
 	}
 	for (int i = 0; i < enemyEffect_.size(); i++) {
 		enemyEffect_[i]->SetPosition(enemyEffectPosition_[i]);
+		enemyEffect_[i]->SetScale(enemyEffectScale_[i]);
 	}
 	if (enemyEffectTime_ >= 10) {
 		isEnemyEffect_ = false;

@@ -16,7 +16,7 @@ void PlayerBullet::Initialize(const DirectX::XMFLOAT3& position, const DirectX::
 	this->velocity__ = velocity;
 	
 	// OBJからモデルデータを読み込む
-	bulletM_ = Model::LoadFromOBJ("playerBullet");
+	bulletM_ = Model::LoadFromOBJ("playerBullet1");
 	// 3Dオブジェクト生成
 	bulletO3_ = Object3d::Create();
 	// オブジェクトにモデルをひも付ける
