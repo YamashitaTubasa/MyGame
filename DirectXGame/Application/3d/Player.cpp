@@ -84,8 +84,8 @@ bool Player::Initialize()
 	Object3d::SetTarget(target_);
 
 	// OBJの名前を指定してモデルデータを読み込む
-	particle_ = MyEngine::Particle::LoadFromOBJ("bomb.png");
-	blackSmoke_ = MyEngine::Particle::LoadFromOBJ("bombEffect.png");
+	particle_ = MyEngine::Particle::LoadFromOBJ("bomb1.png");
+	blackSmoke_ = MyEngine::Particle::LoadFromOBJ("bomb1.png");
 	rotationParticle_ = MyEngine::Particle::LoadFromOBJ("pSpin.png");
 	// パーティクルの生成
 	particleMan_ = MyEngine::ParticleManager::Create();
