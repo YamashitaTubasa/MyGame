@@ -86,15 +86,18 @@ bool Player::Initialize()
 	// OBJの名前を指定してモデルデータを読み込む
 	particle_ = MyEngine::Particle::LoadFromOBJ("bomb1.png");
 	blackSmoke_ = MyEngine::Particle::LoadFromOBJ("bomb1.png");
-	rotationParticle_ = MyEngine::Particle::LoadFromOBJ("pSpin.png");
+	rotationParticle_ = MyEngine::Particle::LoadFromOBJ("pSpin.png"); 
+	smoke_ = MyEngine::Particle::LoadFromOBJ("graySmoke.png");
 	// パーティクルの生成
 	particleMan_ = MyEngine::ParticleManager::Create();
 	blackSmokeMan_ = MyEngine::ParticleManager::Create();
 	rotationParticleMan_ = MyEngine::ParticleManager::Create();
+	smokeMan_ = MyEngine::ParticleManager::Create();
 	// パーティクルマネージャーにパーティクルを割り当てる
 	particleMan_->SetModel(particle_.get());
 	blackSmokeMan_->SetModel(blackSmoke_.get());
 	rotationParticleMan_->SetModel(rotationParticle_.get());
+	smokeMan_->SetModel(smoke_.get());
 
 	return true;
 }
@@ -110,6 +113,7 @@ void Player::Update()
 	particleMan_->Update();
 	blackSmokeMan_->Update();
 	rotationParticleMan_->Update();
+	smokeMan_->Update();
 
 	// デスフラグの立った弾を削除
 	pBullets_.remove_if([](std::unique_ptr<PlayerBullet>& bullet) {
@@ -206,6 +210,30 @@ void Player::Update()
 
 			// 追加
 			rotationParticle_->Add(rotationParticleLife, pos, vel, acc, rotationParticleStartScale_, rotationParticleEndScale_);
+		}
+	}
+
+	if (isSmokeParticle_ || MyEngine::Input::GetInstance()->PushKey(DIK_I)) {
+		for (int i = 0; i < 10; i++) {
+			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+			const float md_pos = 0.1f;
+			XMFLOAT3 pos{};
+			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + position_.x;
+			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + position_.y;
+			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f + position_.z;
+			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+			const float md_vel = 0.05f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+			XMFLOAT3 acc{};
+			const float md_acc = 0.1f;
+			acc.y -= (float)rand() / RAND_MAX * md_acc;
+			acc.z -= (float)rand() / RAND_MAX * md_acc;
+
+			// 追加
+			smoke_->Add(smokeParticleLife_, pos, vel, acc, smokeParticleStartScale_, smokeParticleEndScale_);
 		}
 	}
 
@@ -537,6 +565,7 @@ void Player::Effect()
 		rotationParticleMan_->Draw();
 	}
 	blackSmokeMan_->Draw();
+	smokeMan_->Draw();
 
 #pragma endregion
 }

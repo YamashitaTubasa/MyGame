@@ -40,6 +40,11 @@ void GameTitleScene::Initialize()
 	// ポストエフェクト
 	postEffect_ = std::make_unique<MyEngine::PostEffect>();
 	postEffect_->Initialize(L"Resources/shaders/PostEffectRadialBlurPS.hlsl");
+
+	// 煙
+	smoke_ = MyEngine::Particle::LoadFromOBJ("graySmoke.png");
+	smokeMan_ = MyEngine::ParticleManager::Create();
+	smokeMan_->SetModel(smoke_.get());
 }
 
 void GameTitleScene::Update()
@@ -52,14 +57,40 @@ void GameTitleScene::Update()
 	// 自機の更新
 	player_->Update();
 
+	// 煙更新
+	smokeMan_->Update();
+
+	if (isSmokeParticle_) {
+		for (int i = 0; i < 10; i++) {
+			// X,Y,Zすべて[-5.0f,+5.0f]でランダムに分布
+			const float md_pos = 0.1f;
+			DirectX::XMFLOAT3 pos{};
+			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+			pos.y += 0.5f;
+			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
+			pos.z += 10.0f;
+			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
+			const float md_vel = 0.1f;
+			DirectX::XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * md_vel - md_vel / 2.0f;
+			// 重力に見立ててYのみ[-0.001f,0]でランダム分布
+			DirectX::XMFLOAT3 acc{};
+			const float md_acc = 0.1f;
+			acc.z -= (float)rand() / RAND_MAX * md_acc;
+
+			// 追加
+			smoke_->Add(smokeParticleLife_, pos, vel, acc, smokeParticleStartScale_, smokeParticleEndScale_);
+		}
+	}
+
 	// スプライトの更新
 	title_->SpriteUpdate(title_.get(), spriteCommon_);
 	space_->SpriteUpdate(space_.get(), spriteCommon_);
 	inBlack_->SpriteUpdate(inBlack_.get(), spriteCommon_);
 	nowLoading_->SpriteUpdate(nowLoading_.get(), spriteCommon_);
-	/*for (auto& i : dot_) {
-		i->SpriteUpdate(i, spriteCommon_);
-	}*/
 	for (int i = 0; i < dotMax_; i++) {
 		dot_[i]->SpriteUpdate(dot_[i].get(), spriteCommon_);
 	}
@@ -140,7 +171,7 @@ void GameTitleScene::Draw()
 	MyEngine::Sprite::PreDraw(cmdList, spriteCommon_);
 
 	//=== スプライトの描画 ===//
-	if (!start_) {
+	if (!isStart_) {
 		title_->SpriteDraw(spriteCommon_);
 		if (isSpace_) {
 			space_->SpriteDraw(spriteCommon_);
@@ -155,9 +186,7 @@ void GameTitleScene::Draw()
 	// NowLodingと点の描画
 	if (isLoding_) {
 		nowLoading_->SpriteDraw(spriteCommon_);
-		/*for (auto& i : dot_) {
-			i->SpriteDraw(spriteCommon_);
-		}*/
+
 		for (int i = 0; i < dotMax_; i++) {
 			if (isDot_[i]) {
 				dot_[i]->SpriteDraw(spriteCommon_);
@@ -167,6 +196,19 @@ void GameTitleScene::Draw()
 
 	// スプライト描画後処理
 	MyEngine::Sprite::PostDraw();
+
+#pragma endregion
+
+#pragma region パーティクルの描画
+
+	// パーティクル描画前処理
+	MyEngine::ParticleManager::PreDraw(cmdList);
+
+	// パーティクルの描画
+	smokeMan_->Draw();
+
+	// パーティクル描画後処理
+	MyEngine::ParticleManager::PostDraw();
 
 #pragma endregion
 
@@ -400,10 +442,11 @@ void GameTitleScene::SceneChange()
 		if (MyEngine::Input::GetInstance()->TriggerKey(DIK_SPACE)) 
 		{
 			isBlur_ = true;
-			start_ = true;
+			isStart_ = true;
+			isSmokeParticle_ = true;
 		}
 	}
-	if (start_) {
+	if (isStart_) {
 		GameTitleScene::PlayerRotation();
 		startTimer_++;
 		pPos_.z += sPlayerPosMoveZ_;

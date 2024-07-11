@@ -125,6 +125,16 @@ private: // メンバ変数
 
 	std::unique_ptr<MyEngine::PostEffect> postEffect_;
 
+	std::unique_ptr<MyEngine::Particle> smoke_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> smokeMan_ = nullptr;
+
+	// 煙パーティクル
+	const int smokeParticleLife_ = 100;
+	const float smokeParticleStartScale_ = 0.2f;
+	const float smokeParticleEndScale_ = 0.2f;
+	const int smokeParticleMax_ = 20;
+	bool isSmokeParticle_ = false;
+
 	// タイトルの設定
 	DirectX::XMFLOAT4 titleColor_ = { 1,1,1,1 };
 	DirectX::XMFLOAT3 titlePos_ = { 120, 80, 0 };
@@ -185,7 +195,7 @@ private: // メンバ変数
 	const int MaxStartTimer_ = 200;
 
 	// フラグ
-	bool start_ = false;
+	bool isStart_ = false;
 	bool isPos_ = false;
 
 	// フェードイン・アウト時ののアルファ値
