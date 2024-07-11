@@ -151,10 +151,12 @@ private: // メンバ変数
 	std::unique_ptr<MyEngine::Particle> blackSmoke_ = nullptr;
 	std::unique_ptr<MyEngine::Particle> circleMan_ = nullptr;
 	std::unique_ptr<MyEngine::Particle> rotationParticle_ = nullptr;
+	std::unique_ptr<MyEngine::Particle> smoke_ = nullptr;
 	std::unique_ptr<MyEngine::ParticleManager> particleMan_ = nullptr;
 	std::unique_ptr<MyEngine::ParticleManager> blackSmokeMan_ = nullptr;
 	std::unique_ptr<MyEngine::ParticleManager> circle_ = nullptr;
 	std::unique_ptr<MyEngine::ParticleManager> rotationParticleMan_ = nullptr;
+	std::unique_ptr<MyEngine::ParticleManager> smokeMan_ = nullptr;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
@@ -254,6 +256,13 @@ private: // メンバ変数
 	const float rotationParticleEndScale_ = 0.0f;
 	const int rotationParticleMax_ = 40;
 	bool isRotationParticle_ = false;
+
+	// 煙パーティクル
+	const int smokeParticleLife_ = 100;
+	const float smokeParticleStartScale_ = 0.2f;
+	const float smokeParticleEndScale_ = 0.2f;
+	const int smokeParticleMax_ = 20;
+	bool isSmokeParticle_ = false;
 
 	// ダメージ
 	bool isSpinEffect_ = false;
