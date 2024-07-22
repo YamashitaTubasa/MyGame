@@ -238,9 +238,9 @@ private: // メンバ変数
 	const float playerPosYMove_ = 0.03f;
 
 	// スタート
-	const float sPlayerPosMoveY_ = 0.25f;
-	const float sPlayerPosMoveZ_ = 1.8f;
-	const float sPlayerEyeMove_ = 0.06f;
+	const float sPlayerPosMoveY_ = 0.20f;
+	const float sPlayerPosMoveZ_ = 2.0f;
+	const float sPlayerEyeMove_ = 0.08f;
 
 	// ポストエフェクト（ブラー）
 	bool isBlur_ = false;
