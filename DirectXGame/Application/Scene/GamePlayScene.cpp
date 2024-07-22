@@ -367,32 +367,10 @@ void GamePlayScene::Draw()
 		if (score_ == 0) {
 			num0_[2]->SpriteDraw(spriteCommon_);
 		}
-		if (score_ == 100) {
-			number_[1]->SpriteDraw(spriteCommon_);
-		}
-		if (score_ == 200) {
-			number_[2]->SpriteDraw(spriteCommon_);
-		}
-		if (score_ == 300) {
-			number_[3]->SpriteDraw(spriteCommon_);
-		}
-		if (score_ == 400) {
-			number_[4]->SpriteDraw(spriteCommon_);
-		}
-		if (score_ == 500) {
-			number_[5]->SpriteDraw(spriteCommon_);
-		}
-		if (score_ == 600) {
-			number_[6]->SpriteDraw(spriteCommon_);
-		}
-		if (score_ == 700) {
-			number_[7]->SpriteDraw(spriteCommon_);
-		}
-		if (score_ == 800) {
-			number_[8]->SpriteDraw(spriteCommon_);
-		}
-		if (score_ == 900) {
-			number_[9]->SpriteDraw(spriteCommon_);
+		for (int i = 1; i <= 9; i++) {
+			if (score_ == i * 100) {
+				number_[i]->SpriteDraw(spriteCommon_);
+			}
 		}
 	}
 	// ダメージの描画

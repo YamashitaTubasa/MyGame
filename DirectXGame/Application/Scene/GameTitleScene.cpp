@@ -67,7 +67,6 @@ void GameTitleScene::Update()
 			DirectX::XMFLOAT3 pos{};
 			pos.x = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
 			pos.y = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
-			pos.y += 0.5f;
 			pos.z = (float)rand() / RAND_MAX * md_pos - md_pos / 2.0f;
 			pos.z += 10.0f;
 			// X,Y,Z全て[-0.05f,+0.05f]でランダム分布
@@ -165,6 +164,19 @@ void GameTitleScene::Draw()
 
 #pragma endregion
 
+#pragma region パーティクルの描画
+
+	// パーティクル描画前処理
+	MyEngine::ParticleManager::PreDraw(cmdList);
+
+	// パーティクルの描画
+	smokeMan_->Draw();
+
+	// パーティクル描画後処理
+	MyEngine::ParticleManager::PostDraw();
+
+#pragma endregion
+
 #pragma region スプライトの描画
 
 	// スプライト描画前処理
@@ -196,19 +208,6 @@ void GameTitleScene::Draw()
 
 	// スプライト描画後処理
 	MyEngine::Sprite::PostDraw();
-
-#pragma endregion
-
-#pragma region パーティクルの描画
-
-	// パーティクル描画前処理
-	MyEngine::ParticleManager::PreDraw(cmdList);
-
-	// パーティクルの描画
-	smokeMan_->Draw();
-
-	// パーティクル描画後処理
-	MyEngine::ParticleManager::PostDraw();
 
 #pragma endregion
 
